@@ -45,6 +45,30 @@ $section_id = 'events-' . uniqid();
 <section id="<?php echo esc_attr($section_id); ?>" class="flex overflow-hidden relative">
     <div class="flex flex-col items-center w-full mx-auto max-w-container <?php echo esc_attr(implode(' ', $padding_classes)); ?> max-lg:px-5">
         <div class="overflow-hidden px-14 pt-14 pb-20 w-full max-md:px-5">
+
+            <?php
+            // Build the "View all events" button once so we can reuse it in desktop + mobile positions
+            $view_all_html = '';
+            if ($view_all_button && is_array($view_all_button) && isset($view_all_button['url'], $view_all_button['title'])) {
+                ob_start();
+                ?>
+                <a href="<?php echo esc_url($view_all_button['url']); ?>"
+                   class="flex gap-2 justify-center items-center self-stretch py-3 pr-4 pl-6 my-auto text-sm font-bold leading-none text-sky-800 min-h-[42px] rounded-[100px] max-md:pl-5 btn w-fit whitespace-nowrap hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800 transition-colors duration-200"
+                   target="<?php echo esc_attr($view_all_button['target'] ?? '_self'); ?>"
+                   aria-label="<?php echo esc_attr($view_all_button['title']); ?>">
+                    <span class="self-stretch my-auto text-sky-800">
+                        <?php echo esc_html($view_all_button['title']); ?>
+                    </span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="object-contain self-stretch my-auto w-4 shrink-0 aspect-square" aria-hidden="true">
+                        <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <?php
+                $view_all_html = ob_get_clean();
+            }
+            ?>
+
+            <!-- Header (Desktop: button on same line) -->
             <header class="flex flex-wrap gap-10 justify-between items-center w-full max-md:max-w-full">
                 <div class="flex gap-3.5 items-center self-stretch my-auto min-w-60" role="banner">
                     <div class="flex gap-2 justify-center items-center self-stretch my-auto w-10 h-10 bg-rose-50 border-4 border-red-200 border-solid min-h-10 rounded-[100px]" role="img" aria-label="Calendar icon">
@@ -60,18 +84,10 @@ $section_id = 'events-' . uniqid();
                     <?php endif; ?>
                 </div>
 
-                <?php if ($view_all_button && is_array($view_all_button) && isset($view_all_button['url'], $view_all_button['title'])): ?>
-                    <a href="<?php echo esc_url($view_all_button['url']); ?>"
-                       class="flex gap-2 justify-center items-center self-stretch py-3 pr-4 pl-6 my-auto text-sm font-bold leading-none text-sky-800 min-h-[42px] rounded-[100px] max-md:pl-5 btn w-fit whitespace-nowrap hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800 transition-colors duration-200"
-                       target="<?php echo esc_attr($view_all_button['target'] ?? '_self'); ?>"
-                       aria-label="<?php echo esc_attr($view_all_button['title']); ?>">
-                        <span class="self-stretch my-auto text-sky-800">
-                            <?php echo esc_html($view_all_button['title']); ?>
-                        </span>
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="object-contain self-stretch my-auto w-4 shrink-0 aspect-square" aria-hidden="true">
-                            <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
+                <?php if ($view_all_html): ?>
+                    <div class="hidden md:block">
+                        <?php echo $view_all_html; ?>
+                    </div>
                 <?php endif; ?>
             </header>
 
@@ -150,12 +166,28 @@ $section_id = 'events-' . uniqid();
                     <?php endwhile; ?>
                     <?php wp_reset_postdata(); ?>
                 </main>
+
+                <?php if ($view_all_html): ?>
+                    <!-- Mobile: button below the grid -->
+                    <div class="mt-6 flex justify-center md:hidden">
+                        <?php echo $view_all_html; ?>
+                    </div>
+                <?php endif; ?>
+
             <?php else: ?>
                 <div class="p-8 mt-6 text-center text-gray-600 bg-gray-50 rounded-lg" role="status" aria-live="polite">
                     <p class="text-lg">No upcoming events found.</p>
                     <p class="mt-2 text-sm">Check back later for new events.</p>
                 </div>
+
+                <?php if ($view_all_html): ?>
+                    <!-- Mobile: keep button below even if no events -->
+                    <div class="mt-6 flex justify-start md:hidden">
+                        <?php echo $view_all_html; ?>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
+
         </div>
     </div>
 </section>

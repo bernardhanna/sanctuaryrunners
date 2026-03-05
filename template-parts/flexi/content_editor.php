@@ -50,7 +50,7 @@ $heading_id = $section_id . '-heading';
     aria-labelledby="<?php echo esc_attr($heading_id); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
-    <div class="flex flex-col items-center w-full mx-auto max-w-container pt-5 pb-5 max-lg:px-5 <?php echo esc_attr($padding_class_string); ?>">
+    <div class="flex flex-col items-center w-full mx-auto max-w-container pt-5 pb-12 max-lg:px-5 <?php echo esc_attr($padding_class_string); ?>">
         <div class="w-full max-w-[60rem] flex flex-col gap-6">
             <<?php echo esc_html($heading_tag); ?>
                 id="<?php echo esc_attr($heading_id); ?>"
@@ -62,17 +62,17 @@ $heading_id = $section_id . '-heading';
 
             <?php if (!empty($show_subheading) && !empty($subheading_wysiwyg)) { ?>
                 <div
-                    class="wp_editor w-full break-words text-left text-[1.25rem] font-[400] leading-[1.625rem] font-['Public Sans']"
+                    class="wp_editor w-full break-words text-left text-[1.25rem] font-[400] leading-[1.625rem] font-['Public Sans'] mb-0 [&_p]:mb-0"
                     style="color: <?php echo esc_attr($subheading_color); ?>;"
                 >
                     <?php echo wp_kses_post($subheading_wysiwyg); ?>
                 </div>
             <?php } ?>
 
-            <div class="flex flex-col gap-14 w-full md:flex-row md:items-center">
+            <div class="flex flex-col gap-6 md:gap-14 w-full md:flex-row md:items-start">
                 <?php if (!empty($column_1)) { ?>
                     <div
-                        class="wp_editor w-full md:w-1/2 whitespace-pre-wrap break-words text-left text-[1rem] font-[400] leading-[1.375rem] font-['Public Sans']"
+                        class="wp_editor w-full md:w-1/2 whitespace-normal break-words text-left text-[1rem] font-[400] leading-[1.375rem] font-['Public Sans']"
                         style="color: <?php echo esc_attr($body_text_color); ?>;"
                     >
                         <?php echo wp_kses_post($column_1); ?>
@@ -81,7 +81,7 @@ $heading_id = $section_id . '-heading';
 
                 <?php if (!empty($column_2)) { ?>
                     <div
-                        class="wp_editor w-full md:w-1/2 whitespace-pre-wrap break-words text-left text-[1rem] font-[400] leading-[1.375rem] font-['Public Sans']"
+                        class="wp_editor w-full md:w-1/2 whitespace-normal break-words text-left text-[1rem] font-[400] leading-[1.375rem] font-['Public Sans']"
                         style="color: <?php echo esc_attr($body_text_color); ?>;"
                     >
                         <?php echo wp_kses_post($column_2); ?>
@@ -91,7 +91,7 @@ $heading_id = $section_id . '-heading';
 
             <?php if (!empty($show_column_3) && !empty($column_3)) { ?>
                 <div
-                    class="wp_editor w-full whitespace-pre-wrap break-words text-left text-[1rem] font-[400] leading-[1.375rem] font-['Public Sans']"
+                    class="wp_editor w-full whitespace-normal break-words text-left text-[1rem] font-[400] leading-[1.375rem] font-['Public Sans']"
                     style="color: <?php echo esc_attr($body_text_color); ?>;"
                 >
                     <?php echo wp_kses_post($column_3); ?>

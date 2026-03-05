@@ -37,8 +37,8 @@ if (have_rows('padding_settings')) {
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
     <div class="flex flex-col items-center pt-5 pb-5 mx-auto w-full max-w-container max-lg:px-5">
-        <div class="flex justify-center items-center px-20 py-16 w-full max-md:flex-col max-md:px-10 max-sm:px-5 max-sm:py-10">
-            <div class="flex gap-20 items-center w-full max-w-screen-xl max-md:flex-col max-md:gap-16 max-sm:gap-10">
+        <div class="flex justify-center items-center px-20 pt-16 pb-6 w-full md:flex-row flex-col md:px-20 px-5">
+            <div class="flex flex-col md:flex-row gap-4 md:gap-20 items-start w-full max-w-screen-xl">
 
                 <?php if ($main_image): ?>
                 <div class="flex-1 max-md:w-full" role="img" aria-labelledby="<?php echo esc_attr($section_id); ?>-image-desc">
@@ -53,31 +53,36 @@ if (have_rows('padding_settings')) {
                 </div>
                 <?php endif; ?>
 
-                <div class="flex flex-col flex-1 max-md:w-full" role="main">
+                <div class="flex flex-col flex-1 max-md:w-full pt-6 pl-12 md:pl-0" role="main">
 
-                    <?php if (!empty($main_quote)): ?>
-                    <div
-                        class="mb-6 text-7xl font-bold leading-none max-sm:text-6xl"
-                        style="color: <?php echo esc_attr($quotation_mark_color); ?>;"
-                        aria-hidden="true"
-                        role="presentation"
-                    >
-                        "
+                   <?php if (!empty($main_quote)): ?>
+
+                    <div class="relative w-full">
+
+                       <!-- Quotation mark -->
+                        <div
+                            class="absolute -top-4 -left-4 -translate-x-1/2 text-6xl md:text-7xl font-bold leading-none text-[#1C959B] md:text-[<?php echo esc_attr($quotation_mark_color); ?>]"
+                            aria-hidden="true"
+                        >
+                            "
+                        </div>
+
+                        <<?php echo esc_attr($main_quote_tag); ?>
+                            id="<?php echo esc_attr($section_id); ?>-heading"
+                            class="pt-0 mb-6 text-2xl md:text-[36px] font-bold leading-tight text-sky-800 text-left"
+                            role="heading"
+                            aria-level="<?php echo esc_attr(str_replace('h', '', $main_quote_tag)); ?>"
+                        >
+                            <?php echo esc_html($main_quote); ?>
+                        </<?php echo esc_attr($main_quote_tag); ?>>
+
                     </div>
 
-                    <<?php echo esc_attr($main_quote_tag); ?>
-                        id="<?php echo esc_attr($section_id); ?>-heading"
-                        class="mb-8 text-5xl font-bold leading-tight text-sky-800 max-md:text-4xl max-sm:mb-6 max-sm:text-3xl"
-                        role="heading"
-                        aria-level="<?php echo esc_attr(str_replace('h', '', $main_quote_tag)); ?>"
-                    >
-                        <?php echo esc_html($main_quote); ?>
-                    </<?php echo esc_attr($main_quote_tag); ?>>
                     <?php endif; ?>
 
                     <?php if (!empty($highlighted_quote)): ?>
                     <blockquote
-                        class="pl-6 mb-8 border-l-4 border-sky-800 max-sm:mb-6"
+                        class="pl-6 mb-8 border-l-4 border-[#008BCC] max-sm:mb-6"
                         role="complementary"
                         aria-labelledby="<?php echo esc_attr($section_id); ?>-quote"
                     >
@@ -91,7 +96,7 @@ if (have_rows('padding_settings')) {
                     <?php endif; ?>
 
                     <?php if (!empty($author_name) || !empty($author_title)): ?>
-                    <cite class="mb-8 text-base not-italic font-semibold text-gray-900 max-sm:mb-6 max-sm:text-sm">
+                    <cite class="mb-8 text-base not-italic font-bold text-gray-900 max-sm:mb-6 max-sm:text-sm">
                         <?php if (!empty($author_name)): ?>
                             <span class="author-name"><?php echo esc_html($author_name); ?></span>
                         <?php endif; ?>

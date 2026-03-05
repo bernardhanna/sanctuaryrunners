@@ -49,7 +49,7 @@ $heading_id = $section_id . '-heading';
 >
   <div class="flex flex-col items-center w-full mx-auto max-w-container pt-5 pb-5 max-lg:px-5 <?php echo esc_attr($padding_class_string); ?>">
     <div class="w-full max-w-[64rem] mx-auto">
-      <div class="flex flex-col gap-8 self-center pt-6 pr-5 pb-6 pl-5 mx-auto w-full h-auto md:justify-start md:items-center max-xl:px-5">
+      <div class="flex flex-col gap-8 self-center pt-0 pr-5 pb-6 pl-5 mx-auto w-full h-auto md:justify-start md:items-center max-xl:px-5">
 
         <div class="flex flex-col md:justify-start md:items-start gap-4 pr-4 pl-4 rounded-[0.5rem] w-full self-start mx-auto max-xl:px-5">
           <<?php echo esc_html($heading_tag); ?>
@@ -106,7 +106,7 @@ $heading_id = $section_id . '-heading';
               }
               ?>
 
-              <div role="listitem" class="flex">
+              <div role="listitem" class="flex justify-center md:justify-start">
                 <?php if (is_array($logo_link) && !empty($logo_link['url'])) : ?>
                   <a
                     href="<?php echo esc_url($logo_link['url']); ?>"
