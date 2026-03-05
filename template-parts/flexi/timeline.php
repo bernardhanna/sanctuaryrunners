@@ -23,6 +23,8 @@ $timeline_line_color  = get_sub_field('timeline_line_color');
 $date_text_color      = get_sub_field('date_text_color');
 $card_radius          = get_sub_field('card_radius');
 
+
+
 $padding_classes = [];
 if (have_rows('padding_settings')) {
     while (have_rows('padding_settings')) {
