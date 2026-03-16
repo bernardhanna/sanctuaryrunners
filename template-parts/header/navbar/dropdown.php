@@ -120,7 +120,7 @@ $img_title = is_array($img) && !empty($img['title']) ? $img['title'] : $img_alt;
                 <?php endif; ?>
 
                 <!-- Right column: image OR third-tier aside (same width, transition between them) -->
-                <div class="flex grow shrink justify-center pr-6 min-w-60 w-[563px] max-md:max-w-full overflow-hidden">
+                <div class="flex grow shrink justify-center min-w-60 w-[563px] max-md:max-w-full overflow-hidden">
                     <!-- Image: visible when no third-tier is hovered -->
                     <?php if ($img_url) : ?>
                     <div
@@ -131,7 +131,7 @@ $img_title = is_array($img) && !empty($img['title']) ? $img['title'] : $img_alt;
                         x-transition:leave="transition ease-in duration-150"
                         x-transition:leave-start="opacity-100"
                         x-transition:leave-end="opacity-0"
-                        class="flex flex-col justify-center w-full"
+                        class="flex flex-col justify-center px-5 w-full"
                     >
                         <img
                             src="<?php echo esc_url($img_url); ?>"
