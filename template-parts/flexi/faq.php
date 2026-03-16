@@ -166,7 +166,7 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
             <div class="self-start pt-4 mt-4 text-sm leading-none text-white">
                 <a
                     href="<?php echo esc_url($button['url']); ?>"
-                    class="flex gap-2 justify-center items-center px-6 py-3.5 min-h-[52px] rounded-full bg-sky-800 hover:bg-sky-700 focus:bg-sky-700 transition-colors duration-300 btn w-fit whitespace-nowrap max-md:px-5"
+                    class="btn-primary flex gap-2 justify-center items-center px-6 py-3.5 min-h-[52px] rounded-full w-fit whitespace-nowrap max-md:px-5"
                     target="<?php echo esc_attr($button['target'] ?? '_self'); ?>"
                     aria-label="<?php echo esc_attr($button['title']); ?>"
                 >

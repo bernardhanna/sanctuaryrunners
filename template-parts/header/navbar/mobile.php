@@ -106,14 +106,10 @@ $menu_array = $primary_navigation->toArray();
         this.flyLevel = 1;
       },
 
+      // True if this item has children (third tier or deeper) — show chevron and allow expand
       hasDescendants(node) {
         if (!node || !Array.isArray(node.children)) return false;
-        const stack = [...node.children];
-        while (stack.length) {
-          const n = stack.pop();
-          if (Array.isArray(n.children) && n.children.length) return true;
-        }
-        return false;
+        return node.children.length > 0;
       },
 
       openFlatten(index) {

@@ -12,7 +12,8 @@ const baseConfig = {
   theme: {
     extend: {
       fontFamily: {
-        primary: ['Ubuntu', 'sans-serif'],
+        primary: ['Public Sans', 'sans-serif'],
+        sans: ['Public Sans', 'sans-serif'],
         heading: ['Great Vibes', 'cursive'],
         decorative: ['Great Vibes', 'cursive'],
       },
@@ -25,6 +26,13 @@ const baseConfig = {
         highlight:{ primary:'#101828', secondary:'#041227', light:'#FFF9E2' },
         text:{ primary:'#1D2939', secondary:'#ffffff', accent:'#1D2939' },
         hover:{ bg:'#F6F6F6', text:'#000' },
+        /* Design system: SR / Turquoise / Mint */
+        turquoise: { 500: '#1C959B' },
+        'blue-sr': { 10: '#EBF9FF', 400: '#008BCC' },
+        mint: { 500: '#87CEB7' },
+      },
+      backgroundImage: {
+        'gradient-blue-3': 'linear-gradient(313deg, #059DED 24.08%, #28B2FA 63%)',
       },
       backgroundColor: { hover:'#F6F6F6' },
       textColor: { hover:'#041227' },

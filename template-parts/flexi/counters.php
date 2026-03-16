@@ -25,7 +25,7 @@ $image_bg_color     = (string) get_sub_field('image_bg_color');
 $image_radius       = (string) get_sub_field('image_radius');
 
 if ($image_radius === '') {
-    $image_radius = 'rounded-none';
+    $image_radius = 'rounded-lg';
 }
 
 $allowed_heading_tags = ['h1','h2','h3','h4','h5','h6','span','p'];
@@ -90,16 +90,16 @@ if ($image_title === '') {
                 <div class="flex flex-col gap-4 pr-5 min-w-0 md:justify-start md:items-start md:pr-8 md:flex-1">
                     <<?php echo esc_html($heading_tag); ?>
                         id="<?php echo esc_attr($section_id . '-heading'); ?>"
-                        class="break-words text-left text-[1.5rem] font-[700] leading-[2rem] font-['Public Sans'] w-full"
-                        style="color: <?php echo esc_attr($heading_color ?: '#00628f'); ?>;"
+                        class="break-words text-left text-[24px] font-bold leading-[32px] font-['Public_Sans'] text-[var(--Blue-SR-500,#00628F)] w-full"
+                        <?php if ($heading_color): ?>style="color: <?php echo esc_attr($heading_color); ?>;"<?php endif; ?>
                     >
                         <?php echo esc_html($heading_text ?: 'Solidarity in Numbers'); ?>
                     </<?php echo esc_html($heading_tag); ?>>
 
                     <?php if (!empty($description)) : ?>
                         <div
-                            class="wp_editor break-words text-left text-[1rem] font-[400] leading-[1.375rem] font-['Public Sans'] w-full"
-                            style="color: <?php echo esc_attr($text_color ?: '#00263e'); ?>;"
+                            class="counters-description wp_editor break-words text-left text-[1rem] font-normal leading-[1.375rem] font-['Public_Sans'] text-[var(--Gray-600,#475467)] w-full"
+                            <?php if ($text_color): ?>style="color: <?php echo esc_attr($text_color); ?>;"<?php endif; ?>
                         >
                             <?php echo wp_kses_post($description); ?>
                         </div>
@@ -136,8 +136,8 @@ if ($image_title === '') {
                                     <?php endif; ?>
                                 >
                                     <h3
-                                        class="break-words text-left text-[3rem] md:text-[3.75rem] font-[700] leading-[4.5rem] tracking-[-0.125rem] font-['Public Sans'] uppercase w-full"
-                                        style="color: <?php echo esc_attr($stat_number_color ?: '#008fc5'); ?>;"
+                                        class="break-words text-left text-[60px] font-bold leading-[72px] tracking-[-1.2px] font-['Public_Sans'] text-[var(--Light-Blue-500,#008FC5)] w-full"
+                                        <?php if ($stat_number_color): ?>style="color: <?php echo esc_attr($stat_number_color); ?>;"<?php endif; ?>
                                     >
                                         <!-- aria-hidden to avoid screen readers reading rapid changes -->
                                         <span aria-hidden="true">
@@ -151,8 +151,8 @@ if ($image_title === '') {
                                     <?php if ($stat_text !== '') : ?>
                                         <p
                                             id="<?php echo esc_attr($desc_id); ?>"
-                                            class="break-words text-left text-[0.875rem] font-[400] leading-[1.25rem] font-['Public Sans'] w-full"
-                                            style="color: <?php echo esc_attr($stat_text_color ?: '#475467'); ?>;"
+                                            class="break-words text-left text-[14px] font-normal leading-5 font-['Public_Sans'] text-[var(--Gray-600,#475467)] w-full"
+                                            <?php if ($stat_text_color): ?>style="color: <?php echo esc_attr($stat_text_color); ?>;"<?php endif; ?>
                                         >
                                             <?php echo esc_html($stat_text); ?>
                                         </p>
@@ -174,7 +174,7 @@ if ($image_title === '') {
                             title="<?php echo esc_attr($image_title); ?>"
                             loading="lazy"
                             decoding="async"
-                            class="w-full max-md:h-auto h-full max-md:object-contain object-cover rounded-[inherit]"
+                            class="object-cover w-full h-full rounded-lg max-md:h-auto max-md:object-contain"
                         />
                     <?php endif; ?>
                 </div>

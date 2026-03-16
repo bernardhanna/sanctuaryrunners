@@ -11,6 +11,8 @@ $logo_alt = $logo_id ? (get_post_meta($logo_id, '_wp_attachment_image_alt', true
 $nav_settings   = get_field('navigation_settings_start', 'option') ?: [];
 $phone_number   = $nav_settings['phone_number'] ?? null;
 $contact_button = $nav_settings['contact_button'] ?? null;
+$donate_button  = $nav_settings['donate_button'] ?? null;
+$donate_icon    = $nav_settings['donate_icon'] ?? null;
 
 use Log1x\Navi\Navi;
 
@@ -33,6 +35,7 @@ if ($primary_navigation->isNotEmpty()) {
   x-data="{
     isOpen: false,
     activeDropdown: null,
+    searchOpen: false,
     toggleDropdown(index) {
       this.activeDropdown = (this.activeDropdown === index ? null : index);
     },
@@ -45,6 +48,7 @@ if ($primary_navigation->isNotEmpty()) {
   }"
   x-init="window.addEventListener('resize', () => checkWindowSize())"
   class="p-5 bg-transparent"
+  style="z-index: 1000;"
   x-effect="isOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''"
 >
       <nav
@@ -56,6 +60,7 @@ if ($primary_navigation->isNotEmpty()) {
         <div class="flex flex-col items-start my-auto max-w-[250px]">
           <a
             href="<?php echo esc_url(home_url('/')); ?>"
+            style="z-index: 1000;"
             class="flex justify-start btn"
             aria-label="<?php echo esc_attr(get_bloginfo('name')); ?> - Go to homepage"
           >
@@ -86,6 +91,10 @@ if ($primary_navigation->isNotEmpty()) {
               <li
                 class="relative group <?php echo esc_attr($item->classes); ?> <?php echo $item->active ? 'current-item' : ''; ?>"
                 role="none"
+                <?php if ($item->children) : ?>
+                  @mouseenter="activeDropdown = <?php echo $index; ?>"
+                  @mouseleave="activeDropdown = null"
+                <?php endif; ?>
               >
                 <div class="flex flex-col justify-center py-2 pr-3 pl-3.5 my-auto rounded-[100px]">
                   <div class="flex gap-1 items-center">
@@ -198,40 +207,21 @@ if ($primary_navigation->isNotEmpty()) {
 
         <!-- Search and Buttons Section -->
         <div class="flex gap-4 items-center my-auto min-w-60 max-lg:hidden">
-          <!-- Search Icons -->
-          <div class="flex gap-1 justify-center items-center px-1 my-auto w-12 min-h-12 rounded-[1000px]">
-            <button
-              type="button"
-              class="flex justify-center items-center w-full h-full btn"
-              aria-label="Search"
-            >
-              <img
-                src="https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/39824b071242e5eb0fb53e8a89193884da687d50?placeholderIfAbsent=true"
-                alt=""
-                class="object-contain shrink-0 w-4 aspect-square shadow-[0px_1px_4px_rgba(0,0,0,0.25)]"
-                role="presentation"
-              />
-              <img
-                src="https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/a12a9f00529c849acb1271c9704ef0513fb6cc17?placeholderIfAbsent=true"
-                alt=""
-                class="object-contain shrink-0 w-2 aspect-[2] stroke-[2px] stroke-sky-800"
-                role="presentation"
-              />
-            </button>
-          </div>
+          <!-- Language dropdown (opens on hover) -->
+          <?php get_template_part('template-parts/header/navbar/language-dropdown'); ?>
 
           <div class="flex gap-2 justify-center items-center w-12 h-12 border border-gray-300 border-solid min-h-12 rounded-[1000px]">
             <button
               type="button"
               class="flex justify-center items-center w-full h-full btn"
-              aria-label="Additional search options"
+              aria-label="Search site"
+              aria-expanded="false"
+              x-bind:aria-expanded="searchOpen"
+              @click="searchOpen = true"
             >
-              <img
-                src="https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/94aa3e5d1aa638c8bdc4dc9145739711051eeff8?placeholderIfAbsent=true"
-                alt=""
-                class="object-contain w-4 aspect-square"
-                role="presentation"
-              />
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M14 14L11.1 11.1M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z" stroke="#00628F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </button>
           </div>
 
@@ -239,17 +229,27 @@ if ($primary_navigation->isNotEmpty()) {
           <div class="flex gap-2 items-center my-auto text-sm font-bold leading-none min-w-60">
             <!-- Donate Button -->
             <a
-              href="<?php echo esc_url($nav_settings['donate_link'] ?? '#'); ?>"
+              href="<?php echo esc_url($donate_button && !empty($donate_button['url']) ? $donate_button['url'] : '#'); ?>"
+              target="<?php echo esc_attr(($donate_button && !empty($donate_button['target'])) ? $donate_button['target'] : '_self'); ?>"
               class="btn flex gap-2 justify-center items-center px-4 py-3 my-auto text-sky-800 whitespace-nowrap border border-sky-800 border-solid min-h-[42px] rounded-[100px] w-fit hover:bg-sky-50 transition-colors duration-200"
               role="button"
             >
-              <img
-                src="https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/cb3a3b809769d8b5aff9ca811be4ecf57a76c106?placeholderIfAbsent=true"
-                alt=""
-                class="object-contain w-4 shrink-0 aspect-square"
-                role="presentation"
-              />
-              <span class="text-sky-800">Donate</span>
+              <?php if ($donate_icon && !empty($donate_icon['url'])) : ?>
+                <img
+                  src="<?php echo esc_url($donate_icon['url']); ?>"
+                  alt=""
+                  class="object-contain w-4 shrink-0 aspect-square"
+                  role="presentation"
+                />
+              <?php else : ?>
+                <img
+                  src="https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/cb3a3b809769d8b5aff9ca811be4ecf57a76c106?placeholderIfAbsent=true"
+                  alt=""
+                  class="object-contain w-4 shrink-0 aspect-square"
+                  role="presentation"
+                />
+              <?php endif; ?>
+              <span class="text-sky-800"><?php echo esc_html($donate_button && !empty($donate_button['title']) ? $donate_button['title'] : 'Donate'); ?></span>
             </a>
 
             <!-- Get Involved Button -->
@@ -257,7 +257,7 @@ if ($primary_navigation->isNotEmpty()) {
               <a
                 href="<?php echo esc_url($contact_button['url']); ?>"
                 target="<?php echo esc_attr($contact_button['target'] ?: '_self'); ?>"
-                class="btn flex gap-2 justify-center items-center px-4 py-3 my-auto text-white min-h-[42px] rounded-[100px] w-fit whitespace-nowrap bg-sky-800 hover:bg-sky-900 transition-colors duration-200"
+                class="flex gap-2 justify-center items-center px-4 py-3 my-auto btn-primary"
                 role="button"
               >
                 <img
@@ -271,7 +271,7 @@ if ($primary_navigation->isNotEmpty()) {
             <?php else : ?>
               <a
                 href="#"
-                class="btn flex gap-2 justify-center items-center px-4 py-3 my-auto text-white min-h-[42px] rounded-[100px] w-fit whitespace-nowrap bg-sky-800 hover:bg-sky-900 transition-colors duration-200"
+                class="flex gap-2 justify-center items-center px-4 py-3 my-auto btn-primary"
                 role="button"
               >
                 <img
@@ -287,6 +287,68 @@ if ($primary_navigation->isNotEmpty()) {
           </div>
         </div>
       </nav>
+
+      <!-- Search overlay (WordPress site search) -->
+      <div
+        x-show="searchOpen"
+        x-cloak
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-[100] flex items-start justify-center  pt-[8rem] px-4"
+        @click.self="searchOpen = false"
+        @keydown.escape.window="searchOpen = false"
+        role="dialog"
+        aria-label="Search"
+        aria-modal="true"
+      >
+        <div
+          class="relative p-4 w-full max-w-[1250px] bg-white rounded-lg shadow-xl"
+          @click.stop
+        >
+          <form
+            method="get"
+            action="<?php echo esc_url(home_url('/')); ?>"
+            role="search"
+            class="flex gap-2 items-center"
+            aria-label="<?php esc_attr_e('Search this site', 'matrix-starter'); ?>"
+          >
+            <label for="header-search-input" class="sr-only"><?php esc_html_e('Search', 'matrix-starter'); ?></label>
+            <input
+              type="search"
+              id="header-search-input"
+              name="s"
+              placeholder="<?php esc_attr_e('Search this site…', 'matrix-starter'); ?>"
+              class="flex-1 min-w-0 px-4 py-3 text-base border border-gray-300 rounded-[100px] focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+              autocomplete="off"
+              autofocus
+              x-ref="searchInput"
+              x-init="$watch('searchOpen', open => { if (open) $nextTick(() => $refs.searchInput?.focus()); })"
+            />
+            <button
+              type="submit"
+              class="flex gap-2 items-center px-5 py-3 btn-primary shrink-0"
+              aria-label="<?php esc_attr_e('Search', 'matrix-starter'); ?>"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M14 14L11.1 11.1M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span><?php esc_html_e('Search', 'matrix-starter'); ?></span>
+            </button>
+          </form>
+          <button
+            type="button"
+            class="absolute -top-[1rem] -right-[1rem] p-2 text-white rounded-full transition-colors btn hover:text-gray-700 hover:bg-gray-100 bg-black"
+            aria-label="<?php esc_attr_e('Close search', 'matrix-starter'); ?>"
+            @click="searchOpen = false"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
 </section>
 
 <script>
