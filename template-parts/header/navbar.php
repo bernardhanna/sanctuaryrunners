@@ -306,7 +306,7 @@ if ($primary_navigation->isNotEmpty()) {
         aria-modal="true"
       >
         <div
-          class="relative p-4 w-full max-w-2xl bg-white rounded-lg shadow-xl"
+          class="relative p-4 w-full max-w-[1250px] bg-white rounded-lg shadow-xl"
           @click.stop
         >
           <form
