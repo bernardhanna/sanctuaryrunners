@@ -80,7 +80,9 @@ function matrix_social_svg($icon) {
         return '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M11.99 9.60071C11.9898 10.025 11.8215 10.4319 11.5223 10.7318C11.223 11.0317 10.8172 11.2 10.3942 11.1998C9.9712 11.1996 9.5656 11.0308 9.26664 10.7307C8.96767 10.4305 8.79984 10.0234 8.80005 9.59911C8.80026 9.17479 8.9685 8.76793 9.26777 8.46804C9.56703 8.16815 9.9728 7.99979 10.3958 8C10.8188 8.00021 11.2244 8.16898 11.5234 8.46917C11.8223 8.76936 11.9902 9.17639 11.99 9.60071ZM12.0378 12.3846H8.8479V22.4H12.0378V12.3846ZM17.0779 12.3846H13.9039V22.4H17.046V17.1443C17.046 14.2165 20.85 13.9445 20.85 17.1443V22.4H24V16.0564C24 11.1206 18.3698 11.3046 17.046 13.7285L17.0779 12.3846Z" fill="#00628F"/></svg>';
     }
     if ($icon === 'instagram') {
-        return '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M23.1567 13.0314C23.1448 12.4341 23.0316 11.8432 22.8221 11.2837C22.6413 10.8033 22.3579 10.3681 21.9916 10.0084C21.632 9.64217 21.1967 9.35876 20.7163 9.17796C20.1568 8.96842 19.5659 8.85526 18.9686 8.8433C18.2006 8.80829 17.9555 8.79999 16 8.79999C14.0446 8.79999 13.7995 8.80829 13.0315 8.8433C12.4342 8.85526 11.8433 8.96842 11.2838 9.17796C10.8034 9.35876 10.3681 9.64217 10.0085 10.0084C9.64223 10.3681 9.35882 10.8033 9.17802 11.2837C8.96848 11.8432 8.85532 12.4341 8.84336 13.0314C8.80835 13.7994 8.80005 14.0446 8.80005 16C8.80005 17.9554 8.80835 18.2006 8.84336 18.9685C8.85532 19.5658 8.96848 20.1568 9.17802 20.7162C9.35882 21.1967 9.64223 21.6319 10.0085 21.9915C10.3681 22.3578 10.8034 22.6412 11.2838 22.822C11.8433 23.0316 12.4342 23.1447 13.0315 23.1567C13.7995 23.1917 14.0446 23.2 16 23.2C17.9555 23.2 18.2006 23.1917 18.9686 23.1567C19.5659 23.1447 20.1568 23.0316 20.7163 22.822C21.1946 22.637 21.629 22.3542 21.9916 21.9915C22.3542 21.6289 22.6371 21.1945 22.8221 20.7163C23.0316 20.1568 23.1448 19.5658 23.1567 18.9685C23.1917 18.2006 23.2 17.9554 23.2 16C23.2 14.0446 23.1917 13.7994 23.1567 13.0314ZM16 12.3027C15.2688 12.3027 14.554 12.5195 13.9459 12.9258C13.3379 13.3321 12.864 13.9095 12.5842 14.5851C12.3043 15.2607 12.2311 16.0041 12.3738 16.7213C12.5164 17.4385 12.8686 18.0973 13.3857 18.6144C13.9027 19.1315 14.5615 19.4836 15.2787 19.6263C15.9959 19.7689 16.7394 19.6957 17.4149 19.4159C18.0905 19.136 18.668 18.6621 19.0743 18.0541C19.4805 17.4461 19.6974 16.7312 19.6974 16Z" fill="#00628F"/></svg>';
+        return '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+          <path d="M14.3567 4.23145C14.3447 3.63415 14.2316 3.04321 14.022 2.48374C13.8412 2.00331 13.5578 1.5681 13.1916 1.20845C12.8319 0.84218 12.3967 0.558769 11.9163 0.377976C11.3568 0.168433 10.7658 0.0552748 10.1686 0.043312C9.40058 0.00830398 9.15542 0 7.2 0C5.24458 0 4.99942 0.00830398 4.23145 0.043312C3.63415 0.0552748 3.04321 0.168433 2.48374 0.377976C2.00331 0.558769 1.5681 0.84218 1.20845 1.20845C0.84218 1.5681 0.558769 2.00331 0.377976 2.48374C0.168433 3.04321 0.0552748 3.63415 0.043312 4.23145C0.00830398 4.99942 0 5.24458 0 7.2C0 9.15542 0.00830398 9.40058 0.043312 10.1686C0.0552748 10.7658 0.168433 11.3568 0.377976 11.9163C0.558769 12.3967 0.84218 12.8319 1.20845 13.1916C1.56808 13.5578 2.0033 13.8412 2.48374 14.022C3.04321 14.2316 3.63415 14.3447 4.23145 14.3567C4.99942 14.3918 5.24458 14.4 7.2 14.4C9.15542 14.4 9.40058 14.3918 10.1686 14.3567C10.7658 14.3447 11.3568 14.2316 11.9163 14.022C12.3946 13.837 12.8289 13.5542 13.1915 13.1916C13.5542 12.8289 13.837 12.3946 14.022 11.9163C14.2316 11.3568 14.3447 10.7659 14.3567 10.1686C14.3917 9.40058 14.4 9.15542 14.4 7.2C14.4 5.24458 14.3917 4.99942 14.3567 4.23145ZM13.0607 10.1094C13.0553 10.566 12.9715 11.0182 12.8128 11.4463C12.693 11.7569 12.5096 12.0389 12.2742 12.2742C12.0389 12.5096 11.7569 12.693 11.4463 12.8128C11.0182 12.9715 10.566 13.0553 10.1094 13.0608C9.3503 13.0954 9.12261 13.1027 7.2 13.1027C5.27739 13.1027 5.0497 13.0954 4.29058 13.0607C3.83402 13.0553 3.3818 12.9715 2.95366 12.8128C2.64092 12.6974 2.35802 12.5134 2.12578 12.2742C1.88664 12.042 1.7026 11.7591 1.5872 11.4463C1.42852 11.0182 1.34465 10.566 1.33925 10.1094C1.30464 9.35019 1.29731 9.12251 1.29731 7.2C1.29731 5.27749 1.30464 5.04981 1.33926 4.29058C1.34466 3.83402 1.42853 3.3818 1.5872 2.95366C1.70259 2.64092 1.88663 2.35802 2.12578 2.12578C2.35802 1.88664 2.64092 1.7026 2.95366 1.5872C3.38179 1.42853 3.83402 1.34466 4.29058 1.33925C5.04981 1.30464 5.27749 1.29731 7.2 1.29731C9.12251 1.29731 9.35019 1.30464 10.1094 1.33926C10.566 1.34467 11.0182 1.42854 11.4463 1.58721C11.7591 1.7026 12.042 1.88664 12.2742 2.12578C12.5134 2.35802 12.6974 2.64092 12.8128 2.95366C12.9715 3.38179 13.0553 3.83402 13.0608 4.29058C13.0954 5.04978 13.1027 5.27754 13.1027 7.2C13.1027 9.12246 13.0954 9.35019 13.0607 10.1094ZM7.2 3.50269C6.46874 3.50269 5.7539 3.71953 5.14588 4.1258C4.53786 4.53206 4.06397 5.1095 3.78413 5.7851C3.50429 6.46069 3.43107 7.2041 3.57373 7.92131C3.71639 8.63852 4.06853 9.29732 4.58561 9.81439C5.10268 10.3315 5.76148 10.6836 6.47869 10.8263C7.1959 10.9689 7.9393 10.8957 8.6149 10.6159C9.29049 10.336 9.86794 9.86214 10.2742 9.25412C10.6805 8.6461 10.8973 7.93126 10.8973 7.2C10.8973 6.21941 10.5078 5.279 9.81438 4.58562C9.121 3.89224 8.18058 3.5027 7.2 3.50269ZM7.2 9.6C6.72532 9.6 6.26131 9.45924 5.86663 9.19553C5.47195 8.93181 5.16434 8.55698 4.98269 8.11844C4.80104 7.6799 4.75351 7.19734 4.84612 6.73178C4.93872 6.26623 5.1673 5.83859 5.50294 5.50294C5.83859 5.1673 6.26623 4.93872 6.73178 4.84612C7.19734 4.75351 7.6799 4.80104 8.11844 4.98269C8.55698 5.16434 8.93181 5.47195 9.19553 5.86663C9.45924 6.26131 9.6 6.72532 9.6 7.2C9.6 7.83652 9.34714 8.44697 8.89706 8.89706C8.44697 9.34714 7.83652 9.6 7.2 9.6ZM11.9074 3.35664C11.9074 3.52752 11.8567 3.69457 11.7618 3.83665C11.6668 3.97874 11.5319 4.08948 11.374 4.15487C11.2161 4.22027 11.0424 4.23738 10.8748 4.20404C10.7072 4.1707 10.5533 4.08841 10.4324 3.96758C10.3116 3.84675 10.2293 3.6928 10.196 3.5252C10.1626 3.3576 10.1797 3.18388 10.2451 3.026C10.3105 2.86813 10.4213 2.73319 10.5634 2.63825C10.7054 2.54331 10.8725 2.49264 11.0434 2.49264C11.2725 2.49264 11.4923 2.58367 11.6543 2.7457C11.8163 2.90773 11.9074 3.12749 11.9074 3.35664Z" fill="#00628F"/>
+        </svg>';
     }
     // facebook default
     return '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M17.6055 17.3246H19.8992L20.8167 13.7924H17.6055V12.0262C17.6055 11.1167 17.6055 10.2601 19.4405 10.2601H20.8167V7.293C20.5176 7.25503 19.3882 7.16937 18.1954 7.16937C15.7045 7.16937 13.9356 8.63261 13.9356 11.3198V13.7924H11.1832V17.3246H13.9356V24.8307H17.6055V17.3246Z" fill="#00628F"/></svg>';
@@ -91,10 +93,10 @@ function matrix_social_svg($icon) {
   <div class="h-2" style="background-color: <?php echo esc_attr($top_bar_color ?: '#E6F4FB'); ?>;"></div>
 
   <div style="background-color: <?php echo esc_attr($main_bg_color ?: '#00263E'); ?>;">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-14 py-14 <?php echo esc_attr($padding_class_string); ?>">
-      <div class="flex flex-col gap-10 lg:flex-row lg:gap-16 xl:gap-32">
+    <div class="max-w-[1440px] mx-auto px-8 sm:px-8 lg:px-14 py-8 md:py-14 <?php echo esc_attr($padding_class_string); ?>">
+      <div class="flex flex-col gap-0 lg:flex-row lg:gap-16 xl:gap-32">
 
-        <div class="flex flex-col gap-4 shrink-0">
+        <div class="flex flex-row justify-around md:flex-col md:justify-start gap-4 shrink-0 pb-6 md:pb-0">
           <div class="w-40">
             <?php if ($footer_logo) : ?>
               <?php
@@ -111,6 +113,8 @@ function matrix_social_svg($icon) {
               </span>
             <?php endif; ?>
           </div>
+
+          <div>
 
           <?php if (!empty($footer_social_links) && is_array($footer_social_links)) : ?>
             <nav class="flex gap-4 items-center" aria-label="Social media links">
@@ -139,14 +143,15 @@ function matrix_social_svg($icon) {
           <?php endif; ?>
 
           <?php if ($footer_reg_text !== '') : ?>
-            <p class="text-white font-primary text-[10px] leading-4 max-w-[180px]">
+            <p class="text-white font-primary text-[10px] leading-4 max-w-[180px] mt-3 md:mt-5">
               <?php echo esc_html($footer_reg_text); ?>
             </p>
           <?php endif; ?>
+          </div>
         </div>
 
-        <nav class="flex flex-col gap-4" aria-labelledby="footer-col-1">
-          <h3 id="footer-col-1" class="text-2xl font-light leading-8 text-[#54A5DE] font-primary">
+        <nav class="flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-1">
+          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
             <?php echo esc_html($col1_heading ?: 'About us'); ?>
           </h3>
           <?php
@@ -161,9 +166,9 @@ function matrix_social_svg($icon) {
           ?>
         </nav>
 
-        <nav class="flex flex-col gap-4" aria-labelledby="footer-col-2">
-          <h3 id="footer-col-2" class="text-2xl font-light leading-8 text-[#54A5DE] font-primary">
-            <?php echo esc_html($col2_heading ?: 'Latest'); ?>
+        <nav class="flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-2">
+          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
+            <?php echo esc_html($col2_heading ?: 'About us'); ?>
           </h3>
           <?php
           wp_nav_menu([
@@ -177,8 +182,8 @@ function matrix_social_svg($icon) {
           ?>
         </nav>
 
-        <nav class="flex flex-col gap-4" aria-labelledby="footer-col-3">
-          <h3 id="footer-col-3" class="text-2xl font-light leading-8 text-[#54A5DE] font-primary">
+        <nav class="flex flex-col gap-4 py-6 border-t border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-3">
+          <h3 id="footer-col-3" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
             <?php echo esc_html($col3_heading ?: 'Get involved'); ?>
           </h3>
           <?php
@@ -198,7 +203,7 @@ function matrix_social_svg($icon) {
   </div>
 
   <div style="background-color: <?php echo esc_attr($bottom_bg_color ?: '#F0F9FF'); ?>;">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-14 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div class="max-w-[1540px] mx-auto px-4 sm:px-8 lg:px-14 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[#475467] font-primary text-xs leading-[18px]">
         <span><?php echo esc_html($copyright_left); ?></span>
         <span class="text-[#475467]" aria-hidden="true">|</span>
@@ -210,7 +215,7 @@ function matrix_social_svg($icon) {
             'menu_class'     => 'flex flex-wrap items-center gap-x-2 gap-y-1',
             'fallback_cb'    => '__return_empty_string',
             'link_before'    => '<span class="transition-colors hover:text-sr-blue-500">',
-            'link_after'     => '</span><span class="text-[#475467]" aria-hidden="true">|</span>',
+            'link_after' => '</span><span class="px-3 text-[#475467]" aria-hidden="true">|</span>',
         ]);
         ?>
       </div>

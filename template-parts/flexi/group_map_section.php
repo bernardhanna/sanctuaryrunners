@@ -118,10 +118,10 @@ foreach ($running_group_ids as $group_id) {
 >
     <div class="px-5 py-16 mx-auto w-full max-w-container lg:px-10">
 
-        <div class="grid grid-cols-1 gap-10 items-start lg:grid-cols-2">
+        <div class="grid grid-cols-1 gap-10 items-start lg:grid-cols-12">
 
             <!-- Text Content -->
-            <article class="flex flex-col justify-center p-8 w-full h-full" role="article">
+            <article class="flex flex-col justify-center p-8 w-full h-full lg:col-span-5" role="article">
                 <header>
                     <?php if (!empty($heading)): ?>
                         <<?php echo esc_attr($heading_tag); ?>
@@ -164,7 +164,7 @@ foreach ($running_group_ids as $group_id) {
             </article>
 
             <!-- Map Column -->
-            <div class="relative">
+            <div class="relative lg:col-span-7">
                 <div
                     id="<?php echo esc_attr($section_id); ?>-map"
                     class="w-full h-[504px] md:h-[540px] rounded-lg overflow-hidden"

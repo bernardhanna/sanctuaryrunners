@@ -24,7 +24,7 @@ $subhero
             'h4' => 'H4',
             'h5' => 'H5',
             'h6' => 'H6',
-            'p' => 'Paragraph',
+            'p'  => 'Paragraph',
             'span' => 'Span',
         ],
         'default_value' => 'h1',
@@ -38,6 +38,33 @@ $subhero
         'tabs' => 'all',
         'toolbar' => 'full',
     ])
+
+    ->addLink('primary_cta', [
+        'label' => 'Primary CTA',
+        'instructions' => 'Add the primary call to action button.',
+        'return_format' => 'array',
+    ])
+    ->addImage('primary_cta_icon', [
+        'label' => 'Primary CTA Icon',
+        'instructions' => 'Optional icon displayed before the primary CTA label.',
+        'return_format' => 'id',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+    ])
+
+    ->addLink('secondary_cta', [
+        'label' => 'Secondary CTA',
+        'instructions' => 'Add the secondary call to action button.',
+        'return_format' => 'array',
+    ])
+    ->addImage('secondary_cta_icon', [
+        'label' => 'Secondary CTA Icon',
+        'instructions' => 'Optional icon displayed before the secondary CTA label.',
+        'return_format' => 'id',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+    ])
+
     ->addImage('image', [
         'label' => 'Featured Image',
         'instructions' => 'Upload an image to display alongside the content.',
@@ -98,6 +125,17 @@ $subhero
     ])
 
     ->addTab('Layout', ['label' => 'Layout'])
+    ->addSelect('layout_option', [
+        'label' => 'Layout Option',
+        'instructions' => 'Choose which subhero layout to use.',
+        'choices' => [
+            'layout_1' => 'Layout 1',
+            'layout_2' => 'Layout 2',
+        ],
+        'default_value' => 'layout_1',
+        'required' => 1,
+        'ui' => 1,
+    ])
     ->addRepeater('padding_settings', [
         'label' => 'Padding Settings',
         'instructions' => 'Customize padding for different screen sizes.',

@@ -98,7 +98,7 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
                         <div class="bg-yellow-50 rounded-lg faq-item" data-faq-item>
                             <button
                                 id="<?php echo esc_attr($button_id); ?>"
-                                class="flex flex-wrap gap-10 justify-between items-center p-6 w-full text-lg leading-none text-left btn focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-600 max-md:px-5 max-md:max-w-full"
+                                class="flex flex-wrap gap-10 justify-between items-center pt-6 pb-2 px-6 w-full text-lg leading-none text-left btn outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 max-md:px-5 max-md:max-w-full"
                                 aria-expanded="false"
                                 aria-controls="<?php echo esc_attr($content_id); ?>"
                                 data-faq-toggle

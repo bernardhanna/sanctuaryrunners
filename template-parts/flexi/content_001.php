@@ -98,7 +98,7 @@ $section_id = 'about-us-' . wp_rand(1000, 9999);
                     <div class="mt-8">
                         <a
                             href="<?php echo esc_url($button['url']); ?>"
-                            class="inline-flex gap-2 items-center px-6 py-3.5 font-semibold text-white bg-sky-800 rounded-full transition-colors duration-300 hover:bg-sky-700"
+                            class="inline-flex gap-2 justify-center items-center px-6 py-3 mx-auto text-sm text-white bg-sky-600 rounded-full transition-colors duration-300 w-full md:w-fit hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-600 btn"
                             target="<?php echo esc_attr($button['target'] ?? '_self'); ?>"
                             aria-label="<?php echo esc_attr($button['title']); ?>"
                         >

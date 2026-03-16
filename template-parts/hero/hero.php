@@ -212,7 +212,12 @@ if ($media_type === 'video_local' && $video_autoplay) {
                     ($primary_cta && is_array($primary_cta) && !empty($primary_cta['url']) && !empty($primary_cta['title'])) ||
                     ($secondary_cta && is_array($secondary_cta) && !empty($secondary_cta['url']) && !empty($secondary_cta['title']))
                 ): ?>
-                    <div class="grid grid-cols-1 gap-4 pt-4 w-full max-w-[400px] md:grid-cols-2 max-xl:pb-4" role="group" aria-label="<?php echo esc_attr__('Hero calls to action', 'matrix-starter'); ?>">
+                    <div 
+                      class="flex justify-between pt-0 md:pt-4 w-full max-w-[400px] 
+                             md:grid md:grid-cols-2 
+                             gap-4 max-xl:pb-4"
+                      role="group" 
+                      aria-label="<?php echo esc_attr__('Hero calls to action', 'matrix-starter'); ?>">
                         <?php if ($primary_cta && is_array($primary_cta) && !empty($primary_cta['url']) && !empty($primary_cta['title'])): ?>
                             <a
                                 href="<?php echo esc_url($primary_cta['url']); ?>"

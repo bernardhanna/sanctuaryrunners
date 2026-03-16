@@ -330,3 +330,26 @@ add_filter('wp_check_filetype_and_ext', function ($wp_check, $file, $filename, $
     }
     return $wp_check;
 }, 10, 5);
+
+
+add_filter('safe_style_css', function ($styles) {
+    $extra_styles = [
+        'display',
+        'gap',
+        'row-gap',
+        'column-gap',
+        'white-space',
+        'align-items',
+        'justify-content',
+        'justify-self',
+        'align-self',
+        'flex',
+        'flex-grow',
+        'flex-shrink',
+        'flex-basis',
+        'flex-wrap',
+        'flex-direction',
+    ];
+
+    return array_unique(array_merge($styles, $extra_styles));
+});

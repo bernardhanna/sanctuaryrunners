@@ -100,7 +100,7 @@ $people_query = new WP_Query($query_args);
                 <?php } ?>
                 </div>
           <?php if ($people_query->have_posts()) { ?>
-              <div class="grid grid-cols-1 gap-6 w-full sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div class="grid grid-cols-2 gap-6 w-full md:grid-cols-3 lg:grid-cols-4">
                   <?php while ($people_query->have_posts()) { ?>
                       <?php
                       $people_query->the_post();
