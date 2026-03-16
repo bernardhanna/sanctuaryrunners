@@ -53,14 +53,14 @@ $section_id = 'about-us-' . wp_rand(1000, 9999);
                 <?php if (!empty($heading)): ?>
                     <<?php echo esc_attr($heading_tag); ?>
                         id="<?php echo esc_attr($section_id); ?>-heading"
-                        class="text-4xl tracking-tight leading-tight text-sky-800"
+                        class="text-[36px] font-bold leading-[44px] tracking-[-0.72px] text-[var(--Blue-SR-500,#00628F)]"
                     >
                         <?php echo esc_html($heading); ?>
                     </<?php echo esc_attr($heading_tag); ?>>
                 <?php endif; ?>
 
                 <?php if (!empty($content)): ?>
-                    <div class="mt-6 text-base leading-6 text-slate-600 wp_editor">
+                    <div class="content-001-text mt-6 font-['Public_Sans'] text-[16px] font-normal leading-[22px] text-[var(--Gray-600,#475467)] wp_editor">
                         <?php echo wp_kses_post($content); ?>
                     </div>
                 <?php endif; ?>
@@ -88,7 +88,7 @@ $section_id = 'about-us-' . wp_rand(1000, 9999);
                                             stroke-linejoin="round"/>
                                     </svg>
                                 <?php endif; ?>
-                                <span><?php echo esc_html($bullet_text); ?></span>
+                                <span class="font-['Public_Sans'] text-[14px] font-semibold leading-5 text-[var(--Gray-800,#001929)]"><?php echo esc_html($bullet_text); ?></span>
                             </div>
                         <?php endwhile; ?>
                     </div>
@@ -98,7 +98,7 @@ $section_id = 'about-us-' . wp_rand(1000, 9999);
                     <div class="mt-8">
                         <a
                             href="<?php echo esc_url($button['url']); ?>"
-                            class="inline-flex gap-2 justify-center items-center px-6 py-3 mx-auto text-sm text-white bg-sky-600 rounded-full transition-colors duration-300 w-full md:w-fit hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-600 btn"
+                            class="inline-flex gap-2 justify-center items-center px-6 py-3 mx-auto text-sm font-bold text-white rounded-full w-full md:w-fit btn-primary"
                             target="<?php echo esc_attr($button['target'] ?? '_self'); ?>"
                             aria-label="<?php echo esc_attr($button['title']); ?>"
                         >

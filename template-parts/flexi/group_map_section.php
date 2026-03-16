@@ -20,9 +20,10 @@ $find_groups_button    = get_sub_field('find_groups_button');
 // -------------------------------------------------
 // ACF: Map settings
 // -------------------------------------------------
-$map_center_lat = get_sub_field('map_center_lat') ?: 53.349805;
-$map_center_lng = get_sub_field('map_center_lng') ?: -6.26031;
-$map_zoom       = get_sub_field('map_zoom') ?: 10;
+// Default: whole of Ireland
+$map_center_lat = get_sub_field('map_center_lat') ?: 53.35;
+$map_center_lng = get_sub_field('map_center_lng') ?: -8;
+$map_zoom       = get_sub_field('map_zoom') ?: 6;
 
 // Default to OSM so the map always renders even without a Jawg token
 $tile_provider  = get_sub_field('tile_provider') ?: 'osm';
@@ -126,7 +127,7 @@ foreach ($running_group_ids as $group_id) {
                     <?php if (!empty($heading)): ?>
                         <<?php echo esc_attr($heading_tag); ?>
                             id="<?php echo esc_attr($section_id); ?>-heading"
-                            class="text-4xl font-bold tracking-tight leading-tight text-sky-800"
+                            class="font-['Public_Sans'] text-[36px] font-bold leading-[44px] tracking-[-0.72px] text-[var(--Blue-SR-500,#00628F)]"
                         >
                             <?php echo esc_html($heading); ?>
                         </<?php echo esc_attr($heading_tag); ?>>
@@ -151,7 +152,7 @@ foreach ($running_group_ids as $group_id) {
                             <div class="mt-4">
                                 <a
                                     href="<?php echo esc_url($start_group_button['url']); ?>"
-                                    class="inline-flex justify-center items-center px-6 py-4 w-full text-sm text-sky-800 rounded-full border border-sky-800 transition-colors duration-300 hover:bg-sky-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800 btn"
+                                    class="group-map-start-btn inline-flex justify-center items-center px-6 py-4 w-full font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] rounded-full border-[1px] border-[var(--Blue-SR-500,#00628F)] hover:border-4 hover:border-[var(--Turquoise-500,#1C959B)] active:border-[1px] active:border-[var(--Blue-SR-500,#00628F)] active:bg-[var(--Blue-SR-10,#EBF9FF)] focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-10,#EBF9FF)] transition-colors duration-200 btn"
                                     target="<?php echo esc_attr($start_group_button['target'] ?? '_self'); ?>"
                                     aria-label="<?php echo esc_attr($start_group_button['title']); ?>"
                                 >
@@ -187,7 +188,7 @@ foreach ($running_group_ids as $group_id) {
                     <div style="z-index: 1000;" class="flex absolute right-0 left-0 bottom-8 justify-center items-center mx-auto">
                         <a
                             href="<?php echo esc_url($find_groups_button['url']); ?>"
-                            class="inline-flex gap-2 justify-center items-center px-6 py-3 mx-auto text-sm text-white bg-sky-600 rounded-full transition-colors duration-300 w-fit hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-600 btn"
+                            class="group-map-find-btn inline-flex shrink-0 justify-center items-center gap-2 w-[170px] h-[42px] p-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white rounded-full bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn"
                             target="<?php echo esc_attr($find_groups_button['target'] ?? '_self'); ?>"
                             aria-label="<?php echo esc_attr($find_groups_button['title']); ?>"
                         >
@@ -250,7 +251,7 @@ foreach ($running_group_ids as $group_id) {
     const token    = container.getAttribute("data-token") || "";
     const lat      = parseFloat(container.getAttribute("data-lat") || "53.349805");
     const lng      = parseFloat(container.getAttribute("data-lng") || "-6.26031");
-    const zoom     = parseInt(container.getAttribute("data-zoom") || "10", 10);
+    const zoom     = parseInt(container.getAttribute("data-zoom") || "6", 10);
 
     // Safe JSON read
     let groups = [];
@@ -259,7 +260,7 @@ foreach ($running_group_ids as $group_id) {
       try { groups = JSON.parse(jsonEl.textContent || "[]"); } catch (e) {}
     }
 
-    const map = L.map(container, { scrollWheelZoom: false }).setView([lat, lng], zoom);
+    const map = L.map(container, { scrollWheelZoom: false, zoomControl: false }).setView([lat, lng], zoom);
 
     // Tile layer with Jawg fallback if token missing
     let tileUrl, tileOpts = {};
@@ -278,6 +279,13 @@ foreach ($running_group_ids as $group_id) {
 
     L.tileLayer(tileUrl, tileOpts).addTo(map);
 
+    const customIcon = L.divIcon({
+      className: 'group-map-marker',
+      html: '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="27" viewBox="0 0 22 27" fill="none"><path d="M10.6667 13.3333C11.4 13.3333 12.0278 13.0722 12.55 12.55C13.0722 12.0278 13.3333 11.4 13.3333 10.6667C13.3333 9.93333 13.0722 9.30556 12.55 8.78333C12.0278 8.26111 11.4 8 10.6667 8C9.93333 8 9.30556 8.26111 8.78333 8.78333C8.26111 9.30556 8 9.93333 8 10.6667C8 11.4 8.26111 12.0278 8.78333 12.55C9.30556 13.0722 9.93333 13.3333 10.6667 13.3333ZM10.6667 26.6667C7.08889 23.6222 4.41667 20.7944 2.65 18.1833C0.883333 15.5722 0 13.1556 0 10.9333C0 7.6 1.07222 4.94444 3.21667 2.96667C5.36111 0.988889 7.84444 0 10.6667 0C13.4889 0 15.9722 0.988889 18.1167 2.96667C20.2611 4.94444 21.3333 7.6 21.3333 10.9333C21.3333 13.1556 20.45 15.5722 18.6833 18.1833C16.9167 20.7944 14.2444 23.6222 10.6667 26.6667Z" fill="#00628F"/></svg>',
+      iconSize: [22, 27],
+      iconAnchor: [11, 27]
+    });
+
     const bounds = [];
     groups.forEach((g) => {
       if (!g) return;
@@ -287,7 +295,7 @@ foreach ($running_group_ids as $group_id) {
 
       if (!Number.isFinite(glat) || !Number.isFinite(glng)) return;
 
-      const marker = L.marker([glat, glng]).addTo(map);
+      const marker = L.marker([glat, glng], { icon: customIcon }).addTo(map);
       bounds.push([glat, glng]);
 
       let popup = `<div style="max-width:240px;">`;

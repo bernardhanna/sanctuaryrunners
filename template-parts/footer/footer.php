@@ -92,6 +92,7 @@ function matrix_social_svg($icon) {
 <footer role="contentinfo" aria-label="Site footer">
   <div class="h-2" style="background-color: <?php echo esc_attr($top_bar_color ?: '#E6F4FB'); ?>;"></div>
 
+  <?php if ( ! ( function_exists( 'matrix_donations_is_donation_flow' ) && matrix_donations_is_donation_flow() ) ) : ?>
   <div style="background-color: <?php echo esc_attr($main_bg_color ?: '#00263E'); ?>;">
     <div class="max-w-[1440px] mx-auto px-8 sm:px-8 lg:px-14 py-8 md:py-14 <?php echo esc_attr($padding_class_string); ?>">
       <div class="flex flex-col gap-0 lg:flex-row lg:gap-16 xl:gap-32">
@@ -201,6 +202,7 @@ function matrix_social_svg($icon) {
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
   <div style="background-color: <?php echo esc_attr($bottom_bg_color ?: '#F0F9FF'); ?>;">
     <div class="max-w-[1540px] mx-auto px-4 sm:px-8 lg:px-14 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

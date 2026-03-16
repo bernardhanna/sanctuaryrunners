@@ -203,7 +203,7 @@ if ($media_type === 'video_local' && $video_autoplay) {
                 </div>
 
                 <?php if (!empty($description)): ?>
-                    <div id="<?php echo esc_attr($desc_id); ?>" class="text-left text-[1.125rem] lg:max-w-[303px] w-full font-normal leading-6 text-[#f9fafb] wp_editor">
+                    <div id="<?php echo esc_attr($desc_id); ?>" class="hero__description text-left lg:max-w-[303px] w-full font-['Public_Sans'] text-[18px] font-normal leading-6 text-white wp_editor">
                         <?php echo wp_kses_post($description); ?>
                     </div>
                 <?php endif; ?>
@@ -222,7 +222,7 @@ if ($media_type === 'video_local' && $video_autoplay) {
                             <a
                                 href="<?php echo esc_url($primary_cta['url']); ?>"
                                 target="<?php echo esc_attr($primary_cta['target'] ?? '_self'); ?>"
-                                class="inline-flex w-fit justify-center items-center gap-2 bg-white rounded-full text-center px-6 py-4 text-[0.875rem] leading-5 font-bold text-primary hover:opacity-90 transition-opacity duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white/80 whitespace-nowrap"
+                                class="inline-flex w-fit justify-center items-center gap-2 bg-white rounded-full text-center px-6 py-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] hover:bg-[var(--Turquoise-50,#CBF3F6)] active:bg-[var(--Turquoise-100,#75E0E6)] focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-white transition-colors duration-200 whitespace-nowrap"
                                 aria-label="<?php echo esc_attr($primary_cta['title']); ?>"
                             >
                                 <?php echo esc_html($primary_cta['title']); ?>
@@ -233,7 +233,7 @@ if ($media_type === 'video_local' && $video_autoplay) {
                             <a
                                 href="<?php echo esc_url($secondary_cta['url']); ?>"
                                 target="<?php echo esc_attr($secondary_cta['target'] ?? '_self'); ?>"
-                                class="inline-flex justify-center text-center items-center gap-2 border border-white rounded-full px-6 py-4 text-[0.875rem] leading-5 font-bold text-white hover:opacity-90 transition-opacity duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white/80 w-fit whitespace-nowrap"
+                                class="inline-flex justify-center text-center items-center gap-2 border border-white rounded-full px-6 py-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white hover:border-[var(--Yellow-100,#FCF4C5)] active:border-white active:bg-[var(--Blue-SR-400,#008BCC)] focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Purple-50,#D9CCE4)] transition-colors duration-200 w-fit whitespace-nowrap"
                                 aria-label="<?php echo esc_attr($secondary_cta['title']); ?>"
                             >
                                 <?php echo esc_html($secondary_cta['title']); ?>

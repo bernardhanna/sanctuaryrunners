@@ -1,8 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --Turquoise-500: #1C959B;
+  --Blue-SR-10: #EBF9FF;
+  --Blue-SR-400: #008BCC;
+  --Mint-500: #87CEB7;
+  --Gradient-Blue-3: linear-gradient(313deg, #059DED 24.08%, #28B2FA 63%);
+}
+
 html {
   @apply font-primary;
   width: 100%;
@@ -18,9 +27,51 @@ body {
 
 
 @layer components {
-  /* ACCESSIBILITY: style every element using .btn */
+  /* ACCESSIBILITY: style every element using .btn. Use box-shadow for rings to avoid border artifacts. */
   .btn {
-    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-highlight-primary;
+    @apply focus:outline-none transition-[color,background-color,box-shadow] duration-200;
+    border: none;
+  }
+  .btn:hover {
+    box-shadow: 0 0 0 4px var(--Turquoise-500);
+    background: var(--Blue-SR-10) !important;
+  }
+  .btn:focus-visible {
+    box-shadow: 0 0 0 3px var(--Turquoise-500);
+    background: var(--Blue-SR-10) !important;
+  }
+
+  /* Map "Start group" outline button: .btn sets border:none — restore default 1px border, no fill on hover */
+  .group-map-start-btn.btn {
+    border: 1px solid var(--Blue-SR-500, #00628F);
+  }
+  .group-map-start-btn.btn:hover {
+    background: transparent !important;
+  }
+
+  /* Map "Find groups" button: override .btn hover so bg stays Blue-SR-500, text stays white */
+  .group-map-find-btn.btn:hover,
+  .group-map-find-btn.btn:focus-visible {
+    background: var(--Blue-SR-500, #00628F) !important;
+    color: #fff !important;
+  }
+
+  /* Primary CTA (replaces bg-sky-800): gradient, mint hover ring, pressed/focus blue-sr-400 */
+  .btn-primary {
+    @apply btn text-white min-h-[42px] rounded-[100px] w-fit whitespace-nowrap;
+    background: var(--Gradient-Blue-3);
+  }
+  .btn-primary:hover {
+    border-radius: 100px;
+    box-shadow: 0 0 0 4px var(--Mint-500);
+    background: var(--Gradient-Blue-3);
+  }
+  .btn-primary:active {
+    background: var(--Blue-SR-400);
+  }
+  .btn-primary:focus-visible {
+    box-shadow: 0 0 0 3px var(--Turquoise-500);
+    background: var(--Blue-SR-400) !important;
   }
 }
 
@@ -937,19 +988,19 @@ body {
 }
 
 .entry-content h1 {
-  @apply text-4xl font-semibold tracking-normal leading-10 font-secondary text-primary max-md:text-3xl max-md:leading-9 max-sm:text-2xl max-sm:leading-8;
+  @apply text-4xl font-semibold tracking-normal leading-10 font-primary text-primary max-md:text-3xl max-md:leading-9 max-sm:text-2xl max-sm:leading-8;
 }
 
 .entry-content h2 {
-  @apply text-3xl font-semibold tracking-normal leading-10 font-secondary text-primary max-md:text-3xl max-md:leading-9 max-sm:text-2xl max-sm:leading-8;
+  @apply text-3xl font-semibold tracking-normal leading-10 font-primary text-primary max-md:text-3xl max-md:leading-9 max-sm:text-2xl max-sm:leading-8;
 }
 
 .entry-content h3 {
-    @apply text-2xl font-semibold tracking-normal leading-10 font-secondary text-primary max-md:text-2xl max-md:leading-9 max-sm:text-xl max-sm:leading-7;
+    @apply text-2xl font-semibold tracking-normal leading-10 font-primary text-primary max-md:text-2xl max-md:leading-9 max-sm:text-xl max-sm:leading-7;
   }
 
 .entry-content h4 {
-  @apply text-xl font-semibold tracking-normal leading-10 font-secondary text-primary max-md:text-xl max-md:leading-9 max-sm:text-lg max-sm:leading-7;
+  @apply text-xl font-semibold tracking-normal leading-10 font-primary text-primary max-md:text-xl max-md:leading-9 max-sm:text-lg max-sm:leading-7;
 }
 
 .entry-content h5 {
@@ -961,7 +1012,7 @@ body {
 }
 
 .entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6 {
-  @apply pt-4 pb-4 mb-4 font-secondary;
+  @apply pt-4 pb-4 mb-4 font-primary;
 }
 
 .entry-content h1,
@@ -969,28 +1020,6 @@ body {
 .entry-content h3,
 .entry-content h4 {
     position: relative;
-}
-
-.entry-content h1::after,
-.entry-content h2::after,
-.entry-content h3::after,
-.entry-content h4::after {
-    content: '';
-    position: absolute;
-    left: -3px;
-    bottom: 0;
-    width: 71px;
-    height: 5px;
-    background: linear-gradient(to right, #EF7B10 0% 25%, #0098D8 25% 50%, #B6C0C0 50% 75%, #74AF27 75% 100%);
-}
-
-@media (max-width: 640px) {
-    .entry-content h1::after,
-    .entry-content h2::after,
-    .entry-content h3::after,
-    .entry-content h4::after {
-        width: 60px;
-    }
 }
 .wp_editor .entry-content p {
   @apply pb-2 text-black text-[16px] font-normal leading-[26px] tracking-[0];
@@ -1081,6 +1110,53 @@ body {
 /* When scrolling down (header is hidden) */
 .headroom--unpinned {
   transform: translateY(-100%);
+}
+
+/* Group map: custom pin marker (no default Leaflet icon bg) */
+.group-map-marker.leaflet-marker-icon {
+  background: none !important;
+  border: none !important;
+}
+
+/* Home page: semi-transparent navbar when at top (not scrolling) — main nav only, not dropdown submenus */
+body.home #site-nav.headroom--top > nav {
+  background: rgba(255, 255, 255, 0.80);
+}
+
+/* Hero: description text always white (overrides .wp_editor) */
+.hero__description.wp_editor,
+.hero__description.wp_editor p,
+.hero__description.wp_editor span,
+.hero__description.wp_editor a,
+.hero__description.wp_editor li,
+.hero__description.wp_editor strong,
+.hero__description.wp_editor b,
+.hero__description.wp_editor em,
+.hero__description.wp_editor i {
+  color: #fff !important;
+}
+.hero__description.wp_editor a:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Counters: description paragraph inherits design spec */
+.counters-description.wp_editor p,
+.counters-description.wp_editor .entry-content p {
+  color: inherit;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
+
+/* Content 001: paragraph text — Gray-600, Public Sans 16px/22px */
+.content-001-text.wp_editor p,
+.content-001-text.wp_editor .entry-content p {
+  color: var(--Gray-600, #475467);
+  font-family: 'Public Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
 }
 
 @media only screen and (min-width: 1025px) {

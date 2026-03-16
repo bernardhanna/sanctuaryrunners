@@ -12,6 +12,11 @@
 
     <?php wp_body_open(); ?>
     <header class="relative">
-
-        <?php get_template_part('template-parts/header/navbar'); ?>
+        <?php
+        if ( function_exists( 'matrix_donations_is_donation_flow' ) && matrix_donations_is_donation_flow() ) {
+            do_action( 'matrix_donations_header' );
+        } else {
+            get_template_part( 'template-parts/header/navbar' );
+        }
+        ?>
     </header>
