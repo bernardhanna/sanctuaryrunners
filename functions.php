@@ -308,6 +308,11 @@ add_filter('acf/load_field/name=menu_item', function ($field) {
     return $field;
 });
 
+//Supress Gravity Forms licenece demands
+add_action( 'admin_head', function() {
+    echo '<style>[data-js="setup-wizard"] { display: none !important; }</style>';
+});
+
 /* ALLOW VCARDS */
 // Allow .vcf uploads site-wide
 add_filter('upload_mimes', function ($mimes) {
