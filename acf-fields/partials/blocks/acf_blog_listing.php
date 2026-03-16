@@ -58,43 +58,54 @@ $blog_listing
     ])
 
     ->addTab('Layout', ['label' => 'Layout'])
+    ->addSelect('layout_option', [
+        'label' => 'Layout Option',
+        'instructions' => 'Choose which blog listing layout to use.',
+        'choices' => [
+            'layout_1' => 'Layout 1',
+            'layout_2' => 'Layout 2',
+        ],
+        'default_value' => 'layout_1',
+        'required' => 1,
+        'ui' => 1,
+    ])
     ->addRepeater('padding_settings', [
         'label' => 'Padding Settings',
         'instructions' => 'Customize padding for different screen sizes.',
         'button_label' => 'Add Screen Size Padding',
     ])
-    ->addSelect('screen_size', [
-        'label' => 'Screen Size',
-        'choices' => [
-            'xxs' => 'xxs',
-            'xs' => 'xs',
-            'mob' => 'mob',
-            'sm' => 'sm',
-            'md' => 'md',
-            'lg' => 'lg',
-            'xl' => 'xl',
-            'xxl' => 'xxl',
-            'ultrawide' => 'ultrawide',
-        ],
-    ])
-    ->addNumber('padding_top', [
-        'label' => 'Padding Top',
-        'instructions' => 'Set the top padding in rem.',
-        'min' => 0,
-        'max' => 20,
-        'step' => 0.1,
-        'append' => 'rem',
-        'default_value' => 3.5,
-    ])
-    ->addNumber('padding_bottom', [
-        'label' => 'Padding Bottom',
-        'instructions' => 'Set the bottom padding in rem.',
-        'min' => 0,
-        'max' => 20,
-        'step' => 0.1,
-        'append' => 'rem',
-        'default_value' => 5,
-    ])
+        ->addSelect('screen_size', [
+            'label' => 'Screen Size',
+            'choices' => [
+                'xxs' => 'xxs',
+                'xs' => 'xs',
+                'mob' => 'mob',
+                'sm' => 'sm',
+                'md' => 'md',
+                'lg' => 'lg',
+                'xl' => 'xl',
+                'xxl' => 'xxl',
+                'ultrawide' => 'ultrawide',
+            ],
+        ])
+        ->addNumber('padding_top', [
+            'label' => 'Padding Top',
+            'instructions' => 'Set the top padding in rem.',
+            'min' => 0,
+            'max' => 20,
+            'step' => 0.1,
+            'append' => 'rem',
+            'default_value' => 3.5,
+        ])
+        ->addNumber('padding_bottom', [
+            'label' => 'Padding Bottom',
+            'instructions' => 'Set the bottom padding in rem.',
+            'min' => 0,
+            'max' => 20,
+            'step' => 0.1,
+            'append' => 'rem',
+            'default_value' => 5,
+        ])
     ->endRepeater();
 
 return $blog_listing;

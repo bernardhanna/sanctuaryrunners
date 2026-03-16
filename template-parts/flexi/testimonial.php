@@ -61,7 +61,7 @@ if (have_rows('padding_settings')) {
 
                        <!-- Quotation mark -->
                         <div
-                            class="absolute -top-4 -left-4 -translate-x-1/2 text-6xl md:text-7xl font-bold leading-none text-[#1C959B] md:text-[<?php echo esc_attr($quotation_mark_color); ?>]"
+                            class="absolute -top-4 -left-4 -translate-x-1/2 text-6xl md:text-7xl font-bold leading-none text-[#1C959B] md:text-[#F1416D]; ?>]"
                             aria-hidden="true"
                         >
                             "

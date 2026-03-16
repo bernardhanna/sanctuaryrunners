@@ -1343,6 +1343,10 @@ body {
    @apply font-primary text-[18px] font-normal leading-[24px] tracking-[0] mb-4 text-[#00263E];
 }
 
+.wp_editor li {
+   @apply font-primary text-[18px] font-normal leading-[24px] tracking-[0] mb-4 text-[#00263E];
+}
+
 /* Image Styling */
 .wp_editor .entry-content img {
   @apply mb-6;

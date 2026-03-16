@@ -67,7 +67,7 @@ if (!$icon_alt) {
                 <?php if ($heading): ?>
                     <<?php echo esc_attr($heading_tag); ?>
                         id="<?php echo esc_attr($section_id); ?>-heading"
-                        class="text-2xl font-light leading-10 md:text-3xl"
+                        class="text-2xl font-light leading-10 md:text-3xl lg:max-w-[200px] break-words"
                         style="color: <?php echo esc_attr($text_color); ?>;">
                         <?php echo esc_html($heading); ?>
                     </<?php echo esc_attr($heading_tag); ?>>
@@ -131,7 +131,7 @@ if (!$icon_alt) {
 
                             <button
                                 type="submit"
-                                class="flex gap-2 justify-center items-center px-6 py-4 h-full font-bold whitespace-nowrap rounded-r transition-colors duration-200 btn focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:opacity-90"
+                                class="flex gap-2 justify-center items-center px-6 py-4 font-bold whitespace-nowrap rounded-r transition-colors duration-200 btn focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:opacity-90 h-[52px] rounded-r-[100px] bg-[#FBEA5E]"
                                 style="background-color: <?php echo esc_attr($button_color); ?>; color: <?php echo esc_attr($button_text_color); ?>;"
                                 aria-describedby="newsletter-submit-help-<?php echo esc_attr($section_id); ?>">
                                 <span>Subscribe</span>
@@ -140,7 +140,7 @@ if (!$icon_alt) {
                     </div>
 
                     <!-- Terms and Conditions -->
-                    <div class="flex flex-wrap gap-2 items-start mt-4 w-full">
+                    <div class="flex flex-wrap gap-2 items-start md:items-center mt-4 w-full">
                         <div class="flex overflow-hidden flex-col flex-shrink-0 justify-center items-center w-6 rounded min-h-6">
                             <input
                                 type="checkbox"

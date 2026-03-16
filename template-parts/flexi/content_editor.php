@@ -50,7 +50,7 @@ $heading_id = $section_id . '-heading';
     aria-labelledby="<?php echo esc_attr($heading_id); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
-    <div class="flex flex-col items-center w-full mx-auto max-w-container pt-5 pb-12 max-lg:px-5 <?php echo esc_attr($padding_class_string); ?>">
+    <div class="flex flex-col items-center w-full mx-auto max-w-container pt-10 pb-12 max-lg:px-5 <?php echo esc_attr($padding_class_string); ?>">
         <div class="w-full max-w-[60rem] flex flex-col gap-6">
             <<?php echo esc_html($heading_tag); ?>
                 id="<?php echo esc_attr($heading_id); ?>"
