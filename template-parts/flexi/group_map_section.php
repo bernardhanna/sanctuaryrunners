@@ -117,7 +117,7 @@ foreach ($running_group_ids as $group_id) {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="px-5 py-16 mx-auto w-full max-w-container lg:px-10">
+    <div class="px-5 py-16 mx-auto w-full max-w-[1240px] lg:px-10">
 
         <div class="grid grid-cols-1 gap-10 items-start lg:grid-cols-12">
 
@@ -134,14 +134,14 @@ foreach ($running_group_ids as $group_id) {
                     <?php endif; ?>
 
                     <?php if (!empty($description)): ?>
-                        <div class="mt-4 text-base leading-6 text-sky-950 wp_editor">
+                        <div class="mt-4 text-base leading-6 text-sky-950 max-w-[380px] wp_editor">
                             <?php echo wp_kses_post($description); ?>
                         </div>
                     <?php endif; ?>
                 </header>
 
                 <?php if (!empty($secondary_heading) || !empty($start_group_button)): ?>
-                    <div class="mt-6 font-bold">
+                    <div class="mt-4 font-bold">
                         <?php if (!empty($secondary_heading)): ?>
                             <<?php echo esc_attr($secondary_heading_tag); ?> class="text-lg leading-none text-sky-950">
                                 <?php echo esc_html($secondary_heading); ?>
@@ -152,7 +152,7 @@ foreach ($running_group_ids as $group_id) {
                             <div class="mt-4">
                                 <a
                                     href="<?php echo esc_url($start_group_button['url']); ?>"
-                                    class="group-map-start-btn inline-flex justify-center items-center px-6 py-4 w-full font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] rounded-full border-[1px] border-[var(--Blue-SR-500,#00628F)] hover:border-4 hover:border-[var(--Turquoise-500,#1C959B)] active:border-[1px] active:border-[var(--Blue-SR-500,#00628F)] active:bg-[var(--Blue-SR-10,#EBF9FF)] focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-10,#EBF9FF)] transition-colors duration-200 btn"
+                                    class="group-map-start-btn inline-flex justify-center items-center px-6 py-4 w-full font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] rounded-full border border-[var(--Blue-SR-500,#00628F)] hover:border-[var(--Turquoise-500,#1C959B)] active:border-[var(--Blue-SR-500,#00628F)] active:bg-[var(--Blue-SR-10,#EBF9FF)] focus:outline-none focus-visible:ring-0 focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-10,#EBF9FF)] transition-colors duration-200 btn"
                                     target="<?php echo esc_attr($start_group_button['target'] ?? '_self'); ?>"
                                     aria-label="<?php echo esc_attr($start_group_button['title']); ?>"
                                 >
@@ -186,14 +186,20 @@ foreach ($running_group_ids as $group_id) {
 
                 <?php if ($find_groups_button && is_array($find_groups_button) && !empty($find_groups_button['url']) && !empty($find_groups_button['title'])): ?>
                     <div style="z-index: 1000;" class="flex absolute right-0 left-0 bottom-8 justify-center items-center mx-auto">
-                        <a
-                            href="<?php echo esc_url($find_groups_button['url']); ?>"
-                            class="group-map-find-btn inline-flex shrink-0 justify-center items-center gap-2 w-[170px] h-[42px] p-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white rounded-full bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn"
-                            target="<?php echo esc_attr($find_groups_button['target'] ?? '_self'); ?>"
-                            aria-label="<?php echo esc_attr($find_groups_button['title']); ?>"
+                        <a 
+                        href="<?php echo esc_url($find_groups_button['url']); ?>" 
+                        class="group-map-find-btn inline-flex shrink-0 justify-center items-center gap-2 w-[170px] h-[42px] p-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white rounded-full bg-[#00628F]
+                        hover:bg-[#00628F] hover:text-white hover:shadow-none hover:scale-100 hover:translate-y-0
+                        active:bg-[#00628F] active:shadow-none active:scale-100
+                        focus:bg-[#00628F] focus:shadow-none focus:outline-none
+                        focus-visible:ring-0 focus-visible:border-0
+                        transition-none btn"
+                        target="<?php echo esc_attr($find_groups_button['target'] ?? '_self'); ?>"
+                        aria-label="<?php echo esc_attr($find_groups_button['title']); ?>"
                         >
-                            <?php echo esc_html($find_groups_button['title']); ?>
+                        <?php echo esc_html($find_groups_button['title']); ?>
                         </a>
+                            
                     </div>
                 <?php endif; ?>
             </div>
