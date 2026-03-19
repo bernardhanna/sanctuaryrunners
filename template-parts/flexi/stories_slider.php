@@ -51,13 +51,13 @@ if ($has_posts) {
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
     <div
-        class="mx-auto max-w-[1560px] px-4 py-8 sm:px-6 lg:px-24 lg:py-[72px]"
+        class="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-24 lg:py-[72px]"
       
     >
-        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:pl-8">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <<?php echo esc_html($heading_tag); ?>
                 id="<?php echo esc_attr($section_id); ?>-heading"
-                class="font-display text-[2.25rem] font-light tracking-[-0.04em] text-brand-blue sm:text-[2.75rem]"
+                class="font-display text-[2.25rem] font-bold tracking-[-0.04em] text-brand-blue sm:text-[2.75rem]"
             >
                 <?php echo esc_html($heading); ?>
             </<?php echo esc_html($heading_tag); ?>>

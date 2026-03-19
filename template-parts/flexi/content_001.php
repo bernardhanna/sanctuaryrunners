@@ -31,7 +31,7 @@ $section_id = 'about-us-' . wp_rand(1000, 9999);
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="px-5 mx-auto w-full max-w-container lg:px-10">
+    <div class="px-5 mx-auto w-full max-w-container2 lg:px-10">
 
         <div class="grid grid-cols-1 gap-12 items-center py-16 lg:grid-cols-2">
 
@@ -48,7 +48,7 @@ $section_id = 'about-us-' . wp_rand(1000, 9999);
             <?php endif; ?>
 
             <!-- CONTENT -->
-            <div class="<?php echo $reverse_layout ? 'lg:order-1' : ''; ?>">
+            <div class="<?php echo $reverse_layout ? 'lg:order-1' : ''; ?> max-w-[420px]">
 
                 <?php if (!empty($heading)): ?>
                     <<?php echo esc_attr($heading_tag); ?>
@@ -98,7 +98,7 @@ $section_id = 'about-us-' . wp_rand(1000, 9999);
                     <div class="mt-8">
                         <a
                             href="<?php echo esc_url($button['url']); ?>"
-                            class="inline-flex gap-2 justify-center items-center px-6 py-3 mx-auto text-sm font-bold text-white rounded-full w-full md:w-fit btn-primary"
+                            class="inline-flex gap-2 justify-center items-center px-6 py-3 mx-auto text-sm font-bold text-white rounded-[100px] w-full md:w-fit border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)]"
                             target="<?php echo esc_attr($button['target'] ?? '_self'); ?>"
                             aria-label="<?php echo esc_attr($button['title']); ?>"
                         >
