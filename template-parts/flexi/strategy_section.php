@@ -102,22 +102,14 @@ if (have_rows('padding_settings')) {
                 <?php endif; ?>
 
                 <?php if ($button && is_array($button) && isset($button['url'], $button['title'])): ?>
-                    <div class="flex pt-4 mt-4 w-full">
-                        <a
-                            href="<?php echo esc_url($button['url']); ?>"
-                            class="flex justify-center items-center w-full md:w-fit px-6 py-4 text-sm leading-none whitespace-nowrap rounded-full border border-sky-800 transition-all duration-300 hover:bg-sky-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800 btn"
-                            target="<?php echo esc_attr($button['target'] ?? '_self'); ?>"
-                            aria-label="<?php echo esc_attr($button['title']); ?>"
-                        >
-                            <span class="text-sky-800 transition-colors duration-300 hover:text-white">
+                        <div class="flex pt-4 mt-4 w-full">
+                            <a
+                                href="<?php echo esc_url($button['url']); ?>"
+                                class="flex justify-center items-center w-full md:w-fit px-6 py-4 text-sm leading-none whitespace-nowrap rounded-[100px] border border-[#00628F] bg-transparent md:bg-[#EBF9FF] text-[#00628F] transition-all duration-200 hover:border-transparent hover:shadow-[0_0_0_4px_#1C959B]"
+                            >
                                 <?php echo esc_html($button['title']); ?>
-                            </span>
-                        </a>
-
-                        <style>
-                            .btn:hover span { color: white !important; }
-                        </style>
-                    </div>
+                            </a>
+                        </div>
                 <?php endif; ?>
                
             </article>

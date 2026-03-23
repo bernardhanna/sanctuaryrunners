@@ -29,7 +29,7 @@ if (have_rows('padding_settings')) {
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
     <div class="flex flex-col items-center pt-5 pb-5 mx-auto w-full max-w-container max-lg:px-5">
-        <div class="flex overflow-hidden flex-col justify-center self-stretch px-40 pb-16 max-md:px-5">
+        <div class="flex overflow-hidden flex-col justify-center self-stretch px-10 pb-16 max-md:px-5">
 
             <?php if (!empty($heading)): ?>
                 <<?php echo esc_attr($heading_tag); ?>

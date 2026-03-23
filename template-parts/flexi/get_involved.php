@@ -24,7 +24,7 @@ if (have_rows('padding_settings')) {
     class="relative flex overflow-hidden bg-[linear-gradient(313deg,_#059DED_24.08%,_#28B2FA_63%)] <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="flex flex-col items-center pt-5 pb-5 mx-auto w-full lg:py-12 max-w-container max-lg:px-5">
+    <div class="flex flex-col items-center pt-12 pb-12 mx-auto w-full lg:py-12 max-w-container max-lg:px-5">
         <div class="grid grid-cols-1 gap-10 justify-center items-start px-8 w-full lg:grid-cols-[20%_80%] max-md:px-5">
 
             <!-- Left Column: Heading and Donate Button -->
@@ -42,7 +42,7 @@ if (have_rows('padding_settings')) {
                 <?php if ($donate_button && is_array($donate_button) && isset($donate_button['url'], $donate_button['title'])): ?>
                     <a
                         href="<?php echo esc_url($donate_button['url']); ?>"
-                        class="flex gap-2 justify-center items-center w-full md:w-fit px-8 py-4 text-base font-bold leading-none text-sky-800 bg-white rounded-full transition-colors duration-300 hover:bg-sky-50 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-sky-800 max-md:px-5"
+                       class="flex gap-2 justify-center items-center w-full md:w-fit px-8 py-4 text-base font-bold leading-none text-sky-800 bg-white rounded-full transition-colors duration-300 hover:bg-[#CBF3F6] focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-sky-800 max-md:px-5"
                         target="<?php echo esc_attr($donate_button['target'] ?? '_self'); ?>"
                         aria-label="<?php echo esc_attr($donate_button['title']); ?> - Opens in <?php echo ($donate_button['target'] === '_blank') ? 'new window' : 'same window'; ?>"
                     >
@@ -91,31 +91,37 @@ if (have_rows('padding_settings')) {
                                 <div class="flex flex-col flex-1 text-base text-white">
                                     <?php if ($item_link && is_array($item_link) && isset($item_link['url'], $item_link['title'])): ?>
                                         <div class="mb-2 font-bold leading-none">
-                                            <a
-                                                href="<?php echo esc_url($item_link['url']); ?>"
-                                                class="flex gap-1 items-center text-white transition-colors duration-300 hover:text-yellow-300 focus:text-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 focus:ring-offset-transparent btn"
-                                                target="<?php echo esc_attr($item_link['target'] ?? '_self'); ?>"
-                                                aria-label="<?php echo esc_attr($item_link['title']); ?> - <?php echo esc_attr($item_description); ?>"
-                                            >
-                                                <span><?php echo esc_html($item_title); ?></span>
-                                                <svg
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    class="w-6 h-6"
-                                                    aria-hidden="true"
+                                                <a
+                                                    href="<?php echo esc_url($item_link['url']); ?>"
+                                                    class="group relative inline-flex gap-1 items-center text-white mb-2 transition-colors duration-300 focus:outline-none"
+                                                    target="<?php echo esc_attr($item_link['target'] ?? '_self'); ?>"
+                                                    aria-label="<?php echo esc_attr($item_link['title']); ?> - <?php echo esc_attr($item_description); ?>"
                                                 >
-                                                    <path
-                                                        d="M5 12H19M19 12L12 5M19 12L12 19"
-                                                        stroke="currentColor"
-                                                        stroke-width="2"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                    />
-                                                </svg>
-                                            </a>
+                                                    <span class="text-white transition-colors duration-300 group-hover:text-[#75E0E6]">
+                                                        <?php echo esc_html($item_title); ?>
+                                                    </span>
+
+                                                    <svg
+                                                        width="24"
+                                                        height="24"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        class="w-6 h-6 text-white transition-colors duration-300 group-hover:text-[#75E0E6]"
+                                                        aria-hidden="true"
+                                                    >
+                                                        <path
+                                                            d="M5 12H19M19 12L12 5M19 12L12 19"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        />
+                                                    </svg>
+
+                                                    <!-- underline -->
+                                                    <span class="absolute left-0 -bottom-2 h-[1px] w-0 bg-[#75E0E6] transition-all duration-300 group-hover:w-full"></span>
+                                                </a>
                                         </div>
                                     <?php else: ?>
                                         <h3 class="mb-2 font-bold leading-none text-white">

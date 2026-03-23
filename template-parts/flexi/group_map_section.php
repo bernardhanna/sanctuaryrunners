@@ -117,12 +117,12 @@ foreach ($running_group_ids as $group_id) {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="px-5 py-16 mx-auto w-full max-w-[1240px] lg:px-10">
+    <div class="px-5 py-16 pt-6 pb-6 md:pt-16 md:pb-16 mx-auto w-full max-w-[1240px] lg:px-10">
 
         <div class="grid grid-cols-1 gap-10 items-start lg:grid-cols-12">
 
             <!-- Text Content -->
-            <article class="flex flex-col justify-center p-8 w-full h-full lg:col-span-5" role="article">
+            <article class="flex flex-col justify-center p-0 pb-0 md:pt-8 md:pb-8 w-full h-full lg:col-span-5" role="article">
                 <header>
                     <?php if (!empty($heading)): ?>
                         <<?php echo esc_attr($heading_tag); ?>
@@ -187,19 +187,13 @@ foreach ($running_group_ids as $group_id) {
                 <?php if ($find_groups_button && is_array($find_groups_button) && !empty($find_groups_button['url']) && !empty($find_groups_button['title'])): ?>
                     <div style="z-index: 1000;" class="flex absolute right-0 left-0 bottom-8 justify-center items-center mx-auto">
                         <a 
-                        href="<?php echo esc_url($find_groups_button['url']); ?>" 
-                        class="group-map-find-btn inline-flex shrink-0 justify-center items-center gap-2 w-[170px] h-[42px] p-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white rounded-full bg-[#00628F]
-                        hover:bg-[#00628F] hover:text-white hover:shadow-none hover:scale-100 hover:translate-y-0
-                        active:bg-[#00628F] active:shadow-none active:scale-100
-                        focus:bg-[#00628F] focus:shadow-none focus:outline-none
-                        focus-visible:ring-0 focus-visible:border-0
-                        transition-none btn"
-                        target="<?php echo esc_attr($find_groups_button['target'] ?? '_self'); ?>"
-                        aria-label="<?php echo esc_attr($find_groups_button['title']); ?>"
+                          href="<?php echo esc_url($find_groups_button['url']); ?>" 
+                          class="group-map-find-btn inline-flex shrink-0 justify-center items-center gap-2 w-[170px] h-[42px] p-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white rounded-full border-0 shadow-none outline-none ring-0 bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white hover:border-0 hover:shadow-none hover:outline-none hover:ring-0 focus:border-0 focus:shadow-none focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 transition-colors duration-200 btn"
+                          target="<?php echo esc_attr($find_groups_button['target'] ?? '_self'); ?>"
+                          aria-label="<?php echo esc_attr($find_groups_button['title']); ?>"
                         >
-                        <?php echo esc_html($find_groups_button['title']); ?>
-                        </a>
-                            
+                          <?php echo esc_html($find_groups_button['title']); ?>
+                        </a>                            
                     </div>
                 <?php endif; ?>
             </div>

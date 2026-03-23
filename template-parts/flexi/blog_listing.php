@@ -71,8 +71,10 @@ $section_id = 'blog-listing-' . uniqid();
                     >
                         <button
                             type="button"
-                            class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto text-sky-800 whitespace-nowrap rounded-full border-2 border-sky-500 border-solid min-h-9 btn w-fit hover:bg-sky-500 hover:text-white focus:ring-sky-500"
-                            :class="activeFilter === 'all' ? 'bg-blue-200' : 'bg-white'"
+                            class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                            :class="activeFilter === 'all'
+                                ? 'bg-sky-500 text-white'
+                                : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
                             @click="setFilter('all')"
                             aria-pressed="true"
                         >
@@ -82,8 +84,10 @@ $section_id = 'blog-listing-' . uniqid();
                         <?php foreach ($categories as $category): ?>
                             <button
                                 type="button"
-                                class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto text-sky-800 whitespace-nowrap bg-blue-200 rounded-full min-h-9 btn w-fit hover:bg-sky-500 hover:text-white focus:ring-sky-500"
-                                :class="activeFilter === '<?php echo esc_attr($category->slug); ?>' ? 'bg-sky-500 text-white' : 'bg-blue-200'"
+                                class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                                :class="activeFilter === '<?php echo esc_attr($category->slug); ?>'
+                                    ? 'bg-sky-500 text-white'
+                                    : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
                                 @click="setFilter('<?php echo esc_attr($category->slug); ?>')"
                                 aria-pressed="false"
                             >
@@ -97,10 +101,11 @@ $section_id = 'blog-listing-' . uniqid();
             <?php if ($show_search): ?>
                 <!-- Search -->
                 <div class="flex self-stretch my-auto min-h-[60px] min-w-60 w-[396px] items-center">
-                    <div class="flex-1 text-gray-400 shrink basis-12 min-w-60 shadow-[0px_0px_20px_rgba(63,0,119,0.07)]">
-                        <div class="flex-1 w-full">
-                            <div class="flex flex-1 justify-between items-center px-4 py-0 pr-0 bg-white rounded size-full">
-                                <div class="flex flex-1 gap-2 items-center self-stretch my-auto w-full shrink basis-0 min-w-60">
+                    <div class="flex-1 shrink basis-12 min-w-60 shadow-[0px_0px_20px_rgba(63,0,119,0.07)] rounded-r-[30px] overflow-hidden">
+                        <div class="w-full">
+                            <div class="flex items-center">
+                                <div 
+                                class="flex flex-1 gap-2 items-center self-stretch my-auto w-full shrink basis-0 min-w-60 px-4 py-2 max-h-[60px] rounded-l-[4px] border border-transparent bg-white transition-all duration-200 hover:bg-[#CBF3F6] hover:border-[#1C959B] focus-within:bg-[#C2EDFF] focus-within:border-[#C2EDFF]">
                                     <svg
                                         class="object-contain self-stretch my-auto w-6 shrink-0 aspect-square"
                                         width="24"
@@ -115,27 +120,28 @@ $section_id = 'blog-listing-' . uniqid();
 
                                     <input
                                         type="search"
-                                        class="flex-1 self-stretch my-auto text-gray-400 bg-transparent !border-none outline-none shrink basis-0 py-4 min-h-[60px]"
+                                        class="flex-1 self-stretch my-auto text-gray-400 bg-transparent !border-0 !outline-none !ring-0 focus:!border-0 focus:!outline-none focus:!ring-0 active:!border-0 active:!outline-none active:!ring-0 appearance-none shrink basis-0 min-h-[28px]"
                                         placeholder="Type keyword"
                                         x-model="searchTerm"
                                         @input="filterPosts()"
                                         aria-label="Search posts"
                                     />
                                 </div>
+
+                                <button
+                                    type="button"
+                                    class="flex gap-2 justify-center items-center px-6 py-4 h-full min-h-[60px] font-bold whitespace-nowrap bg-yellow-300 text-slate-800 max-md:px-5 w-fit hover:bg-[#FCF4C5] focus:ring-yellow-300 border-0 rounded-r-[100px] shadow-none"
+                                    @click="filterPosts()"
+                                    aria-label="Search posts"
+                                >
+                                    Search
+                                </button>
                             </div>
                         </div>
                     </div>
-
-                    <button
-                        type="button"
-                        class="flex gap-2 justify-center items-center px-6 py-4 h-full min-h-[60px] font-bold whitespace-nowrap bg-yellow-300 text-slate-800 max-md:px-5 btn w-fit hover:bg-yellow-400 focus:ring-yellow-300 border-0 rounded-r-[100px]"
-                        @click="filterPosts()"
-                        aria-label="Search posts"
-                    >
-                        Search
-                    </button>
                 </div>
             <?php endif; ?>
+            
         </div>
 
         <!-- Blog Posts Grid -->
@@ -164,12 +170,12 @@ $section_id = 'blog-listing-' . uniqid();
                         ?>
 
                         <article
-                            class="overflow-hidden flex-1 bg-yellow-50 rounded-lg shrink basis-0 min-w-60 post-item"
+                            class="overflow-hidden flex-1 bg-yellow-50 rounded-[4px] shrink basis-0 min-w-60 post-item transition-all duration-200 hover:bg-[#FCF4C5] hover:shadow-[0_0_0_4px_#009DE6]"
                             data-categories="<?php echo esc_attr(implode(' ', $category_slugs)); ?>"
                             data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>"
                         >
                             <!-- Featured Image with Tag -->
-                            <div class="flex overflow-hidden relative flex-col gap-2.5 items-start pt-6 pb-44 w-full text-xs font-bold text-sky-800 whitespace-nowrap aspect-[1.565] min-h-[232px] max-md:pb-24">
+                            <div class="flex overflow-hidden relative flex-col gap-2.5 items-start pt-6 pb-44 w-full text-xs font-bold text-sky-800 whitespace-nowrap aspect-[1.565] min-h-[232px] max-md:pb-24 rounded-t-[8px]">
                                 <?php if ($featured_image): ?>
                                     <?php echo wp_get_attachment_image($featured_image, 'large', false, [
                                         'alt'     => esc_attr($image_alt),
@@ -263,91 +269,66 @@ $section_id = 'blog-listing-' . uniqid();
                     <?php endif; ?>
 
                     <!-- Page Numbers -->
-                    <div class="flex gap-2 items-center self-stretch my-auto">
-                        <?php
-                        $total_pages  = $blog_query->max_num_pages;
-                        $current_page = $paged;
+<div class="flex gap-2 items-center self-stretch my-auto">
+    <?php
+    $total_pages  = $blog_query->max_num_pages;
+    $current_page = $paged;
 
-                        if ($current_page == 1): ?>
-                            <div class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-gray-300 rounded-full min-h-12">
-                                <span class="text-gray-300" aria-current="page">1</span>
-                            </div>
-                        <?php else: ?>
-                            <a
-                                href="<?php echo esc_url(get_pagenum_link(1)); ?>"
-                                class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-sky-600 rounded-full min-h-12 hover:bg-sky-100 focus:bg-sky-100 btn"
-                                aria-label="Go to page 1"
-                            >
-                                <span>1</span>
-                            </a>
-                        <?php endif;
+    $pagination_link_class = 'flex flex-col justify-center items-center self-stretch my-auto w-12 min-h-12 rounded-full text-sky-600 transition-all duration-200 hover:bg-[#009DE6] hover:text-white hover:shadow-[0_0_0_4px_#009DE6] focus:bg-[#009DE6] focus:text-white focus:shadow-[0_0_0_4px_#009DE6]';
 
-                        for ($i = max(2, $current_page - 2); $i <= min($total_pages - 1, $current_page + 2); $i++):
-                            if ($i == $current_page): ?>
-                                <div class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-white bg-sky-600 rounded-full min-h-12">
-                                    <span aria-current="page"><?php echo esc_html($i); ?></span>
-                                </div>
-                            <?php else: ?>
-                                <a
-                                    href="<?php echo esc_url(get_pagenum_link($i)); ?>"
-                                    class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-sky-600 rounded-full min-h-12 hover:bg-sky-100 focus:bg-sky-100 btn"
-                                    aria-label="Go to page <?php echo esc_attr($i); ?>"
-                                >
-                                    <span><?php echo esc_html($i); ?></span>
-                                </a>
-                            <?php endif;
-                        endfor;
+    $pagination_current_class = 'flex flex-col justify-center items-center self-stretch my-auto w-12 min-h-12 rounded-full text-white bg-[#009DE6] shadow-[0_0_0_4px_#009DE6]';
+    ?>
 
-                        if ($total_pages > 5 && $current_page < $total_pages - 2): ?>
-                            <div class="flex flex-col justify-center items-start self-stretch py-1 my-auto w-6">
-                                <span class="text-sky-600" aria-hidden="true">...</span>
-                            </div>
-                            <a
-                                href="<?php echo esc_url(get_pagenum_link($total_pages)); ?>"
-                                class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-sky-600 rounded-full min-h-12 hover:bg-sky-100 focus:bg-sky-100 btn"
-                                aria-label="Go to page <?php echo esc_attr($total_pages); ?>"
-                            >
-                                <span><?php echo esc_html($total_pages); ?></span>
-                            </a>
-                        <?php endif; ?>
-                    </div>
+    <?php if ($current_page == 1): ?>
+        <div class="<?php echo esc_attr($pagination_current_class); ?>">
+            <span aria-current="page">1</span>
+        </div>
+    <?php else: ?>
+        <a
+            href="<?php echo esc_url(get_pagenum_link(1)); ?>"
+            class="<?php echo esc_attr($pagination_link_class); ?>"
+            aria-label="Go to page 1"
+        >
+            <span>1</span>
+        </a>
+    <?php endif; ?>
 
-                    <!-- Next Button -->
-                    <?php if ($paged < $total_pages): ?>
-                        <a
-                            href="<?php echo esc_url(get_pagenum_link($paged + 1)); ?>"
-                            class="flex gap-1 items-center self-stretch py-1 pr-1 pl-2.5 my-auto text-sky-600 hover:text-sky-800 focus:text-sky-800 btn"
-                            aria-label="Go to next page"
-                        >
-                            <span class="self-stretch my-auto">Next</span>
-                            <svg
-                                class="object-contain self-stretch my-auto w-8 shrink-0 aspect-square"
-                                width="32"
-                                height="32"
-                                viewBox="0 0 32 32"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
-                            >
-                                <path d="M12 8L20 16L12 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
-                    <?php else: ?>
-                        <div class="flex gap-1 items-center self-stretch py-1 pr-1 pl-2.5 my-auto text-gray-300">
-                            <span class="self-stretch my-auto text-gray-300">Next</span>
-                            <svg
-                                class="object-contain self-stretch my-auto w-8 shrink-0 aspect-square"
-                                width="32"
-                                height="32"
-                                viewBox="0 0 32 32"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
-                            >
-                                <path d="M12 8L20 16L12 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    <?php endif; ?>
+    <?php for ($i = max(2, $current_page - 2); $i <= min($total_pages - 1, $current_page + 2); $i++): ?>
+        <?php if ($i == $current_page): ?>
+            <div class="<?php echo esc_attr($pagination_current_class); ?>">
+                <span aria-current="page"><?php echo esc_html($i); ?></span>
+            </div>
+        <?php else: ?>
+            <a
+                href="<?php echo esc_url(get_pagenum_link($i)); ?>"
+                class="<?php echo esc_attr($pagination_link_class); ?>"
+                aria-label="Go to page <?php echo esc_attr($i); ?>"
+            >
+                <span><?php echo esc_html($i); ?></span>
+            </a>
+        <?php endif; ?>
+    <?php endfor; ?>
+
+    <?php if ($total_pages > 5 && $current_page < $total_pages - 2): ?>
+        <div class="flex flex-col justify-center items-start self-stretch py-1 my-auto w-6">
+            <span class="text-sky-600" aria-hidden="true">...</span>
+        </div>
+        <a
+            href="<?php echo esc_url(get_pagenum_link($total_pages)); ?>"
+            class="<?php echo esc_attr($pagination_link_class); ?>"
+            aria-label="Go to page <?php echo esc_attr($total_pages); ?>"
+        >
+            <span><?php echo esc_html($total_pages); ?></span>
+        </a>
+    <?php endif; ?>
+</div>
+
+
+
+
+
+
+                    
                 </nav>
             <?php endif; ?>
         </main>

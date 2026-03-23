@@ -63,7 +63,7 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="flex flex-col items-center max-lg:py-5 py-20 mx-auto w-full max-w-[768px] max-md:px-5">
+    <div class="flex flex-col items-center max-lg:py-5 py-20 mx-auto w-full max-w-[960px] max-md:px-5">
 
         <?php if (!empty($heading)): ?>
             <<?php echo esc_attr($heading_tag); ?>
@@ -94,11 +94,11 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
                     $button_id = $faq_id . '-button';
                     $content_id = $faq_id . '-content';
                     ?>
-                    <div class="<?php echo $index > 0 ? 'mt-4' : ''; ?> w-full max-w-screen-md">
+                    <div class="<?php echo $index > 0 ? 'mt-4' : ''; ?> w-full">
                         <div class="bg-yellow-50 rounded-lg faq-item" data-faq-item>
                             <button
                                 id="<?php echo esc_attr($button_id); ?>"
-                                class="flex flex-wrap gap-10 justify-between items-center pt-6 pb-2 px-6 w-full text-lg leading-none text-left btn outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 max-md:px-5 max-md:max-w-full"
+                                class="flex flex-wrap gap-10 justify-between items-center pt-6 pb-6 px-6 w-full text-lg leading-none text-left outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 max-md:px-5 max-md:max-w-full md:hover:bg-[#fcf192] transition-colors duration-200"
                                 aria-expanded="false"
                                 aria-controls="<?php echo esc_attr($content_id); ?>"
                                 data-faq-toggle

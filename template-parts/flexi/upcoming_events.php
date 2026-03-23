@@ -43,15 +43,14 @@ $section_id = 'events-' . uniqid();
 
 <section id="<?php echo esc_attr($section_id); ?>" class="flex overflow-hidden relative">
     <div class="flex flex-col items-center w-full mx-auto max-w-container2 <?php echo esc_attr(implode(' ', $padding_classes)); ?> max-lg:px-5">
-        <div class="overflow-hidden px-14 pt-14 pb-20 w-full max-md:px-5">
-
+        <div class="overflow-hidden px-14 pt-0 pb-0 md:pt-14 md:pb-20 w-full max-md:px-5">
             <?php
             $view_all_html = '';
             if ($view_all_button && is_array($view_all_button) && isset($view_all_button['url'], $view_all_button['title'])) {
                 ob_start();
                 ?>
                 <a href="<?php echo esc_url($view_all_button['url']); ?>"
-                   class="flex gap-2 justify-center items-center self-stretch py-3 pr-4 pl-6 my-auto text-sm font-bold leading-none text-sky-800 min-h-[42px] rounded-[100px] max-md:pl-5 btn w-fit whitespace-nowrap hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800 transition-colors duration-200"
+                   class="flex gap-2 justify-center items-center self-stretch py-3 pr-4 pl-6 my-auto text-sm font-bold leading-none text-sky-800 min-h-[42px] rounded-[100px] max-md:pl-5 w-fit whitespace-nowrap hover:bg-[#A9D2EF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800 transition-colors duration-200"
                    target="<?php echo esc_attr($view_all_button['target'] ?? '_self'); ?>"
                    aria-label="<?php echo esc_attr($view_all_button['title']); ?>">
                     <span class="self-stretch my-auto text-sky-800">
@@ -69,8 +68,8 @@ $section_id = 'events-' . uniqid();
             <header class="flex flex-wrap gap-10 justify-between items-center w-full">
                 <div class="flex gap-3.5 items-center min-w-60">
                     <div class="flex items-center justify-center w-10 h-10 bg-rose-50 border-4 border-red-200 rounded-full">
-                        <svg width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M8 2V6M16 2V6M3 10H21M5 4H19C21 4 21 6 21 6V20C21 22 19 22 19 22H5C3 22 3 20 3 20V6C3 4 5 4 5 4Z" stroke="#DC2626" stroke-width="2"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="21" viewBox="0 0 19 21" fill="none">
+                            <path d="M13.5 0.5V4.5M5.5 0.5V4.5M0.5 8.5H18.5M2.5 2.5H16.5C17.6046 2.5 18.5 3.39543 18.5 4.5V18.5C18.5 19.6046 17.6046 20.5 16.5 20.5H2.5C1.39543 20.5 0.5 19.6046 0.5 18.5V4.5C0.5 3.39543 1.39543 2.5 2.5 2.5Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
 
@@ -80,7 +79,9 @@ $section_id = 'events-' . uniqid();
                 </div>
 
                 <?php if ($view_all_html): ?>
-                    <div class="hidden md:block"><?php echo $view_all_html; ?></div>
+                    <div class="hidden md:block">
+                        <?php echo $view_all_html; ?>
+                    </div>
                 <?php endif; ?>
             </header>
 
@@ -107,11 +108,7 @@ $section_id = 'events-' . uniqid();
 
                         <article class="flex-1 min-w-60">
                             <a href="<?php echo esc_url($permalink); ?>"
-                               class="group flex gap-4 p-6 rounded-lg bg-sky-950 border border-transparent transition-all duration-200
-                                      hover:bg-white 
-                                      
-                                      hover:shadow-[0_0_0_4px_var(--Turquoise-500)]"
-                               >
+                               class="group flex gap-4 p-6 rounded-lg bg-sky-950 border border-transparent transition-all duration-200 hover:bg-white hover:shadow-[0_0_0_4px_#00628F]">
 
                                 <?php if ($event_image): ?>
                                     <?php echo wp_get_attachment_image($event_image, 'thumbnail', false, ['class' => 'w-[100px] h-[100px] rounded']); ?>
@@ -129,16 +126,21 @@ $section_id = 'events-' . uniqid();
                                     <?php endif; ?>
 
                                     <?php if ($location_name): ?>
-                                        <div class="mt-1 px-3 py-1 text-xs bg-red rounded-full w-fit self-start group-hover:bg-gray-100">
+                                        <div class="mt-1 px-3 py-1 text-xs bg-red rounded-full w-fit self-start">
                                             <?php echo esc_html($location_name); ?>
                                         </div>
                                     <?php endif; ?>
                                 </div>
                             </a>
                         </article>
-
                     <?php endwhile; wp_reset_postdata(); ?>
                 </main>
+
+                <?php if ($view_all_html): ?>
+                    <div class="mt-6 flex justify-center md:hidden">
+                        <?php echo $view_all_html; ?>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
 
         </div>
