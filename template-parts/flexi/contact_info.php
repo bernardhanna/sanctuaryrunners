@@ -49,7 +49,7 @@ if (have_rows('padding_settings')) {
                     $phone_icon_alt = get_post_meta($phone_icon, '_wp_attachment_image_alt', true) ?: 'Phone icon';
                     $email_icon_alt = get_post_meta($email_icon, '_wp_attachment_image_alt', true) ?: 'Email icon';
                 ?>
-                    <article class="flex flex-col flex-1 h-full p-8 bg-white rounded-lg shrink basis-0 min-w-60 max-md:px-5" role="listitem">
+                    <article class="flex flex-col flex-1 p-8 h-auto bg-white rounded-lg lg:h-full shrink basis-0 min-w-60 max-md:px-5" role="listitem">
 
                         <!-- Office Address Section -->
                         <div class="flex gap-2 items-start w-full">
