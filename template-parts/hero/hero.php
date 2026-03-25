@@ -89,7 +89,7 @@ if (!empty($title)) {
                 </div>
 
                 <?php if (!empty($description)): ?>
-                    <div id="<?php echo esc_attr($desc_id); ?>" class="text-left lg:max-w-[303px] text-[18px] leading-6 text-white">
+                    <div id="<?php echo esc_attr($desc_id); ?>" class="flex flex-col gap-[10px] text-left lg:max-w-[303px] text-[18px] leading-6 text-white">
                         <?php echo wp_kses_post($description); ?>
                     </div>
                 <?php endif; ?>
