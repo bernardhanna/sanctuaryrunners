@@ -117,24 +117,24 @@ foreach ($running_group_ids as $group_id) {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="px-5 py-16 pt-6 pb-6 md:pt-16 md:pb-16 mx-auto w-full max-w-[1240px] lg:px-10">
+    <div class="px-5 py-16 pt-6 pb-6 md:pt-16 md:pb-16 mx-auto w-full max-w-[1136px] lg:px-10">
 
         <div class="grid grid-cols-1 gap-10 items-start lg:grid-cols-12">
 
             <!-- Text Content -->
-            <article class="flex flex-col justify-center p-0 pb-0 md:pt-8 md:pb-8 w-full h-full lg:col-span-5" role="article">
+            <article class="flex flex-col justify-center p-0 pb-0 w-full h-full md:pt-8 md:pb-8 lg:col-span-5" role="article">
                 <header>
                     <?php if (!empty($heading)): ?>
                         <<?php echo esc_attr($heading_tag); ?>
                             id="<?php echo esc_attr($section_id); ?>-heading"
-                            class="font-['Public_Sans'] text-[36px] font-bold leading-[44px] tracking-[-0.72px] text-[var(--Blue-SR-500,#00628F)]"
+                            class="font-['Public_Sans'] text-[24px] font-bold not-italic leading-[32px] text-[var(--Blue-SR-500,#00628F)] sm:text-[36px] sm:leading-[44px] sm:tracking-[-0.72px]"
                         >
                             <?php echo esc_html($heading); ?>
                         </<?php echo esc_attr($heading_tag); ?>>
                     <?php endif; ?>
 
                     <?php if (!empty($description)): ?>
-                        <div class="mt-4 text-base leading-6 text-sky-950 max-w-[380px] wp_editor">
+                        <div class="mt-4 text-base leading-6 text-sky-950 max-w-[380px] wp_editor max-sm:[&_p]:!text-[16px] max-sm:[&_p]:!font-normal max-sm:[&_p]:!not-italic max-sm:[&_p]:!leading-[22px]">
                             <?php echo wp_kses_post($description); ?>
                         </div>
                     <?php endif; ?>
@@ -152,7 +152,7 @@ foreach ($running_group_ids as $group_id) {
                             <div class="mt-4">
                                 <a
                                     href="<?php echo esc_url($start_group_button['url']); ?>"
-                                    class="group-map-start-btn inline-flex justify-center items-center px-6 py-4 w-full font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] rounded-full border border-[var(--Blue-SR-500,#00628F)] hover:border-[var(--Turquoise-500,#1C959B)] active:border-[var(--Blue-SR-500,#00628F)] active:bg-[var(--Blue-SR-10,#EBF9FF)] focus:outline-none focus-visible:ring-0 focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-10,#EBF9FF)] transition-colors duration-200 btn"
+                                    class="group-map-start-btn inline-flex w-full items-center justify-center rounded-full border border-[var(--Blue-SR-500,#00628F)] bg-transparent px-4 py-0 font-['Public_Sans'] text-[var(--Blue-SR-500,#00628F)] hover:border-[var(--Turquoise-500,#1C959B)] active:border-[var(--Blue-SR-500,#00628F)] active:bg-[var(--Blue-SR-10,#EBF9FF)] focus:outline-none focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-10,#EBF9FF)] focus-visible:ring-0 transition-colors duration-200 btn sm:px-6 sm:py-4 sm:text-[14px] sm:font-bold sm:leading-5"
                                     target="<?php echo esc_attr($start_group_button['target'] ?? '_self'); ?>"
                                     aria-label="<?php echo esc_attr($start_group_button['title']); ?>"
                                 >
@@ -166,7 +166,7 @@ foreach ($running_group_ids as $group_id) {
 
             <!-- Map Column -->
             <div
-                class="relative isolate lg:col-span-7"
+                class="isolate relative lg:col-span-7"
                 x-data="{ mapQuery: '' }"
             >
                 <div
@@ -191,7 +191,7 @@ foreach ($running_group_ids as $group_id) {
                         <?php echo esc_html__('Search groups by city or county', 'matrix-starter'); ?>
                     </label>
                     <div
-                        class="flex h-12 w-[258px] max-w-full shrink-0 items-center justify-between rounded-[1000px] border border-[var(--Gray-300,#D0D5DD)] bg-white px-6 py-0 pointer-events-auto"
+                        class="flex h-[38px] max-h-[38px] w-[258px] max-w-full shrink-0 items-center justify-between rounded-[1000px] border border-[var(--Gray-300,#D0D5DD)] bg-white px-6 py-0 pointer-events-auto sm:h-12 sm:max-h-none"
                     >
                         <input
                             id="<?php echo esc_attr($section_id); ?>-map-search"
@@ -202,11 +202,11 @@ foreach ($running_group_ids as $group_id) {
                             @input.debounce.300ms="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
                             @keydown.enter.prevent="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
                             placeholder="<?php echo esc_attr__('Search by city or county...', 'matrix-starter'); ?>"
-                            class="min-w-0 h-full flex-1 !border-0 bg-transparent font-['Public_Sans'] text-[14px] font-normal not-italic leading-[20px] text-[var(--Blue-SR-500,#00628F)] placeholder:text-[var(--Blue-SR-500,#00628F)]/60 !outline-none focus:!border-0 !ring-0 focus:!ring-0 pr-2"
+                            class="h-full min-w-0 flex-1 !border-0 bg-transparent pr-2 font-['Public_Sans'] text-[12px] font-normal not-italic leading-[18px] text-[var(--Blue-SR-500,#00628F)] placeholder:text-[var(--Blue-SR-500,#00628F)]/60 !outline-none !ring-0 focus:!border-0 focus:!ring-0 sm:text-[14px] sm:leading-[20px]"
                         />
                         <button
                             type="button"
-                            class="flex shrink-0 justify-center items-center p-0 text-[#00628F] hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--Turquoise-500,#1C959B)] focus-visible:ring-offset-2 rounded-full"
+                            class="flex h-full max-h-[38px] max-w-[38px] shrink-0 items-center justify-center rounded-full p-0 text-[#00628F] hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--Turquoise-500,#1C959B)] focus-visible:ring-offset-2 sm:max-h-none sm:max-w-none"
                             aria-label="<?php echo esc_attr__('Search map', 'matrix-starter'); ?>"
                             @click="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
                         >
@@ -226,7 +226,7 @@ foreach ($running_group_ids as $group_id) {
                     <div class="flex absolute right-0 left-0 bottom-8 z-[7500] justify-center items-center mx-auto pointer-events-none">
                         <a 
                           href="<?php echo esc_url($find_groups_button['url']); ?>" 
-                          class="group-map-find-btn pointer-events-auto inline-flex shrink-0 justify-center items-center gap-2 w-[170px] h-[42px] p-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white rounded-full border-0 shadow-none outline-none ring-0 bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white hover:border-0 hover:shadow-none hover:outline-none hover:ring-0 focus:border-0 focus:shadow-none focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 transition-colors duration-200 btn"
+                          class="group-map-find-btn pointer-events-auto inline-flex w-[170px] shrink-0 items-center justify-center gap-2 rounded-full border-0 bg-[var(--Blue-SR-400,#008BCC)] p-0 font-['Public_Sans'] text-white shadow-none outline-none ring-0 hover:border-0 hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white hover:shadow-none hover:outline-none hover:ring-0 focus:border-0 focus:shadow-none focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 transition-colors duration-200 btn sm:h-[42px] sm:p-4 sm:text-[14px] sm:font-bold sm:leading-5"
                           target="<?php echo esc_attr($find_groups_button['target'] ?? '_self'); ?>"
                           aria-label="<?php echo esc_attr($find_groups_button['title']); ?>"
                         >
@@ -304,9 +304,12 @@ foreach ($running_group_ids as $group_id) {
 
     const provider = container.getAttribute("data-provider") || "osm";
     const token    = container.getAttribute("data-token") || "";
-    const lat      = parseFloat(container.getAttribute("data-lat") || "53.349805");
-    const lng      = parseFloat(container.getAttribute("data-lng") || "-6.26031");
+    const lat      = parseFloat(container.getAttribute("data-lat") || "53.35");
+    const lng      = parseFloat(container.getAttribute("data-lng") || "-8");
     const zoom     = parseInt(container.getAttribute("data-zoom") || "6", 10);
+
+    // Whole-island frame (ROI + NI); avoids auto-fit zooming into a Dublin-only cluster
+    const IRELAND_BOUNDS = L.latLngBounds([51.22, -10.75], [55.44, -5.98]);
 
     // Safe JSON read
     let groups = [];
@@ -391,9 +394,8 @@ foreach ($running_group_ids as $group_id) {
 
     container._applyGroupMapFilter = applyGroupMapFilter;
 
-    // Auto-fit if we have markers
-    if (bounds.length > 1) map.fitBounds(bounds, { padding: [30, 30] });
-    if (bounds.length === 1) map.setView(bounds[0], Math.max(zoom, 12));
+    // Default view: all of Ireland (marker auto-fit was zooming tight on Dublin clusters)
+    map.fitBounds(IRELAND_BOUNDS, { padding: [28, 28] });
 
     container.dataset.initialized = "1";
 

@@ -187,7 +187,7 @@ $section_id = 'subhero-' . uniqid();
                                 <a
                                     href="<?php echo esc_url($primary_cta['url']); ?>"
                                     target="<?php echo esc_attr($primary_cta['target'] ?? '_self'); ?>"
-                                    class="inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#009DEA] px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
+                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#009DEA] px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
                                     aria-label="<?php echo esc_attr($primary_cta['title']); ?>"
                                 >
                                     <?php if ($primary_cta_icon): ?>
@@ -209,7 +209,7 @@ $section_id = 'subhero-' . uniqid();
                                 <a
                                     href="<?php echo esc_url($secondary_cta['url']); ?>"
                                     target="<?php echo esc_attr($secondary_cta['target'] ?? '_self'); ?>"
-                                    class="inline-flex w-fit items-center justify-center gap-2 rounded-full border border-[#009DEA] px-6 py-4 text-[0.875rem] leading-5 font-bold text-[#009DEA] transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
+                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full border border-[#009DEA] px-6 py-4 text-[0.875rem] leading-5 font-bold text-[#009DEA] transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
                                     aria-label="<?php echo esc_attr($secondary_cta['title']); ?>"
                                 >
                                     <?php if ($secondary_cta_icon): ?>
@@ -330,7 +330,7 @@ $section_id = 'subhero-' . uniqid();
                                 <a
                                     href="<?php echo esc_url($primary_cta['url']); ?>"
                                     target="<?php echo esc_attr($primary_cta['target'] ?? '_self'); ?>"
-                                    class="inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#009DEA] px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
+                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#009DEA] px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
                                     aria-label="<?php echo esc_attr($primary_cta['title']); ?>"
                                 >
                                     <?php if ($primary_cta_icon): ?>
@@ -352,7 +352,7 @@ $section_id = 'subhero-' . uniqid();
                                 <a
                                     href="<?php echo esc_url($secondary_cta['url']); ?>"
                                     target="<?php echo esc_attr($secondary_cta['target'] ?? '_self'); ?>"
-                                    class="inline-flex w-fit items-center justify-center gap-2 rounded-full border border-[#009DEA] px-6 py-4 text-[0.875rem] leading-5 font-bold text-[#009DEA] transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
+                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full border border-[#009DEA] px-6 py-4 text-[0.875rem] leading-5 font-bold text-[#009DEA] transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
                                     aria-label="<?php echo esc_attr($secondary_cta['title']); ?>"
                                 >
                                     <?php if ($secondary_cta_icon): ?>

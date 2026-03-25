@@ -50,10 +50,10 @@ if ($has_posts) {
 <section
     id="<?php echo esc_attr($section_id); ?>"
     style="<?php echo esc_attr($background_style); ?>"
-    class="px-4 pt-6 pb-12 sm:px-6 lg:px-10 xl:px-16 <?php echo esc_attr($section_class); ?>"
+    class="py-12 lg:pt-[5rem] lg:pb-[9rem] <?php echo esc_attr($section_class); ?> max-xl:px-5"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-24 lg:py-[72px]">
+    <div class="mx-auto max-w-[1024px] w-full">
 
         <!-- Header row: heading + desktop CTA -->
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -94,7 +94,7 @@ if ($has_posts) {
                     class="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-0 transition-opacity duration-500 stories-bg stories-bg-b"
                     style="background-color: #081226;"
                 ></div>
-                <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10"></div>
+                <div class="absolute inset-x-0 bottom-0 z-10 h-2/3 bg-gradient-to-t to-transparent pointer-events-none from-black/40"></div>
             </div>
 
             <!-- Nav arrows (desktop only) -->
@@ -134,7 +134,7 @@ if ($has_posts) {
                 <?php if ($has_posts) : ?>
 
                     <!-- ── DESKTOP: Slick slider ── -->
-                    <div class="hidden md:block px-8 pb-8 w-full">
+                    <div class="hidden px-8 pb-8 w-full md:block">
                         <div class="js-stories-slider">
                             <?php $slide_index = 0; while ($stories_query->have_posts()) : $stories_query->the_post(); ?>
                                 <?php
@@ -145,7 +145,7 @@ if ($has_posts) {
                                 $image_alt = $image_alt ?: get_the_title($post_id);
                                 $excerpt   = wp_trim_words(get_the_excerpt(), 12, '…');
                                 ?>
-                                <div class="stories-slide px-2" data-slide-index="<?php echo esc_attr((string) $slide_index); ?>">
+                                <div class="px-2 stories-slide" data-slide-index="<?php echo esc_attr((string) $slide_index); ?>">
                                     <article class="flex h-full gap-3 rounded-[12px] bg-white p-4 shadow-md">
                                         <?php if ($image_url) : ?>
                                             <img
@@ -155,13 +155,13 @@ if ($has_posts) {
                                                 class="h-[100px] w-[100px] shrink-0 rounded-[8px] object-cover self-start"
                                             />
                                         <?php endif; ?>
-                                        <div class="flex min-w-0 flex-1 flex-col items-start justify-between gap-3">
-                                            <p style="color:#475467;font-family:'Public Sans',sans-serif;font-size:14px;font-weight:400;line-height:20px;">
+                                        <div class="flex flex-col flex-1 gap-3 justify-between items-start min-w-0">
+                                            <p class="font-sans text-[14px] font-normal leading-[20px] text-[#475467]">
                                                 <?php echo esc_html('"' . $excerpt . '"'); ?>
                                             </p>
                                             <a
                                                 href="<?php the_permalink(); ?>"
-                                                class="inline-flex justify-center items-center gap-2 px-5 py-2.5 w-full text-sm font-bold text-white rounded-full md:w-fit whitespace-nowrap bg-[#008BCC] border-0 hover:border-0 hover:bg-[#00628F] transition-colors duration-200"
+                                                class="inline-flex justify-center items-center gap-2 px-5 py-2.5 w-full  font-['Public_Sans'] text-[12px] not-italic font-bold leading-[18px] text-white rounded-full md:w-fit whitespace-nowrap bg-[#008BCC] border-0 hover:border-0 hover:bg-[#00628F] transition-colors duration-200"
                                             >
                                                 <?php echo esc_html('Read ' . get_the_title() . '\'s story'); ?>
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -176,7 +176,7 @@ if ($has_posts) {
                     </div>
 
                     <!-- ── MOBILE: CSS scroll snap ── -->
-                    <div class="md:hidden pb-4 w-full">
+                    <div class="pb-4 w-full md:hidden">
                         <div class="stories-scroll-track">
                             <?php foreach ($stories_query->posts as $i => $p) :
                                 $img_url = get_the_post_thumbnail_url($p->ID, 'medium_large') ?: '';
@@ -195,13 +195,13 @@ if ($has_posts) {
                                                 class="h-[80px] w-[80px] shrink-0 rounded-[8px] object-cover self-start"
                                             />
                                         <?php endif; ?>
-                                        <div class="flex min-w-0 flex-1 flex-col items-start justify-between gap-2">
-                                            <p style="color:#475467;font-family:'Public Sans',sans-serif;font-size:14px;font-weight:400;line-height:20px;">
+                                        <div class="flex flex-col flex-1 gap-2 justify-between items-start min-w-0">
+                                            <p class="font-sans text-[14px] font-normal leading-[20px] text-[#475467]">
                                                 <?php echo esc_html('"' . $exc . '"'); ?>
                                             </p>
                                             <a
                                                 href="<?php echo esc_url(get_permalink($p->ID)); ?>"
-                                                class="inline-flex justify-center items-center gap-2 px-4 py-2 w-full text-[13px] font-bold text-white rounded-full btn-primary whitespace-nowrap"
+                                                class="inline-flex justify-center items-center gap-2 px-4 py-2 w-full  font-['Public_Sans'] text-[12px] not-italic font-bold leading-[18px] text-white rounded-full btn-primary whitespace-nowrap"
                                             >
                                                 <?php echo esc_html('Read ' . get_the_title($p->ID) . '\'s story'); ?>
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -226,7 +226,7 @@ if ($has_posts) {
 
         <?php if ($has_posts) : ?>
             <!-- Mobile dots + CTA — outside the rounded container -->
-            <div class="mt-5 flex flex-col items-center justify-center gap-5 md:hidden">
+            <div class="flex flex-col gap-5 justify-center items-center mt-5 md:hidden">
                 <div class="stories-mobile-dots"></div>
 
                 <?php if (!empty($read_all_link['url']) && !empty($read_all_link['title'])) : ?>
@@ -257,6 +257,11 @@ if ($has_posts) {
         }
     }
 
+    /* ── Desktop: fractional slidesToShow needs a clipping viewport ── */
+    #<?php echo esc_attr($section_id); ?> .js-stories-slider .slick-list {
+        overflow: hidden;
+    }
+
     /* ── Desktop: equal height Slick slides ── */
     #<?php echo esc_attr($section_id); ?> .js-stories-slider .slick-track {
         display: flex !important;
@@ -283,10 +288,10 @@ if ($has_posts) {
     #<?php echo esc_attr($section_id); ?> .stories-scroll-track::-webkit-scrollbar {
         display: none;
     }
-    /* Each card: full width minus left+right peek */
+    /* ~2 cards visible + peek of next (match desktop carousel) */
     #<?php echo esc_attr($section_id); ?> .stories-scroll-slide {
-        flex: 0 0 calc(100% - 48px);
-        scroll-snap-align: center;
+        flex: 0 0 calc((100% - 24px) / 2.35);
+        scroll-snap-align: start;
         scroll-snap-stop: always;
     }
 
@@ -362,8 +367,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if ($slider.length && !$slider.hasClass('slick-initialized')) {
             $slider.slick({
-                slidesToShow   : 3,
-                slidesToScroll : 3,
+                /* ~2 full cards + peek of next (see design) */
+                slidesToShow   : 2.35,
+                slidesToScroll : 1,
                 infinite       : true,
                 dots           : false,
                 arrows         : true,
@@ -372,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 adaptiveHeight : false,
                 responsive     : [{
                     breakpoint : 1024,
-                    settings   : { slidesToShow: 2, slidesToScroll: 2 }
+                    settings   : { slidesToShow: 2.25, slidesToScroll: 1 }
                 }]
             });
         }
@@ -411,13 +417,14 @@ document.addEventListener('DOMContentLoaded', function () {
         dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
     }
 
-    /* Dot click: scroll the chosen slide into center */
+    /* Dot click: align slide to start (matches scroll-snap-align: start + 2+peek layout) */
     dotsEl.addEventListener('click', function (e) {
         var btn = e.target.closest('button[data-i]');
         if (!btn) return;
         var idx = parseInt(btn.getAttribute('data-i'), 10);
         var slide = slides[idx];
-        var targetScroll = slide.offsetLeft - (track.offsetWidth - slide.offsetWidth) / 2;
+        var trackPad = 24;
+        var targetScroll = Math.max(0, slide.offsetLeft - trackPad);
         track.scrollTo({ left: targetScroll, behavior: 'smooth' });
     });
 

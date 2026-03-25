@@ -83,9 +83,9 @@ if ($image_title === '') {
     aria-labelledby="<?php echo esc_attr($section_id . '-heading'); ?>"
     style="background-color: <?php echo esc_attr($background_color ?: '#ffffff'); ?>;"
 >
-    <div class="flex flex-col items-center w-full px-8 mx-auto max-w-container2 pt-5 pb-5 max-lg:px-5 <?php echo esc_attr($padding_class_string); ?> pt-8 pb-8 md:pt-5 md:pb-5">
-        <div class="w-full max-w-[80rem] mx-auto">
-            <div class="flex flex-col gap-7 md:gap-14 self-start pt-0 pb-0 md:pt-16 md:pb-16 w-full h-auto md:flex-row md:justify-start max-xl:px-5 md:items-start">
+    <div class="flex flex-col items-center w-full mx-auto max-w-[1208px] max-xl:px-5 <?php echo esc_attr($padding_class_string); ?>">
+        <div class="w-full max-w-[1208px] mx-auto">
+            <div class="flex flex-col gap-7 items-center self-start py-12 w-full h-auto md:gap-14 md:pt-16 md:pb-16 md:flex-row md:justify-start max-xl:px-5">
 
                 <div class="flex flex-col gap-4 pr-5 min-w-0 md:justify-start md:items-start md:pr-8 md:flex-1">
                     <<?php echo esc_html($heading_tag); ?>
@@ -165,7 +165,7 @@ if ($image_title === '') {
 
                 <div
                     class="<?php echo esc_attr($image_radius); ?> overflow-hidden bg-center md:flex-1 min-w-0"
-                    style="background-color: <?php echo esc_attr($image_bg_color ?: '#f2f4f7'); ?>;"
+                    
                 >
                     <?php if ($image_url !== '') : ?>
                         <img
@@ -174,7 +174,7 @@ if ($image_title === '') {
                             title="<?php echo esc_attr($image_title); ?>"
                             loading="lazy"
                             decoding="async"
-                            class="object-cover w-full h-full rounded-lg max-md:h-auto max-md:object-contain"
+                            class="object-cover w-full h-full max-h-[385px] max-w-[433px] rounded-lg max-md:h-auto max-md:object-contain"
                         />
                     <?php endif; ?>
                 </div>
