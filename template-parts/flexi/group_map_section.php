@@ -165,10 +165,13 @@ foreach ($running_group_ids as $group_id) {
             </article>
 
             <!-- Map Column -->
-            <div class="relative lg:col-span-7">
+            <div
+                class="relative isolate lg:col-span-7"
+                x-data="{ mapQuery: '' }"
+            >
                 <div
                     id="<?php echo esc_attr($section_id); ?>-map"
-                    class="w-full h-[504px] md:h-[540px] rounded-lg overflow-hidden"
+                    class="relative z-0 w-full h-[504px] md:h-[540px] rounded-lg overflow-hidden"
                     data-leaflet
                     data-provider="<?php echo esc_attr($tile_provider); ?>"
                     data-token="<?php echo esc_attr($tile_api_key); ?>"
@@ -179,16 +182,51 @@ foreach ($running_group_ids as $group_id) {
                     aria-label="Interactive map showing running group locations"
                 ></div>
 
+                <!-- After map in DOM + high z-index so the bar sits visually on top, centered -->
+                <div
+                    class="absolute inset-x-0 top-4 z-[8000] flex justify-center px-4 pointer-events-none md:top-5"
+                    role="search"
+                >
+                    <label class="sr-only" for="<?php echo esc_attr($section_id); ?>-map-search">
+                        <?php echo esc_html__('Search groups by city or county', 'matrix-starter'); ?>
+                    </label>
+                    <div
+                        class="flex h-12 w-[258px] max-w-full shrink-0 items-center justify-between rounded-[1000px] border border-[var(--Gray-300,#D0D5DD)] bg-white px-6 py-0 pointer-events-auto"
+                    >
+                        <input
+                            id="<?php echo esc_attr($section_id); ?>-map-search"
+                            type="search"
+                            name="group_map_search"
+                            autocomplete="off"
+                            x-model="mapQuery"
+                            @input.debounce.300ms="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
+                            @keydown.enter.prevent="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
+                            placeholder="<?php echo esc_attr__('Search by city or county...', 'matrix-starter'); ?>"
+                            class="min-w-0 h-full flex-1 !border-0 bg-transparent font-['Public_Sans'] text-[14px] font-normal not-italic leading-[20px] text-[var(--Blue-SR-500,#00628F)] placeholder:text-[var(--Blue-SR-500,#00628F)]/60 !outline-none focus:!border-0 !ring-0 focus:!ring-0 pr-2"
+                        />
+                        <button
+                            type="button"
+                            class="flex shrink-0 justify-center items-center p-0 text-[#00628F] hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--Turquoise-500,#1C959B)] focus-visible:ring-offset-2 rounded-full"
+                            aria-label="<?php echo esc_attr__('Search map', 'matrix-starter'); ?>"
+                            @click="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                                <path d="M13 13L10.1 10.1M11.6667 6.33333C11.6667 9.27885 9.27885 11.6667 6.33333 11.6667C3.38781 11.6667 1 9.27885 1 6.33333C1 3.38781 3.38781 1 6.33333 1C9.27885 1 11.6667 3.38781 11.6667 6.33333Z" stroke="#00628F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Safe JSON payload (prevents broken HTML attributes) -->
                 <script type="application/json" id="<?php echo esc_attr($section_id); ?>-groups">
 <?php echo wp_json_encode($groups_payload); ?>
                 </script>
 
                 <?php if ($find_groups_button && is_array($find_groups_button) && !empty($find_groups_button['url']) && !empty($find_groups_button['title'])): ?>
-                    <div style="z-index: 1000;" class="flex absolute right-0 left-0 bottom-8 justify-center items-center mx-auto">
+                    <div class="flex absolute right-0 left-0 bottom-8 z-[7500] justify-center items-center mx-auto pointer-events-none">
                         <a 
                           href="<?php echo esc_url($find_groups_button['url']); ?>" 
-                          class="group-map-find-btn inline-flex shrink-0 justify-center items-center gap-2 w-[170px] h-[42px] p-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white rounded-full border-0 shadow-none outline-none ring-0 bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white hover:border-0 hover:shadow-none hover:outline-none hover:ring-0 focus:border-0 focus:shadow-none focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 transition-colors duration-200 btn"
+                          class="group-map-find-btn pointer-events-auto inline-flex shrink-0 justify-center items-center gap-2 w-[170px] h-[42px] p-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white rounded-full border-0 shadow-none outline-none ring-0 bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white hover:border-0 hover:shadow-none hover:outline-none hover:ring-0 focus:border-0 focus:shadow-none focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 transition-colors duration-200 btn"
                           target="<?php echo esc_attr($find_groups_button['target'] ?? '_self'); ?>"
                           aria-label="<?php echo esc_attr($find_groups_button['title']); ?>"
                         >
@@ -243,6 +281,23 @@ foreach ($running_group_ids as $group_id) {
     document.body.appendChild(script);
   }
 
+  function groupMatchesQuery(g, rawQuery) {
+    const q = String(rawQuery || "").trim().toLowerCase();
+    if (!q) return true;
+    const parts = [g.title, g.address, g.contact_info].filter(Boolean).map((s) => String(s).toLowerCase());
+    return parts.some((hay) => hay.indexOf(q) !== -1);
+  }
+
+  /**
+   * sectionId is the PHP $section_id (without -map suffix).
+   */
+  window.srGroupMapApplyFilter = function (sectionId, query) {
+    const el = document.getElementById(sectionId + "-map");
+    if (el && typeof el._applyGroupMapFilter === "function") {
+      el._applyGroupMapFilter(query);
+    }
+  };
+
   function initGroupMap(container) {
     if (!container || container.dataset.initialized === "1") return;
     if (typeof window.L === "undefined") return;
@@ -286,6 +341,7 @@ foreach ($running_group_ids as $group_id) {
       iconAnchor: [11, 27]
     });
 
+    const markerEntries = [];
     const bounds = [];
     groups.forEach((g) => {
       if (!g) return;
@@ -297,6 +353,7 @@ foreach ($running_group_ids as $group_id) {
 
       const marker = L.marker([glat, glng], { icon: customIcon }).addTo(map);
       bounds.push([glat, glng]);
+      markerEntries.push({ marker: marker, group: g });
 
       let popup = `<div style="max-width:240px;">`;
       popup += `<div style="font-weight:700;margin-bottom:4px;">${escapeHtml(g.title || "")}</div>`;
@@ -309,11 +366,43 @@ foreach ($running_group_ids as $group_id) {
       marker.bindPopup(popup);
     });
 
+    function applyGroupMapFilter(rawQuery) {
+      const q = String(rawQuery || "").trim();
+      const visibleBounds = [];
+      markerEntries.forEach(({ marker, group }) => {
+        const show = groupMatchesQuery(group, q);
+        if (show) {
+          if (!map.hasLayer(marker)) marker.addTo(map);
+          const glat = Number(group.lat);
+          const glng = Number(group.lng);
+          if (Number.isFinite(glat) && Number.isFinite(glng)) visibleBounds.push([glat, glng]);
+        } else if (map.hasLayer(marker)) {
+          map.removeLayer(marker);
+        }
+      });
+      if (visibleBounds.length === 0) {
+        map.setView([lat, lng], zoom);
+      } else if (visibleBounds.length === 1) {
+        map.setView(visibleBounds[0], Math.max(zoom, 12));
+      } else {
+        map.fitBounds(visibleBounds, { padding: [30, 30] });
+      }
+    }
+
+    container._applyGroupMapFilter = applyGroupMapFilter;
+
     // Auto-fit if we have markers
     if (bounds.length > 1) map.fitBounds(bounds, { padding: [30, 30] });
     if (bounds.length === 1) map.setView(bounds[0], Math.max(zoom, 12));
 
     container.dataset.initialized = "1";
+
+    // Sync Alpine search if user typed before map finished init
+    const sectionPrefix = container.id.replace(/-map$/, "");
+    const searchInput = document.getElementById(sectionPrefix + "-map-search");
+    if (searchInput && searchInput.value) {
+      applyGroupMapFilter(searchInput.value);
+    }
 
     // Fix rendering when inside layout containers / after fonts load
     setTimeout(() => map.invalidateSize(), 50);
