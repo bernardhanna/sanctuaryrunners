@@ -1,7 +1,7 @@
 <?php
 /**
- * Flexi Block: Hero
- * template-parts/flexi/hero.php
+ * Hero block (ACF flexible layout)
+ * template-parts/hero/hero.php
  */
 
 if (!defined('ABSPATH')) exit;
@@ -30,6 +30,42 @@ $media_type        = get_sub_field('media_type') ?: 'image';
 $media_image       = get_sub_field('media_image');
 $media_ratio_class = get_sub_field('media_ratio') ?: 'aspect-[16/9]';
 
+$video_source      = get_sub_field('video_source') ?: 'local';
+$video_file        = get_sub_field('video_file');
+$video_youtube_url = get_sub_field('video_youtube_url');
+$video_vimeo_url   = get_sub_field('video_vimeo_url');
+$video_poster      = get_sub_field('video_poster');
+
+$video_autoplay    = matrix_hero_acf_bool(get_sub_field('video_autoplay'), true);
+$video_muted       = matrix_hero_acf_bool(get_sub_field('video_muted'), true);
+$video_loop        = matrix_hero_acf_bool(get_sub_field('video_loop'), true);
+$video_playsinline = matrix_hero_acf_bool(get_sub_field('video_playsinline'), true);
+$video_controls    = matrix_hero_acf_bool(get_sub_field('video_controls'), false);
+
+$video_embed_url = '';
+if ($media_type === 'video') {
+    $embed_opts = [
+        'autoplay'    => $video_autoplay,
+        'mute'        => $video_muted,
+        'loop'        => $video_loop,
+        'controls'    => $video_controls,
+        'playsinline' => $video_playsinline,
+    ];
+    if ($video_source === 'youtube' && !empty($video_youtube_url)) {
+        $yt_id = matrix_hero_parse_youtube_id($video_youtube_url);
+        if ($yt_id !== '') {
+            $video_embed_url = matrix_hero_youtube_embed_url($yt_id, $embed_opts);
+        }
+    } elseif ($video_source === 'vimeo' && !empty($video_vimeo_url)) {
+        $vm_id = matrix_hero_parse_vimeo_id($video_vimeo_url);
+        if ($vm_id !== '') {
+            $video_embed_url = matrix_hero_vimeo_embed_url($vm_id, $embed_opts);
+        }
+    }
+}
+
+$video_poster_url = ($video_poster && $media_type === 'video') ? wp_get_attachment_image_url((int) $video_poster, 'full') : '';
+
 // -------------------------------
 // Background
 // -------------------------------
@@ -52,6 +88,10 @@ if (!empty($title)) {
     $title_clean = preg_replace('#</?h[1-6][^>]*>#i', '', (string) $title_clean);
     $title_inline = trim((string) wp_kses($title_clean, $allowed_title_tags));
 }
+
+$hero_iframe_title = $title_inline !== ''
+    ? wp_strip_all_tags($title_inline)
+    : __('Hero video', 'matrix-starter');
 ?>
 
 <section
@@ -138,7 +178,43 @@ if (!empty($title)) {
 
                 <figure class="relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] <?php echo esc_attr($media_ratio_class); ?>">
 
-                    <?php if (!empty($media_image)): ?>
+                    <?php if ($media_type === 'video'): ?>
+                        <?php
+                        $video_media_classes = 'absolute inset-0 w-full h-full object-cover';
+                        if ($video_source === 'local' && is_array($video_file) && !empty($video_file['url'])) :
+                            $mime = !empty($video_file['mime_type']) ? $video_file['mime_type'] : 'video/mp4';
+                            ?>
+                            <video
+                                class="<?php echo esc_attr($video_media_classes); ?>"
+                                <?php echo $video_controls ? 'controls' : ''; ?>
+                                <?php echo $video_autoplay ? 'autoplay' : ''; ?>
+                                <?php echo $video_muted ? 'muted' : ''; ?>
+                                <?php echo $video_loop ? 'loop' : ''; ?>
+                                <?php echo $video_playsinline ? 'playsinline' : ''; ?>
+                                <?php echo $video_poster_url ? 'poster="' . esc_url($video_poster_url) . '"' : ''; ?>
+                                preload="metadata"
+                            >
+                                <source src="<?php echo esc_url($video_file['url']); ?>" type="<?php echo esc_attr($mime); ?>">
+                            </video>
+                        <?php elseif (($video_source === 'youtube' || $video_source === 'vimeo') && $video_embed_url !== '') : ?>
+                            <iframe
+                                class="<?php echo esc_attr($video_media_classes); ?>"
+                                src="<?php echo esc_url($video_embed_url); ?>"
+                                title="<?php echo esc_attr($hero_iframe_title); ?>"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                loading="eager"
+                            ></iframe>
+                        <?php elseif (!empty($video_poster_url)) : ?>
+                            <img
+                                src="<?php echo esc_url($video_poster_url); ?>"
+                                alt=""
+                                class="<?php echo esc_attr($video_media_classes); ?>"
+                                decoding="async"
+                            >
+                        <?php endif; ?>
+
+                    <?php elseif (!empty($media_image)): ?>
                         <?php echo wp_get_attachment_image($media_image, 'full', false, [
                             'class' => 'w-full h-full object-cover'
                         ]); ?>

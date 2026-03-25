@@ -4,7 +4,7 @@ use StoutLogic\AcfBuilder\FieldsBuilder;
 
 /**
  * Flexi Layout: Hero
- * Matches template-parts/flexi/hero.php
+ * Matches template-parts/hero/hero.php
  */
 
 $hero = new FieldsBuilder('hero');
@@ -50,12 +50,97 @@ $hero
         ])
 
     ->addTab('Media')
+        ->addSelect('media_type', [
+            'label' => 'Media type',
+            'choices' => [
+                'image' => 'Image',
+                'video' => 'Video',
+            ],
+            'default_value' => 'image',
+            'ui' => 1,
+            'return_format' => 'value',
+        ])
         ->addImage('media_image', [
             'label' => 'Media Image',
             'return_format' => 'id', // your template expects an attachment ID
             'preview_size' => 'medium',
             'library' => 'all',
         ])
+            ->conditional('media_type', '==', 'image')
+        ->addSelect('video_source', [
+            'label' => 'Video source',
+            'choices' => [
+                'local' => 'Uploaded file (MP4 / WebM)',
+                'youtube' => 'YouTube',
+                'vimeo' => 'Vimeo',
+            ],
+            'default_value' => 'local',
+            'ui' => 1,
+            'return_format' => 'value',
+            'instructions' => 'Only used when media type is Video.',
+        ])
+            ->conditional('media_type', '==', 'video')
+        ->addFile('video_file', [
+            'label' => 'Video file',
+            'instructions' => 'MP4 or WebM from the media library.',
+            'return_format' => 'array',
+            'mime_types' => 'mp4,webm,ogv',
+            'library' => 'all',
+        ])
+            ->conditional('media_type', '==', 'video')
+            ->and('video_source', '==', 'local')
+        ->addUrl('video_youtube_url', [
+            'label' => 'YouTube URL',
+            'instructions' => 'Paste a watch, youtu.be, shorts, or embed link.',
+        ])
+            ->conditional('media_type', '==', 'video')
+            ->and('video_source', '==', 'youtube')
+        ->addUrl('video_vimeo_url', [
+            'label' => 'Vimeo URL',
+            'instructions' => 'Paste a vimeo.com video link.',
+        ])
+            ->conditional('media_type', '==', 'video')
+            ->and('video_source', '==', 'vimeo')
+        ->addImage('video_poster', [
+            'label' => 'Video poster (optional)',
+            'instructions' => 'Shown before playback and as fallback; recommended for performance.',
+            'return_format' => 'id',
+            'preview_size' => 'medium',
+            'library' => 'all',
+        ])
+            ->conditional('media_type', '==', 'video')
+        ->addTrueFalse('video_autoplay', [
+            'label' => 'Autoplay',
+            'ui' => 1,
+            'default_value' => 1,
+        ])
+            ->conditional('media_type', '==', 'video')
+        ->addTrueFalse('video_muted', [
+            'label' => 'Muted',
+            'instructions' => 'Required for autoplay in most browsers.',
+            'ui' => 1,
+            'default_value' => 1,
+        ])
+            ->conditional('media_type', '==', 'video')
+        ->addTrueFalse('video_loop', [
+            'label' => 'Loop',
+            'ui' => 1,
+            'default_value' => 1,
+        ])
+            ->conditional('media_type', '==', 'video')
+        ->addTrueFalse('video_playsinline', [
+            'label' => 'Plays inline (mobile)',
+            'instructions' => 'Keeps video inline instead of fullscreen on iOS; recommended with autoplay.',
+            'ui' => 1,
+            'default_value' => 1,
+        ])
+            ->conditional('media_type', '==', 'video')
+        ->addTrueFalse('video_controls', [
+            'label' => 'Show player controls',
+            'ui' => 1,
+            'default_value' => 0,
+        ])
+            ->conditional('media_type', '==', 'video')
         ->addText('media_ratio', [
             'label' => 'Media Aspect Ratio Class',
             'instructions' => "Tailwind aspect class, e.g. aspect-[16/9], aspect-square, aspect-[4/3].",
