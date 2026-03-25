@@ -28,6 +28,10 @@ if (have_rows('padding_settings')) {
 
 // Get current page for pagination
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+$search_query = is_search() ? get_search_query() : '';
+if ($search_query === '' && isset($_GET['s'])) {
+    $search_query = sanitize_text_field(wp_unslash($_GET['s']));
+}
 
 // Query posts
 $args = array(
@@ -36,6 +40,9 @@ $args = array(
     'paged'          => $paged,
     'post_status'    => 'publish'
 );
+if ($search_query !== '') {
+    $args['s'] = $search_query;
+}
 
 $blog_query = new WP_Query($args);
 
@@ -53,7 +60,8 @@ $section_id = 'blog-listing-' . uniqid();
     id="<?php echo esc_attr($section_id); ?>"
     class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
-    x-data="blogFilter()"
+    x-data="blogFilter('<?php echo esc_js($search_query); ?>')"
+    x-init="filterPosts()"
 >
     <div class="flex flex-col items-center pt-5 lg:pt-[3.5rem] pb-5 mx-auto w-full max-w-container max-lg:px-5">
 
@@ -341,10 +349,10 @@ $section_id = 'blog-listing-' . uniqid();
 </section>
 
 <script>
-function blogFilter() {
+function blogFilter(initialSearchTerm = '') {
     return {
         activeFilter: 'all',
-        searchTerm: '',
+        searchTerm: initialSearchTerm || '',
 
         setFilter(filter) {
             this.activeFilter = filter;
