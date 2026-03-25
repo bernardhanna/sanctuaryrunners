@@ -191,7 +191,9 @@ $section_id = 'events-listing-' . uniqid();
                         ?>
 
                         <article 
-    class="overflow-hidden flex-1 bg-sky-950 rounded-lg shrink basis-0 min-w-60 transition-all duration-200 hover:shadow-[0_0_0_4px_#F68DA7]"
+    class="overflow-hidden flex-1 bg-sky-950 rounded-lg shrink basis-0 min-w-60 event-item cursor-pointer transition-all duration-200 hover:shadow-[0_0_0_4px_#F68DA7]"
+    data-url="<?php echo esc_url(get_permalink()); ?>"
+    tabindex="0"
 >
                             <!-- Featured Image -->
                             <div class="flex overflow-hidden relative flex-col gap-2.5 items-start w-full aspect-[1.565] min-h-[232px] rounded-t-[8px]">
@@ -424,6 +426,29 @@ function eventsFilter() {
         }
     }
 }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var cards = document.querySelectorAll('#<?php echo esc_js($section_id); ?> .event-item[data-url]');
+    if (!cards.length) return;
+
+    cards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+            if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
+            var url = card.getAttribute('data-url');
+            if (url) window.location.href = url;
+        });
+
+        card.addEventListener('keydown', function (e) {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
+            e.preventDefault();
+            var url = card.getAttribute('data-url');
+            if (url) window.location.href = url;
+        });
+    });
+});
 </script>
 
 <?php wp_reset_postdata(); ?>

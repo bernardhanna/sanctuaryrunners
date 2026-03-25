@@ -170,9 +170,11 @@ $section_id = 'blog-listing-' . uniqid();
                         ?>
 
                         <article
-                            class="overflow-hidden flex-1 bg-yellow-50 rounded-[4px] shrink basis-0 min-w-60 post-item transition-all duration-200 hover:bg-[#FCF4C5] hover:shadow-[0_0_0_4px_#009DE6]"
+                            class="overflow-hidden flex-1 bg-yellow-50 rounded-[4px] shrink basis-0 min-w-60 post-item cursor-pointer transition-all duration-200 hover:bg-[#FCF4C5] hover:shadow-[0_0_0_4px_#009DE6]"
                             data-categories="<?php echo esc_attr(implode(' ', $category_slugs)); ?>"
                             data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>"
+                            data-url="<?php echo esc_url(get_permalink()); ?>"
+                            tabindex="0"
                         >
                             <!-- Featured Image with Tag -->
                             <div class="flex overflow-hidden relative flex-col gap-2.5 items-start pt-6 pb-44 w-full text-xs font-bold text-sky-800 whitespace-nowrap aspect-[1.565] min-h-[232px] max-md:pb-24 rounded-t-[8px]">
@@ -365,4 +367,27 @@ function blogFilter() {
         }
     }
 }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var cards = document.querySelectorAll('#<?php echo esc_js($section_id); ?> .post-item[data-url]');
+    if (!cards.length) return;
+
+    cards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+            if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
+            var url = card.getAttribute('data-url');
+            if (url) window.location.href = url;
+        });
+
+        card.addEventListener('keydown', function (e) {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
+            e.preventDefault();
+            var url = card.getAttribute('data-url');
+            if (url) window.location.href = url;
+        });
+    });
+});
 </script>
