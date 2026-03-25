@@ -3,9 +3,12 @@
 $section_heading     = get_sub_field('section_heading') ?: 'Latest Posts';
 $section_heading_tag = get_sub_field('section_heading_tag') ?: 'h2';
 $show_filters        = get_sub_field('show_filters');
+if ($show_filters === null) $show_filters = true;
 $show_search         = get_sub_field('show_search');
-$posts_per_page      = get_sub_field('posts_per_page') ?: 6;
+if ($show_search === null) $show_search = true;
+$posts_per_page      = get_sub_field('posts_per_page') ?: get_option('posts_per_page') ?: 6;
 $show_pagination     = get_sub_field('show_pagination');
+if ($show_pagination === null) $show_pagination = true;
 $background_color    = get_sub_field('background_color') ?: '#ffffff';
 $layout_option       = get_sub_field('layout_option') ?: 'layout_1';
 $is_layout_2         = $layout_option === 'layout_2';
