@@ -36,15 +36,15 @@ if (have_rows('padding_settings')) {
     role="region"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="flex flex-col items-center pt-5 pb-5 mx-auto w-full max-w-container max-lg:px-5">
-        <div class="flex justify-center items-center px-20 pt-8 md:pt-16 pb-6 w-full md:flex-row flex-col md:px-0 px-5">
-            <div class="flex flex-col md:flex-row gap-4 md:gap-20 items-start w-full max-w-screen-xl">
+    <div class="flex flex-col items-center  mx-auto w-full max-w-[1084px] max-lg:px-5">
+        <div class="flex flex-col justify-center items-center px-5 pt-8 pb-6 w-full md:pt-16 md:flex-row md:px-0">
+            <div class="flex flex-col gap-4 items-start w-full md:flex-row md:gap-20">
 
                 <?php if ($main_image): ?>
                 <div class="flex-1 max-md:w-full" role="img" aria-labelledby="<?php echo esc_attr($section_id); ?>-image-desc">
                     <?php echo wp_get_attachment_image($main_image, 'full', false, [
                         'alt' => esc_attr($main_image_alt),
-                        'class' => 'w-full h-auto rounded-lg object-cover',
+                        'class' => 'w-full h-auto rounded-lg object-cover max-sm:object-contain  max-w-[450px] max-h-[450px]',
                         'loading' => 'lazy'
                     ]); ?>
                     <span id="<?php echo esc_attr($section_id); ?>-image-desc" class="sr-only">
@@ -53,15 +53,15 @@ if (have_rows('padding_settings')) {
                 </div>
                 <?php endif; ?>
 
-                <div class="flex flex-col flex-1 max-md:w-full pt-6 pl-12 md:pl-0" role="main">
+                <div class="flex flex-col flex-1 pt-6 pl-12 max-md:w-full md:pl-0" role="main">
 
                    <?php if (!empty($main_quote)): ?>
 
-                    <div class="relative w-full">
+                    <div class="relative w-full max-w-[400px]">
 
                         <!-- Quotation mark -->
                         <div
-                            class="absolute -top-4 -left-4 -translate-x-1/2 text-6xl md:text-7xl font-bold leading-none"
+                            class="absolute -top-4 -left-4 text-6xl font-bold leading-none -translate-x-1/2 md:text-7xl"
                             style="color: <?php echo esc_attr($quotation_mark_color); ?>;"
                             aria-hidden="true"
                         >
@@ -70,7 +70,7 @@ if (have_rows('padding_settings')) {
 
                         <<?php echo esc_attr($main_quote_tag); ?>
                             id="<?php echo esc_attr($section_id); ?>-heading"
-                            class="pt-0 mb-6 text-2xl md:text-[36px] font-bold leading-tight text-sky-800 text-left"
+                            class="pt-0 mb-6 text-left font-sans text-[36px] font-bold not-italic leading-[44px] tracking-[-0.72px] text-sky-800"
                             role="heading"
                             aria-level="<?php echo esc_attr(str_replace('h', '', $main_quote_tag)); ?>"
                         >
@@ -83,13 +83,13 @@ if (have_rows('padding_settings')) {
 
                     <?php if (!empty($highlighted_quote)): ?>
                     <blockquote
-                        class="pl-6 mb-8 border-l-4 border-[#008BCC] max-sm:mb-6"
+                        class="max-w-[400px] pl-6 mb-8 border-l-2 border-[#008BCC] max-sm:mb-6"
                         role="complementary"
                         aria-labelledby="<?php echo esc_attr($section_id); ?>-quote"
                     >
                         <p
                             id="<?php echo esc_attr($section_id); ?>-quote"
-                            class="text-lg leading-relaxed text-gray-700 max-sm:text-base wp_editor"
+                            class="wp_editor font-sans !text-[18px] !font-normal !not-italic !leading-[24px] text-gray-700 [&_p]:!font-sans [&_p]:!text-[18px] [&_p]:!font-normal [&_p]:!not-italic [&_p]:!leading-[24px] [&_p]:!text-gray-700"
                         >
                             <?php echo wp_kses_post($highlighted_quote); ?>
                         </p>
@@ -97,7 +97,7 @@ if (have_rows('padding_settings')) {
                     <?php endif; ?>
 
                     <?php if (!empty($author_name) || !empty($author_title)): ?>
-                    <cite class="mb-8 text-base not-italic font-bold text-gray-900 max-sm:mb-6 max-sm:text-sm">
+                    <cite class="mb-8 block font-sans text-[14px] font-bold not-italic leading-[20px] text-gray-900 max-sm:mb-6">
                         <?php if (!empty($author_name)): ?>
                             <span class="author-name"><?php echo esc_html($author_name); ?></span>
                         <?php endif; ?>
