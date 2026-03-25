@@ -1,18 +1,29 @@
 <?php
-// Get ACF fields
-$heading            = get_sub_field('heading') ?: 'About Sanctuary Runners';
-$heading_tag        = get_sub_field('heading_tag') ?: 'h1';
-$content            = get_sub_field('content') ?: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.';
-$primary_cta        = get_sub_field('primary_cta');
-$secondary_cta      = get_sub_field('secondary_cta');
-$primary_cta_icon   = get_sub_field('primary_cta_icon');
-$secondary_cta_icon = get_sub_field('secondary_cta_icon');
-$image              = get_sub_field('image');
+// Supports both Flexible Content (get_sub_field) and direct template args.
+$args = is_array($args ?? null) ? $args : [];
+$sf = static function (string $key, $default = null) use ($args) {
+    if (array_key_exists($key, $args)) {
+        return $args[$key];
+    }
+    $val = get_sub_field($key);
+    return $val !== null ? $val : $default;
+};
+
+// Get fields / overrides
+$heading            = $sf('heading', 'About Sanctuary Runners');
+$heading_tag        = $sf('heading_tag', 'h1');
+$content            = $sf('content', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.');
+$primary_cta        = $sf('primary_cta');
+$secondary_cta      = $sf('secondary_cta');
+$primary_cta_icon   = $sf('primary_cta_icon');
+$secondary_cta_icon = $sf('secondary_cta_icon');
+$image              = $sf('image');
 $image_alt          = $image ? (get_post_meta($image, '_wp_attachment_image_alt', true) ?: 'Featured image') : '';
-$background_color   = get_sub_field('background_color') ?: '#EEF6FC';
-$use_white_text     = get_sub_field('use_white_text');
-$custom_breadcrumbs = get_sub_field('custom_breadcrumbs');
-$layout_option      = get_sub_field('layout_option') ?: 'layout_1';
+$background_color   = $sf('background_color', '#EEF6FC');
+$use_white_text     = (bool) $sf('use_white_text', false);
+$custom_breadcrumbs = (bool) $sf('custom_breadcrumbs', false);
+$layout_option      = $sf('layout_option', 'layout_1');
+$breadcrumbs_arg    = $sf('breadcrumbs');
 
 $is_layout_2         = $layout_option === 'layout_2';
 $is_dark_background  = strtolower($background_color) !== '#eef6fc';
@@ -28,7 +39,9 @@ $has_ctas = $has_primary_cta || $has_secondary_cta;
 
 // Generate breadcrumbs automatically if not custom
 $breadcrumbs = [];
-if ($custom_breadcrumbs && have_rows('breadcrumb_items')) {
+if (is_array($breadcrumbs_arg) && !empty($breadcrumbs_arg)) {
+    $breadcrumbs = $breadcrumbs_arg;
+} elseif ($custom_breadcrumbs && have_rows('breadcrumb_items')) {
     while (have_rows('breadcrumb_items')) {
         the_row();
         $breadcrumbs[] = [
