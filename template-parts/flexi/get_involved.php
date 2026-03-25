@@ -24,11 +24,11 @@ if (have_rows('padding_settings')) {
     class="relative flex overflow-hidden bg-[linear-gradient(313deg,_#059DED_24.08%,_#28B2FA_63%)] <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="flex flex-col items-center pt-12 pb-12 mx-auto w-full lg:py-12 max-w-container max-lg:px-5">
+    <div class="flex flex-col items-center py-[5rem] mx-auto w-full max-lg:py-12 max-w-[1024px] max-xl:px-5">
         <div class="grid grid-cols-1 gap-10 justify-center items-start px-8 w-full lg:grid-cols-[20%_80%] max-md:px-5">
 
             <!-- Left Column: Heading and Donate Button -->
-            <div class="flex flex-col items-center md:items-start w-full">
+            <div class="flex flex-col items-center w-full md:items-start">
 
                 <?php if (!empty($heading)): ?>
                     <<?php echo esc_attr($heading_tag); ?>
@@ -61,7 +61,7 @@ if (have_rows('padding_settings')) {
             <!-- Right Column: Involvement Items Grid -->
             <?php if ($involvement_items): ?>
                 <div class="flex flex-col justify-center w-full">
-                    <div class="grid grid-cols-1 gap-8 md:gap-16 w-full md:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-8 w-full md:gap-16 md:grid-cols-2">
                         <?php foreach ($involvement_items as $index => $item):
                             $item_icon = $item['icon'];
                             $item_icon_alt = get_post_meta($item_icon, '_wp_attachment_image_alt', true) ?: 'Icon';
@@ -93,7 +93,7 @@ if (have_rows('padding_settings')) {
                                         <div class="mb-2 font-bold leading-none">
                                                 <a
                                                     href="<?php echo esc_url($item_link['url']); ?>"
-                                                    class="group relative inline-flex gap-1 items-center text-white mb-2 transition-colors duration-300 focus:outline-none"
+                                                    class="inline-flex relative gap-1 items-center mb-2 text-white transition-colors duration-300 group focus:outline-none"
                                                     target="<?php echo esc_attr($item_link['target'] ?? '_self'); ?>"
                                                     aria-label="<?php echo esc_attr($item_link['title']); ?> - <?php echo esc_attr($item_description); ?>"
                                                 >
@@ -130,7 +130,7 @@ if (have_rows('padding_settings')) {
                                     <?php endif; ?>
 
                                     <?php if (!empty($item_description)): ?>
-                                        <p class="leading-6 text-white">
+                                        <p class="font-sans text-[16px] font-normal not-italic leading-[22px] text-[var(--Base-White,#FFF)]">
                                             <?php echo esc_html($item_description); ?>
                                         </p>
                                     <?php endif; ?>
