@@ -37,7 +37,7 @@ if (have_rows('padding_settings')) {
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
     <div class="flex flex-col items-center pt-5 pb-5 mx-auto w-full max-w-container max-lg:px-5">
-        <div class="flex justify-center items-center px-20 pt-16 pb-6 w-full md:flex-row flex-col md:px-20 px-5">
+        <div class="flex justify-center items-center px-20 pt-8 md:pt-16 pb-6 w-full md:flex-row flex-col md:px-0 px-5">
             <div class="flex flex-col md:flex-row gap-4 md:gap-20 items-start w-full max-w-screen-xl">
 
                 <?php if ($main_image): ?>
@@ -59,9 +59,10 @@ if (have_rows('padding_settings')) {
 
                     <div class="relative w-full">
 
-                       <!-- Quotation mark -->
+                        <!-- Quotation mark -->
                         <div
-                            class="absolute -top-4 -left-4 -translate-x-1/2 text-6xl md:text-7xl font-bold leading-none text-[#1C959B] md:text-[#F1416D]; ?>]"
+                            class="absolute -top-4 -left-4 -translate-x-1/2 text-6xl md:text-7xl font-bold leading-none"
+                            style="color: <?php echo esc_attr($quotation_mark_color); ?>;"
                             aria-hidden="true"
                         >
                             "

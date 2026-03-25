@@ -55,7 +55,7 @@ if (function_exists('pll_current_language')) {
       <!-- Compact trigger in nav (hover target): flag + arrow -->
       <a
         href="<?php echo esc_url($current['url'] ?? '#'); ?>"
-        class="flex gap-1 justify-center items-center px-1 py-2.5 w-full bg-transparent rounded-t transition-colors duration-200 btn hover:bg-gray-100"
+        class="flex gap-1 justify-center items-center px-1 py-2.5 w-full bg-transparent rounded-t transition-colors duration-200"
         aria-haspopup="listbox"
         :aria-expanded="open"
         aria-labelledby="language-dropdown-label"

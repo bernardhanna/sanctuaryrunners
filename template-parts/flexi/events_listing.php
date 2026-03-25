@@ -95,8 +95,10 @@ $section_id = 'events-listing-' . uniqid();
                         >
                             <button
                                 type="button"
-                                class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto text-sky-800 whitespace-nowrap rounded-full border-2 border-sky-500 border-solid min-h-9 btn w-fit hover:bg-sky-500 hover:text-white focus:ring-sky-500"
-                                :class="selectedLocation === '' ? 'bg-blue-200' : 'bg-white'"
+                                class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                                :class="selectedLocation === ''
+                                    ? 'bg-sky-500 text-white'
+                                    : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
                                 @click="filterEvents('')"
                                 aria-pressed="true"
                             >
@@ -106,8 +108,10 @@ $section_id = 'events-listing-' . uniqid();
                             <?php foreach ($event_locations as $location): ?>
                                 <button
                                     type="button"
-                                    class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto text-sky-800 whitespace-nowrap bg-blue-200 rounded-full min-h-9 btn w-fit hover:bg-sky-500 hover:text-white focus:ring-sky-500"
-                                    :class="selectedLocation === '<?php echo esc_attr($location->slug); ?>' ? 'bg-sky-500 text-white' : 'bg-blue-200'"
+                                    class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                                    :class="selectedLocation === '<?php echo esc_attr($location->slug); ?>'
+                                        ? 'bg-sky-500 text-white'
+                                        : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
                                     @click="filterEvents('<?php echo esc_attr($location->slug); ?>')"
                                     aria-pressed="false"
                                 >
@@ -119,50 +123,54 @@ $section_id = 'events-listing-' . uniqid();
                 <?php endif; ?>
 
                 <?php if ($show_search): ?>
-                    <!-- Search -->
-                    <form
-                        class="flex self-stretch my-auto min-h-[60px] min-w-60 w-[396px] items-center"
-                        @submit.prevent="searchEvents()"
-                        role="search"
-                        aria-label="Search events"
-                    >
-                        <div class="flex-1 text-gray-400 shrink basis-12 min-w-60 shadow-[0px_0px_20px_rgba(63,0,119,0.07)]">
-                            <div class="flex-1 w-full">
-                                <div class="flex flex-1 justify-between items-center px-4 py-0 pr-0 bg-white rounded size-full">
-                                    <div class="flex flex-1 gap-2 items-center self-stretch my-auto w-full shrink basis-0 min-w-60">
-                                        <svg
-                                            class="object-contain self-stretch my-auto w-6 shrink-0 aspect-square"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            aria-hidden="true"
-                                        >
-                                            <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
+                <!-- Search -->
+                <form
+                    class="flex self-stretch my-auto min-h-[60px] min-w-60 w-[396px] items-center"
+                    @submit.prevent="searchEvents()"
+                    role="search"
+                    aria-label="Search events"
+                >
+                    <div class="flex-1 shrink basis-12 min-w-60 shadow-[0px_0px_20px_rgba(63,0,119,0.07)] rounded-r-[30px] overflow-hidden">
+                        <div class="w-full">
+                            <div class="flex items-center">
+                                <div
+                                    class="flex flex-1 gap-2 items-center self-stretch my-auto w-full shrink basis-0 min-w-60 px-4 py-2 max-h-[60px] rounded-l-[4px] border border-transparent bg-white transition-all duration-200 hover:bg-[#CBF3F6] hover:border-[#1C959B] focus-within:bg-[#C2EDFF] focus-within:border-[#C2EDFF]"
+                                >
+                                    <svg
+                                        class="object-contain self-stretch my-auto w-6 shrink-0 aspect-square"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
 
-                                        <input
-                                            type="search"
-                                            class="flex-1 self-stretch my-auto text-gray-400 bg-transparent !border-none outline-none shrink basis-0 py-4 min-h-[60px]"
-                                            placeholder="Type keyword"
-                                            x-model="searchKeyword"
-                                            aria-label="Search events"
-                                        />
-                                    </div>
+                                    <input
+                                        type="search"
+                                        class="flex-1 self-stretch my-auto text-gray-400 bg-transparent !border-0 !outline-none !ring-0 focus:!border-0 focus:!outline-none focus:!ring-0 active:!border-0 active:!outline-none active:!ring-0 appearance-none shrink basis-0 min-h-[28px]"
+                                        placeholder="Type keyword"
+                                        x-model="searchKeyword"
+                                        aria-label="Search events"
+                                    />
                                 </div>
+
+                                <button
+                                    type="submit"
+                                    class="flex -ml-px gap-2 justify-center items-center px-6 py-4 h-full min-h-[60px] font-bold whitespace-nowrap bg-yellow-300 text-slate-800 max-md:px-5 w-fit hover:bg-[#FCF4C5] focus:ring-yellow-300 border-0 rounded-r-[100px] shadow-none"
+                                    aria-label="Search events"
+                                >
+                                    Search
+                                </button>
                             </div>
                         </div>
+                    </div>
+                </form>
+            <?php endif; ?>
 
-                        <button
-                            type="submit"
-                            class="flex gap-2 justify-center items-center px-6 py-4 h-full min-h-[60px] font-bold whitespace-nowrap bg-yellow-300 text-slate-800 max-md:px-5 btn w-fit hover:bg-yellow-400 focus:ring-yellow-300 border-0 rounded-r-[100px]"
-                            aria-label="Search events"
-                        >
-                            Search
-                        </button>
-                    </form>
-                <?php endif; ?>
+
             </div>
         <?php endif; ?>
 
@@ -182,9 +190,11 @@ $section_id = 'events-listing-' . uniqid();
                         $image_alt             = get_post_meta($featured_image, '_wp_attachment_image_alt', true) ?: get_the_title();
                         ?>
 
-                        <article class="overflow-hidden flex-1 bg-sky-950 rounded-lg shrink basis-0 min-w-60">
+                        <article 
+    class="overflow-hidden flex-1 bg-sky-950 rounded-lg shrink basis-0 min-w-60 transition-all duration-200 hover:shadow-[0_0_0_4px_#F68DA7]"
+>
                             <!-- Featured Image -->
-                            <div class="flex overflow-hidden relative flex-col gap-2.5 items-start w-full aspect-[1.565] min-h-[232px]">
+                            <div class="flex overflow-hidden relative flex-col gap-2.5 items-start w-full aspect-[1.565] min-h-[232px] rounded-t-[8px]">
                                 <?php if ($featured_image): ?>
                                     <?php echo wp_get_attachment_image($featured_image, 'large', false, [
                                         'alt'     => esc_attr($image_alt),
@@ -317,14 +327,20 @@ $section_id = 'events-listing-' . uniqid();
 
                     <!-- Page Numbers -->
                     <div class="flex gap-2 items-center self-stretch my-auto">
+                        <?php
+                        $pagination_link_class = 'flex flex-col justify-center items-center self-stretch my-auto w-12 min-h-12 rounded-full text-sky-600 transition-all duration-200 hover:bg-[#009DE6] hover:text-white hover:shadow-[0_0_0_4px_#009DE6] focus:bg-[#009DE6] focus:text-white focus:shadow-[0_0_0_4px_#009DE6]';
+
+                        $pagination_current_class = 'flex flex-col justify-center items-center self-stretch my-auto w-12 min-h-12 rounded-full text-white bg-[#009DE6] shadow-[0_0_0_4px_#009DE6]';
+                        ?>
+
                         <?php if ($current_page == 1): ?>
-                            <div class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-gray-300 rounded-full min-h-12">
-                                <span class="text-gray-300" aria-current="page">1</span>
+                            <div class="<?php echo esc_attr($pagination_current_class); ?>">
+                                <span aria-current="page">1</span>
                             </div>
                         <?php else: ?>
                             <a
                                 href="<?php echo esc_url($build_page_url(1)); ?>"
-                                class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-sky-600 rounded-full min-h-12 hover:bg-sky-100 focus:bg-sky-100 btn"
+                                class="<?php echo esc_attr($pagination_link_class); ?>"
                                 aria-label="Go to page 1"
                             >
                                 <span>1</span>
@@ -334,13 +350,13 @@ $section_id = 'events-listing-' . uniqid();
                         <?php
                         for ($i = max(2, $current_page - 2); $i <= min($total_pages - 1, $current_page + 2); $i++):
                             if ($i == $current_page): ?>
-                                <div class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-white bg-sky-600 rounded-full min-h-12">
+                                <div class="<?php echo esc_attr($pagination_current_class); ?>">
                                     <span aria-current="page"><?php echo esc_html($i); ?></span>
                                 </div>
                             <?php else: ?>
                                 <a
                                     href="<?php echo esc_url($build_page_url($i)); ?>"
-                                    class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-sky-600 rounded-full min-h-12 hover:bg-sky-100 focus:bg-sky-100 btn"
+                                    class="<?php echo esc_attr($pagination_link_class); ?>"
                                     aria-label="Go to page <?php echo esc_attr($i); ?>"
                                 >
                                     <span><?php echo esc_html($i); ?></span>
@@ -355,7 +371,7 @@ $section_id = 'events-listing-' . uniqid();
                             </div>
                             <a
                                 href="<?php echo esc_url($build_page_url($total_pages)); ?>"
-                                class="flex flex-col justify-center items-center self-stretch my-auto w-12 text-sky-600 rounded-full min-h-12 hover:bg-sky-100 focus:bg-sky-100 btn"
+                                class="<?php echo esc_attr($pagination_link_class); ?>"
                                 aria-label="Go to page <?php echo esc_attr($total_pages); ?>"
                             >
                                 <span><?php echo esc_html($total_pages); ?></span>
@@ -363,42 +379,7 @@ $section_id = 'events-listing-' . uniqid();
                         <?php endif; ?>
                     </div>
 
-                    <!-- Next Button -->
-                    <?php if ($current_page < $total_pages): ?>
-                        <a
-                            href="<?php echo esc_url($build_page_url($current_page + 1)); ?>"
-                            class="flex gap-1 items-center self-stretch py-1 pr-1 pl-2.5 my-auto text-sky-600 hover:text-sky-800 focus:text-sky-800 btn"
-                            aria-label="Go to next page"
-                        >
-                            <span class="self-stretch my-auto">Next</span>
-                            <svg
-                                class="object-contain self-stretch my-auto w-8 shrink-0 aspect-square"
-                                width="32"
-                                height="32"
-                                viewBox="0 0 32 32"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
-                            >
-                                <path d="M12 8L20 16L12 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
-                    <?php else: ?>
-                        <div class="flex gap-1 items-center self-stretch py-1 pr-1 pl-2.5 my-auto text-gray-300">
-                            <span class="self-stretch my-auto text-gray-300">Next</span>
-                            <svg
-                                class="object-contain self-stretch my-auto w-8 shrink-0 aspect-square"
-                                width="32"
-                                height="32"
-                                viewBox="0 0 32 32"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
-                            >
-                                <path d="M12 8L20 16L12 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    <?php endif; ?>
+                    
                 </nav>
             <?php endif; ?>
         </main>

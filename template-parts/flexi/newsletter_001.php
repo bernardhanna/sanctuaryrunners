@@ -101,7 +101,7 @@ if (!$icon_alt) {
                                     required
                                     aria-required="true"
                                     aria-describedby="newsletter-name-error-<?php echo esc_attr($section_id); ?>"
-                                    class="flex-1 w-full placeholder-gray-400 text-gray-700 bg-transparent border-none outline-none"
+                                    class="flex-1 w-full placeholder-gray-400 text-gray-700 bg-transparent border-none outline-none !border-none"
                                 />
                             </div>
                             <div id="newsletter-name-error-<?php echo esc_attr($section_id); ?>" class="hidden mt-1 text-xs text-red-600" role="alert" aria-live="polite"></div>
@@ -123,7 +123,7 @@ if (!$icon_alt) {
                                         aria-required="true"
                                         aria-describedby="newsletter-email-error-<?php echo esc_attr($section_id); ?>"
                                         autocomplete="email"
-                                        class="flex-1 w-full placeholder-gray-400 text-gray-700 bg-transparent border-none outline-none"
+                                        class="flex-1 w-full placeholder-gray-400 text-gray-700 bg-transparent border-none outline-none !border-none"
                                     />
                                 </div>
                                 <div id="newsletter-email-error-<?php echo esc_attr($section_id); ?>" class="hidden mt-1 text-xs text-red-600" role="alert" aria-live="polite"></div>
@@ -131,7 +131,7 @@ if (!$icon_alt) {
 
                             <button
                                 type="submit"
-                                class="flex gap-2 justify-center items-center px-6 py-4 font-bold whitespace-nowrap rounded-r transition-colors duration-200 btn focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:opacity-90 h-[52px] rounded-r-[100px] bg-[#FBEA5E]"
+                                class="flex gap-2 justify-center items-center px-6 py-4 font-bold whitespace-nowrap rounded-r transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 h-[50px] rounded-r-[100px] hover:!bg-[#fcf4c5]"
                                 style="background-color: <?php echo esc_attr($button_color); ?>; color: <?php echo esc_attr($button_text_color); ?>;"
                                 aria-describedby="newsletter-submit-help-<?php echo esc_attr($section_id); ?>">
                                 <span>Subscribe</span>

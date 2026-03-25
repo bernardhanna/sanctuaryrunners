@@ -61,7 +61,7 @@ $items = get_sub_field('timeline_items');
     <div class="flex flex-col items-center w-full mx-auto max-w-container pt-14 pb-14 max-lg:px-5 <?php echo esc_attr($padding_class_string); ?>">
         <div class="flex flex-col gap-12 w-full">
 
-            <header class="flex flex-col gap-4 w-full lg:px-32">
+            <header class="flex flex-col gap-4 w-full lg:px-16">
                 <<?php echo esc_html($heading_tag); ?>
                     id="<?php echo esc_attr($heading_id); ?>"
                     class="break-words text-left text-[1.875rem] font-[700] leading-[2.375rem] font-['Public Sans'] w-full"
@@ -162,7 +162,7 @@ $items = get_sub_field('timeline_items');
                                             href="<?php echo esc_url($cta_url); ?>"
                                             target="<?php echo esc_attr($cta_target); ?>"
                                             rel="<?php echo esc_attr($cta_target === '_blank' ? 'noopener noreferrer' : ''); ?>"
-                                            class="flex justify-center items-center gap-2 shrink-0 bg-[linear-gradient(313.479227deg,_rgba(5,157,237,1)_0%,_rgba(40,178,250,1)_91%)] bg-center rounded-[6.25rem] px-8 py-3.5 btn hover:opacity-90 transition-opacity duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-[0.875rem] leading-[1.25rem] font-[700] font-['Public Sans'] w-fit text-white"
+                                            class="inline-flex gap-2 justify-center items-center px-6 py-3 mx-auto text-sm font-bold text-white rounded-[100px] w-full md:w-fit border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn-primary max-w-fit"
                                             aria-label="<?php echo esc_attr($cta_title); ?>"
                                         >
                                             <span class="my-auto"><?php echo esc_html($cta_title); ?></span>

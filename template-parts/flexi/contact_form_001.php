@@ -277,3 +277,13 @@ if ($form_markup) {
         </div>
     </div>
 </section>
+
+<style type="text/css">
+    
+input,
+select,
+textarea{
+    border: 1px solid #475467 !important;
+}
+
+</style>

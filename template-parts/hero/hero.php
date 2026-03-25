@@ -56,7 +56,7 @@ if (!empty($title)) {
 
 <section
     id="<?php echo esc_attr($section_id); ?>"
-    class="overflow-hidden relative min-h-[590px] w-full flex items-end"
+    class="overflow-hidden relative min-h-[500px] w-full flex items-center lg:pb-[50px]"
     style="background-color: <?php echo esc_attr($bg_color); ?>;"
     role="banner"
     aria-labelledby="<?php echo esc_attr($title_id); ?>"
@@ -64,7 +64,7 @@ if (!empty($title)) {
 
     <div class="mx-auto w-full max-w-container">
 
-        <div class="grid grid-cols-1 gap-4 lg:grid-cols-[35%_70%] max-lg:px-5 w-full max-lg:pt-[7rem] pb-[2.5rem]">
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-[35%_70%] w-full max-lg:px-5 py-[2rem] lg:py-0">
 
             <!-- Text -->
             <header class="order-2 lg:order-1 flex flex-col gap-4 self-start pr-5 pl-0 min-w-0">
@@ -89,18 +89,24 @@ if (!empty($title)) {
                 </div>
 
                 <?php if (!empty($description)): ?>
-                    <div id="<?php echo esc_attr($desc_id); ?>" class="text-left lg:max-w-[303px] text-[18px] leading-6 text-white">
+                    <div id="<?php echo esc_attr($desc_id); ?>" class="flex flex-col gap-[10px] text-left lg:max-w-[303px] text-[18px] leading-6 text-white">
                         <?php echo wp_kses_post($description); ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if ($primary_cta || $secondary_cta): ?>
-                    <div class="flex gap-6 pt-0 md:pt-4 w-full max-w-[400px]">
+                    <div class="flex gap-6 pt-0 md:pt-4 w-full max-w-[400px] justify-between md:justify-start">
 
                         <?php if ($primary_cta): ?>
                             <a
                                 href="<?php echo esc_url($primary_cta['url']); ?>"
-                                class="inline-flex items-center justify-center bg-white rounded-full px-6 py-4 text-[14px] font-bold text-[#00628F]"
+                                target="<?php echo esc_attr($primary_cta['target'] ?? '_self'); ?>"
+                                class="inline-flex items-center justify-center gap-2 bg-white rounded-full px-6 py-4 text-[14px] font-bold text-[#00628F]
+                                       hover:bg-[var(--Turquoise-50,#CBF3F6)]
+                                       active:bg-[var(--Turquoise-100,#75E0E6)]
+                                       focus:outline-none focus-visible:ring-0 focus-visible:border-[3px]
+                                       focus-visible:border-[var(--Turquoise-500,#1C959B)]
+                                       transition-colors duration-200 whitespace-nowrap"
                             >
                                 <?php echo esc_html($primary_cta['title']); ?>
                             </a>
@@ -109,7 +115,14 @@ if (!empty($title)) {
                         <?php if ($secondary_cta): ?>
                             <a
                                 href="<?php echo esc_url($secondary_cta['url']); ?>"
-                                class="inline-flex items-center justify-center border border-white rounded-full px-6 py-4 text-[14px] font-bold text-white"
+                                target="<?php echo esc_attr($secondary_cta['target'] ?? '_self'); ?>"
+                                class="inline-flex items-center justify-center gap-2 border border-white rounded-full px-6 py-4 text-[14px] font-bold text-white
+                                       hover:border-[var(--Yellow-100,#FCF4C5)]
+                                       active:border-white active:bg-[var(--Blue-SR-400,#008BCC)]
+                                       focus:outline-none focus-visible:ring-0 focus-visible:border-[3px]
+                                       focus-visible:border-[var(--Turquoise-500,#1C959B)]
+                                       focus-visible:bg-[var(--Purple-50,#D9CCE4)]
+                                       transition-colors duration-200 whitespace-nowrap"
                             >
                                 <?php echo esc_html($secondary_cta['title']); ?>
                             </a>
@@ -127,7 +140,7 @@ if (!empty($title)) {
 
                     <?php if (!empty($media_image)): ?>
                         <?php echo wp_get_attachment_image($media_image, 'full', false, [
-                            'class' => 'w-full h-full object-contain'
+                            'class' => 'w-full h-full object-cover'
                         ]); ?>
                     <?php endif; ?>
 

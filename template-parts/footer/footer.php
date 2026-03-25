@@ -214,7 +214,7 @@ function matrix_social_svg($icon) {
         wp_nav_menu([
             'theme_location' => $menu_legal,
             'container'      => false,
-            'menu_class'     => 'flex flex-wrap items-center gap-x-2 gap-y-1',
+            'menu_class' => 'menu-copyright flex flex-wrap items-center gap-x-2 gap-y-1',
             'fallback_cb'    => '__return_empty_string',
             'link_before'    => '<span class="transition-colors hover:text-sr-blue-500">',
             'link_after' => '</span><span class="px-3 text-[#475467]" aria-hidden="true">|</span>',
@@ -222,7 +222,7 @@ function matrix_social_svg($icon) {
         ?>
       </div>
 
-      <div class="flex items-center gap-1 text-[#475467] font-primary text-xs leading-[18px] whitespace-nowrap">
+      <div class="flex items-center gap-1 text-[#475467] font-primary text-xs leading-[18px] whitespace-nowrap flex-wrap">
         <span><?php echo esc_html($credit_prefix ?: 'All Rights Reserved - Designed & Developed by'); ?></span>
         <?php if (is_array($credit_link) && !empty($credit_link['url'])) : ?>
           <a

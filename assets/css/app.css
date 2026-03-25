@@ -1576,3 +1576,7 @@ blockquote.right {
 .max-w-container2{
   max-width: 80rem;
 }
+
+.menu-copyright li:last-child span:last-child {
+    display: none;
+}
