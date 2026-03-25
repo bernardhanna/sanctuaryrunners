@@ -135,7 +135,7 @@ $hero_iframe_title = $title_inline !== ''
                 <?php endif; ?>
 
                 <?php if ($primary_cta || $secondary_cta): ?>
-                    <div class="flex gap-6 pt-0 md:pt-4 w-full lg:max-w-[400px] justify-between md:justify-start">
+                    <div class="flex gap-6 pt-0 md:pt-4 w-full lg:max-w-[400px]  md:justify-start">
 
                         <?php if ($primary_cta): ?>
                             <a
