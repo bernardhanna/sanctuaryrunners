@@ -58,7 +58,7 @@ body {
 
   /* Primary CTA (replaces bg-sky-800): gradient, mint hover ring, pressed/focus blue-sr-400 */
   .btn-primary {
-    @apply btn text-white min-h-[42px] rounded-[100px] w-fit whitespace-nowrap;
+    @apply btn text-white min-h-[42px] max-sm:!h-[38px] max-sm:!max-h-[38px] max-sm:!min-h-0 max-sm:!py-0 max-sm:!text-[12px] max-sm:!leading-[18px] max-sm:!font-bold max-sm:!not-italic rounded-[100px] w-fit whitespace-nowrap;
     background: var(--Gradient-Blue-3);
   }
   .btn-primary:hover {
@@ -72,6 +72,25 @@ body {
   .btn-primary:focus-visible {
     box-shadow: 0 0 0 3px var(--Turquoise-500);
     background: var(--Blue-SR-400) !important;
+  }
+
+  /*
+   * Below sm: compact CTA height + type (Tailwind @apply only).
+   * Skips bare .btn (logo, nav rows, text links).
+   */
+  a.group-map-start-btn.btn,
+  a.group-map-find-btn.btn,
+  main a.btn.inline-flex:not(.flex-col),
+  main a.btn.flex.gap-2:not(.flex-col),
+  main a.btn.flex.gap-1:not(.flex-col),
+  main a.btn.flex.gap-0\.5:not(.flex-col),
+  main a.btn.filter-btn,
+  main button.search-btn.btn,
+  button.btn.filter-btn,
+  button.filter-btn,
+  button.search-btn,
+  a.hero-cta {
+    @apply max-sm:!h-[38px] max-sm:!max-h-[38px] max-sm:!min-h-0 max-sm:!py-0 max-sm:!text-[12px] max-sm:!leading-[18px] max-sm:!font-bold max-sm:!not-italic;
   }
 }
 

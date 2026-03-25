@@ -107,7 +107,7 @@ $hero_iframe_title = $title_inline !== ''
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-[35%_70%] w-full max-lg:px-5 py-[2rem] lg:py-0">
 
             <!-- Text -->
-            <header class="order-2 lg:order-1 flex flex-col gap-4 self-start pr-5 pl-0 min-w-0">
+            <header class="flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 lg:order-1">
 
                 <div class="w-full">
 
@@ -135,13 +135,13 @@ $hero_iframe_title = $title_inline !== ''
                 <?php endif; ?>
 
                 <?php if ($primary_cta || $secondary_cta): ?>
-                    <div class="flex gap-6 pt-0 md:pt-4 w-full max-w-[400px] justify-between md:justify-start">
+                    <div class="flex gap-6 pt-0 md:pt-4 w-full lg:max-w-[400px] justify-between md:justify-start">
 
                         <?php if ($primary_cta): ?>
                             <a
                                 href="<?php echo esc_url($primary_cta['url']); ?>"
                                 target="<?php echo esc_attr($primary_cta['target'] ?? '_self'); ?>"
-                                class="inline-flex items-center justify-center gap-2 bg-white rounded-full px-6 py-4 text-[14px] font-bold text-[#00628F]
+                                class="hero-cta inline-flex items-center justify-center gap-2 bg-white rounded-full px-6 py-4 text-[14px] font-bold text-[#00628F]
                                        hover:bg-[var(--Turquoise-50,#CBF3F6)]
                                        active:bg-[var(--Turquoise-100,#75E0E6)]
                                        focus:outline-none focus-visible:ring-0 focus-visible:border-[3px]
@@ -156,13 +156,12 @@ $hero_iframe_title = $title_inline !== ''
                             <a
                                 href="<?php echo esc_url($secondary_cta['url']); ?>"
                                 target="<?php echo esc_attr($secondary_cta['target'] ?? '_self'); ?>"
-                                class="inline-flex items-center justify-center gap-2 border border-white rounded-full px-6 py-4 text-[14px] font-bold text-white
+                                class="hero-cta inline-flex items-center justify-center gap-2 rounded-full border border-solid border-white px-6 py-4 text-[14px] font-bold text-white
                                        hover:border-[var(--Yellow-100,#FCF4C5)]
-                                       active:border-white active:bg-[var(--Blue-SR-400,#008BCC)]
-                                       focus:outline-none focus-visible:ring-0 focus-visible:border-[3px]
-                                       focus-visible:border-[var(--Turquoise-500,#1C959B)]
-                                       focus-visible:bg-[var(--Purple-50,#D9CCE4)]
-                                       transition-colors duration-200 whitespace-nowrap"
+                                       active:border-[var(--Base-White,#FFF)] active:bg-[var(--Blue-SR-400,#008BCC)]
+                                       focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-solid
+                                       focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Purple-50,#D9CCE4)]
+                                       transition-[border-color,background-color,border-width] duration-200 whitespace-nowrap"
                             >
                                 <?php echo esc_html($secondary_cta['title']); ?>
                             </a>
@@ -174,7 +173,7 @@ $hero_iframe_title = $title_inline !== ''
             </header>
 
             <!-- Media -->
-            <div class="order-1 lg:order-2 flex justify-end min-w-0">
+            <div class="flex order-1 justify-end min-w-0 lg:order-2">
 
                 <figure class="relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] <?php echo esc_attr($media_ratio_class); ?>">
 
