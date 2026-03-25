@@ -85,7 +85,7 @@ if ($image_title === '') {
 >
     <div class="flex flex-col items-center w-full mx-auto max-w-[1208px] max-xl:px-5 <?php echo esc_attr($padding_class_string); ?>">
         <div class="w-full max-w-[1208px] mx-auto">
-            <div class="flex flex-col gap-7 items-center self-start pt-0 pb-0 w-full h-auto md:gap-14 md:pt-16 md:pb-16 md:flex-row md:justify-start max-xl:px-5">
+            <div class="flex flex-col gap-7 items-center self-start py-12 w-full h-auto md:gap-14 md:pt-16 md:pb-16 md:flex-row md:justify-start max-xl:px-5">
 
                 <div class="flex flex-col gap-4 pr-5 min-w-0 md:justify-start md:items-start md:pr-8 md:flex-1">
                     <<?php echo esc_html($heading_tag); ?>
