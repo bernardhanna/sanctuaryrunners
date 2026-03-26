@@ -16,6 +16,7 @@ $secondary_heading     = get_sub_field('secondary_heading') ?: 'No group in you 
 $secondary_heading_tag = get_sub_field('secondary_heading_tag') ?: 'h3';
 $start_group_button    = get_sub_field('start_group_button');
 $find_groups_button    = get_sub_field('find_groups_button');
+$reverse_layout        = (bool) get_sub_field('reverse_layout');
 
 // -------------------------------------------------
 // ACF: Map settings
@@ -122,7 +123,7 @@ foreach ($running_group_ids as $group_id) {
         <div class="grid grid-cols-1 gap-10 items-start lg:grid-cols-12">
 
             <!-- Text Content -->
-            <article class="flex flex-col justify-center p-0 pb-0 w-full h-full md:pt-8 md:pb-8 lg:col-span-5" role="article">
+            <article class="flex flex-col justify-center p-0 pb-0 w-full h-full md:pt-8 md:pb-8 lg:col-span-5 <?php echo $reverse_layout ? 'lg:order-2' : 'lg:order-1'; ?>" role="article">
                 <header>
                     <?php if (!empty($heading)): ?>
                         <<?php echo esc_attr($heading_tag); ?>
@@ -166,7 +167,7 @@ foreach ($running_group_ids as $group_id) {
 
             <!-- Map Column -->
             <div
-                class="isolate relative lg:col-span-7"
+                class="isolate relative lg:col-span-7 <?php echo $reverse_layout ? 'lg:order-1' : 'lg:order-2'; ?>"
                 x-data="{ mapQuery: '' }"
             >
                 <div
