@@ -66,7 +66,7 @@ $section_id = 'blog-listing-' . uniqid();
     <div class="flex flex-col items-center pt-5 lg:pt-[3.5rem] pb-5 mx-auto w-full max-w-container max-lg:px-5">
 
         <!-- Filters and Search Section -->
-        <div class="grid grid-cols-1 gap-6 items-center pb-4 w-full text-sm leading-none lg:grid-cols-[60%_40%]">
+        <div class="grid grid-cols-1 gap-6 items-center pb-4 w-full text-sm leading-none md:grid-cols-[60%_40%]">
 
             <?php if ($show_filters && !empty($categories)): ?>
                 <!-- Filters -->
@@ -76,7 +76,7 @@ $section_id = 'blog-listing-' . uniqid();
                     </div>
 
                     <div
-                        class="flex gap-2 items-center self-stretch my-auto font-semibold text-sky-800 whitespace-nowrap"
+                        class="flex flex-wrap gap-2 items-center self-stretch my-auto font-semibold text-sky-800"
                         role="group"
                         aria-label="Filter posts by category"
                     >
