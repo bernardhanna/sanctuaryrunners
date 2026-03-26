@@ -103,15 +103,20 @@ $heading_id = $section_id . '-heading';
 
 <style>
     /* Scoped typography + bullet styling for this specific content editor block */
+    #<?php echo esc_attr($section_id); ?> .content-editor-rich h1,
+    #<?php echo esc_attr($section_id); ?> .content-editor-rich h2,
     #<?php echo esc_attr($section_id); ?> .content-editor-rich h3 {
+        width: 100%;
+        word-break: break-word;
+        text-align: left;
         font-family: "Public Sans", sans-serif;
-        font-size: 18px;
+        font-size: 1.5rem;
         font-style: normal;
-        font-weight: 400;
-        line-height: 24px;
+        font-weight: 700;
+        line-height: 2rem;
         letter-spacing: 0;
         color: #00263E;
-        margin: 0 0 12px;
+        margin: 0 0 16px;
     }
 
     #<?php echo esc_attr($section_id); ?> .content-editor-rich h4 {
