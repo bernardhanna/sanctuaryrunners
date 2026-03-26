@@ -33,27 +33,27 @@ if (have_rows('padding_settings')) {
     class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
-    <div class="flex flex-col items-center pt-8 pb-16 mx-auto w-full max-w-container max-lg:px-5">
-        <div class="flex overflow-hidden flex-wrap gap-10 items-center w-full <?php echo $reverse_layout ? 'flex-row-reverse' : ''; ?>">
+    <div class="flex flex-col items-center pt-8 pb-16 mx-auto w-full max-w-[1084px] max-lg:px-5">
+        <div class="grid w-full items-center gap-10 md:grid-cols-2">
 
             <!-- Text Content Section -->
-            <article class="flex-1 shrink basis-0 min-w-60 max-md:max-w-full">
+            <article class="w-full min-w-0 max-md:max-w-full <?php echo $reverse_layout ? 'order-2' : 'order-1'; ?>">
                 <div class="w-full max-md:max-w-full">
 
                     <?php if (!empty($heading)): ?>
-                        <<?php echo esc_attr($heading_tag); ?> class="text-2xl font-bold leading-none text-sky-800 max-md:max-w-full">
+                        <<?php echo esc_attr($heading_tag); ?> class="font-sans text-[24px] font-bold not-italic leading-[32px] text-[var(--Blue-SR-500,#00628F)] max-md:max-w-full">
                             <?php echo esc_html($heading); ?>
                         </<?php echo esc_attr($heading_tag); ?>>
                     <?php endif; ?>
 
                     <?php if (!empty($description)): ?>
-                        <p class="mt-2 text-xl font-light leading-tight text-slate-600 max-md:max-w-full">
+                        <p class="mt-2 font-sans text-[20px] font-light not-italic leading-[26px] text-[var(--Gray-600,#475467)] max-md:max-w-full">
                             <?php echo esc_html($description); ?>
                         </p>
                     <?php endif; ?>
 
                     <?php if (!empty($content)): ?>
-                        <div class="mt-2 text-base leading-6 text-sky-950 max-md:max-w-full wp_editor">
+                        <div class="mt-2 max-md:max-w-full wp_editor font-sans !text-[16px] !font-normal !not-italic !leading-[22px] !text-[var(--Gray-700,#00263E)] [&_p]:!font-sans [&_p]:!text-[16px] [&_p]:!font-normal [&_p]:!not-italic [&_p]:!leading-[22px] [&_p]:!text-[var(--Gray-700,#00263E)]">
                             <?php echo wp_kses_post($content); ?>
                         </div>
                     <?php endif; ?>
@@ -61,7 +61,7 @@ if (have_rows('padding_settings')) {
 
                 <!-- Key Points Section -->
                 <?php if (have_rows('key_points')): ?>
-                    <div class="flex flex-wrap gap-4 items-start pt-2 mt-4 text-sm font-semibold leading-none text-slate-900 max-md:max-w-full" role="list" aria-label="Key benefits">
+                    <div class="flex flex-wrap gap-4 items-start pt-2 mt-4 max-md:max-w-full" role="list" aria-label="Key benefits">
                         <div class="flex flex-col" role="group" aria-label="First set of benefits">
                             <?php
                             $point_count = 0;
@@ -71,20 +71,11 @@ if (have_rows('padding_settings')) {
                                 if (!empty($point_text) && $point_count < 2):
                                     $point_count++;
                             ?>
-                                <div class="flex overflow-hidden gap-1 items-center px-3 py-1 <?php echo $point_count > 1 ? 'mt-2' : ''; ?> bg-teal-100 rounded-full" role="listitem">
-                                    <svg
-                                        class="object-contain w-4 h-4 shrink-0"
-                                        viewBox="0 0 16 16"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
-                                            fill="currentColor"
-                                        />
-                                    </svg>
-                                    <span class="text-slate-900">
+                                <div class="flex overflow-hidden gap-1 items-center px-3 py-1 <?php echo $point_count > 1 ? 'mt-2' : ''; ?> bg-[#CBF3F6] rounded-full w-fit" role="listitem">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="10" viewBox="0 0 13 10" fill="none">
+                                        <path d="M11.6667 1L4.33333 8.33333L1 5" stroke="#6EC4A9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    <span class="font-sans text-[14px] font-semibold not-italic leading-[20px] text-[var(--Gray-800,#001929)]">
                                         <?php echo esc_html($point_text); ?>
                                     </span>
                                 </div>
@@ -104,20 +95,11 @@ if (have_rows('padding_settings')) {
                                     $point_count++;
                                     if ($point_count > 2):
                             ?>
-                                <div class="flex overflow-hidden gap-1 items-center px-3 py-1 <?php echo $point_count > 3 ? 'mt-2' : ''; ?> bg-teal-100 rounded-full" role="listitem">
-                                    <svg
-                                        class="object-contain w-4 h-4 shrink-0"
-                                        viewBox="0 0 16 16"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
-                                            fill="currentColor"
-                                        />
-                                    </svg>
-                                    <span class="text-slate-900">
+                                <div class="flex overflow-hidden w-fit gap-1 items-center px-3 py-1 <?php echo $point_count > 3 ? 'mt-2' : ''; ?> bg-[#CBF3F6] rounded-full" role="listitem">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="10" viewBox="0 0 13 10" fill="none">
+                                        <path d="M11.6667 1L4.33333 8.33333L1 5" stroke="#6EC4A9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    <span class="font-sans text-[14px] font-semibold not-italic leading-[20px] text-[var(--Gray-800,#001929)]">
                                         <?php echo esc_html($point_text); ?>
                                     </span>
                                 </div>
@@ -135,11 +117,11 @@ if (have_rows('padding_settings')) {
                     <?php if ($primary_button && is_array($primary_button) && isset($primary_button['url'], $primary_button['title'])): ?>
                         <a
                             href="<?php echo esc_url($primary_button['url']); ?>"
-                            class="flex gap-2 justify-center items-center px-6 py-4 text-white min-h-[52px] rounded-full w-fit whitespace-nowrap bg-sky-800 hover:bg-sky-700 focus:bg-sky-700 transition-colors duration-300 btn"
+                            class="btn-primary flex gap-2 justify-center items-center px-6 py-4 min-h-[52px] rounded-full w-fit whitespace-nowrap"
                             target="<?php echo esc_attr($primary_button['target'] ?? '_self'); ?>"
                             aria-label="<?php echo esc_attr($primary_button['title']); ?>"
                         >
-                            <span class="text-sm font-semibold leading-5">
+                            <span class="text-sm font-bold leading-5">
                                 <?php echo esc_html($primary_button['title']); ?>
                             </span>
                         </a>
@@ -148,11 +130,11 @@ if (have_rows('padding_settings')) {
                     <?php if ($secondary_button && is_array($secondary_button) && isset($secondary_button['url'], $secondary_button['title'])): ?>
                         <a
                             href="<?php echo esc_url($secondary_button['url']); ?>"
-                            class="flex gap-2 justify-center items-center px-6 py-4 text-sky-800 border border-sky-800 border-solid min-h-[52px] rounded-full w-fit whitespace-nowrap hover:bg-sky-800 hover:text-white focus:bg-sky-800 focus:text-white transition-colors duration-300 btn"
+                            class="btn flex gap-2 justify-center items-center px-6 py-4 text-sky-800 border border-sky-800 border-solid min-h-[52px] rounded-full w-fit whitespace-nowrap hover:bg-sky-50 transition-colors duration-200"
                             target="<?php echo esc_attr($secondary_button['target'] ?? '_self'); ?>"
                             aria-label="<?php echo esc_attr($secondary_button['title']); ?>"
                         >
-                            <span class="text-sm font-semibold leading-5">
+                            <span class="text-sm font-bold leading-5">
                                 <?php echo esc_html($secondary_button['title']); ?>
                             </span>
                         </a>
@@ -162,10 +144,10 @@ if (have_rows('padding_settings')) {
 
             <!-- Image Section -->
             <?php if ($image): ?>
-                <div class="overflow-hidden bg-gray-100 rounded-lg min-w-60 w-[544px] max-md:max-w-full">
+                <div class="w-full min-w-0 overflow-hidden rounded-lg bg-gray-100 <?php echo $reverse_layout ? 'order-1' : 'order-2'; ?>">
                     <?php echo wp_get_attachment_image($image, 'full', false, [
                         'alt' => esc_attr($image_alt),
-                        'class' => 'object-contain w-full aspect-[1.42] max-md:max-w-full',
+                        'class' => 'h-auto w-full object-contain aspect-[1.42] max-md:max-w-full',
                     ]); ?>
                 </div>
             <?php endif; ?>

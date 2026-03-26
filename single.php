@@ -41,8 +41,8 @@ get_header();
     ]);
     ?>
 
-    <section class="relative flex overflow-hidden bg-white">
-        <div class="mx-auto w-full max-w-container px-5 pb-16 pt-8 lg:pt-12">
+    <section class="flex overflow-hidden relative bg-white">
+        <div class="px-5 pt-8 pb-16 mx-auto w-full max-w-container lg:pt-12">
             <div class="mx-auto w-full max-w-[860px]">
                 <div class="mb-6 flex flex-wrap items-center gap-3 text-[14px] leading-5 text-[var(--Gray-700,#00263E)]">
                     <time datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>" class="font-sans">
@@ -59,18 +59,6 @@ get_header();
                     <?php endif; ?>
                 </div>
 
-                <?php if ($featured_id) : ?>
-                    <figure class="mb-8 overflow-hidden rounded-[12px]">
-                        <?php
-                        echo wp_get_attachment_image($featured_id, 'full', false, [
-                            'alt' => esc_attr($featured_alt),
-                            'class' => 'h-auto w-full object-cover',
-                            'loading' => 'lazy',
-                        ]);
-                        ?>
-                    </figure>
-                <?php endif; ?>
-
                 <article class="wp_editor prose prose-lg max-w-none prose-headings:font-sans prose-headings:text-[var(--Blue-SR-500,#00628F)] prose-p:font-sans prose-p:text-[16px] prose-p:leading-[22px] prose-p:text-[var(--Gray-700,#00263E)] prose-a:text-[var(--Blue-SR-500,#00628F)]">
                     <?php the_content(); ?>
                 </article>
@@ -85,7 +73,7 @@ get_header();
 
 <?php endwhile; else : ?>
     <section class="py-16">
-        <div class="mx-auto w-full max-w-container px-5 text-center">
+        <div class="px-5 mx-auto w-full text-center max-w-container">
             <p class="font-sans text-[16px] text-[var(--Gray-700,#00263E)]">No content found.</p>
         </div>
     </section>
