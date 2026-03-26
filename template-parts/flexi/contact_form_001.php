@@ -101,22 +101,22 @@ if ($form_markup) {
     class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
-    <div class="flex flex-col items-center pt-10 pb-14 mx-auto w-full max-w-container max-lg:px-5">
+    <div class="flex flex-col items-center pt-10 pb-14 mx-auto w-full max-w-[1024px] max-xl:px-5">
         <div
-            class="px-20 py-14 w-full rounded-2xl max-md:px-5 max-md:max-w-full"
+            class="px-20 py-16 w-full rounded-2xl max-lg:px-5 max-lg:max-w-full"
             style="background-color: <?php echo esc_attr($form_background_color); ?>;"
         >
             <?php if ($heading): ?>
                 <<?php echo esc_attr($heading_tag); ?>
                     id="form-heading-<?php echo esc_attr(get_row_index()); ?>"
-                    class="text-3xl leading-none text-sky-800 max-md:max-w-full"
+                    class="text-3xl leading-none text-sky-800 max-lg:max-w-full"
                 >
                     <?php echo esc_html($heading); ?>
                 </<?php echo esc_attr($heading_tag); ?>>
             <?php endif; ?>
 
             <?php if ($description): ?>
-                <p class="mt-4 text-base leading-none text-sky-950 max-md:max-w-full">
+                <p class="mt-4 text-base leading-none text-sky-950 max-lg:max-w-full">
                     <?php echo esc_html($description); ?>
                 </p>
             <?php endif; ?>
@@ -280,10 +280,31 @@ if ($form_markup) {
 
 <style type="text/css">
     
-input,
+input:not([type="hidden"]),
 select,
 textarea{
-    border: 1px solid #475467 !important;
+    border-radius: 4px !important;
+    border: 1px solid var(--Gray-600, #475467) !important;
+}
+
+input:not([type="hidden"])::placeholder,
+textarea::placeholder{
+    color: var(--Gray-600, #475467) !important;
+    font-family: "Public Sans", sans-serif !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 20px !important;
+    opacity: 1 !important;
+}
+
+label{
+    color: var(--Gray-800, #001929) !important;
+    font-family: "Public Sans", sans-serif !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 18px !important;
 }
 
 </style>

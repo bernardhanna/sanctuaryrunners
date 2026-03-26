@@ -202,7 +202,7 @@ foreach ($running_group_ids as $group_id) {
                             @input.debounce.300ms="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
                             @keydown.enter.prevent="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
                             placeholder="<?php echo esc_attr__('Search by city or county...', 'matrix-starter'); ?>"
-                            class="h-full min-w-0 flex-1 !border-0 bg-transparent pr-2 font-['Public_Sans'] text-[12px] font-normal not-italic leading-[18px] text-[var(--Blue-SR-500,#00628F)] placeholder:text-[var(--Blue-SR-500,#00628F)]/60 !outline-none !ring-0 focus:!border-0 focus:!ring-0 sm:text-[14px] sm:leading-[20px]"
+                            class="h-full min-w-0 flex-1 !border-0 bg-transparent !pl-0 pr-2 font-['Public_Sans'] text-[12px] font-normal not-italic leading-[18px] text-[var(--Blue-SR-500,#00628F)] placeholder:text-[var(--Blue-SR-500,#00628F)]/60 !outline-none !ring-0 focus:!border-0 focus:!ring-0 sm:text-[14px] sm:leading-[20px]"
                         />
                         <button
                             type="button"

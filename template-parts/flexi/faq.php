@@ -63,7 +63,7 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="flex flex-col items-center max-lg:py-5 py-20 mx-auto w-full max-w-[960px] max-md:px-5">
+    <div class="flex flex-col items-center max-lg:py-5 py-20 mx-auto w-full max-w-[768px] max-xl:px-5">
 
         <?php if (!empty($heading)): ?>
             <<?php echo esc_attr($heading_tag); ?>
