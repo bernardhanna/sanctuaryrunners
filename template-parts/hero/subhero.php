@@ -36,24 +36,34 @@ if (!in_array($image_presentation, $allowed_image_presentations, true)) {
 $is_full_height_right_image = !empty($image) && $image_presentation === 'full_height_right_svg';
 
 $layout_1_grid_class = $is_full_height_right_image
-    ? 'relative grid grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:block lg:min-h-[420px]'
-    : 'grid grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
+    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:block lg:min-h-[420px]'
+    : 'grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
 $layout_2_grid_class = $is_full_height_right_image
-    ? 'relative grid grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:block lg:min-h-[300px]'
-    : 'grid grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
+    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:block lg:min-h-[300px]'
+    : 'grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
+
+$section_media_wrap_class = $is_full_height_right_image
+    ? 'pointer-events-none absolute inset-y-0 right-0 z-[1] hidden lg:flex lg:w-[60%] lg:items-stretch lg:justify-end'
+    : '';
+$section_media_figure_class = $is_full_height_right_image
+    ? 'h-full w-full overflow-hidden'
+    : '';
+$section_media_image_class = $is_full_height_right_image
+    ? 'h-full w-full object-contain object-right'
+    : '';
 
 $layout_1_media_col_class = $is_full_height_right_image
-    ? 'order-1 max-md:w-full md:order-2 md:col-span-7 lg:absolute lg:inset-y-0 lg:right-0 lg:z-[1] lg:flex lg:w-[62%] lg:items-stretch lg:justify-end lg:pointer-events-none'
+    ? 'order-1 max-md:w-full md:order-2 md:col-span-7 lg:hidden'
     : 'order-1 max-md:w-full md:order-2 md:col-span-7';
 $layout_2_media_col_class = $is_full_height_right_image
-    ? 'order-1 max-md:w-full md:order-2 md:col-span-6 lg:absolute lg:inset-y-0 lg:right-0 lg:z-[1] lg:flex lg:w-[62%] lg:items-stretch lg:justify-end lg:pointer-events-none'
+    ? 'order-1 max-md:w-full md:order-2 md:col-span-6 lg:hidden'
     : 'order-1 max-md:w-full md:order-2 md:col-span-6';
 
 $layout_1_figure_class = $is_full_height_right_image
-    ? 'flex h-full w-full min-h-[260px] items-stretch justify-end overflow-hidden lg:min-h-0'
+    ? 'flex h-full w-full min-h-[260px] items-stretch justify-end overflow-hidden'
     : 'w-full';
 $layout_2_figure_class = $is_full_height_right_image
-    ? 'w-full h-full max-md:absolute max-md:inset-0 max-md:h-full lg:flex lg:items-stretch lg:justify-end'
+    ? 'w-full h-full max-md:absolute max-md:inset-0 max-md:h-full'
     : 'w-full max-md:absolute max-md:inset-0 max-md:h-full';
 
 $layout_1_text_col_class = $is_full_height_right_image
@@ -162,6 +172,21 @@ $section_id = 'subhero-' . uniqid();
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
+        <?php if ($is_full_height_right_image && $image): ?>
+            <div class="<?php echo esc_attr($section_media_wrap_class); ?>">
+                <figure class="<?php echo esc_attr($section_media_figure_class); ?>">
+                    <?php
+                    echo wp_get_attachment_image($image, 'full', false, [
+                        'alt'      => esc_attr($image_alt),
+                        'class'    => $section_media_image_class,
+                        'loading'  => 'lazy',
+                        'decoding' => 'async',
+                    ]);
+                    ?>
+                </figure>
+            </div>
+        <?php endif; ?>
+
         <div class="relative max-xl:px-5 mx-auto w-full max-w-container pb-6 md:pb-8">
             <div class="<?php echo esc_attr($layout_1_grid_class); ?>">
 
@@ -305,6 +330,21 @@ $section_id = 'subhero-' . uniqid();
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
+        <?php if ($is_full_height_right_image && $image): ?>
+            <div class="<?php echo esc_attr($section_media_wrap_class); ?>">
+                <figure class="<?php echo esc_attr($section_media_figure_class); ?>">
+                    <?php
+                    echo wp_get_attachment_image($image, 'full', false, [
+                        'alt'      => esc_attr($image_alt),
+                        'class'    => $section_media_image_class,
+                        'loading'  => 'lazy',
+                        'decoding' => 'async',
+                    ]);
+                    ?>
+                </figure>
+            </div>
+        <?php endif; ?>
+
         <div class="relative max-xl:px-5 mx-auto flex w-full max-w-container pt-[0rem] pb-0 md:pb-0 lg:min-h-[300px] lg:items-center">
             <div class="<?php echo esc_attr($layout_2_grid_class); ?>">
 

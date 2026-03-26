@@ -82,12 +82,19 @@ $header_classes = $is_full_height_right_media
     ? 'relative z-[2] flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 lg:order-1 lg:max-w-[420px]'
     : 'flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 lg:order-1';
 
+$section_media_wrap_classes = $is_full_height_right_media
+    ? 'pointer-events-none absolute inset-y-0 right-0 z-[1] hidden lg:flex lg:w-[68%] lg:items-stretch lg:justify-end'
+    : '';
+$section_media_figure_classes = $is_full_height_right_media
+    ? 'h-full w-full overflow-hidden'
+    : '';
+
 $media_wrap_classes = $is_full_height_right_media
-    ? 'flex order-1 justify-end min-w-0 lg:absolute lg:inset-y-0 lg:right-0 lg:z-[1] lg:w-[68%] lg:items-stretch lg:justify-end lg:pointer-events-none'
+    ? 'flex order-1 justify-end min-w-0 lg:hidden'
     : 'flex order-1 justify-end min-w-0 lg:order-2';
 
 $media_figure_classes = $is_full_height_right_media
-    ? 'relative flex w-full min-h-[260px] items-stretch justify-end overflow-hidden lg:h-full'
+    ? 'relative flex w-full min-h-[260px] items-stretch justify-end overflow-hidden'
     : 'relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] ' . $media_ratio_class;
 
 $image_classes = 'w-full h-full object-cover';
@@ -134,6 +141,16 @@ $hero_iframe_title = $title_inline !== ''
     role="banner"
     aria-labelledby="<?php echo esc_attr($title_id); ?>"
 >
+
+    <?php if ($is_full_height_right_media && !empty($media_image)): ?>
+        <div class="<?php echo esc_attr($section_media_wrap_classes); ?>">
+            <figure class="<?php echo esc_attr($section_media_figure_classes); ?>">
+                <?php echo wp_get_attachment_image($media_image, 'full', false, [
+                    'class' => $image_classes,
+                ]); ?>
+            </figure>
+        </div>
+    <?php endif; ?>
 
     <div class="relative mx-auto w-full max-w-container">
 
