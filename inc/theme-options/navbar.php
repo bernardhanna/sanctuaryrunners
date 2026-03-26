@@ -28,6 +28,12 @@ $navigationFields
             'preview_size' => 'thumbnail',
             'library' => 'all',
         ])
+        ->addTrueFalse('show_country_picker', [
+            'label' => 'Show Country Picker',
+            'instructions' => 'Disable to completely hide the country picker from the header.',
+            'default_value' => 1,
+            'ui' => 1,
+        ])
         ->addRepeater('country_picker_options', [
             'label'        => 'Country Picker Options',
             'instructions' => 'Add custom options for the country picker dropdown in the header. If this has rows, these options are used instead of the default fallback list.',
@@ -36,6 +42,7 @@ $navigationFields
             'min'          => 0,
             'max'          => 20,
         ])
+            ->conditional('show_country_picker', '==', '1')
             ->addText('value', [
                 'label'        => 'Value',
                 'instructions' => 'Unique value/slug used in the option data attribute (e.g., ie, uk, global).',

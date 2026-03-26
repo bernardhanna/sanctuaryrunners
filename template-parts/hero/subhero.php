@@ -24,10 +24,13 @@ $background_color   = $sf('background_color', '#EEF6FC');
 $use_white_text     = (bool) $sf('use_white_text', false);
 $custom_breadcrumbs = (bool) $sf('custom_breadcrumbs', false);
 $layout_option      = $sf('layout_option', 'layout_1');
+$layout_2_desktop_min_height = max(0, (int) $sf('layout_2_desktop_min_height', 300));
 $breadcrumbs_arg    = $sf('breadcrumbs');
 
 $is_layout_2         = $layout_option === 'layout_2';
 $is_dark_background  = strtolower($background_color) !== '#eef6fc';
+$layout_2_min_height_class = 'lg:min-h-[var(--layout-2-min-height)]';
+$layout_2_min_height_style = "--layout-2-min-height: {$layout_2_desktop_min_height}px;";
 
 $allowed_image_presentations = ['default', 'contain', 'contain_right', 'full_height_right_svg'];
 if (!in_array($image_presentation, $allowed_image_presentations, true)) {
@@ -39,7 +42,7 @@ $layout_1_grid_class = $is_full_height_right_image
     ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:flex lg:min-h-[420px] lg:items-center'
     : 'grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
 $layout_2_grid_class = $is_full_height_right_image
-    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:flex lg:min-h-[300px] lg:items-center'
+    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:flex lg:items-center ' . $layout_2_min_height_class
     : 'grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
 
 $section_media_wrap_class = $is_full_height_right_image
@@ -345,7 +348,10 @@ $section_id = 'subhero-' . uniqid();
             </div>
         <?php endif; ?>
 
-        <div class="relative max-xl:px-5 mx-auto flex w-full max-w-container pt-[0rem] pb-0 md:pb-0 lg:min-h-[300px] lg:items-center">
+        <div
+            class="relative max-xl:px-5 mx-auto flex w-full max-w-container pt-[0rem] pb-0 md:pb-0 <?php echo esc_attr($layout_2_min_height_class); ?> lg:items-center"
+            style="<?php echo esc_attr($layout_2_min_height_style); ?>"
+        >
             <div class="<?php echo esc_attr($layout_2_grid_class); ?>">
 
                 <?php if ($image): ?>
