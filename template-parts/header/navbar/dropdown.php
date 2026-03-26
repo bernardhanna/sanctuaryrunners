@@ -82,7 +82,7 @@ $img_title = is_array($img) && !empty($img['title']) ? $img['title'] : $img_alt;
                 <!-- Second-level nav -->
                 <?php if ($item_children) : ?>
                     <section
-                        class="flex flex-col grow shrink justify-center self-start px-8 font-bold text-blue-900 min-h-[336px] w-[241px] max-md:px-5"
+                        class="flex flex-col grow shrink justify-center self-start px-8 min-h-[336px] w-[241px] max-md:px-5"
                         aria-label="Main navigation items"
                     >
                         <ul class="py-14 space-y-2" role="list">
@@ -106,15 +106,15 @@ $img_title = is_array($img) && !empty($img['title']) ? $img['title'] : $img_alt;
                                         >
                                             <div class="flex items-center w-full">
                                                 <span
-                                                    class="flex-1 my-auto shrink basis-0 text-sm font-bold leading-5 transition-colors duration-200"
-                                                    :class="activeTier3Index === <?php echo (int) $child_index; ?> ? 'text-white' : 'text-[#1D3C94]'"
+                                                    class="flex-1 my-auto shrink basis-0 font-sans text-[14px] font-normal not-italic leading-[20px] transition-colors duration-200"
+                                                    :class="activeTier3Index === <?php echo (int) $child_index; ?> ? 'text-white' : 'text-[var(--Blue-SR-500,#00628F)]'"
                                                 >
                                                     <?php echo esc_html($child->label); ?>
                                                 </span>
 
                                                 <i
                                                     class="text-sm fa-solid fa-chevron-right shrink-0 transition-colors duration-200 ml-auto"
-                                                    :class="activeTier3Index === <?php echo (int) $child_index; ?> ? 'text-white' : 'text-[#1D3C94]'"
+                                                    :class="activeTier3Index === <?php echo (int) $child_index; ?> ? 'text-white' : 'text-[var(--Blue-SR-500,#00628F)]'"
                                                     aria-hidden="true"
                                                 ></i>
                                             </div>
@@ -122,7 +122,7 @@ $img_title = is_array($img) && !empty($img['title']) ? $img['title'] : $img_alt;
                                     <?php else : ?>
                                         <a
                                             href="<?php echo esc_url($child->url); ?>"
-                                            class="btn flex flex-col justify-center py-2 pr-3 pl-3.5 w-full rounded-[100px] text-left border-0 outline-none shadow-none transition-colors duration-200 whitespace-nowrap text-[#1D3C94] font-['Public_Sans'] text-sm font-bold leading-5 hover:!bg-[#75e0e6] hover:!border-0 hover:!outline-none hover:!shadow-none focus:bg-[#75e0e6] <?php echo $child->active ? 'font-semibold' : ''; ?>"
+                                            class="btn flex flex-col justify-center py-2 pr-3 pl-3.5 w-full rounded-[100px] text-left border-0 outline-none shadow-none transition-colors duration-200 whitespace-nowrap font-sans text-[14px] font-normal not-italic leading-[20px] text-[var(--Blue-SR-500,#00628F)] hover:!bg-[#75e0e6] hover:!border-0 hover:!outline-none hover:!shadow-none focus:bg-[#75e0e6]"
                                             <?php if (!empty($child->target)) : ?>target="<?php echo esc_attr($child->target); ?>"<?php endif; ?>
                                             @mouseenter="activeTier3Index = null"
                                         >
