@@ -6,11 +6,12 @@
 
 get_header();
 
+$queried_object = get_queried_object();
 $archive_title = is_category()
     ? single_cat_title('', false)
     : wp_strip_all_tags(get_the_archive_title());
 $archive_title = preg_replace('/^\s*Archives?:\s*/i', '', (string) $archive_title);
-$archive_desc  = wp_strip_all_tags(get_the_archive_description());
+$archive_desc  = trim((string) get_the_archive_description());
 if ($archive_desc === '') {
     $archive_desc = 'Browse updates, stories, and announcements from Sanctuary Runners.';
 }
@@ -35,7 +36,7 @@ $breadcrumbs = [
     ],
 ];
 
-get_template_part('template-parts/hero/subhero', null, [
+get_template_part('template-parts/hero/subhero', null, matrix_get_archive_subhero_media_args($queried_object, [
     'heading'            => $archive_title !== '' ? $archive_title : 'Archive',
     'heading_tag'        => 'h1',
     'content'            => $archive_desc,
@@ -44,10 +45,9 @@ get_template_part('template-parts/hero/subhero', null, [
     'use_white_text'     => false,
     'custom_breadcrumbs' => true,
     'breadcrumbs'        => $breadcrumbs,
-    'image'              => null,
     'primary_cta'        => null,
     'secondary_cta'      => null,
-]);
+]));
 
 get_template_part('template-parts/flexi/blog_listing');
 get_template_part('template-parts/flexi/newsletter_001');

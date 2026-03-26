@@ -5,14 +5,14 @@ Template Name: Sitemap Page
 
 get_header();
 ?>
-<main class="overflow-hidden w-full min-h-screen site-main">
+<main class="w-full min-h-screen overflow-hidden site-main">
     <?php load_hero_templates(); ?>
-        <section class="flex overflow-hidden relative">
+        <section class="relative flex overflow-hidden">
             <div class="flex flex-col items-center w-full py-5 mx-auto max-w-[1085px] max-lg:px-5">
-                <div class="flex flex-col gap-10 mt-10 w-full md:flex-row">
-                    <div class="w-full entry-content">
-                        <h2 class="text-[2.125rem] font-semibold tracking-normal leading-10 text-left font-secondary text-primary max-md:text-[2.125rem] max-md:leading-9  max-sm:leading-8 max-lg:hidden">Pages</h2>
- 
+                <div class="flex flex-col w-full gap-10 mt-10 md:flex-row">
+                    <div class="w-full">
+                        <h2 class="text-2xl font-semibold text-secondary">Pages</h2>
+                        <div class="mt-1.5 w-8 h-[4px] max-w-[32px]" style="background-color: #f68d2e;" aria-hidden="true"></div>
                         <ul class="mt-4 space-y-2">
                             <?php
                             $pages = get_pages();
@@ -22,9 +22,9 @@ get_header();
                             ?>
                         </ul>
                     </div>
-                    <div class="w-full entry-content">
-                        <h2 class="text-[2.125rem] font-semibold tracking-normal leading-10 text-left font-secondary text-primary max-md:text-[2.125rem] max-md:leading-9  max-sm:leading-8 max-lg:hidden">Posts</h2>
-
+                    <div class="w-full">
+                        <h2 class="text-2xl font-semibold text-secondary">Posts</h2>
+                        <div class="mt-1.5 w-8 h-[4px] max-w-[32px]" style="background-color: #f68d2e;" aria-hidden="true"></div>
                         <ul class="mt-4 space-y-2">
                             <?php
                             $posts = get_posts(['numberposts' => -1, 'post_status' => 'publish']);

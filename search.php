@@ -33,7 +33,7 @@ $breadcrumbs = [
     ],
 ];
 
-get_template_part('template-parts/hero/subhero', null, [
+get_template_part('template-parts/hero/subhero', null, matrix_get_archive_subhero_media_args(get_queried_object(), [
     'heading'            => $heading,
     'heading_tag'        => 'h1',
     'content'            => $description,
@@ -42,10 +42,9 @@ get_template_part('template-parts/hero/subhero', null, [
     'use_white_text'     => false,
     'custom_breadcrumbs' => true,
     'breadcrumbs'        => $breadcrumbs,
-    'image'              => null,
     'primary_cta'        => null,
     'secondary_cta'      => null,
-]);
+]));
 
 get_template_part('template-parts/flexi/blog_listing');
 get_template_part('template-parts/flexi/newsletter_001');
