@@ -66,11 +66,11 @@ $section_id = 'blog-listing-' . uniqid();
     <div class="flex flex-col items-center pt-5 lg:pt-[3.5rem] pb-5 mx-auto w-full max-w-container max-lg:px-5">
 
         <!-- Filters and Search Section -->
-        <div class="flex flex-wrap gap-10 justify-between items-center pb-4 w-full text-sm leading-none max-md:max-w-full">
+        <div class="grid grid-cols-1 gap-6 items-center pb-4 w-full text-sm leading-none lg:grid-cols-[60%_40%]">
 
             <?php if ($show_filters && !empty($categories)): ?>
                 <!-- Filters -->
-                <div class="flex gap-4 items-center self-stretch my-auto min-w-60">
+                <div class="flex gap-4 items-center self-stretch my-auto min-w-0 w-full">
                     <div class="self-stretch my-auto text-sky-950">
                         Filter by:
                     </div>
@@ -111,8 +111,8 @@ $section_id = 'blog-listing-' . uniqid();
 
             <?php if ($show_search): ?>
                 <!-- Search -->
-                <div class="flex self-stretch my-auto min-h-[60px] min-w-60 w-[396px] items-center">
-                    <div class="flex-1 shrink basis-12 min-w-60 shadow-[0px_0px_20px_rgba(63,0,119,0.07)] rounded-r-[30px] overflow-hidden">
+                <div class="flex self-stretch my-auto w-full min-h-[60px] items-center lg:justify-end">
+                    <div class="flex-1 shrink basis-12 min-w-0 w-full max-w-[396px] shadow-[0px_0px_20px_rgba(63,0,119,0.07)] rounded-r-[30px] overflow-hidden">
                         <div class="w-full">
                             <div class="flex items-center">
                                 <div 
