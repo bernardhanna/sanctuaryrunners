@@ -95,9 +95,9 @@ function matrix_social_svg($icon) {
   <?php if ( ! ( function_exists( 'matrix_donations_is_donation_flow' ) && matrix_donations_is_donation_flow() ) ) : ?>
   <div style="background-color: <?php echo esc_attr($main_bg_color ?: '#00263E'); ?>;">
     <div class="max-w-[1440px] mx-auto px-8 sm:px-8 lg:px-14 py-8 md:py-14 <?php echo esc_attr($padding_class_string); ?>">
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:flex xl:flex-row xl:gap-16 2xl:gap-32">
+      <div class="footer-main-layout flex flex-col gap-0 md:flex-row lg:gap-16 xl:gap-32">
 
-        <div class="flex flex-row gap-4 justify-around pb-6 md:flex-col md:justify-start shrink-0 md:pb-0">
+        <div class="footer-brand-block flex flex-row gap-4 justify-around pb-6 md:flex-col md:justify-start shrink-0 md:pb-0">
           <div class="w-40">
             <?php if ($footer_logo) : ?>
               <?php
@@ -151,7 +151,7 @@ function matrix_social_svg($icon) {
           </div>
         </div>
 
-        <nav class="flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-1">
+        <nav class="footer-nav-block flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-1">
           <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
             <?php echo esc_html($col1_heading ?: 'About us'); ?>
           </h3>
@@ -167,7 +167,7 @@ function matrix_social_svg($icon) {
           ?>
         </nav>
 
-        <nav class="flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-2">
+        <nav class="footer-nav-block flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-2">
           <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
             <?php echo esc_html($col2_heading ?: 'About us'); ?>
           </h3>
@@ -183,7 +183,7 @@ function matrix_social_svg($icon) {
           ?>
         </nav>
 
-        <nav class="flex flex-col gap-4 py-6 border-t border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-3">
+        <nav class="footer-nav-block flex flex-col gap-4 py-6 border-t border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-3">
           <h3 id="footer-col-3" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
             <?php echo esc_html($col3_heading ?: 'Get involved'); ?>
           </h3>
@@ -237,5 +237,32 @@ function matrix_social_svg($icon) {
     </div>
   </div>
 </footer>
+
+<style>
+  /* Tablet-only footer layout tuning to avoid squashed columns */
+  @media (min-width: 768px) and (max-width: 1084px) {
+    .footer-main-layout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 2rem;
+      row-gap: 2rem;
+    }
+
+    .footer-brand-block {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 0;
+    }
+
+    .footer-nav-block {
+      padding-top: 0;
+      padding-bottom: 0;
+      border-top: 0;
+      border-bottom: 0;
+    }
+  }
+</style>
 
 <?php wp_footer(); ?>
