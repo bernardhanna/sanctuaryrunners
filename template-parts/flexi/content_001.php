@@ -41,7 +41,7 @@ $section_id = 'about-us-' . wp_rand(1000, 9999);
                     <div class="overflow-hidden bg-gray-100 rounded-lg">
                         <?php echo wp_get_attachment_image($image, 'full', false, [
                             'alt'   => esc_attr($image_alt),
-                            'class' => 'w-full h-auto object-cover',
+                            'class' => 'w-full h-auto object-cover max-sm:object-contain',
                         ]); ?>
                     </div>
                 </div>
