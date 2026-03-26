@@ -99,7 +99,7 @@ $primary_navigation = Navi::make()->build('primary');
     <div class="flex shrink-0 items-center max-w-[250px]">
       <a href="<?php echo esc_url(home_url('/')); ?>" class="flex btn">
         <?php if ($logo_url) : ?>
-          <div class="max-w-[124px]">
+          <div class="max-w-[124px]" style="z-index: 99999999999999;">
             <img
               src="<?php echo esc_url($logo_url); ?>"
               alt="<?php echo esc_attr($logo_alt); ?>"
