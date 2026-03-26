@@ -42,8 +42,8 @@ $section_id = 'events-' . uniqid();
 ?>
 
 <section id="<?php echo esc_attr($section_id); ?>" class="flex overflow-hidden relative">
-    <div class="flex flex-col items-center w-full mx-auto max-w-container2 <?php echo esc_attr(implode(' ', $padding_classes)); ?> max-lg:px-5">
-        <div class="overflow-hidden px-14 pt-0 pb-0 md:pt-14 md:pb-20 w-full max-md:px-5">
+    <div class="flex flex-col items-center w-full mx-auto max-w-container2 <?php echo esc_attr(implode(' ', $padding_classes)); ?>">
+        <div class="overflow-hidden px-14 pt-0 pb-0 w-full md:pt-14 md:pb-20 max-lg:px-5">
             <?php
             $view_all_html = '';
             if ($view_all_button && is_array($view_all_button) && isset($view_all_button['url'], $view_all_button['title'])) {
@@ -67,7 +67,7 @@ $section_id = 'events-' . uniqid();
 
             <header class="flex flex-wrap gap-10 justify-between items-center w-full">
                 <div class="flex gap-3.5 items-center min-w-60">
-                    <div class="flex items-center justify-center w-10 h-10 bg-rose-50 border-4 border-red-200 rounded-full">
+                    <div class="flex justify-center items-center w-10 h-10 bg-rose-50 rounded-full border-4 border-red-200">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="21" viewBox="0 0 19 21" fill="none">
                             <path d="M13.5 0.5V4.5M5.5 0.5V4.5M0.5 8.5H18.5M2.5 2.5H16.5C17.6046 2.5 18.5 3.39543 18.5 4.5V18.5C18.5 19.6046 17.6046 20.5 16.5 20.5H2.5C1.39543 20.5 0.5 19.6046 0.5 18.5V4.5C0.5 3.39543 1.39543 2.5 2.5 2.5Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -86,7 +86,7 @@ $section_id = 'events-' . uniqid();
             </header>
 
             <?php if ($events_query->have_posts()): ?>
-                <main class="flex flex-wrap items-stretch gap-4 mt-6 w-full">
+                <main class="grid grid-cols-1 gap-4 items-stretch mt-6 w-full xl:grid-cols-3">
                     <?php while ($events_query->have_posts()): $events_query->the_post(); ?>
                         <?php
                         $event_id  = get_the_ID();
@@ -106,27 +106,27 @@ $section_id = 'events-' . uniqid();
                         $location_name = $event_locations[0]->name ?? '';
                         ?>
 
-                        <article class="flex flex-1 min-w-60">
+                        <article class="w-full">
                             <a href="<?php echo esc_url($permalink); ?>"
-                               class="group flex h-full w-full gap-4 p-6 rounded-lg bg-sky-950 border border-transparent transition-all duration-200 hover:bg-white hover:shadow-[0_0_0_4px_#00628F]">
+                               class="group flex h-full w-full flex-col gap-4 p-6 rounded-lg bg-sky-950 border border-transparent transition-all duration-200 hover:bg-white hover:shadow-[0_0_0_4px_#00628F] sm:flex-row">
 
                                 <?php if ($event_image): ?>
                                     <?php echo wp_get_attachment_image($event_image, 'thumbnail', false, ['class' => 'w-[100px] h-[100px] rounded']); ?>
                                 <?php endif; ?>
 
                                 <div class="flex flex-col flex-1">
-                                    <h3 class="text-lg font-bold text-red group-hover:text-sky-950 transition-colors">
+                                    <h3 class="text-lg font-bold transition-colors text-red group-hover:text-sky-950">
                                         <?php the_title(); ?>
                                     </h3>
 
                                     <?php if ($event_date_formatted): ?>
-                                        <time class="text-sm text-gray-100 group-hover:text-gray-600 transition-colors">
+                                        <time class="text-sm text-gray-100 transition-colors group-hover:text-gray-600">
                                             <?php echo esc_html($event_date_formatted); ?>
                                         </time>
                                     <?php endif; ?>
 
                                     <?php if ($location_name): ?>
-                                        <div class="mt-1 px-3 py-1 text-xs bg-red rounded-full w-fit self-start">
+                                        <div class="self-start px-3 py-1 mt-1 text-xs rounded-full bg-red w-fit">
                                             <?php echo esc_html($location_name); ?>
                                         </div>
                                     <?php endif; ?>
@@ -137,7 +137,7 @@ $section_id = 'events-' . uniqid();
                 </main>
 
                 <?php if ($view_all_html): ?>
-                    <div class="mt-6 flex justify-center md:hidden">
+                    <div class="flex justify-center mt-6 md:hidden">
                         <?php echo $view_all_html; ?>
                     </div>
                 <?php endif; ?>

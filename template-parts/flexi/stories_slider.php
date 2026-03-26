@@ -59,7 +59,7 @@ if ($has_posts) {
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <<?php echo esc_html($heading_tag); ?>
                 id="<?php echo esc_attr($section_id); ?>-heading"
-                class="font-display text-[36px] font-bold leading-[1.1] tracking-[-0.04em] text-brand-blue sm:text-[44px]"
+                class="font-display text-center text-[24px] not-italic font-bold leading-[32px] tracking-[-0.72px] text-brand-blue md:text-left md:text-[36px] md:leading-[1.1] md:tracking-[-0.04em] lg:text-[44px]"
             >
                 <?php echo esc_html($heading); ?>
             </<?php echo esc_html($heading_tag); ?>>

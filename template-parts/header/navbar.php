@@ -24,6 +24,7 @@ $primary_navigation = Navi::make()->build('primary');
     isOpen: false,
     activeDropdown: null,
     searchOpen: false,
+    searchTriggerEl: null,
     lastScroll: 0,
     isVisible: true,
 
@@ -50,6 +51,17 @@ $primary_navigation = Navi::make()->build('primary');
       }
 
       this.lastScroll = currentScroll;
+    },
+
+    openSearch() {
+      this.searchTriggerEl = document.activeElement;
+      this.searchOpen = true;
+      this.$nextTick(() => this.$refs.searchInput?.focus());
+    },
+
+    closeSearch() {
+      this.searchOpen = false;
+      this.$nextTick(() => this.searchTriggerEl?.focus());
     },
 
     setContentOffset() {
@@ -85,7 +97,7 @@ $primary_navigation = Navi::make()->build('primary');
 
     window.addEventListener('scroll', () => handleScroll());
   "
-  x-effect="isOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''"
+  x-effect="(isOpen || searchOpen) ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''"
   :class="isVisible ? 'translate-y-0' : '-translate-y-full'"
   class="fixed top-0 left-0 w-full z-[1000] px-5 pt-5 bg-transparent transition-transform duration-300"
 >
@@ -167,8 +179,8 @@ $primary_navigation = Navi::make()->build('primary');
 
       <!-- SEARCH -->
       <div class="group w-12 h-12 flex items-center justify-center border border-gray-300 rounded-full hover:bg-[var(--Blue-SR-500,#00628F)] hover:shadow-[0_0_24px_0_#C2EDFF] transition-all duration-200">
-        <button type="button" @click="searchOpen = true" aria-label="Open search">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
+        <button type="button" @click="openSearch()" aria-label="Open search dialog" :aria-expanded="searchOpen.toString()" aria-controls="site-search-dialog">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" aria-hidden="true" focusable="false">
             <path
               d="M14 14L11.1 11.1M12.6 7.3A5.3 5.3 0 1 1 2 7.3a5.3 5.3 0 0 1 10.6 0Z"
               class="transition-colors duration-200 group-hover:stroke-white"
@@ -212,18 +224,28 @@ $primary_navigation = Navi::make()->build('primary');
 
   <!-- SEARCH OVERLAY -->
   <div
+    id="site-search-dialog"
     x-show="searchOpen"
     x-cloak
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="site-search-title"
+    @keydown.escape.window="closeSearch()"
     class="fixed inset-0 flex justify-center items-start pt-[8rem] bg-black/30 h-screen"
-    @click.self="searchOpen = false"
+    @click.self="closeSearch()"
   >
     <div class="bg-white p-4 rounded-lg w-full max-w-[800px]">
+      <h2 id="site-search-title" class="sr-only">Site search</h2>
       <form method="get" action="<?php echo esc_url(home_url('/')); ?>" class="flex gap-2">
+        <label for="site-search-input" class="sr-only">Search the site</label>
         <input
+          id="site-search-input"
+          x-ref="searchInput"
           type="search"
           name="s"
           placeholder="Search..."
-          class="flex-1 px-4 py-3 rounded-full border"
+          autocomplete="off"
+          class="flex-1 px-4 py-3 !border-none"
         />
         <button type="submit" class="px-5 btn-primary">Search</button>
       </form>

@@ -95,9 +95,9 @@ function matrix_social_svg($icon) {
   <?php if ( ! ( function_exists( 'matrix_donations_is_donation_flow' ) && matrix_donations_is_donation_flow() ) ) : ?>
   <div style="background-color: <?php echo esc_attr($main_bg_color ?: '#00263E'); ?>;">
     <div class="max-w-[1440px] mx-auto px-8 sm:px-8 lg:px-14 py-8 md:py-14 <?php echo esc_attr($padding_class_string); ?>">
-      <div class="flex flex-col gap-0 lg:flex-row lg:gap-16 xl:gap-32">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:flex xl:flex-row xl:gap-16 2xl:gap-32">
 
-        <div class="flex flex-row justify-around md:flex-col md:justify-start gap-4 shrink-0 pb-6 md:pb-0">
+        <div class="flex flex-row gap-4 justify-around pb-6 md:flex-col md:justify-start shrink-0 md:pb-0">
           <div class="w-40">
             <?php if ($footer_logo) : ?>
               <?php

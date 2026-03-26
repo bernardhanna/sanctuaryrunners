@@ -147,7 +147,7 @@ foreach ($running_group_ids as $group_id) {
                 />
             <?php endif; ?>
 
-            <div class="flex relative flex-col items-center w-full min-h-[641px] max-md:px-5 max-md:pt-24 max-md:max-w-full">
+            <div class="flex relative flex-col items-center w-full min-h-[641px] max-md:px-5 max-md:pt-8 max-md:max-w-full">
                 <?php if (!empty($overlay_image_url)) : ?>
                     <img
                         src="<?php echo esc_url($overlay_image_url); ?>"
