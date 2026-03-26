@@ -1032,6 +1032,7 @@ body {
 
 .entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6 {
   @apply pt-4 pb-4 mb-4 font-primary;
+  color: var(--Blue-SR-500, #00628F);
 }
 
 .entry-content h1,
@@ -1040,8 +1041,10 @@ body {
 .entry-content h4 {
     position: relative;
 }
-.wp_editor .entry-content p {
-  @apply pb-2 text-black text-[16px] font-normal leading-[26px] tracking-[0];
+.wp_editor .entry-content p,
+.entry-content p {
+  @apply pb-2 font-sans text-[16px] font-normal not-italic leading-[22px] tracking-[0];
+  color: var(--Gray-700, #00263E);
 }
 
 
