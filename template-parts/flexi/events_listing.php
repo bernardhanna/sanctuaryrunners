@@ -208,7 +208,7 @@ $section_id = 'events-listing-' . uniqid();
 
                             <!-- Event Content -->
                             <div class="flex flex-col p-6 w-full text-sm max-md:px-5">
-                                <h3 class="text-lg font-bold leading-none text-[#F68DA7]">
+                                <h3 class="font-sans text-[18px] font-bold not-italic leading-[24px] text-[#F68DA7]">
                                     <a
                                         href="<?php echo esc_url(get_permalink()); ?>"
                                         class="hover:underline focus:underline"

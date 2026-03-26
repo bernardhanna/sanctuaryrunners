@@ -218,7 +218,7 @@ $section_id = 'blog-listing-' . uniqid();
                                     </span>
                                 </div>
 
-                                <h3 class="mt-2 text-lg font-bold leading-none <?php echo $is_layout_2 ? 'text-[#F68DA7]' : 'text-sky-800'; ?>">
+                                <h3 class="mt-2 font-sans text-[18px] font-bold not-italic leading-[24px] <?php echo $is_layout_2 ? 'text-[#F68DA7]' : 'text-sky-800'; ?>">
                                     <a href="<?php echo esc_url(get_permalink()); ?>" class="hover:underline focus:underline">
                                         <?php the_title(); ?>
                                     </a>
