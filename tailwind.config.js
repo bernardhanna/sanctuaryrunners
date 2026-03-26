@@ -6,6 +6,8 @@ module.exports = {
     './woocommerce/**/*.php',
     './**/*.php',
     './assets/js/**/*.js',
+    '../plugins/matrix-donations/**/*.php',
+    '../plugins/matrix-donations/assets/js/**/*.js',
   ],
   theme: {
     extend: {

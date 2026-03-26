@@ -25,6 +25,10 @@ $use_white_text     = (bool) $sf('use_white_text', false);
 $custom_breadcrumbs = (bool) $sf('custom_breadcrumbs', false);
 $layout_option      = $sf('layout_option', 'layout_1');
 $layout_2_desktop_min_height = max(0, (int) $sf('layout_2_desktop_min_height', 300));
+$layout_2_container_padding_class = (string) $sf('layout_2_container_padding_class', 'pt-[0rem] pb-0 md:pb-0');
+$disable_mobile_absolute_media = (bool) $sf('disable_mobile_absolute_media', false);
+$mobile_image_contain = (bool) $sf('mobile_image_contain', false);
+$section_extra_classes = trim((string) $sf('section_extra_classes', ''));
 $breadcrumbs_arg    = $sf('breadcrumbs');
 
 $is_layout_2         = $layout_option === 'layout_2';
@@ -66,8 +70,8 @@ $layout_1_figure_class = $is_full_height_right_image
     ? 'flex h-full w-full min-h-[260px] items-stretch justify-end overflow-hidden'
     : 'w-full';
 $layout_2_figure_class = $is_full_height_right_image
-    ? 'w-full h-full max-md:absolute max-md:inset-0 max-md:h-full'
-    : 'w-full max-md:absolute max-md:inset-0 max-md:h-full';
+    ? ($disable_mobile_absolute_media ? 'w-full h-full' : 'w-full h-full max-md:absolute max-md:inset-0 max-md:h-full')
+    : ($disable_mobile_absolute_media ? 'w-full' : 'w-full max-md:absolute max-md:inset-0 max-md:h-full');
 
 $layout_1_text_col_class = $is_full_height_right_image
     ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full md:order-1 md:col-span-5 lg:w-full lg:max-w-[460px]'
@@ -88,6 +92,11 @@ if ($image_presentation === 'contain') {
 } elseif ($is_full_height_right_image) {
     $layout_1_image_class = 'h-full w-full object-contain object-right';
     $layout_2_image_class = 'h-full w-full object-contain object-right max-md:object-center';
+}
+
+if ($mobile_image_contain) {
+    $layout_1_image_class .= ' max-md:object-contain';
+    $layout_2_image_class .= ' max-md:object-contain';
 }
 
 // CTA icon alts
@@ -170,7 +179,7 @@ $section_id = 'subhero-' . uniqid();
     <!-- Layout 1 -->
     <section
         id="<?php echo esc_attr($section_id); ?>"
-        class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
+        class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
@@ -328,7 +337,7 @@ $section_id = 'subhero-' . uniqid();
     <!-- Layout 2 -->
     <section
         id="<?php echo esc_attr($section_id); ?>"
-        class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
+        class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
@@ -349,7 +358,7 @@ $section_id = 'subhero-' . uniqid();
         <?php endif; ?>
 
         <div
-            class="relative max-xl:px-5 mx-auto flex w-full max-w-container pt-[0rem] pb-0 md:pb-0 <?php echo esc_attr($layout_2_min_height_class); ?> lg:items-center"
+            class="relative max-xl:px-5 mx-auto flex w-full max-w-container <?php echo esc_attr($layout_2_container_padding_class); ?> <?php echo esc_attr($layout_2_min_height_class); ?> lg:items-center"
             style="<?php echo esc_attr($layout_2_min_height_style); ?>"
         >
             <div class="<?php echo esc_attr($layout_2_grid_class); ?>">
