@@ -44,6 +44,7 @@ $img_title = is_array($img) && !empty($img['title']) ? $img['title'] : $img_alt;
 $img_id    = is_array($img) && !empty($img['ID'])    ? (int) $img['ID'] : 0;
 $img_width = is_array($img) && !empty($img['width']) ? (int) $img['width'] : 0;
 $img_height = is_array($img) && !empty($img['height']) ? (int) $img['height'] : 0;
+$has_dropdown_image = $img_url !== '';
 ?>
 
 <div
@@ -69,7 +70,7 @@ $img_height = is_array($img) && !empty($img['height']) ? (int) $img['height'] : 
 
             <!-- Megamenu Container -->
             <div
-                class="flex overflow-hidden flex-wrap py-4 pl-14 w-full max-w-[1168px] mx-auto text-sm leading-none text-sky-800 bg-white rounded-lg shadow-lg max-md:pl-5"
+                class="flex overflow-hidden flex-wrap <?php echo $has_dropdown_image ? 'py-4' : 'py-0'; ?> pl-14 w-full max-w-[1168px] mx-auto text-sm leading-none text-sky-800 bg-white rounded-lg shadow-lg max-md:pl-5"
                 role="navigation"
                 aria-label="<?php echo esc_attr($item->label); ?> menu"
                 x-data="{ activeTier3Index: null }"
@@ -203,7 +204,7 @@ $img_height = is_array($img) && !empty($img['height']) ? (int) $img['height'] : 
                                     @mouseenter="activeTier3Index = <?php echo (int) $child_index; ?>"
                                     style="display: none;"
                                 >
-                                    <div class="flex flex-col items-start py-6 pr-6 pl-4 w-full bg-sky-50 rounded-lg max-md:pr-5 max-md:max-w-full">
+                                    <div class="flex flex-col items-start <?php echo $has_dropdown_image ? 'py-6' : 'py-4'; ?> pr-6 pl-4 w-full bg-sky-50 rounded-lg max-md:pr-5 max-md:max-w-full">
                                         <header class="flex flex-col justify-center py-2 pr-3 pl-3.5 font-bold text-sky-800">
                                             <span class="flex items-center self-stretch my-auto" aria-hidden="true">
                                                 <i class="mr-2 text-sm text-blue-900 fa-solid fa-chevron-left shrink-0" aria-hidden="true"></i>
@@ -220,7 +221,7 @@ $img_height = is_array($img) && !empty($img['height']) ? (int) $img['height'] : 
                                                     <li>
                                                         <a
                                                             href="<?php echo esc_url($grandchild->url); ?>"
-                                                            class="btn flex flex-col justify-center items-start py-2 pr-3 pl-3.5 w-full max-w-[162px] rounded-[100px] text-left hover:bg-white focus:bg-white transition-colors duration-200 whitespace-normal font-sans text-[14px] font-normal not-italic leading-[20px] text-[var(--Blue-SR-500,#00628F)]"
+                                                            class="btn flex flex-col justify-center items-start py-2 pr-3 pl-3.5 w-full rounded-[100px] text-left hover:bg-white focus:bg-white transition-colors duration-200 whitespace-normal font-sans text-[14px] font-normal not-italic leading-[20px] text-[var(--Blue-SR-500,#00628F)]"
                                                             <?php if (!empty($grandchild->target)) : ?>target="<?php echo esc_attr($grandchild->target); ?>"<?php endif; ?>
                                                         >
                                                             <span class="self-stretch my-auto"><?php echo esc_html($grandchild->label); ?></span>
