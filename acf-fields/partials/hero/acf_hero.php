@@ -67,6 +67,20 @@ $hero
             'library' => 'all',
         ])
             ->conditional('media_type', '==', 'image')
+        ->addSelect('media_presentation', [
+            'label' => 'Image Presentation',
+            'instructions' => 'Choose how image media should fit. Use "Full-height right SVG" for decorative SVGs that should align to the right edge and fill the hero height.',
+            'choices' => [
+                'default'               => 'Default (cover)',
+                'contain'               => 'Contain (centered)',
+                'contain_right'         => 'Contain (right aligned)',
+                'full_height_right_svg' => 'Full-height right SVG',
+            ],
+            'default_value' => 'default',
+            'ui' => 1,
+            'return_format' => 'value',
+        ])
+            ->conditional('media_type', '==', 'image')
         ->addSelect('video_source', [
             'label' => 'Video source',
             'choices' => [

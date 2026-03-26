@@ -18,6 +18,7 @@ $secondary_cta      = $sf('secondary_cta');
 $primary_cta_icon   = $sf('primary_cta_icon');
 $secondary_cta_icon = $sf('secondary_cta_icon');
 $image              = $sf('image');
+$image_presentation = $sf('image_presentation', 'default');
 $image_alt          = $image ? (get_post_meta($image, '_wp_attachment_image_alt', true) ?: 'Featured image') : '';
 $background_color   = $sf('background_color', '#EEF6FC');
 $use_white_text     = (bool) $sf('use_white_text', false);
@@ -27,6 +28,64 @@ $breadcrumbs_arg    = $sf('breadcrumbs');
 
 $is_layout_2         = $layout_option === 'layout_2';
 $is_dark_background  = strtolower($background_color) !== '#eef6fc';
+
+$allowed_image_presentations = ['default', 'contain', 'contain_right', 'full_height_right_svg'];
+if (!in_array($image_presentation, $allowed_image_presentations, true)) {
+    $image_presentation = 'default';
+}
+$is_full_height_right_image = !empty($image) && $image_presentation === 'full_height_right_svg';
+
+$layout_1_grid_class = $is_full_height_right_image
+    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:block lg:min-h-[420px]'
+    : 'grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
+$layout_2_grid_class = $is_full_height_right_image
+    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:block lg:min-h-[300px]'
+    : 'grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
+
+$section_media_wrap_class = $is_full_height_right_image
+    ? 'pointer-events-none absolute inset-y-0 right-0 z-[1] hidden lg:flex lg:w-[60%] lg:items-stretch lg:justify-end'
+    : '';
+$section_media_figure_class = $is_full_height_right_image
+    ? 'h-full w-full overflow-hidden'
+    : '';
+$section_media_image_class = $is_full_height_right_image
+    ? 'h-full w-full object-contain object-right'
+    : '';
+
+$layout_1_media_col_class = $is_full_height_right_image
+    ? 'order-1 max-md:w-full md:order-2 md:col-span-7 lg:hidden'
+    : 'order-1 max-md:w-full md:order-2 md:col-span-7';
+$layout_2_media_col_class = $is_full_height_right_image
+    ? 'order-1 max-md:w-full md:order-2 md:col-span-6 lg:hidden'
+    : 'order-1 max-md:w-full md:order-2 md:col-span-6';
+
+$layout_1_figure_class = $is_full_height_right_image
+    ? 'flex h-full w-full min-h-[260px] items-stretch justify-end overflow-hidden'
+    : 'w-full';
+$layout_2_figure_class = $is_full_height_right_image
+    ? 'w-full h-full max-md:absolute max-md:inset-0 max-md:h-full'
+    : 'w-full max-md:absolute max-md:inset-0 max-md:h-full';
+
+$layout_1_text_col_class = $is_full_height_right_image
+    ? 'order-2 relative z-[2] flex flex-col max-md:max-w-full md:order-1 md:col-span-5 lg:max-w-[460px]'
+    : 'order-2 flex flex-col max-md:max-w-full md:order-1 md:col-span-5';
+$layout_2_text_col_class = $is_full_height_right_image
+    ? 'order-2 relative z-[2] flex flex-col max-md:max-w-full md:order-1 md:col-span-6 lg:max-w-[460px]'
+    : 'order-2 z-[2] flex flex-col max-md:max-w-full md:order-1 md:col-span-6';
+
+$layout_1_image_class = 'w-full max-h-[522px] h-auto rounded-lg object-cover object-center';
+$layout_2_image_class = 'w-full max-h-[300px] h-auto rounded-lg object-contain md:object-right max-md:object-center';
+
+if ($image_presentation === 'contain') {
+    $layout_1_image_class = 'w-full max-h-[522px] h-auto rounded-lg object-contain object-center';
+    $layout_2_image_class = 'w-full max-h-[300px] h-auto rounded-lg object-contain object-center max-md:object-center';
+} elseif ($image_presentation === 'contain_right') {
+    $layout_1_image_class = 'w-full max-h-[522px] h-auto rounded-lg object-contain object-right';
+    $layout_2_image_class = 'w-full max-h-[300px] h-auto rounded-lg object-contain md:object-right max-md:object-center';
+} elseif ($is_full_height_right_image) {
+    $layout_1_image_class = 'h-full w-full object-contain object-right';
+    $layout_2_image_class = 'h-full w-full object-contain object-right max-md:object-center';
+}
 
 // CTA icon alts
 $primary_cta_icon_alt   = $primary_cta_icon ? (get_post_meta($primary_cta_icon, '_wp_attachment_image_alt', true) ?: '') : '';
@@ -113,16 +172,31 @@ $section_id = 'subhero-' . uniqid();
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
-        <div class="max-xl:px-5 mx-auto w-full max-w-container pb-6 md:pb-8">
-            <div class="grid grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12">
+        <?php if ($is_full_height_right_image && $image): ?>
+            <div class="<?php echo esc_attr($section_media_wrap_class); ?>">
+                <figure class="<?php echo esc_attr($section_media_figure_class); ?>">
+                    <?php
+                    echo wp_get_attachment_image($image, 'full', false, [
+                        'alt'      => esc_attr($image_alt),
+                        'class'    => $section_media_image_class,
+                        'loading'  => 'lazy',
+                        'decoding' => 'async',
+                    ]);
+                    ?>
+                </figure>
+            </div>
+        <?php endif; ?>
+
+        <div class="relative max-xl:px-5 mx-auto w-full max-w-container pb-6 md:pb-8">
+            <div class="<?php echo esc_attr($layout_1_grid_class); ?>">
 
                 <?php if ($image): ?>
-                    <div class="order-1 max-md:w-full md:order-2 md:col-span-7">
-                        <figure class="w-full">
+                    <div class="<?php echo esc_attr($layout_1_media_col_class); ?>">
+                        <figure class="<?php echo esc_attr($layout_1_figure_class); ?>">
                             <?php
                             echo wp_get_attachment_image($image, 'full', false, [
                                 'alt'      => esc_attr($image_alt),
-                                'class'    => 'w-full max-h-[522px] h-auto rounded-lg object-cover object-center',
+                                'class'    => $layout_1_image_class,
                                 'loading'  => 'lazy',
                                 'decoding' => 'async',
                             ]);
@@ -137,7 +211,7 @@ $section_id = 'subhero-' . uniqid();
                     </div>
                 <?php endif; ?>
 
-                <div class="order-2 flex flex-col max-md:max-w-full md:order-1 md:col-span-5 <?php echo esc_attr($text_color_class); ?>">
+                <div class="<?php echo esc_attr($layout_1_text_col_class); ?> <?php echo esc_attr($text_color_class); ?>">
 
                     <?php if (!empty($breadcrumbs)): ?>
                         <nav class="mb-4 max-sm:mb-6" aria-label="Breadcrumb navigation" role="navigation">
@@ -256,16 +330,31 @@ $section_id = 'subhero-' . uniqid();
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
-        <div class="max-xl:px-5 mx-auto flex w-full max-w-container pt-[0rem] pb-0 md:pb-0 lg:min-h-[300px] lg:items-center">
-            <div class="grid grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12">
+        <?php if ($is_full_height_right_image && $image): ?>
+            <div class="<?php echo esc_attr($section_media_wrap_class); ?>">
+                <figure class="<?php echo esc_attr($section_media_figure_class); ?>">
+                    <?php
+                    echo wp_get_attachment_image($image, 'full', false, [
+                        'alt'      => esc_attr($image_alt),
+                        'class'    => $section_media_image_class,
+                        'loading'  => 'lazy',
+                        'decoding' => 'async',
+                    ]);
+                    ?>
+                </figure>
+            </div>
+        <?php endif; ?>
+
+        <div class="relative max-xl:px-5 mx-auto flex w-full max-w-container pt-[0rem] pb-0 md:pb-0 lg:min-h-[300px] lg:items-center">
+            <div class="<?php echo esc_attr($layout_2_grid_class); ?>">
 
                 <?php if ($image): ?>
-                    <div class="order-1 max-md:w-full md:order-2 md:col-span-6">
-                        <figure class="w-full max-md:absolute max-md:inset-0 max-md:h-full">
+                    <div class="<?php echo esc_attr($layout_2_media_col_class); ?>">
+                        <figure class="<?php echo esc_attr($layout_2_figure_class); ?>">
                             <?php
                             echo wp_get_attachment_image($image, 'full', false, [
                                 'alt'      => esc_attr($image_alt),
-                                'class'    => 'w-full max-h-[300px] h-auto rounded-lg object-contain md:object-right max-md:object-center',
+                                'class'    => $layout_2_image_class,
                                 'loading'  => 'lazy',
                                 'decoding' => 'async',
                             ]);
@@ -280,7 +369,7 @@ $section_id = 'subhero-' . uniqid();
                     </div>
                 <?php endif; ?>
 
-                <div class="order-2 z-[2] flex flex-col max-md:max-w-full md:order-1 md:col-span-6 <?php echo esc_attr($text_color_class); ?>">
+                <div class="<?php echo esc_attr($layout_2_text_col_class); ?> <?php echo esc_attr($text_color_class); ?>">
 
                     <?php if (!empty($breadcrumbs)): ?>
                         <nav class="mt-[3rem] sm:mt-0 mb-4 max-sm:mb-6" aria-label="Breadcrumb navigation" role="navigation">

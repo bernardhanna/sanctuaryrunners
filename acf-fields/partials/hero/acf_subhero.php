@@ -72,6 +72,19 @@ $subhero
         'preview_size' => 'medium',
         'library' => 'all',
     ])
+    ->addSelect('image_presentation', [
+        'label' => 'Image Presentation',
+        'instructions' => 'Choose how the image should fit. Use "Full-height right SVG" for decorative SVGs that should align to the right edge and fill the hero height.',
+        'choices' => [
+            'default'               => 'Default',
+            'contain'               => 'Contain (centered)',
+            'contain_right'         => 'Contain (right aligned)',
+            'full_height_right_svg' => 'Full-height right SVG',
+        ],
+        'default_value' => 'default',
+        'required' => 0,
+        'ui' => 1,
+    ])
     ->addTrueFalse('custom_breadcrumbs', [
         'label' => 'Use Custom Breadcrumbs',
         'instructions' => 'Enable to manually configure breadcrumb navigation. When disabled, breadcrumbs will be generated automatically based on page hierarchy.',
