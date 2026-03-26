@@ -76,8 +76,8 @@ body {
 
   /* Form submit buttons: consistent global CTA treatment */
   .form-btn,
-  form input[type="submit"]:not(.no-form-btn-style),
-  form button[type="submit"]:not(.no-form-btn-style) {
+  form:not([data-brevo-newsletter]):not(.search-form):not([role="search"]) input[type="submit"]:not(.no-form-btn-style):not(.filter-btn):not(.search-btn),
+  form:not([data-brevo-newsletter]):not(.search-form):not([role="search"]) button[type="submit"]:not(.no-form-btn-style):not(.filter-btn):not(.search-btn) {
     @apply inline-flex items-center justify-center gap-2 rounded-[100px] px-6 py-4 text-[14px] font-bold leading-5 text-white transition-[background-color,border-color,box-shadow] duration-200;
     border: 4px solid transparent;
     background: var(--Gradient-Blue-3, linear-gradient(313deg, #059DED 24.08%, #28B2FA 63%));
@@ -86,24 +86,24 @@ body {
   }
 
   .form-btn:hover,
-  form input[type="submit"]:not(.no-form-btn-style):hover,
-  form button[type="submit"]:not(.no-form-btn-style):hover {
-    border: 4px solid var(--Mint-500, #87CEB7);
-    background: var(--Gradient-Blue-3, linear-gradient(313deg, #059DED 24.08%, #28B2FA 63%));
-    box-shadow: none;
-    color: #fff;
+  form:not([data-brevo-newsletter]):not(.search-form):not([role="search"]) input[type="submit"]:not(.no-form-btn-style):not(.filter-btn):not(.search-btn):hover,
+  form:not([data-brevo-newsletter]):not(.search-form):not([role="search"]) button[type="submit"]:not(.no-form-btn-style):not(.filter-btn):not(.search-btn):hover {
+    border: 4px solid var(--Mint-500, #87CEB7) !important;
+    background: var(--Gradient-Blue-3, linear-gradient(313deg, #059DED 24.08%, #28B2FA 63%)) !important;
+    box-shadow: none !important;
+    color: #fff !important;
   }
 
   .form-btn:active,
-  form input[type="submit"]:not(.no-form-btn-style):active,
-  form button[type="submit"]:not(.no-form-btn-style):active {
+  form:not([data-brevo-newsletter]):not(.search-form):not([role="search"]) input[type="submit"]:not(.no-form-btn-style):not(.filter-btn):not(.search-btn):active,
+  form:not([data-brevo-newsletter]):not(.search-form):not([role="search"]) button[type="submit"]:not(.no-form-btn-style):not(.filter-btn):not(.search-btn):active {
     border: 4px solid transparent;
     background: var(--Blue-SR-400, #008BCC);
   }
 
   .form-btn:focus-visible,
-  form input[type="submit"]:not(.no-form-btn-style):focus-visible,
-  form button[type="submit"]:not(.no-form-btn-style):focus-visible {
+  form:not([data-brevo-newsletter]):not(.search-form):not([role="search"]) input[type="submit"]:not(.no-form-btn-style):not(.filter-btn):not(.search-btn):focus-visible,
+  form:not([data-brevo-newsletter]):not(.search-form):not([role="search"]) button[type="submit"]:not(.no-form-btn-style):not(.filter-btn):not(.search-btn):focus-visible {
     border: 3px solid var(--Turquoise-500, #1C959B);
     background: var(--Blue-SR-400, #008BCC);
     outline: none;
