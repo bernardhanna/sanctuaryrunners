@@ -7,6 +7,12 @@
 
 $languages = [];
 $nav_settings = get_field('navigation_settings_start', 'option') ?: [];
+$show_country_picker = !array_key_exists('show_country_picker', $nav_settings) || (bool) $nav_settings['show_country_picker'];
+
+if (!$show_country_picker) {
+    return;
+}
+
 $country_picker_options = $nav_settings['country_picker_options'] ?? [];
 
 if (!empty($country_picker_options) && is_array($country_picker_options)) {

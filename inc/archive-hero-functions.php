@@ -66,6 +66,7 @@ if (!function_exists('matrix_get_archive_subhero_media_args')) {
             'content' => matrix_get_archive_hero_description($default_description, $queried_object),
             'image' => $image_id ?: null,
             'image_presentation' => $image_id ? 'full_height_right_svg' : 'default',
+            'layout_2_desktop_min_height' => 450,
         ]);
     }
 }

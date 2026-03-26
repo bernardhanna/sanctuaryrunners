@@ -12,6 +12,7 @@ $nav_settings   = get_field('navigation_settings_start', 'option') ?: [];
 $contact_button = $nav_settings['contact_button'] ?? null;
 $donate_button  = $nav_settings['donate_button'] ?? null;
 $donate_icon    = $nav_settings['donate_icon'] ?? null;
+$show_country_picker = !array_key_exists('show_country_picker', $nav_settings) || (bool) $nav_settings['show_country_picker'];
 
 use Log1x\Navi\Navi;
 $primary_navigation = Navi::make()->build('primary');
@@ -160,7 +161,9 @@ $primary_navigation = Navi::make()->build('primary');
     <!-- RIGHT SIDE -->
     <div class="hidden gap-4 items-center lg:flex shrink-0">
 
-      <?php get_template_part('template-parts/header/navbar/language-dropdown'); ?>
+      <?php if ($show_country_picker) : ?>
+        <?php get_template_part('template-parts/header/navbar/language-dropdown'); ?>
+      <?php endif; ?>
 
       <!-- SEARCH -->
       <div class="group w-12 h-12 flex items-center justify-center border border-gray-300 rounded-full hover:bg-[var(--Blue-SR-500,#00628F)] hover:shadow-[0_0_24px_0_#C2EDFF] transition-all duration-200">

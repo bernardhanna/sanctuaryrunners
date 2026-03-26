@@ -161,7 +161,7 @@ $section_id = 'blog-listing-' . uniqid();
 
         <!-- Blog Posts Grid -->
         <main class="flex flex-col mt-4 w-full max-md:max-w-full" role="main" aria-label="Blog posts">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full min-h-[454px] max-md:max-w-full" id="posts-container">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 lg:gap-y-24 w-full min-h-[454px] max-md:max-w-full" id="posts-container">
 
                 <?php if ($blog_query->have_posts()): ?>
                     <?php while ($blog_query->have_posts()): $blog_query->the_post(); ?>

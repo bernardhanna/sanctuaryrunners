@@ -86,7 +86,7 @@ $section_id = 'events-' . uniqid();
             </header>
 
             <?php if ($events_query->have_posts()): ?>
-                <main class="flex flex-wrap gap-4 mt-6 w-full">
+                <main class="flex flex-wrap items-stretch gap-4 mt-6 w-full">
                     <?php while ($events_query->have_posts()): $events_query->the_post(); ?>
                         <?php
                         $event_id  = get_the_ID();
@@ -106,9 +106,9 @@ $section_id = 'events-' . uniqid();
                         $location_name = $event_locations[0]->name ?? '';
                         ?>
 
-                        <article class="flex-1 min-w-60">
+                        <article class="flex flex-1 min-w-60">
                             <a href="<?php echo esc_url($permalink); ?>"
-                               class="group flex gap-4 p-6 rounded-lg bg-sky-950 border border-transparent transition-all duration-200 hover:bg-white hover:shadow-[0_0_0_4px_#00628F]">
+                               class="group flex h-full w-full gap-4 p-6 rounded-lg bg-sky-950 border border-transparent transition-all duration-200 hover:bg-white hover:shadow-[0_0_0_4px_#00628F]">
 
                                 <?php if ($event_image): ?>
                                     <?php echo wp_get_attachment_image($event_image, 'thumbnail', false, ['class' => 'w-[100px] h-[100px] rounded']); ?>
