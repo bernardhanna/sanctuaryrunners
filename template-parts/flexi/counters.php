@@ -136,7 +136,7 @@ if ($image_title === '') {
                                     <?php endif; ?>
                                 >
                                     <h3
-                                        class="break-words text-left text-[60px] font-bold leading-[72px] tracking-[-1.2px] font-['Public_Sans'] text-[var(--Light-Blue-500,#008FC5)] w-full"
+                                        class="break-words text-left text-[36px] font-bold leading-[44px] tracking-[-0.72px] md:text-[60px] md:leading-[72px] md:tracking-[-1.2px] font-['Public_Sans'] text-[var(--Light-Blue-500,#008FC5)] w-full"
                                         <?php if ($stat_number_color): ?>style="color: <?php echo esc_attr($stat_number_color); ?>;"<?php endif; ?>
                                     >
                                         <!-- aria-hidden to avoid screen readers reading rapid changes -->

@@ -37,7 +37,7 @@ if (have_rows('padding_settings')) {
         <div class="grid w-full items-center gap-10 md:grid-cols-2">
 
             <!-- Text Content Section -->
-            <article class="w-full min-w-0 max-md:max-w-full <?php echo $reverse_layout ? 'order-2' : 'order-1'; ?>">
+            <article class="w-full min-w-0 max-md:max-w-full max-md:order-2 <?php echo $reverse_layout ? 'md:order-2' : 'md:order-1'; ?>">
                 <div class="w-full max-md:max-w-full">
 
                     <?php if (!empty($heading)): ?>
@@ -144,7 +144,7 @@ if (have_rows('padding_settings')) {
 
             <!-- Image Section -->
             <?php if ($image): ?>
-                <div class="w-full min-w-0 overflow-hidden rounded-lg bg-gray-100 <?php echo $reverse_layout ? 'order-1' : 'order-2'; ?>">
+                <div class="w-full min-w-0 overflow-hidden rounded-lg bg-gray-100 max-md:order-1 <?php echo $reverse_layout ? 'md:order-1' : 'md:order-2'; ?>">
                     <?php echo wp_get_attachment_image($image, 'full', false, [
                         'alt' => esc_attr($image_alt),
                         'class' => 'h-auto w-full object-contain aspect-[1.42] max-md:max-w-full',
