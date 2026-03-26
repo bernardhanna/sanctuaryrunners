@@ -8,6 +8,8 @@ const baseConfig = {
     './**/*.php',
     './assets/js/**/*.js',
     './woocommerce/**/*.php',
+    '../plugins/matrix-donations/**/*.php',
+    '../plugins/matrix-donations/assets/js/**/*.js',
   ],
   theme: {
     extend: {
