@@ -31,29 +31,30 @@ if (have_rows('padding_settings')) {
 >
     <div class="flex flex-col items-center pt-12 pb-12 mx-auto w-full max-w-container max-lg:px-5">
         <div class="flex overflow-hidden flex-col justify-center self-stretch px-10 max-md:px-5">
+            <div class="grid grid-cols-1 gap-10 items-center mt-6 w-full md:grid-cols-2 max-md:max-w-full">
 
-            <?php if (!empty($heading)): ?>
-                <<?php echo esc_attr($heading_tag); ?>
-                    id="<?php echo esc_attr($section_id); ?>-heading"
-                    class="text-2xl font-bold leading-none text-sky-800 max-md:max-w-full"
-                >
-                    <?php echo esc_html($heading); ?>
-                </<?php echo esc_attr($heading_tag); ?>>
-            <?php endif; ?>
+                <article class="w-full self-center max-md:max-w-full <?php echo $reverse_layout ? 'md:order-2' : 'md:order-1'; ?>">
+                    <?php if (!empty($heading)): ?>
+                        <<?php echo esc_attr($heading_tag); ?>
+                            id="<?php echo esc_attr($section_id); ?>-heading"
+                            class="text-2xl font-bold leading-none text-sky-800 max-md:max-w-full"
+                        >
+                            <?php echo esc_html($heading); ?>
+                        </<?php echo esc_attr($heading_tag); ?>>
+                    <?php endif; ?>
 
-            <?php if (!empty($description)): ?>
-                <div class="mt-6 text-xl leading-7 text-slate-600 max-md:max-w-full wp_editor">
-                    <?php echo wp_kses_post($description); ?>
-                </div>
-            <?php endif; ?>
+                    <?php if (!empty($description)): ?>
+                        <div class="mt-6 text-xl leading-7 text-slate-600 max-md:max-w-full wp_editor">
+                            <?php echo wp_kses_post($description); ?>
+                        </div>
+                    <?php endif; ?>
 
-            <div class="grid grid-cols-1 gap-10 items-start mt-6 w-full md:grid-cols-2 max-md:max-w-full">
-
-                <?php if (!empty($body_content)): ?>
-                    <div class="text-base leading-6 text-sky-950 max-md:max-w-full wp_editor <?php echo $reverse_layout ? 'md:order-2' : 'md:order-1'; ?>">
-                        <?php echo wp_kses_post($body_content); ?>
-                    </div>
-                <?php endif; ?>
+                    <?php if (!empty($body_content)): ?>
+                        <div class="mt-6 text-base leading-6 text-sky-950 max-md:max-w-full wp_editor">
+                            <?php echo wp_kses_post($body_content); ?>
+                        </div>
+                    <?php endif; ?>
+                </article>
 
                 <?php if ($image): ?>
                     <div class="overflow-hidden  rounded-lg w-full max-md:max-w-full <?php echo $reverse_layout ? 'md:order-1' : 'md:order-2'; ?>">

@@ -36,10 +36,10 @@ if (!in_array($image_presentation, $allowed_image_presentations, true)) {
 $is_full_height_right_image = !empty($image) && $image_presentation === 'full_height_right_svg';
 
 $layout_1_grid_class = $is_full_height_right_image
-    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:block lg:min-h-[420px]'
+    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:flex lg:min-h-[420px] lg:items-center'
     : 'grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
 $layout_2_grid_class = $is_full_height_right_image
-    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:block lg:min-h-[300px]'
+    ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:flex lg:min-h-[300px] lg:items-center'
     : 'grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12';
 
 $section_media_wrap_class = $is_full_height_right_image
@@ -67,10 +67,10 @@ $layout_2_figure_class = $is_full_height_right_image
     : 'w-full max-md:absolute max-md:inset-0 max-md:h-full';
 
 $layout_1_text_col_class = $is_full_height_right_image
-    ? 'order-2 relative z-[2] flex flex-col max-md:max-w-full md:order-1 md:col-span-5 lg:max-w-[460px]'
+    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full md:order-1 md:col-span-5 lg:w-full lg:max-w-[460px]'
     : 'order-2 flex flex-col max-md:max-w-full md:order-1 md:col-span-5';
 $layout_2_text_col_class = $is_full_height_right_image
-    ? 'order-2 relative z-[2] flex flex-col max-md:max-w-full md:order-1 md:col-span-6 lg:max-w-[460px]'
+    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full md:order-1 md:col-span-6 lg:w-full lg:max-w-[460px]'
     : 'order-2 z-[2] flex flex-col max-md:max-w-full md:order-1 md:col-span-6';
 
 $layout_1_image_class = 'w-full max-h-[522px] h-auto rounded-lg object-cover object-center';
