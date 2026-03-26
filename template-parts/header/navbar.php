@@ -103,7 +103,7 @@ $primary_navigation = Navi::make()->build('primary');
             <img
               src="<?php echo esc_url($logo_url); ?>"
               alt="<?php echo esc_attr($logo_alt); ?>"
-              class="w-full h-full object-contain"
+              class="object-contain w-full h-full"
             />
           </div>
         <?php endif; ?>
@@ -111,7 +111,7 @@ $primary_navigation = Navi::make()->build('primary');
     </div>
 
     <!-- CENTER MENU -->
-    <div class="hidden lg:flex flex-1 justify-center px-6">
+    <div class="hidden flex-1 justify-center px-6 lg:flex">
       <?php if ($primary_navigation->isNotEmpty()) : ?>
         <ul id="primary-menu" class="flex gap-1 items-center text-sm font-bold text-sky-800">
           <?php foreach ($primary_navigation->toArray() as $index => $item) : ?>
@@ -158,7 +158,7 @@ $primary_navigation = Navi::make()->build('primary');
     <?php get_template_part('template-parts/header/navbar/mobile'); ?>
 
     <!-- RIGHT SIDE -->
-    <div class="hidden lg:flex shrink-0 gap-4 items-center">
+    <div class="hidden gap-4 items-center lg:flex shrink-0">
 
       <?php get_template_part('template-parts/header/navbar/language-dropdown'); ?>
 
@@ -211,7 +211,7 @@ $primary_navigation = Navi::make()->build('primary');
   <div
     x-show="searchOpen"
     x-cloak
-    class="fixed inset-0 flex justify-center items-start pt-[8rem] bg-black/30"
+    class="fixed inset-0 flex justify-center items-start pt-[8rem] bg-black/30 h-screen"
     @click.self="searchOpen = false"
   >
     <div class="bg-white p-4 rounded-lg w-full max-w-[800px]">
@@ -220,9 +220,9 @@ $primary_navigation = Navi::make()->build('primary');
           type="search"
           name="s"
           placeholder="Search..."
-          class="flex-1 px-4 py-3 border rounded-full"
+          class="flex-1 px-4 py-3 rounded-full border"
         />
-        <button type="submit" class="btn-primary px-5">Search</button>
+        <button type="submit" class="px-5 btn-primary">Search</button>
       </form>
     </div>
   </div>

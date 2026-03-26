@@ -63,7 +63,7 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="flex flex-col items-center max-lg:py-5 py-20 mx-auto w-full max-w-[768px] max-xl:px-5">
+    <div class="flex flex-col items-center max-lg:py-5 py-16 mx-auto w-full max-w-[768px] max-xl:px-5">
 
         <?php if (!empty($heading)): ?>
             <<?php echo esc_attr($heading_tag); ?>
@@ -166,7 +166,7 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
             <div class="self-start pt-4 mt-4 text-sm leading-none text-white">
                 <a
                     href="<?php echo esc_url($button['url']); ?>"
-                    class="btn-primary flex gap-2 justify-center items-center px-6 py-3.5 min-h-[52px] rounded-full w-fit whitespace-nowrap max-md:px-5"
+                    class="btn-primary flex gap-2 justify-center items-center px-6 py-3.5 min-h-[52px] rounded-full w-fit whitespace-nowrap max-md:px-5 active:!bg-[var(--Blue-SR-400,#008BCC)]"
                     target="<?php echo esc_attr($button['target'] ?? '_self'); ?>"
                     aria-label="<?php echo esc_attr($button['title']); ?>"
                 >
