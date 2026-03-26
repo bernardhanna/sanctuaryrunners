@@ -79,23 +79,23 @@ $section_id = 'events-listing-' . uniqid();
     <div class="flex flex-col items-center pt-5 lg:pt-[3.5rem] pb-5 mx-auto w-full max-w-container max-lg:px-5">
 
         <?php if ($show_filters || $show_search): ?>
-            <div class="grid grid-cols-1 gap-6 items-center pb-4 w-full text-sm leading-none lg:grid-cols-[60%_40%]">
+            <div class="grid grid-cols-1 gap-6 items-center pb-4 w-full text-sm leading-none md:grid-cols-[60%_40%]">
 
                 <?php if ($show_filters && !empty($event_locations)): ?>
                     <!-- Filters -->
-                    <div class="flex gap-4 items-center self-stretch my-auto min-w-0 w-full">
+                    <div class="flex gap-4 items-center self-stretch my-auto w-full min-w-0">
                         <div class="self-stretch my-auto text-sky-950">
                             Filter by:
                         </div>
 
                         <div
-                            class="flex gap-2 items-center self-stretch my-auto font-semibold text-sky-800 whitespace-nowrap"
+                            class="flex flex-wrap gap-2 items-center self-stretch my-auto font-semibold text-sky-800"
                             role="group"
                             aria-label="Filter events by location"
                         >
                             <button
                                 type="button"
-                                class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                                class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 transition-colors duration-200 min-h-9 w-fit focus:ring-sky-500"
                                 :class="selectedLocation === ''
                                     ? 'bg-sky-500 text-white'
                                     : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
@@ -108,7 +108,7 @@ $section_id = 'events-listing-' . uniqid();
                             <?php foreach ($event_locations as $location): ?>
                                 <button
                                     type="button"
-                                    class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                                    class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full transition-colors duration-200 min-h-9 w-fit focus:ring-sky-500"
                                     :class="selectedLocation === '<?php echo esc_attr($location->slug); ?>'
                                         ? 'bg-sky-500 text-white'
                                         : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
@@ -176,7 +176,7 @@ $section_id = 'events-listing-' . uniqid();
 
         <!-- Events Grid -->
         <main class="flex flex-col mt-4 w-full max-md:max-w-full" role="main" aria-label="Events listing">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-md:max-w-full" x-show="!loading">
+            <div class="grid grid-cols-1 gap-6 w-full md:grid-cols-2 lg:grid-cols-3 max-md:max-w-full" x-show="!loading">
 
                 <?php if ($events_query->have_posts()): ?>
                     <?php while ($events_query->have_posts()): $events_query->the_post(); ?>
@@ -208,7 +208,7 @@ $section_id = 'events-listing-' . uniqid();
 
                             <!-- Event Content -->
                             <div class="flex flex-col p-6 w-full text-sm max-md:px-5">
-                                <h3 class="text-lg font-bold leading-none text-red-300">
+                                <h3 class="font-sans text-[18px] font-bold not-italic leading-[24px] text-[#F68DA7]">
                                     <a
                                         href="<?php echo esc_url(get_permalink()); ?>"
                                         class="hover:underline focus:underline"
@@ -254,7 +254,7 @@ $section_id = 'events-listing-' . uniqid();
             </div>
 
             <!-- Loading state -->
-            <div x-show="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            <div x-show="loading" class="grid grid-cols-1 gap-6 w-full md:grid-cols-2 lg:grid-cols-3">
                 <?php for ($i = 0; $i < 3; $i++): ?>
                     <div class="overflow-hidden rounded-lg animate-pulse bg-sky-950">
                         <div class="bg-gray-300 w-full aspect-[1.56] min-h-[232px]"></div>
@@ -270,7 +270,7 @@ $section_id = 'events-listing-' . uniqid();
             <?php if ($show_pagination && $events_query->max_num_pages > 1): ?>
                 <!-- Pagination -->
                 <nav
-                    class="flex flex-wrap gap-3 md:gap-8 justify-evenly md:justify-center items-center self-center max-w-full pt-8 pb-6 md:pt-20 md:pb-12 mt-6 text-base leading-none text-sky-600 whitespace-nowrap"
+                    class="flex flex-wrap gap-3 justify-evenly items-center self-center pt-8 pb-6 mt-6 max-w-full text-base leading-none text-sky-600 whitespace-nowrap md:gap-8 md:justify-center md:pt-20 md:pb-12"
                     aria-label="Events pagination"
                 >
                     <?php

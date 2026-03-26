@@ -141,7 +141,7 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
                 <span class="text-sky-950">Read time <?php echo esc_html($read_time); ?></span>
               </div>
 
-              <h3 class="mt-2 text-lg font-bold leading-none text-sky-800">
+              <h3 class="mt-2 font-sans text-[18px] font-bold not-italic leading-[24px] text-sky-800">
                 <a href="<?php echo esc_url($permalink); ?>" class="hover:underline focus:underline">
                   <?php echo esc_html($title); ?>
                 </a>

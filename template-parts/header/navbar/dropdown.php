@@ -47,7 +47,7 @@ $img_title = is_array($img) && !empty($img['title']) ? $img['title'] : $img_alt;
     x-show="activeDropdown === <?php echo (int) $index; ?>"
     x-cloak
     x-transition.opacity.duration.200ms
-    class="fixed left-0 top-[132px] w-full z-40"
+    class="fixed left-0 top-[120px] w-full z-40"
     @click.away="activeDropdown = null"
     @keydown.escape.window="activeDropdown = null"
     role="region"

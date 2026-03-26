@@ -144,7 +144,7 @@ function matrix_social_svg($icon) {
           <?php endif; ?>
 
           <?php if ($footer_reg_text !== '') : ?>
-            <p class="text-white font-primary text-[10px] leading-4 max-w-[180px] mt-3 md:mt-5">
+            <p class="mt-3 max-w-[180px] font-sans text-[12px] font-normal not-italic leading-[18px] text-white md:mt-5">
               <?php echo esc_html($footer_reg_text); ?>
             </p>
           <?php endif; ?>
@@ -161,7 +161,7 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="text-sm font-bold leading-5 text-white transition-colors font-primary hover:text-[#54A5DE]">',
+              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-white transition-colors hover:text-[#54A5DE]">',
               'link_after'     => '</span>',
           ]);
           ?>
@@ -177,7 +177,7 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="text-sm font-bold leading-5 text-white transition-colors font-primary hover:text-[#54A5DE]">',
+              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-white transition-colors hover:text-[#54A5DE]">',
               'link_after'     => '</span>',
           ]);
           ?>
@@ -193,7 +193,7 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="text-sm font-bold leading-5 text-white transition-colors font-primary hover:text-[#54A5DE]">',
+              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-white transition-colors hover:text-[#54A5DE]">',
               'link_after'     => '</span>',
           ]);
           ?>
@@ -206,7 +206,7 @@ function matrix_social_svg($icon) {
 
   <div style="background-color: <?php echo esc_attr($bottom_bg_color ?: '#F0F9FF'); ?>;">
     <div class="max-w-[1540px] mx-auto px-4 sm:px-8 lg:px-14 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[#475467] font-primary text-xs leading-[18px]">
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467]">
         <span><?php echo esc_html($copyright_left); ?></span>
         <span class="text-[#475467]" aria-hidden="true">|</span>
 
@@ -222,13 +222,13 @@ function matrix_social_svg($icon) {
         ?>
       </div>
 
-      <div class="flex items-center gap-1 text-[#475467] font-primary text-xs leading-[18px] whitespace-nowrap flex-wrap">
+      <div class="flex flex-wrap items-center gap-1 whitespace-nowrap font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467]">
         <span><?php echo esc_html($credit_prefix ?: 'All Rights Reserved - Designed & Developed by'); ?></span>
         <?php if (is_array($credit_link) && !empty($credit_link['url'])) : ?>
           <a
             href="<?php echo esc_url($credit_link['url']); ?>"
             target="<?php echo esc_attr($credit_link['target'] ?? '_self'); ?>"
-            class="font-medium transition-colors hover:text-sr-blue-500 btn"
+            class="font-normal transition-colors hover:text-sr-blue-500 btn"
           >
             <?php echo esc_html($credit_link['title'] ?: 'Matrix Internet'); ?>
           </a>
