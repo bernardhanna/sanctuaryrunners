@@ -161,7 +161,7 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-white transition-colors hover:text-[#54A5DE]">',
+              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-[var(--Base-White,#FFF)] transition-colors duration-200 hover:text-[#75E0E6]">',
               'link_after'     => '</span>',
           ]);
           ?>
@@ -177,7 +177,7 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-white transition-colors hover:text-[#54A5DE]">',
+              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-[var(--Base-White,#FFF)] transition-colors duration-200 hover:text-[#75E0E6]">',
               'link_after'     => '</span>',
           ]);
           ?>
@@ -193,7 +193,7 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-white transition-colors hover:text-[#54A5DE]">',
+              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-[var(--Base-White,#FFF)] transition-colors duration-200 hover:text-[#75E0E6]">',
               'link_after'     => '</span>',
           ]);
           ?>
@@ -216,7 +216,7 @@ function matrix_social_svg($icon) {
             'container'      => false,
             'menu_class' => 'menu-copyright flex flex-wrap items-center gap-x-2 gap-y-1',
             'fallback_cb'    => '__return_empty_string',
-            'link_before'    => '<span class="transition-colors hover:text-sr-blue-500">',
+            'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467] transition-colors duration-200 hover:text-[var(--Blue-SR-500,#00628F)] hover:underline underline-offset-2">',
             'link_after' => '</span><span class="px-3 text-[#475467]" aria-hidden="true">|</span>',
         ]);
         ?>
@@ -228,7 +228,7 @@ function matrix_social_svg($icon) {
           <a
             href="<?php echo esc_url($credit_link['url']); ?>"
             target="<?php echo esc_attr($credit_link['target'] ?? '_self'); ?>"
-            class="font-normal transition-colors hover:text-sr-blue-500 btn"
+            class="font-sans text-[12px] font-normal not-italic leading-[18px] transition-colors duration-200 hover:text-[var(--Blue-SR-500,#00628F)] hover:underline underline-offset-2 btn"
           >
             <?php echo esc_html($credit_link['title'] ?: 'Matrix Internet'); ?>
           </a>

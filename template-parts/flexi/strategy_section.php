@@ -11,6 +11,7 @@ $secondary_image_2  = get_sub_field('secondary_image_2');
 $secondary_image_2_alt = get_post_meta($secondary_image_2, '_wp_attachment_image_alt', true) ?: 'Strategy secondary image';
 $button             = get_sub_field('button');
 $background_color   = get_sub_field('background_color');
+$reverse_layout     = (bool) get_sub_field('reverse_layout');
 
 // Generate unique section ID
 $section_id = 'strategy-' . uniqid();
@@ -38,7 +39,7 @@ if (have_rows('padding_settings')) {
 >
     <div class="flex flex-col items-center pt-8 pb-8 w-full md:pt-16 md:pb-16">
         <!-- Changed: remove flex-wrap + enforce stacked mobile / 2-col desktop -->
-        <div class="flex overflow-hidden flex-col gap-10 items-center w-full md:flex-row max-w-[1280px] mx-auto">
+        <div class="flex overflow-hidden flex-col gap-10 items-center w-full md:flex-row <?php echo $reverse_layout ? 'md:flex-row-reverse' : ''; ?> max-w-[1280px] mx-auto">
 
 
             <!-- Images Section (50%) -->
@@ -59,7 +60,7 @@ if (have_rows('padding_settings')) {
                 <div class="flex flex-col justify-center w-1/2 min-w-0">
 
                     <?php if ($secondary_image_1): ?>
-                        <div class="overflow-hidden w-full bg-gray-50 rounded-none lg:rounded-tr-2xl">
+                        <div class="overflow-hidden w-full bg-gray-50 rounded-none <?php echo $reverse_layout ? 'lg:rounded-tl-2xl' : 'lg:rounded-tr-2xl'; ?>">
                             <?php echo wp_get_attachment_image($secondary_image_1, 'full', false, [
                                 'alt'     => esc_attr($secondary_image_1_alt),
                                 'class'   => 'object-contain w-full h-auto',
@@ -69,7 +70,7 @@ if (have_rows('padding_settings')) {
                     <?php endif; ?>
 
                     <?php if ($secondary_image_2): ?>
-                        <div class="overflow-hidden mt-4 w-full bg-gray-50 rounded-none lg:rounded-br-2xl">
+                        <div class="overflow-hidden mt-4 w-full bg-gray-50 rounded-none <?php echo $reverse_layout ? 'lg:rounded-bl-2xl' : 'lg:rounded-br-2xl'; ?>">
                             <?php echo wp_get_attachment_image($secondary_image_2, 'full', false, [
                                 'alt'     => esc_attr($secondary_image_2_alt),
                                 'class'   => 'object-contain w-full h-auto',

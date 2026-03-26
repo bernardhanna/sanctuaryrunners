@@ -6,6 +6,7 @@ $description = get_sub_field('description');
 $body_content = get_sub_field('body_content');
 $image = get_sub_field('image');
 $image_alt = get_post_meta($image, '_wp_attachment_image_alt', true) ?: 'Content image';
+$reverse_layout = (bool) get_sub_field('reverse_layout');
 $background_color = get_sub_field('background_color');
 
 $padding_classes = [];
@@ -46,16 +47,16 @@ if (have_rows('padding_settings')) {
                 </div>
             <?php endif; ?>
 
-            <div class="flex flex-wrap gap-10 items-start mt-6 w-full max-md:max-w-full">
+            <div class="grid grid-cols-1 gap-10 items-start mt-6 w-full md:grid-cols-2 max-md:max-w-full">
 
                 <?php if (!empty($body_content)): ?>
-                    <div class="flex-1 text-base leading-6 shrink basis-0 text-sky-950 max-md:max-w-full wp_editor">
+                    <div class="text-base leading-6 text-sky-950 max-md:max-w-full wp_editor <?php echo $reverse_layout ? 'md:order-2' : 'md:order-1'; ?>">
                         <?php echo wp_kses_post($body_content); ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if ($image): ?>
-                    <div class="overflow-hidden bg-gray-100 rounded-lg w-[448px] max-md:max-w-full">
+                    <div class="overflow-hidden bg-gray-100 rounded-lg w-full max-md:max-w-full <?php echo $reverse_layout ? 'md:order-1' : 'md:order-2'; ?>">
                         <div class="flex relative flex-col w-full min-h-[448px] max-md:max-w-full">
                             <?php
                             echo wp_get_attachment_image($image, 'full', false, [
