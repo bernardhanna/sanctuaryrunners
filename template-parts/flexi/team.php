@@ -79,7 +79,7 @@ $people_query = new WP_Query($query_args);
     aria-labelledby="<?php echo esc_attr($heading_id); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
-    <div class="flex flex-col items-center w-full mx-auto max-w-container pt-5 pb-5 lg:py-12 max-xl:px-5 <?php echo esc_attr($padding_class_string); ?>">
+    <div class="flex flex-col items-center w-full mx-auto max-w-[1120px] pt-5 pb-5 lg:py-12 max-xl:px-5 <?php echo esc_attr($padding_class_string); ?>">
         <div class="flex flex-col gap-8 w-full">
             <div class="flex flex-col gap-2 w-full">
                 <<?php echo esc_html($heading_tag); ?>
