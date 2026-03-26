@@ -29,6 +29,7 @@ $secondary_cta = get_sub_field('secondary_cta');
 $media_type        = get_sub_field('media_type') ?: 'image';
 $media_image       = get_sub_field('media_image');
 $media_ratio_class = get_sub_field('media_ratio') ?: 'aspect-[16/9]';
+$media_presentation = get_sub_field('media_presentation') ?: 'default';
 
 $video_source      = get_sub_field('video_source') ?: 'local';
 $video_file        = get_sub_field('video_file');
@@ -66,6 +67,38 @@ if ($media_type === 'video') {
 
 $video_poster_url = ($video_poster && $media_type === 'video') ? wp_get_attachment_image_url((int) $video_poster, 'full') : '';
 
+$allowed_media_presentations = ['default', 'contain', 'contain_right', 'full_height_right_svg'];
+if (!in_array($media_presentation, $allowed_media_presentations, true)) {
+    $media_presentation = 'default';
+}
+
+$is_full_height_right_media = $media_type === 'image' && !empty($media_image) && $media_presentation === 'full_height_right_svg';
+
+$hero_grid_classes = $is_full_height_right_media
+    ? 'relative grid grid-cols-1 gap-4 w-full max-lg:px-5 py-[2rem] lg:block lg:min-h-[500px] lg:py-0'
+    : 'grid grid-cols-1 gap-4 w-full max-lg:px-5 py-[2rem] lg:grid-cols-[35%_70%] lg:py-0';
+
+$header_classes = $is_full_height_right_media
+    ? 'relative z-[2] flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 lg:order-1 lg:max-w-[420px]'
+    : 'flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 lg:order-1';
+
+$media_wrap_classes = $is_full_height_right_media
+    ? 'flex order-1 justify-end min-w-0 lg:absolute lg:inset-y-0 lg:right-0 lg:z-[1] lg:w-[68%] lg:items-stretch lg:justify-end lg:pointer-events-none'
+    : 'flex order-1 justify-end min-w-0 lg:order-2';
+
+$media_figure_classes = $is_full_height_right_media
+    ? 'relative flex w-full min-h-[260px] items-stretch justify-end overflow-hidden lg:h-full'
+    : 'relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] ' . $media_ratio_class;
+
+$image_classes = 'w-full h-full object-cover';
+if ($media_presentation === 'contain') {
+    $image_classes = 'w-full h-full object-contain';
+} elseif ($media_presentation === 'contain_right') {
+    $image_classes = 'w-full h-full object-contain object-right';
+} elseif ($is_full_height_right_media) {
+    $image_classes = 'w-full h-full object-contain object-right';
+}
+
 // -------------------------------
 // Background
 // -------------------------------
@@ -102,12 +135,12 @@ $hero_iframe_title = $title_inline !== ''
     aria-labelledby="<?php echo esc_attr($title_id); ?>"
 >
 
-    <div class="mx-auto w-full max-w-container">
+    <div class="relative mx-auto w-full max-w-container">
 
-        <div class="grid grid-cols-1 gap-4 lg:grid-cols-[35%_70%] w-full max-lg:px-5 py-[2rem] lg:py-0">
+        <div class="<?php echo esc_attr($hero_grid_classes); ?>">
 
             <!-- Text -->
-            <header class="flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 lg:order-1">
+            <header class="<?php echo esc_attr($header_classes); ?>">
 
                 <div class="w-full">
 
@@ -173,9 +206,9 @@ $hero_iframe_title = $title_inline !== ''
             </header>
 
             <!-- Media -->
-            <div class="flex order-1 justify-end min-w-0 lg:order-2">
+            <div class="<?php echo esc_attr($media_wrap_classes); ?>">
 
-                <figure class="relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] <?php echo esc_attr($media_ratio_class); ?>">
+                <figure class="<?php echo esc_attr($media_figure_classes); ?>">
 
                     <?php if ($media_type === 'video'): ?>
                         <?php
@@ -215,7 +248,7 @@ $hero_iframe_title = $title_inline !== ''
 
                     <?php elseif (!empty($media_image)): ?>
                         <?php echo wp_get_attachment_image($media_image, 'full', false, [
-                            'class' => 'w-full h-full object-cover'
+                            'class' => $image_classes
                         ]); ?>
                     <?php endif; ?>
 
