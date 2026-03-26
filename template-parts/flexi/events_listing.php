@@ -88,36 +88,40 @@ $section_id = 'events-listing-' . uniqid();
                             Filter by:
                         </div>
 
-                        <div
-                            class="flex flex-wrap gap-2 items-center self-stretch my-auto font-semibold text-sky-800"
-                            role="group"
-                            aria-label="Filter events by location"
-                        >
-                            <button
-                                type="button"
-                                class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 transition-colors duration-200 min-h-9 w-fit focus:ring-sky-500"
-                                :class="selectedLocation === ''
-                                    ? 'bg-sky-500 text-white'
-                                    : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
-                                @click="filterEvents('')"
-                                aria-pressed="true"
+                        <div class="relative flex-1 min-w-0">
+                            <div
+                                class="chip-slider flex gap-2 items-center self-stretch my-auto font-semibold text-sky-800 overflow-x-auto whitespace-nowrap select-none cursor-grab active:cursor-grabbing pr-6"
+                                role="group"
+                                aria-label="Filter events by location"
+                                data-chip-slider
                             >
-                                All
-                            </button>
-
-                            <?php foreach ($event_locations as $location): ?>
                                 <button
                                     type="button"
-                                    class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full transition-colors duration-200 min-h-9 w-fit focus:ring-sky-500"
-                                    :class="selectedLocation === '<?php echo esc_attr($location->slug); ?>'
+                                    class="shrink-0 flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 transition-colors duration-200 min-h-9 w-fit focus:ring-sky-500"
+                                    :class="selectedLocation === ''
                                         ? 'bg-sky-500 text-white'
-                                        : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
-                                    @click="filterEvents('<?php echo esc_attr($location->slug); ?>')"
-                                    aria-pressed="false"
+                                        : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
+                                    @click="filterEvents('')"
+                                    aria-pressed="true"
                                 >
-                                    <?php echo esc_html($location->name); ?>
+                                    All
                                 </button>
-                            <?php endforeach; ?>
+
+                                <?php foreach ($event_locations as $location): ?>
+                                    <button
+                                        type="button"
+                                        class="shrink-0 flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full transition-colors duration-200 min-h-9 w-fit focus:ring-sky-500"
+                                        :class="selectedLocation === '<?php echo esc_attr($location->slug); ?>'
+                                            ? 'bg-sky-500 text-white'
+                                            : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
+                                        @click="filterEvents('<?php echo esc_attr($location->slug); ?>')"
+                                        aria-pressed="false"
+                                    >
+                                        <?php echo esc_html($location->name); ?>
+                                    </button>
+                                <?php endforeach; ?>
+                            </div>
+                            <span class="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-white to-transparent"></span>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -176,7 +180,7 @@ $section_id = 'events-listing-' . uniqid();
 
         <!-- Events Grid -->
         <main class="flex flex-col mt-4 w-full max-md:max-w-full" role="main" aria-label="Events listing">
-            <div class="grid grid-cols-1 gap-6 w-full md:grid-cols-2 lg:grid-cols-3 max-md:max-w-full" x-show="!loading">
+            <div class="grid grid-cols-1 gap-x-6 gap-y-6 w-full md:grid-cols-2 lg:grid-cols-3 lg:gap-y-24 max-md:max-w-full" x-show="!loading">
 
                 <?php if ($events_query->have_posts()): ?>
                     <?php while ($events_query->have_posts()): $events_query->the_post(); ?>
@@ -220,6 +224,14 @@ $section_id = 'events-listing-' . uniqid();
                                 <div class="self-start mt-2 text-sm leading-none text-gray-200">
                                     <?php if ($event_date): ?>
                                         <div class="flex gap-2 items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+<mask id="mask0_850_2579" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+<rect width="16" height="16" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_850_2579)">
+<path d="M8.66634 7.73325V5.33325C8.66634 5.14436 8.60245 4.98603 8.47467 4.85825C8.3469 4.73047 8.18856 4.66658 7.99967 4.66658C7.81079 4.66658 7.65245 4.73047 7.52467 4.85825C7.3969 4.98603 7.33301 5.14436 7.33301 5.33325V7.98325C7.33301 8.07214 7.34967 8.15825 7.38301 8.24158C7.41634 8.32492 7.46634 8.39992 7.53301 8.46658L9.73301 10.6666C9.85523 10.7888 10.0108 10.8499 10.1997 10.8499C10.3886 10.8499 10.5441 10.7888 10.6663 10.6666C10.7886 10.5444 10.8497 10.3888 10.8497 10.1999C10.8497 10.011 10.7886 9.85547 10.6663 9.73325L8.66634 7.73325ZM7.99967 14.6666C7.07745 14.6666 6.21079 14.4916 5.39967 14.1416C4.58856 13.7916 3.88301 13.3166 3.28301 12.7166C2.68301 12.1166 2.20801 11.411 1.85801 10.5999C1.50801 9.78881 1.33301 8.92214 1.33301 7.99992C1.33301 7.0777 1.50801 6.21103 1.85801 5.39992C2.20801 4.58881 2.68301 3.88325 3.28301 3.28325C3.88301 2.68325 4.58856 2.20825 5.39967 1.85825C6.21079 1.50825 7.07745 1.33325 7.99967 1.33325C8.9219 1.33325 9.78856 1.50825 10.5997 1.85825C11.4108 2.20825 12.1163 2.68325 12.7163 3.28325C13.3163 3.88325 13.7913 4.58881 14.1413 5.39992C14.4913 6.21103 14.6663 7.0777 14.6663 7.99992C14.6663 8.92214 14.4913 9.78881 14.1413 10.5999C13.7913 11.411 13.3163 12.1166 12.7163 12.7166C12.1163 13.3166 11.4108 13.7916 10.5997 14.1416C9.78856 14.4916 8.9219 14.6666 7.99967 14.6666Z" fill="#F68DA7"/>
+</g>
+</svg>
                                             <time
                                                 datetime="<?php echo esc_attr(date('Y-m-d', strtotime($event_start))); ?>"
                                                 class="self-stretch my-auto text-gray-200"
@@ -230,14 +242,14 @@ $section_id = 'events-listing-' . uniqid();
                                     <?php endif; ?>
 
                                     <div class="flex gap-2 items-center mt-2">
-                                        <svg
-                                            class="object-contain self-stretch my-auto w-4 text-gray-200 shrink-0 aspect-square"
-                                            fill="currentColor"
-                                            viewBox="0 0 24 24"
-                                            aria-hidden="true"
-                                        >
-                                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                                        </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+<mask id="mask0_850_2584" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+<rect width="16" height="16" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_850_2584)">
+<path d="M8.00033 7.99992C8.36699 7.99992 8.68088 7.86936 8.94199 7.60825C9.2031 7.34714 9.33366 7.03325 9.33366 6.66658C9.33366 6.29992 9.2031 5.98603 8.94199 5.72492C8.68088 5.46381 8.36699 5.33325 8.00033 5.33325C7.63366 5.33325 7.31977 5.46381 7.05866 5.72492C6.79755 5.98603 6.66699 6.29992 6.66699 6.66658C6.66699 7.03325 6.79755 7.34714 7.05866 7.60825C7.31977 7.86936 7.63366 7.99992 8.00033 7.99992ZM8.00033 14.6666C6.21144 13.1444 4.87533 11.7305 3.99199 10.4249C3.10866 9.11936 2.66699 7.91103 2.66699 6.79992C2.66699 5.13325 3.2031 3.80547 4.27533 2.81659C5.34755 1.8277 6.58921 1.33325 8.00033 1.33325C9.41144 1.33325 10.6531 1.8277 11.7253 2.81659C12.7975 3.80547 13.3337 5.13325 13.3337 6.79992C13.3337 7.91103 12.892 9.11936 12.0087 10.4249C11.1253 11.7305 9.78921 13.1444 8.00033 14.6666Z" fill="#F68DA7"/>
+</g>
+</svg>
                                         <span class="self-stretch my-auto text-gray-200">
                                             <?php echo esc_html($location_name); ?>
                                         </span>
@@ -254,7 +266,7 @@ $section_id = 'events-listing-' . uniqid();
             </div>
 
             <!-- Loading state -->
-            <div x-show="loading" class="grid grid-cols-1 gap-6 w-full md:grid-cols-2 lg:grid-cols-3">
+            <div x-show="loading" class="grid grid-cols-1 gap-x-6 gap-y-6 w-full md:grid-cols-2 lg:grid-cols-3 lg:gap-y-24">
                 <?php for ($i = 0; $i < 3; $i++): ?>
                     <div class="overflow-hidden rounded-lg animate-pulse bg-sky-950">
                         <div class="bg-gray-300 w-full aspect-[1.56] min-h-[232px]"></div>
@@ -427,6 +439,52 @@ function eventsFilter() {
     }
 }
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var sliders = document.querySelectorAll('#<?php echo esc_js($section_id); ?> [data-chip-slider]');
+    sliders.forEach(function (slider) {
+        var isDown = false;
+        var startX = 0;
+        var scrollLeft = 0;
+
+        slider.addEventListener('mousedown', function (e) {
+            isDown = true;
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+            slider.classList.add('dragging');
+        });
+        slider.addEventListener('mouseleave', function () {
+            isDown = false;
+            slider.classList.remove('dragging');
+        });
+        slider.addEventListener('mouseup', function () {
+            isDown = false;
+            slider.classList.remove('dragging');
+        });
+        slider.addEventListener('mousemove', function (e) {
+            if (!isDown) return;
+            e.preventDefault();
+            var x = e.pageX - slider.offsetLeft;
+            var walk = (x - startX) * 1.2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    });
+});
+</script>
+
+<style>
+#<?php echo esc_attr($section_id); ?> .chip-slider {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+#<?php echo esc_attr($section_id); ?> .chip-slider::-webkit-scrollbar {
+    display: none;
+}
+#<?php echo esc_attr($section_id); ?> .chip-slider.dragging {
+    cursor: grabbing;
+}
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

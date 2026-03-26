@@ -75,36 +75,40 @@ $section_id = 'blog-listing-' . uniqid();
                         Filter by:
                     </div>
 
-                    <div
-                        class="flex flex-wrap gap-2 items-center self-stretch my-auto font-semibold text-sky-800"
-                        role="group"
-                        aria-label="Filter posts by category"
-                    >
-                        <button
-                            type="button"
-                            class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
-                            :class="activeFilter === 'all'
-                                ? 'bg-sky-500 text-white'
-                                : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
-                            @click="setFilter('all')"
-                            aria-pressed="true"
+                    <div class="relative flex-1 min-w-0">
+                        <div
+                            class="chip-slider flex gap-2 items-center self-stretch my-auto font-semibold text-sky-800 overflow-x-auto whitespace-nowrap select-none cursor-grab active:cursor-grabbing pr-6"
+                            role="group"
+                            aria-label="Filter posts by category"
+                            data-chip-slider
                         >
-                            All
-                        </button>
-
-                        <?php foreach ($categories as $category): ?>
                             <button
                                 type="button"
-                                class="flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
-                                :class="activeFilter === '<?php echo esc_attr($category->slug); ?>'
+                                class="shrink-0 flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                                :class="activeFilter === 'all'
                                     ? 'bg-sky-500 text-white'
-                                    : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
-                                @click="setFilter('<?php echo esc_attr($category->slug); ?>')"
-                                aria-pressed="false"
+                                    : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
+                                @click="setFilter('all')"
+                                aria-pressed="true"
                             >
-                                <?php echo esc_html($category->name); ?>
+                                All
                             </button>
-                        <?php endforeach; ?>
+
+                            <?php foreach ($categories as $category): ?>
+                                <button
+                                    type="button"
+                                    class="shrink-0 flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                                    :class="activeFilter === '<?php echo esc_attr($category->slug); ?>'
+                                        ? 'bg-sky-500 text-white'
+                                        : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
+                                    @click="setFilter('<?php echo esc_attr($category->slug); ?>')"
+                                    aria-pressed="false"
+                                >
+                                    <?php echo esc_html($category->name); ?>
+                                </button>
+                            <?php endforeach; ?>
+                        </div>
+                        <span class="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-white to-transparent"></span>
                     </div>
                 </div>
             <?php endif; ?>
@@ -379,6 +383,52 @@ function blogFilter(initialSearchTerm = '') {
     }
 }
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var sliders = document.querySelectorAll('#<?php echo esc_js($section_id); ?> [data-chip-slider]');
+    sliders.forEach(function (slider) {
+        var isDown = false;
+        var startX = 0;
+        var scrollLeft = 0;
+
+        slider.addEventListener('mousedown', function (e) {
+            isDown = true;
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+            slider.classList.add('dragging');
+        });
+        slider.addEventListener('mouseleave', function () {
+            isDown = false;
+            slider.classList.remove('dragging');
+        });
+        slider.addEventListener('mouseup', function () {
+            isDown = false;
+            slider.classList.remove('dragging');
+        });
+        slider.addEventListener('mousemove', function (e) {
+            if (!isDown) return;
+            e.preventDefault();
+            var x = e.pageX - slider.offsetLeft;
+            var walk = (x - startX) * 1.2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    });
+});
+</script>
+
+<style>
+#<?php echo esc_attr($section_id); ?> .chip-slider {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+#<?php echo esc_attr($section_id); ?> .chip-slider::-webkit-scrollbar {
+    display: none;
+}
+#<?php echo esc_attr($section_id); ?> .chip-slider.dragging {
+    cursor: grabbing;
+}
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
