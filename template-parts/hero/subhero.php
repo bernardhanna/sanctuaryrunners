@@ -60,10 +60,10 @@ $section_media_image_class = $is_full_height_right_image
     : '';
 
 $layout_1_media_col_class = $is_full_height_right_image
-    ? 'order-1 max-md:w-full md:order-2 md:col-span-7 lg:hidden'
+    ? 'order-1 max-md:absolute max-md:inset-y-0 max-md:right-[-1rem] max-md:h-full max-md:w-full md:order-2 md:col-span-7 lg:hidden'
     : 'order-1 max-md:w-full md:order-2 md:col-span-7';
 $layout_2_media_col_class = $is_full_height_right_image
-    ? 'order-1 max-md:w-full md:order-2 md:col-span-6 lg:hidden'
+    ? 'order-1 max-md:absolute max-md:inset-y-0 max-md:right-[-1rem] max-md:h-full max-md:w-full md:order-2 md:col-span-6 lg:hidden'
     : 'order-1 max-md:w-full md:order-2 md:col-span-6';
 
 $layout_1_figure_class = $is_full_height_right_image
@@ -181,6 +181,7 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
+        <?php if ($is_full_height_right_image) : ?>data-disable-nav-offset="true"<?php endif; ?>
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
@@ -339,6 +340,7 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
+        <?php if ($is_full_height_right_image) : ?>data-disable-nav-offset="true"<?php endif; ?>
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
