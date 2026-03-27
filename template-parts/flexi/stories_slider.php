@@ -80,7 +80,7 @@ if ($has_posts) {
 
         <!-- Slider wrapper -->
         <div
-            class="stories-slider-wrap relative mt-4 rounded-[12px] shadow-story overflow-hidden md:overflow-visible"
+            class="stories-slider-wrap relative mt-4 rounded-[12px] shadow-story overflow-visible"
             data-slide-images="<?php echo esc_attr(wp_json_encode($slide_images)); ?>"
             data-default-bg="<?php echo esc_attr($default_slider_bg); ?>"
         >
@@ -283,22 +283,52 @@ if ($has_posts) {
 
     /* ── Mobile: CSS scroll snap ── */
     #<?php echo esc_attr($section_id); ?> .stories-scroll-track {
+        --mobile-story-card: clamp(260px, calc(100% - 88px), 320px);
         display: flex;
         overflow-x: scroll;
+        overflow-y: visible;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+        overscroll-behavior-x: contain;
+        cursor: grab;
         scrollbar-width: none;
-        padding: 0 24px;
+        /* Center first card and keep a visible peek of the next card */
+        padding-inline: calc((100% - var(--mobile-story-card)) / 2);
+        scroll-padding-left: calc((100% - var(--mobile-story-card)) / 2);
         gap: 12px;
+    }
+    #<?php echo esc_attr($section_id); ?> .stories-scroll-track:active {
+        cursor: grabbing;
     }
     #<?php echo esc_attr($section_id); ?> .stories-scroll-track::-webkit-scrollbar {
         display: none;
     }
-    /* ~2 cards visible + peek of next (match desktop carousel) */
+    /* Mobile: one primary card with next card peeking on the right */
     #<?php echo esc_attr($section_id); ?> .stories-scroll-slide {
-        flex: 0 0 calc((100% - 24px) / 2.35);
+        flex: 0 0 var(--mobile-story-card);
         scroll-snap-align: start;
         scroll-snap-stop: always;
+    }
+    #<?php echo esc_attr($section_id); ?> .stories-scroll-slide > article {
+        width: 100%;
+    }
+
+    /* Keep mobile wrapper clean while preserving card peeking behavior */
+    @media (max-width: 767px) {
+        #<?php echo esc_attr($section_id); ?> .stories-slider-wrap {
+            overflow: visible;
+        }
+    }
+
+    /* Very small devices: reduce left gutter, preserve right-side peek */
+    @media (max-width: 420px) {
+        #<?php echo esc_attr($section_id); ?> .stories-scroll-track {
+            --mobile-story-card: calc(100% - 56px);
+            padding-left: 6px;
+            padding-right: 28px;
+            scroll-padding-left: 6px;
+        }
     }
 
     /* ── Mobile dots ── */
@@ -439,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!btn) return;
         var idx = parseInt(btn.getAttribute('data-i'), 10);
         var slide = slides[idx];
-        var trackPad = 24;
+        var trackPad = parseFloat(window.getComputedStyle(track).paddingLeft) || 0;
         var targetScroll = Math.max(0, slide.offsetLeft - trackPad);
         track.scrollTo({ left: targetScroll, behavior: 'smooth' });
     });
