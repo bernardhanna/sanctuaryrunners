@@ -31,6 +31,26 @@ $mobile_image_contain = (bool) $sf('mobile_image_contain', false);
 $section_extra_classes = trim((string) $sf('section_extra_classes', ''));
 $breadcrumbs_arg    = $sf('breadcrumbs');
 
+// Guard against accidentally saved document-style titles (e.g. "Site - Parent - Page")
+// so subhero headings on child pages remain the page title only.
+if (is_singular()) {
+    $heading_text = trim(wp_strip_all_tags((string) $heading));
+    $page_title   = trim(wp_strip_all_tags((string) get_the_title()));
+    $site_name    = trim(wp_strip_all_tags((string) get_bloginfo('name')));
+
+    if ($heading_text !== '' && $page_title !== '') {
+        $heading_parts = preg_split('/\s*[-–|]\s*/u', $heading_text);
+        $looks_like_document_title = is_array($heading_parts)
+            && count($heading_parts) >= 2
+            && strcasecmp(trim((string) $heading_parts[0]), $site_name) === 0
+            && strcasecmp(trim((string) end($heading_parts)), $page_title) === 0;
+
+        if ($looks_like_document_title) {
+            $heading = $page_title;
+        }
+    }
+}
+
 $is_layout_2         = $layout_option === 'layout_2';
 $is_dark_background  = strtolower($background_color) !== '#eef6fc';
 $layout_2_min_height_class = 'lg:min-h-[var(--layout-2-min-height)]';
