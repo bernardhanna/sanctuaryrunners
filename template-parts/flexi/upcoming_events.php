@@ -108,10 +108,10 @@ $section_id = 'events-' . uniqid();
 
                         <article class="w-full">
                             <a href="<?php echo esc_url($permalink); ?>"
-                               class="group flex h-full w-full flex-col gap-4 p-6 rounded-lg bg-sky-950 border border-transparent transition-all duration-200 hover:bg-white hover:shadow-[0_0_0_4px_#00628F] sm:flex-row">
+                               class="group flex h-full w-full flex-row gap-4 p-6 rounded-lg bg-sky-950 border border-transparent transition-all duration-200 hover:bg-white hover:shadow-[0_0_0_4px_#00628F]">
 
                                 <?php if ($event_image): ?>
-                                    <?php echo wp_get_attachment_image($event_image, 'thumbnail', false, ['class' => 'w-[100px] h-[100px] rounded']); ?>
+                                    <?php echo wp_get_attachment_image($event_image, 'thumbnail', false, ['class' => 'w-[100px] h-[100px] rounded shrink-0 self-start']); ?>
                                 <?php endif; ?>
 
                                 <div class="flex flex-col flex-1">

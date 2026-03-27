@@ -31,24 +31,24 @@ $section_id = 'about-us-' . wp_rand(1000, 9999);
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="px-5 mx-auto w-full max-w-container2 lg:px-10">
+    <div class="px-5 mx-auto w-full max-w-container2 md:px-10">
 
-        <div class="grid grid-cols-1 gap-12 items-center py-8 md:py-16 lg:grid-cols-2">
+        <div class="grid grid-cols-1 gap-12 items-center py-8 md:py-16 md:grid-cols-2">
 
             <!-- IMAGE -->
             <?php if ($image): ?>
-                <div class="<?php echo $reverse_layout ? 'lg:order-2' : ''; ?>">
+                <div class="<?php echo $reverse_layout ? 'md:order-2' : ''; ?>">
                     <div class="overflow-hidden bg-gray-100 rounded-lg">
                         <?php echo wp_get_attachment_image($image, 'full', false, [
                             'alt'   => esc_attr($image_alt),
-                            'class' => 'w-full h-auto object-cover max-sm:object-contain',
+                            'class' => 'w-full h-auto object-cover max-md:object-contain',
                         ]); ?>
                     </div>
                 </div>
             <?php endif; ?>
 
             <!-- CONTENT -->
-            <div class="<?php echo $reverse_layout ? 'lg:order-1' : ''; ?> max-w-[460px]">
+            <div class="<?php echo $reverse_layout ? 'md:order-1' : ''; ?> w-full lg:max-w-[460px]">
 
                 <?php if (!empty($heading)): ?>
                     <<?php echo esc_attr($heading_tag); ?>
