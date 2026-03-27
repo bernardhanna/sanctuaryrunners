@@ -135,7 +135,7 @@ foreach ($running_group_ids as $group_id) {
                     <?php endif; ?>
 
                     <?php if (!empty($description)): ?>
-                        <div class="mt-4 text-base leading-6 text-sky-950 max-w-[380px] wp_editor max-sm:[&_p]:!text-[16px] max-sm:[&_p]:!font-normal max-sm:[&_p]:!not-italic max-sm:[&_p]:!leading-[22px]">
+                        <div class="mt-4 text-base leading-6 text-sky-950 lg:max-w-[380px] wp_editor max-sm:[&_p]:!text-[16px] max-sm:[&_p]:!font-normal max-sm:[&_p]:!not-italic max-sm:[&_p]:!leading-[22px]">
                             <?php echo wp_kses_post($description); ?>
                         </div>
                     <?php endif; ?>
