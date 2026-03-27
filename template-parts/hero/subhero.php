@@ -201,7 +201,6 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
-        <?php if ($is_full_height_right_image) : ?>data-disable-nav-offset="true"<?php endif; ?>
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
@@ -360,7 +359,6 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
-        <?php if ($is_full_height_right_image) : ?>data-disable-nav-offset="true"<?php endif; ?>
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >

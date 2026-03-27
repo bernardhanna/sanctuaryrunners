@@ -83,9 +83,31 @@ $primary_navigation = Navi::make()->build('primary');
       document.querySelector('.site-main section:first-of-type');
 
     if (target && !this.shouldSkipNavOffset(target)) {
-      const offset = window.innerWidth < 1024 ? 60 : 120;
-      target.style.paddingTop = `${offset}px`;
+      const baseOffsetRem = window.innerWidth < 1024 ? 5 : 7.5;
+      const rootFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 16;
+      let offsetPx = Math.round(baseOffsetRem * rootFontSize);
+
+      target.style.paddingTop = `${offsetPx}px`;
       target.setAttribute('data-nav-offset', 'true');
+
+      const navRect = this.$refs.siteNavInner?.getBoundingClientRect();
+      const anchor = target.querySelector('nav, h1, h2') || target.firstElementChild || target;
+
+      if (navRect && anchor) {
+        const desiredTop = Math.ceil(navRect.bottom) + 8;
+        const anchorTop = Math.ceil(anchor.getBoundingClientRect().top);
+
+        if (anchorTop < desiredTop) {
+          // Keep the requested base offset, only add a small corrective bump if needed.
+          const bumpPx = Math.min(48, desiredTop - anchorTop);
+          offsetPx += bumpPx;
+          target.style.paddingTop = `${offsetPx}px`;
+        }
+      }
+
+      document.documentElement.style.setProperty('--site-nav-offset', `${offsetPx}px`);
+    } else {
+      document.documentElement.style.removeProperty('--site-nav-offset');
     }
   });
 }
