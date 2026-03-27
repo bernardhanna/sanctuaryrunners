@@ -17,6 +17,10 @@ $navigationFields
             'label' => 'Contact Button',
             'instructions' => 'Set contact button link and text',
         ])
+        ->addLink('join_us_button', [
+            'label' => 'Join Us Button (Mobile Top Row)',
+            'instructions' => 'Set mobile top-row Join Us button link and text. Falls back to Contact Button if empty.',
+        ])
         ->addLink('donate_button', [
             'label' => 'Donate Button',
             'instructions' => 'Set donate button link and text. Leave empty to hide.',
