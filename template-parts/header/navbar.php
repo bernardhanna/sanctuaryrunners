@@ -64,6 +64,11 @@ $primary_navigation = Navi::make()->build('primary');
       this.$nextTick(() => this.searchTriggerEl?.focus());
     },
 
+    shouldSkipNavOffset(target) {
+      if (!target) return true;
+      return !!target.closest('[data-disable-nav-offset=true], .no-nav-offset');
+    },
+
     setContentOffset() {
   this.$nextTick(() => {
     document.querySelectorAll('[data-nav-offset=true]').forEach((el) => {
@@ -77,7 +82,7 @@ $primary_navigation = Navi::make()->build('primary');
       document.querySelector('.site-main > section:first-of-type') ||
       document.querySelector('.site-main section:first-of-type');
 
-    if (target) {
+    if (target && !this.shouldSkipNavOffset(target)) {
       const offset = window.innerWidth < 1024 ? 60 : 120;
       target.style.paddingTop = `${offset}px`;
       target.setAttribute('data-nav-offset', 'true');

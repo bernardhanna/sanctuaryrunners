@@ -60,10 +60,10 @@ $section_media_image_class = $is_full_height_right_image
     : '';
 
 $layout_1_media_col_class = $is_full_height_right_image
-    ? 'order-1 max-md:w-full md:order-2 md:col-span-7 lg:hidden'
+    ? 'order-1 max-md:absolute max-md:inset-y-0 max-md:right-[-1rem] max-md:h-full max-md:w-full md:order-2 md:col-span-7 lg:hidden'
     : 'order-1 max-md:w-full md:order-2 md:col-span-7';
 $layout_2_media_col_class = $is_full_height_right_image
-    ? 'order-1 max-md:w-full md:order-2 md:col-span-6 lg:hidden'
+    ? 'order-1 max-md:absolute max-md:inset-y-0 max-md:right-[-1rem] max-md:h-full max-md:w-full md:order-2 md:col-span-6 lg:hidden'
     : 'order-1 max-md:w-full md:order-2 md:col-span-6';
 
 $layout_1_figure_class = $is_full_height_right_image
@@ -74,10 +74,10 @@ $layout_2_figure_class = $is_full_height_right_image
     : ($disable_mobile_absolute_media ? 'w-full' : 'w-full max-md:absolute max-md:inset-0 max-md:h-full');
 
 $layout_1_text_col_class = $is_full_height_right_image
-    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full md:order-1 md:col-span-5 lg:w-full lg:max-w-[460px]'
+    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full max-lg:pt-24 md:order-1 md:col-span-5 lg:w-full lg:max-w-[460px]'
     : 'order-2 flex flex-col max-md:max-w-full md:order-1 md:col-span-5';
 $layout_2_text_col_class = $is_full_height_right_image
-    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full md:order-1 md:col-span-6 lg:w-full lg:max-w-[460px]'
+    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full max-lg:pt-24 md:order-1 md:col-span-6 lg:w-full lg:max-w-[460px]'
     : 'order-2 z-[2] flex flex-col max-md:max-w-full md:order-1 md:col-span-6';
 
 $layout_1_image_class = 'w-full max-h-[522px] h-auto rounded-lg object-cover object-center';
@@ -181,6 +181,7 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
+        <?php if ($is_full_height_right_image) : ?>data-disable-nav-offset="true"<?php endif; ?>
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
@@ -339,6 +340,7 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
+        <?php if ($is_full_height_right_image) : ?>data-disable-nav-offset="true"<?php endif; ?>
         role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
