@@ -10,6 +10,7 @@ $logo_alt = $logo_id ? (get_post_meta($logo_id, '_wp_attachment_image_alt', true
 // Optional: phone + CTA
 $nav_settings   = get_field('navigation_settings_start', 'option') ?: [];
 $contact_button = $nav_settings['contact_button'] ?? null;
+$join_us_button = $nav_settings['join_us_button'] ?? $contact_button;
 $donate_button  = $nav_settings['donate_button'] ?? null;
 $donate_icon    = $nav_settings['donate_icon'] ?? null;
 $show_country_picker = !array_key_exists('show_country_picker', $nav_settings) || (bool) $nav_settings['show_country_picker'];
@@ -33,7 +34,7 @@ $primary_navigation = Navi::make()->build('primary');
     },
 
     checkWindowSize() {
-      if (window.innerWidth > 1084) {
+      if (window.innerWidth > 1200) {
         this.isOpen = false;
         this.activeDropdown = null;
       }
@@ -83,7 +84,7 @@ $primary_navigation = Navi::make()->build('primary');
       document.querySelector('.site-main section:first-of-type');
 
     if (target && !this.shouldSkipNavOffset(target)) {
-      const baseOffsetRem = window.innerWidth < 1024 ? 5 : 7.5;
+      const baseOffsetRem = window.innerWidth <= 1200 ? 5 : 7.5;
       const rootFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 16;
       let offsetPx = Math.round(baseOffsetRem * rootFontSize);
 
@@ -135,8 +136,43 @@ $primary_navigation = Navi::make()->build('primary');
     aria-label="Main navigation"
   >
 
-    <!-- LOGO -->
-    <div class="flex shrink-0 items-center max-w-[250px]">
+    <!-- MOBILE TOP ROW -->
+    <div class="relative flex min-[1201px]:hidden justify-between items-center w-full">
+      <div class="flex justify-start items-center w-[56px] shrink-0">
+        <?php get_template_part('template-parts/header/navbar/mobile'); ?>
+      </div>
+
+      <a href="<?php echo esc_url(home_url('/')); ?>" class="absolute left-1/2 -translate-x-1/2 flex btn" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
+        <?php if ($logo_url) : ?>
+          <div class="w-[96px]">
+            <img
+              src="<?php echo esc_url($logo_url); ?>"
+              alt="<?php echo esc_attr($logo_alt); ?>"
+              class="object-contain w-full h-full"
+            />
+          </div>
+        <?php endif; ?>
+      </a>
+
+      <div class="flex justify-end items-center w-[120px] shrink-0">
+        <?php if (!empty($join_us_button['url']) && !empty($join_us_button['title'])) : ?>
+          <a
+            href="<?php echo esc_url($join_us_button['url']); ?>"
+            class="inline-flex justify-center items-center w-10 h-10 p-0 rounded-full min-[480px]:w-auto min-[480px]:h-10 min-[480px]:px-4 min-[480px]:gap-2 min-[480px]:rounded-full text-white text-[14px] leading-5 font-bold bg-[linear-gradient(313deg,#059DED_24.08%,#28B2FA_63%)] whitespace-nowrap transition-all duration-200 hover:brightness-95 active:brightness-90 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#1C959B]"
+            aria-label="<?php echo esc_attr($join_us_button['title']); ?>"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M11.6667 4.00008C12.5871 4.00008 13.3333 3.25389 13.3333 2.33341C13.3333 1.41294 12.5871 0.666748 11.6667 0.666748C10.7462 0.666748 10 1.41294 10 2.33341C10 3.25389 10.7462 4.00008 11.6667 4.00008Z" fill="white"/>
+              <path d="M10.4729 7.61176C10.6493 7.8668 10.902 8.06298 11.1969 8.17377C11.4918 8.28455 11.8145 8.30458 12.1215 8.23116L14.6665 7.61251L14.2958 6.16476L11.7508 6.78341L10.6924 5.24088C10.5807 5.07748 10.437 4.93709 10.2695 4.82773C10.102 4.71838 9.91394 4.64221 9.71612 4.60358L6.76431 4.02896C6.43409 3.96478 6.09134 4.00796 5.78886 4.15184C5.48637 4.29573 5.24094 4.53234 5.09038 4.82522L3.81787 7.29982L5.19093 7.96773L6.46345 5.49238L7.97312 5.7864L4.06961 12.1125H0.666504V13.605H4.06961C4.60532 13.605 5.10957 13.3274 5.38587 12.8804L6.85794 10.4953L10.8252 11.267L12.2189 15.3333L13.6741 14.8609L12.2811 10.7953C12.1949 10.5458 12.0428 10.3228 11.8399 10.1485C11.637 9.97433 11.3905 9.85508 11.1253 9.80278L8.79281 9.3498L10.1528 7.14535L10.4729 7.61176Z" fill="white"/>
+            </svg>
+            <span class="hidden min-[480px]:inline"><?php echo esc_html($join_us_button['title']); ?></span>
+          </a>
+        <?php endif; ?>
+      </div>
+    </div>
+
+    <!-- LOGO (desktop) -->
+    <div class="hidden min-[1201px]:flex shrink-0 items-center max-w-[250px]">
       <a href="<?php echo esc_url(home_url('/')); ?>" class="flex btn">
         <?php if ($logo_url) : ?>
           <div class="max-w-[124px]" style="z-index: 99999999999999;">
@@ -151,7 +187,7 @@ $primary_navigation = Navi::make()->build('primary');
     </div>
 
     <!-- CENTER MENU -->
-    <div class="hidden flex-1 justify-center px-6 lg:flex">
+    <div class="hidden flex-1 justify-center px-6 min-[1201px]:flex">
       <?php if ($primary_navigation->isNotEmpty()) : ?>
         <ul id="primary-menu" class="flex gap-1 items-center text-sm font-bold text-sky-800">
           <?php foreach ($primary_navigation->toArray() as $index => $item) : ?>
@@ -194,11 +230,8 @@ $primary_navigation = Navi::make()->build('primary');
       <?php endif; ?>
     </div>
 
-    <!-- MOBILE -->
-    <?php get_template_part('template-parts/header/navbar/mobile'); ?>
-
     <!-- RIGHT SIDE -->
-    <div class="hidden gap-4 items-center lg:flex shrink-0">
+    <div class="hidden gap-4 items-center min-[1201px]:flex shrink-0">
 
       <?php if ($show_country_picker) : ?>
         <?php get_template_part('template-parts/header/navbar/language-dropdown'); ?>
