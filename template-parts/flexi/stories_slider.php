@@ -68,7 +68,7 @@ if ($has_posts) {
                 <a
                     href="<?php echo esc_url($read_all_link['url']); ?>"
                     target="<?php echo esc_attr($read_all_link['target'] ?: '_self'); ?>"
-                    class="hidden md:inline-flex h-[42px] justify-center items-center gap-2 py-4 pl-6 pr-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] rounded-full bg-white hover:bg-[var(--Turquoise-50,#CBF3F6)] active:bg-[var(--Turquoise-100,#75E0E6)] focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-white transition-colors duration-200"
+                    class="hidden min-[1085px]:inline-flex h-[42px] justify-center items-center gap-2 py-4 pl-6 pr-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] rounded-full bg-white hover:bg-[var(--Turquoise-50,#CBF3F6)] active:bg-[var(--Turquoise-100,#75E0E6)] focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-white transition-colors duration-200"
                 >
                     <?php echo esc_html($read_all_link['title']); ?>
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
@@ -227,8 +227,8 @@ if ($has_posts) {
 
         <?php if ($has_posts) : ?>
             <!-- Mobile dots + CTA — outside the rounded container -->
-            <div class="flex flex-col gap-5 justify-center items-center mt-5 md:hidden">
-                <div class="stories-mobile-dots"></div>
+            <div class="flex flex-col gap-5 justify-center items-center mt-5 min-[1085px]:hidden">
+                <div class="stories-mobile-dots md:hidden"></div>
 
                 <?php if (!empty($read_all_link['url']) && !empty($read_all_link['title'])) : ?>
                     <a
