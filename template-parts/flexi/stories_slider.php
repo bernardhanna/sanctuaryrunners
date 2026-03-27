@@ -175,6 +175,7 @@ if ($has_posts) {
                         </div>
                     </div>
 
+
                     <!-- ── MOBILE: CSS scroll snap ── -->
                     <div class="pb-4 w-full md:hidden">
                         <div class="stories-scroll-track">
@@ -257,14 +258,19 @@ if ($has_posts) {
         }
     }
 
-    /* ── Desktop: fractional slidesToShow needs a clipping viewport ── */
+    /* ── Desktop: keep left side clipped, extend viewport to right only ── */
     #<?php echo esc_attr($section_id); ?> .js-stories-slider .slick-list {
-        overflow: hidden;
+        overflow: hidden !important;
+        width: calc(100% + 200px);
+        max-width: none;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
     }
 
     /* ── Desktop: equal height Slick slides ── */
     #<?php echo esc_attr($section_id); ?> .js-stories-slider .slick-track {
         display: flex !important;
+        gap: 0 !important;
     }
     #<?php echo esc_attr($section_id); ?> .js-stories-slider .slick-slide {
         height: inherit !important;
@@ -367,19 +373,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if ($slider.length && !$slider.hasClass('slick-initialized')) {
             $slider.slick({
-                /* ~2 full cards + peek of next (see design) */
-                slidesToShow   : 2.35,
+                /* Desktop: 2 full cards + half of 3rd */
+                slidesToShow   : 2.5,
                 slidesToScroll : 1,
-                infinite       : true,
+                infinite       : false,
                 dots           : false,
                 arrows         : true,
                 prevArrow      : $section.find('.stories-prev'),
                 nextArrow      : $section.find('.stories-next'),
                 adaptiveHeight : false,
-                responsive     : [{
-                    breakpoint : 1024,
-                    settings   : { slidesToShow: 2.25, slidesToScroll: 1 }
-                }]
+                responsive     : [
+                    {
+                        breakpoint : 1400,
+                        settings   : { slidesToShow: 2.5, slidesToScroll: 1 }
+                    },
+                    {
+                        breakpoint : 1280,
+                        settings   : { slidesToShow: 2.35, slidesToScroll: 1 }
+                    },
+                    {
+                        breakpoint : 1024,
+                        settings   : { slidesToShow: 2.2, slidesToScroll: 1 }
+                    }
+                ]
             });
         }
 

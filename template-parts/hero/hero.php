@@ -76,7 +76,7 @@ $is_full_height_right_media = $media_type === 'image' && !empty($media_image) &&
 
 $hero_grid_classes = $is_full_height_right_media
     ? 'relative grid grid-cols-1 gap-4 w-full max-lg:px-5 py-[2rem] lg:block lg:min-h-[500px] lg:py-0'
-    : 'grid grid-cols-1 gap-4 w-full max-lg:px-5 py-[2rem] lg:grid-cols-[35%_70%] lg:py-0';
+    : 'grid grid-cols-1 gap-4 w-full max-xl:px-5 py-[2rem] lg:grid-cols-[35%_70%] lg:py-0';
 
 $header_classes = $is_full_height_right_media
     ? 'relative z-[2] flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 lg:order-1 lg:max-w-[420px]'
