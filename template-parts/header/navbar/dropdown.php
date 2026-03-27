@@ -204,8 +204,8 @@ $has_dropdown_image = $img_url !== '';
                                     @mouseenter="activeTier3Index = <?php echo (int) $child_index; ?>"
                                     style="display: none;"
                                 >
-                                    <div class="flex flex-col items-start <?php echo $has_dropdown_image ? '' : 'py-4'; ?> pr-6 pl-4 w-full bg-sky-50 rounded-lg max-md:pr-5 max-md:max-w-full">
-                                        <header class="flex flex-col justify-center pt-6 pr-3 pb-2 pl-3.5 font-bold text-sky-800">
+                                    <div class="flex flex-col items-start pr-6 pl-4 w-full bg-sky-50 rounded-lg max-md:pr-5 max-md:max-w-full">
+                                        <header class="flex flex-col justify-center <?php echo $has_dropdown_image ? 'pt-6 pb-2' : 'pt-0 pb-0'; ?> pr-3 pl-3.5 font-bold text-sky-800">
                                             <span class="flex items-center self-stretch my-auto" aria-hidden="true">
                                                 <i class="mr-2 text-sm text-blue-900 fa-solid fa-chevron-left shrink-0" aria-hidden="true"></i>
                                                 <?php echo esc_html($child->label); ?>

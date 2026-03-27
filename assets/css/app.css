@@ -1637,3 +1637,59 @@ blockquote.right {
 .menu-copyright li:last-child span:last-child {
     display: none;
 }
+
+
+.matrix-donation-submit-btn {
+	display: inline-flex;
+	width: 100%;
+	height: 52px;
+	padding: 16px 32px;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	box-sizing: border-box;
+	border-radius: 100px;
+	border: 4px solid #00628F;
+	background: white;
+	color: #fff;
+	font-family: "Public Sans", sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 22px;
+	white-space: nowrap;
+	transition: background 0.2s, color 0.2s, border-color 0.2s, border-width 0.2s, box-shadow 0.2s;
+	color: var(--Blue-SR-500, #00628F);
+	/* Text md/Bold */
+	font-family: "Public Sans";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 22px
+}
+
+.matrix-donation-submit-btn:hover {
+	border: 4px solid var(--Mint-500, #87CEB7);
+	background: var(--Gradient-Blue-3, linear-gradient(313deg, #059DED 24.08%, #28B2FA 63%));
+	box-shadow: none;
+	color: #fff;
+	outline: none;
+}
+
+.matrix-donation-submit-btn:active {
+	border: 4px solid transparent;
+	background: var(--Blue-SR-400, #008BCC);
+	color: #fff;
+}
+
+.matrix-donation-submit-btn:focus-visible {
+	border: 3px solid var(--Turquoise-500, #1C959B);
+	background: var(--Blue-SR-400, #008BCC);
+	color: #fff;
+	outline: none;
+}
+
+#donation_form .matrix-thank-you-title p, #donation_form .matrix-thank-you-title h1, .matrix-thank-you .matrix-thank-you-title p, .matrix-thank-you .matrix-thank-you-title h1 {
+  padding-top: 0px!important;
+  margin-top: 0px!important;
+}

@@ -68,9 +68,9 @@ $layout_2_media_col_class = $is_full_height_right_image
 
 $layout_1_figure_class = $is_full_height_right_image
     ? 'flex h-full w-full min-h-[260px] items-stretch justify-end overflow-hidden'
-    : 'w-full';
+    : 'w-full max-sm:mt-12';
 $layout_2_figure_class = $is_full_height_right_image
-    ? ($disable_mobile_absolute_media ? 'w-full h-full' : 'w-full h-full max-md:absolute max-md:inset-0 max-md:h-full')
+    ? ($disable_mobile_absolute_media ? 'w-full h-full' : 'w-full h-full max-md:absolute max-md:top-0 max-md:bottom-0 max-md:right-[-1rem] max-md:h-full')
     : ($disable_mobile_absolute_media ? 'w-full' : 'w-full max-md:absolute max-md:inset-0 max-md:h-full');
 
 $layout_1_text_col_class = $is_full_height_right_image
@@ -91,7 +91,7 @@ if ($image_presentation === 'contain') {
     $layout_2_image_class = 'w-full max-h-[300px] h-auto rounded-lg object-contain md:object-right max-md:object-center';
 } elseif ($is_full_height_right_image) {
     $layout_1_image_class = 'h-full w-full object-contain object-right';
-    $layout_2_image_class = 'h-full w-full object-contain object-right max-md:object-center';
+    $layout_2_image_class = 'h-full w-full object-contain object-right max-md:object-right';
 }
 
 if ($mobile_image_contain) {
