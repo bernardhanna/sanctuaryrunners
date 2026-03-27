@@ -219,7 +219,7 @@ $section_id = 'subhero-' . uniqid();
             </div>
         <?php endif; ?>
 
-        <div class="relative max-xl:px-5 mx-auto w-full max-w-container pb-6 md:pb-8">
+        <div class="relative pb-6 mx-auto w-full max-xl:px-5 max-w-container md:pb-8">
             <div class="<?php echo esc_attr($layout_1_grid_class); ?>">
 
                 <?php if ($image): ?>
@@ -249,7 +249,7 @@ $section_id = 'subhero-' . uniqid();
                         <nav class="mb-4 max-sm:mb-6" aria-label="Breadcrumb navigation" role="navigation">
                             <ol class="flex items-center gap-2 text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
                                 <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
-                                    <li class="flex items-center gap-2">
+                                    <li class="flex gap-2 items-center">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
                                                 class="<?php echo esc_attr($breadcrumb_current_class); ?> font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
@@ -298,7 +298,7 @@ $section_id = 'subhero-' . uniqid();
 
                     <?php if ($has_ctas): ?>
                         <div
-                            class="flex flex-col flex-wrap items-start gap-4 pt-6 sm:flex-row sm:flex-nowrap"
+                            class="flex flex-col flex-wrap gap-4 items-start pt-6 sm:flex-row sm:flex-nowrap"
                             role="group"
                             aria-label="<?php echo esc_attr__('Subhero calls to action', 'matrix-starter'); ?>"
                         >
@@ -306,7 +306,7 @@ $section_id = 'subhero-' . uniqid();
                                 <a
                                     href="<?php echo esc_url($primary_cta['url']); ?>"
                                     target="<?php echo esc_attr($primary_cta['target'] ?? '_self'); ?>"
-                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#009DEA] px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
+                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#009DEA] px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white  hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white  focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200" 
                                     aria-label="<?php echo esc_attr($primary_cta['title']); ?>"
                                 >
                                     <?php if ($primary_cta_icon): ?>
@@ -410,7 +410,7 @@ $section_id = 'subhero-' . uniqid();
                         <nav class="mt-[3rem] sm:mt-0 mb-4 max-sm:mb-6" aria-label="Breadcrumb navigation" role="navigation">
                             <ol class="flex items-center gap-2 text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
                                 <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
-                                    <li class="flex items-center gap-2">
+                                    <li class="flex gap-2 items-center">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
                                                 class="<?php echo esc_attr($breadcrumb_current_class); ?> font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
@@ -459,7 +459,7 @@ $section_id = 'subhero-' . uniqid();
 
                     <?php if ($has_ctas): ?>
                         <div
-                            class="flex flex-col flex-wrap items-start gap-4 pt-6 sm:flex-row sm:flex-nowrap"
+                            class="flex flex-col flex-wrap gap-4 items-start pt-6 sm:flex-row sm:flex-nowrap"
                             role="group"
                             aria-label="<?php echo esc_attr__('Subhero calls to action', 'matrix-starter'); ?>"
                         >
