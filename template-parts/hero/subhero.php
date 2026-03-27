@@ -74,10 +74,10 @@ $layout_2_figure_class = $is_full_height_right_image
     : ($disable_mobile_absolute_media ? 'w-full' : 'w-full max-md:absolute max-md:inset-0 max-md:h-full');
 
 $layout_1_text_col_class = $is_full_height_right_image
-    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full md:order-1 md:col-span-5 lg:w-full lg:max-w-[460px]'
+    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full max-lg:pt-24 md:order-1 md:col-span-5 lg:w-full lg:max-w-[460px]'
     : 'order-2 flex flex-col max-md:max-w-full md:order-1 md:col-span-5';
 $layout_2_text_col_class = $is_full_height_right_image
-    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full md:order-1 md:col-span-6 lg:w-full lg:max-w-[460px]'
+    ? 'order-2 relative z-[2] flex flex-col justify-center self-center max-md:max-w-full max-lg:pt-24 md:order-1 md:col-span-6 lg:w-full lg:max-w-[460px]'
     : 'order-2 z-[2] flex flex-col max-md:max-w-full md:order-1 md:col-span-6';
 
 $layout_1_image_class = 'w-full max-h-[522px] h-auto rounded-lg object-cover object-center';
