@@ -106,7 +106,7 @@ if ($image_title === '') {
                     <?php endif; ?>
 
                     <?php if (!empty($stats) && is_array($stats)) : ?>
-                        <div class="flex flex-col flex-wrap gap-4 self-start md:items-start md:grid md:grid-cols-3" role="list" aria-label="Key statistics">
+                        <div class="flex flex-col flex-wrap gap-4 self-start w-full md:items-start md:grid md:grid-cols-3" role="list" aria-label="Key statistics">
                             <?php foreach ($stats as $stat_index => $stat_item) : ?>
                                 <?php
                                 $show_stat = (bool) ($stat_item['show_stat'] ?? true);
@@ -136,7 +136,7 @@ if ($image_title === '') {
                                     <?php endif; ?>
                                 >
                                     <h3
-                                        class="break-words text-left text-[36px] font-bold leading-[44px] tracking-[-0.72px] md:text-[60px] md:leading-[72px] md:tracking-[-1.2px] font-['Public_Sans'] text-[var(--Light-Blue-500,#008FC5)] w-full"
+                                        class="break-words text-left text-[36px] font-bold leading-[44px] tracking-[-0.72px] lg:text-[60px] lg:leading-[72px] lg:tracking-[-1.2px] font-['Public_Sans'] text-[var(--Light-Blue-500,#008FC5)] w-full"
                                         <?php if ($stat_number_color): ?>style="color: <?php echo esc_attr($stat_number_color); ?>;"<?php endif; ?>
                                     >
                                         <!-- aria-hidden to avoid screen readers reading rapid changes -->
