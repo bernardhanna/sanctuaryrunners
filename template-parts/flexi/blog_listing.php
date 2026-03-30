@@ -32,6 +32,8 @@ $search_query = is_search() ? get_search_query() : '';
 if ($search_query === '' && isset($_GET['s'])) {
     $search_query = sanitize_text_field(wp_unslash($_GET['s']));
 }
+$queried_object = get_queried_object();
+$no_posts_message = 'No posts found.';
 
 // Query posts
 $args = array(
@@ -42,6 +44,13 @@ $args = array(
 );
 if ($search_query !== '') {
     $args['s'] = $search_query;
+}
+if (is_category() && $queried_object instanceof WP_Term && $queried_object->taxonomy === 'category') {
+    $args['cat'] = (int) $queried_object->term_id;
+    $category_label = trim((string) $queried_object->name);
+    if ($category_label !== '') {
+        $no_posts_message = sprintf('No %s found.', strtolower($category_label));
+    }
 }
 
 $blog_query = new WP_Query($args);
@@ -237,7 +246,7 @@ $section_id = 'blog-listing-' . uniqid();
                     <?php wp_reset_postdata(); ?>
                 <?php else: ?>
                     <div class="py-12 w-full text-center">
-                        <p class="text-lg text-gray-600">No posts found.</p>
+                        <p class="text-lg text-gray-600"><?php echo esc_html($no_posts_message); ?></p>
                     </div>
                 <?php endif; ?>
             </div>
