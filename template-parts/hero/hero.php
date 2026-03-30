@@ -33,9 +33,9 @@ $media_presentation = get_sub_field('media_presentation') ?: 'default';
 
 $video_source      = get_sub_field('video_source') ?: 'local';
 $video_file        = get_sub_field('video_file');
+$video_url         = trim((string) get_sub_field('video_url'));
 $video_youtube_url = get_sub_field('video_youtube_url');
 $video_vimeo_url   = get_sub_field('video_vimeo_url');
-$video_poster      = get_sub_field('video_poster');
 
 $video_autoplay    = matrix_hero_acf_bool(get_sub_field('video_autoplay'), true);
 $video_muted       = matrix_hero_acf_bool(get_sub_field('video_muted'), true);
@@ -64,8 +64,6 @@ if ($media_type === 'video') {
         }
     }
 }
-
-$video_poster_url = ($video_poster && $media_type === 'video') ? wp_get_attachment_image_url((int) $video_poster, 'full') : '';
 
 $allowed_media_presentations = ['default', 'contain', 'contain_right', 'full_height_right_svg'];
 if (!in_array($media_presentation, $allowed_media_presentations, true)) {
@@ -230,8 +228,20 @@ $hero_iframe_title = $title_inline !== ''
                     <?php if ($media_type === 'video'): ?>
                         <?php
                         $video_media_classes = 'absolute inset-0 w-full h-full object-cover';
-                        if ($video_source === 'local' && is_array($video_file) && !empty($video_file['url'])) :
-                            $mime = !empty($video_file['mime_type']) ? $video_file['mime_type'] : 'video/mp4';
+                        if (
+                            ($video_source === 'local' && is_array($video_file) && !empty($video_file['url'])) ||
+                            ($video_source === 'url' && $video_url !== '')
+                        ) :
+                            $video_src = $video_source === 'url' ? $video_url : $video_file['url'];
+                            $mime = 'video/mp4';
+                            if ($video_source === 'local' && !empty($video_file['mime_type'])) {
+                                $mime = (string) $video_file['mime_type'];
+                            } elseif ($video_source === 'url') {
+                                $filetype = wp_check_filetype((string) $video_src);
+                                if (!empty($filetype['type'])) {
+                                    $mime = (string) $filetype['type'];
+                                }
+                            }
                             ?>
                             <video
                                 class="<?php echo esc_attr($video_media_classes); ?>"
@@ -240,10 +250,9 @@ $hero_iframe_title = $title_inline !== ''
                                 <?php echo $video_muted ? 'muted' : ''; ?>
                                 <?php echo $video_loop ? 'loop' : ''; ?>
                                 <?php echo $video_playsinline ? 'playsinline' : ''; ?>
-                                <?php echo $video_poster_url ? 'poster="' . esc_url($video_poster_url) . '"' : ''; ?>
                                 preload="metadata"
                             >
-                                <source src="<?php echo esc_url($video_file['url']); ?>" type="<?php echo esc_attr($mime); ?>">
+                                <source src="<?php echo esc_url($video_src); ?>" type="<?php echo esc_attr($mime); ?>">
                             </video>
                         <?php elseif (($video_source === 'youtube' || $video_source === 'vimeo') && $video_embed_url !== '') : ?>
                             <iframe
@@ -254,13 +263,6 @@ $hero_iframe_title = $title_inline !== ''
                                 allowfullscreen
                                 loading="eager"
                             ></iframe>
-                        <?php elseif (!empty($video_poster_url)) : ?>
-                            <img
-                                src="<?php echo esc_url($video_poster_url); ?>"
-                                alt=""
-                                class="<?php echo esc_attr($video_media_classes); ?>"
-                                decoding="async"
-                            >
                         <?php endif; ?>
 
                     <?php elseif (!empty($media_image)): ?>

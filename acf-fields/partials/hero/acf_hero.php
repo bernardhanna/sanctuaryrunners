@@ -85,6 +85,7 @@ $hero
             'label' => 'Video source',
             'choices' => [
                 'local' => 'Uploaded file (MP4 / WebM)',
+                'url' => 'External URL (MP4 / WebM, incl. Amazon S3/CloudFront)',
                 'youtube' => 'YouTube',
                 'vimeo' => 'Vimeo',
             ],
@@ -103,6 +104,12 @@ $hero
         ])
             ->conditional('media_type', '==', 'video')
             ->and('video_source', '==', 'local')
+        ->addUrl('video_url', [
+            'label' => 'External video URL',
+            'instructions' => 'Paste a direct MP4/WebM URL (e.g. Amazon S3/CloudFront).',
+        ])
+            ->conditional('media_type', '==', 'video')
+            ->and('video_source', '==', 'url')
         ->addUrl('video_youtube_url', [
             'label' => 'YouTube URL',
             'instructions' => 'Paste a watch, youtu.be, shorts, or embed link.',
@@ -115,14 +122,6 @@ $hero
         ])
             ->conditional('media_type', '==', 'video')
             ->and('video_source', '==', 'vimeo')
-        ->addImage('video_poster', [
-            'label' => 'Video poster (optional)',
-            'instructions' => 'Shown before playback and as fallback; recommended for performance.',
-            'return_format' => 'id',
-            'preview_size' => 'medium',
-            'library' => 'all',
-        ])
-            ->conditional('media_type', '==', 'video')
         ->addTrueFalse('video_autoplay', [
             'label' => 'Autoplay',
             'ui' => 1,
