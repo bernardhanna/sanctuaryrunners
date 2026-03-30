@@ -70,7 +70,7 @@ $has_dropdown_image = $img_url !== '';
 
             <!-- Megamenu Container -->
             <div
-                class="flex overflow-hidden flex-wrap <?php echo $has_dropdown_image ? 'py-4' : 'py-0'; ?> pl-14 w-full max-w-[1168px] mx-auto text-sm leading-none text-sky-800 bg-white rounded-lg shadow-lg max-md:pl-5"
+                class="flex overflow-hidden flex-wrap <?php echo $has_dropdown_image ? 'py-0' : 'py-4'; ?> pl-14 w-full max-w-[1168px] mx-auto text-sm leading-none text-sky-800 bg-white rounded-lg shadow-lg max-md:pl-5"
                 role="navigation"
                 aria-label="<?php echo esc_attr($item->label); ?> menu"
                 x-data="{ activeTier3Index: null }"
