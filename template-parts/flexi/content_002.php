@@ -58,7 +58,7 @@ if (have_rows('padding_settings')) {
 
                 <?php if ($image): ?>
                     <div class="overflow-hidden  rounded-lg w-full max-md:max-w-full <?php echo $reverse_layout ? 'md:order-1' : 'md:order-2'; ?>">
-                        <div class="flex relative flex-col w-full min-h-[448px] max-md:max-w-full">
+                        <div class="flex relative flex-col w-full xl:min-h-[448px] max-md:max-w-full">
                             <?php
                             echo wp_get_attachment_image($image, 'full', false, [
                                 'alt' => esc_attr($image_alt),
