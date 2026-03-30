@@ -118,3 +118,29 @@ if (have_rows('padding_settings')) {
         </div>
     </div>
 </section>
+
+<style>
+    #<?php echo esc_attr($section_id); ?> .wp_editor ul {
+        list-style: none;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    #<?php echo esc_attr($section_id); ?> .wp_editor ul li {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 8px;
+    }
+
+    #<?php echo esc_attr($section_id); ?> .wp_editor ul li::before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 0;
+        width: 16px;
+        height: 16px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M13.3327 4L5.99935 11.3333L2.66602 8' stroke='%236EC4A9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+    }
+</style>
