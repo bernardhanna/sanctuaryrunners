@@ -106,7 +106,7 @@ if (have_rows('padding_settings')) {
                         <div class="flex pt-4 mt-4 w-full">
                             <a
                                 href="<?php echo esc_url($button['url']); ?>"
-                                class="flex justify-center items-center w-full md:w-fit px-6 py-4 text-sm leading-none whitespace-nowrap rounded-[100px] border border-[#00628F] bg-transparent md:bg-[#EBF9FF] text-[#00628F] transition-all duration-200 hover:border-transparent hover:shadow-[0_0_0_4px_#1C959B]"
+                                class="inline-flex gap-2 justify-center items-center w-full md:w-fit px-6 py-3 text-sm font-bold text-white leading-5 whitespace-nowrap rounded-[100px] border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn-primary"
                             >
                                 <?php echo esc_html($button['title']); ?>
                             </a>
