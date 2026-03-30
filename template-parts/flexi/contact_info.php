@@ -167,7 +167,7 @@ if (have_rows('contact_locations')) {
                     $details_id = $section_id . '-location-' . $index;
                 ?>
                     <details
-                        class="group overflow-hidden bg-white rounded-lg"
+                        class="overflow-hidden bg-white rounded-lg group"
                         role="listitem"
                         <?php echo $index === 0 ? 'open' : ''; ?>
                     >
@@ -175,7 +175,7 @@ if (have_rows('contact_locations')) {
                             class="flex gap-2 justify-between items-center p-5 w-full list-none cursor-pointer [&::-webkit-details-marker]:hidden"
                             aria-controls="<?php echo esc_attr($details_id); ?>"
                         >
-                            <div class="flex gap-2 items-start min-w-0">
+                            <div class="flex gap-2 items-center min-w-0">
                                 <span class="inline-flex mt-0.5 shrink-0" aria-hidden="true">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="block w-5 h-6" width="20" height="24" viewBox="0 0 20 24" fill="none">
                                         <path d="M19 10C19 17 10 23 10 23C10 23 1 17 1 10C1 7.61305 1.94821 5.32387 3.63604 3.63604C5.32387 1.94821 7.61305 1 10 1C12.3869 1 14.6761 1.94821 16.364 3.63604C18.0518 5.32387 19 7.61305 19 10Z" stroke="#00628F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -251,7 +251,7 @@ if (have_rows('contact_locations')) {
                         </div>
                     </details>
                 <?php endforeach; ?>
-            </div>
+           </div>
         <?php endif; ?>
 
     </div>

@@ -83,7 +83,7 @@ if (have_rows('padding_settings')) {
             </div>
 
             <!-- Content Section (50%) -->
-            <article class="my-auto w-full min-w-0 font-bold text-sky-800 md:w-1/2">
+            <article class="my-auto w-full min-w-0 font-bold text-sky-800 max-lg:px-5 md:w-1/2">
 
                 <?php if (!empty($heading)): ?>
                     <header>

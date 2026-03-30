@@ -71,6 +71,24 @@ $menu_latest      = 'footer_two';
 $menu_getinvolved = 'footer_three';
 $menu_legal       = 'copyright';
 
+$legal_menu_options = [];
+$legal_menu_locations = get_nav_menu_locations();
+if (!empty($legal_menu_locations[$menu_legal])) {
+    $legal_menu_id = (int) $legal_menu_locations[$menu_legal];
+    $legal_menu_items = wp_get_nav_menu_items($legal_menu_id);
+    if (!empty($legal_menu_items) && is_array($legal_menu_items)) {
+        foreach ($legal_menu_items as $item) {
+            if (!is_object($item) || empty($item->url) || empty($item->title)) {
+                continue;
+            }
+            $legal_menu_options[] = [
+                'url' => (string) $item->url,
+                'title' => wp_strip_all_tags((string) $item->title),
+            ];
+        }
+    }
+}
+
 /** SVGs for social icons */
 function matrix_social_svg($icon) {
     if ($icon === 'bluesky') {
@@ -206,20 +224,40 @@ function matrix_social_svg($icon) {
 
   <div style="background-color: <?php echo esc_attr($bottom_bg_color ?: '#F0F9FF'); ?>;">
     <div class="max-w-[1540px] mx-auto px-4 sm:px-8 lg:px-14 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467]">
-        <span><?php echo esc_html($copyright_left); ?></span>
-        <span class="text-[#475467]" aria-hidden="true">|</span>
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 max-[479px]:flex-col max-[479px]:items-start max-[479px]:w-full max-[479px]:gap-2 font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467]">
+        <?php if (!empty($legal_menu_options)) : ?>
+          <div class="hidden max-[479px]:block max-[479px]:w-full">
+            <label for="copyright-menu-select" class="sr-only">Copyright menu</label>
+            <select
+              id="copyright-menu-select"
+              class="w-full rounded-full border border-[#D0D5DD] bg-white px-4 py-2 font-sans text-[12px] font-normal leading-[18px] text-[#475467] focus:outline-none focus:ring-2 focus:ring-[#00628F]"
+              onchange="if (this.value) { window.location.href = this.value; }"
+            >
+              <option value="">Legal links</option>
+              <?php foreach ($legal_menu_options as $option) : ?>
+                <option value="<?php echo esc_url($option['url']); ?>">
+                  <?php echo esc_html($option['title']); ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+        <?php endif; ?>
 
-        <?php
-        wp_nav_menu([
-            'theme_location' => $menu_legal,
-            'container'      => false,
-            'menu_class' => 'menu-copyright flex flex-wrap items-center gap-x-2 gap-y-1',
-            'fallback_cb'    => '__return_empty_string',
-            'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467] transition-colors duration-200 hover:text-[var(--Blue-SR-500,#00628F)] hover:underline underline-offset-2">',
-            'link_after' => '</span><span class="px-3 text-[#475467]" aria-hidden="true">|</span>',
-        ]);
-        ?>
+        <span><?php echo esc_html($copyright_left); ?></span>
+        <span class="text-[#475467] max-[479px]:hidden" aria-hidden="true">|</span>
+
+        <div class="max-[479px]:hidden">
+          <?php
+          wp_nav_menu([
+              'theme_location' => $menu_legal,
+              'container'      => false,
+              'menu_class' => 'menu-copyright flex flex-wrap items-center gap-x-2 gap-y-1',
+              'fallback_cb'    => '__return_empty_string',
+              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467] transition-colors duration-200 hover:text-[var(--Blue-SR-500,#00628F)] hover:underline underline-offset-2">',
+              'link_after' => '</span><span class="px-3 text-[#475467]" aria-hidden="true">|</span>',
+          ]);
+          ?>
+        </div>
       </div>
 
       <div class="flex flex-wrap items-center gap-1 whitespace-nowrap font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467]">
