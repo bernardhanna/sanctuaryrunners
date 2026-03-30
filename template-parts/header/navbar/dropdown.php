@@ -152,7 +152,7 @@ $has_dropdown_image = $img_url !== '';
                             x-transition:leave="transition ease-in duration-150"
                             x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
-                            class="flex absolute inset-0 flex-col justify-center px-5 w-full"
+                            class="flex absolute inset-0 flex-col justify-center px-5 py-5 w-full"
                             style="display: none;"
                         >
                             <?php if ($img_id) : ?>
