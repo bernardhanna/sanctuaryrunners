@@ -247,12 +247,12 @@ $section_id = 'subhero-' . uniqid();
 
                     <?php if (!empty($breadcrumbs)): ?>
                         <nav class="mb-4 max-sm:mb-6" aria-label="Breadcrumb navigation" role="navigation">
-                            <ol class="flex items-center gap-2 text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
+                            <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
                                 <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
-                                    <li class="flex gap-2 items-center">
+                                    <li class="flex items-center gap-2 <?php echo $breadcrumb['is_current'] ? 'min-w-0 flex-1' : 'shrink-0'; ?>">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
-                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
+                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> min-w-0 break-words font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
                                                 aria-current="page"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
@@ -260,7 +260,7 @@ $section_id = 'subhero-' . uniqid();
                                         <?php else: ?>
                                             <a
                                                 href="<?php echo esc_url($breadcrumb['url']); ?>"
-                                                class="<?php echo esc_attr($text_color_class); ?> font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
+                                                class="<?php echo esc_attr($text_color_class); ?> whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
                                             </a>
@@ -408,12 +408,12 @@ $section_id = 'subhero-' . uniqid();
 
                     <?php if (!empty($breadcrumbs)): ?>
                         <nav class="mt-[3rem] sm:mt-0 mb-4 max-sm:mb-6" aria-label="Breadcrumb navigation" role="navigation">
-                            <ol class="flex items-center gap-2 text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
+                            <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
                                 <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
-                                    <li class="flex gap-2 items-center">
+                                    <li class="flex items-center gap-2 <?php echo $breadcrumb['is_current'] ? 'min-w-0 flex-1' : 'shrink-0'; ?>">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
-                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
+                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> min-w-0 break-words font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
                                                 aria-current="page"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
@@ -421,7 +421,7 @@ $section_id = 'subhero-' . uniqid();
                                         <?php else: ?>
                                             <a
                                                 href="<?php echo esc_url($breadcrumb['url']); ?>"
-                                                class="<?php echo esc_attr($text_color_class); ?> font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
+                                                class="<?php echo esc_attr($text_color_class); ?> whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
                                             </a>
