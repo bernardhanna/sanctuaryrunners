@@ -29,8 +29,8 @@ if (have_rows('padding_settings')) {
     role="region"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="flex flex-col items-center pt-12 pb-12 mx-auto w-full max-w-container max-lg:px-5">
-        <div class="flex overflow-hidden flex-col justify-center self-stretch px-10 max-md:px-5">
+    <div class="flex flex-col items-center pb-12 mx-auto w-full md:pt-12 max-w-container max-lg:px-5">
+        <div class="flex overflow-hidden flex-col justify-center self-stretch px-10 max-md:px-0">
             <div class="grid grid-cols-1 gap-10 items-center mt-6 w-full md:grid-cols-2 max-md:max-w-full">
 
                 <article class="w-full self-center max-md:max-w-full <?php echo $reverse_layout ? 'md:order-2' : 'md:order-1'; ?>">
