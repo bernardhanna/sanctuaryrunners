@@ -283,7 +283,7 @@ if ($has_posts) {
 
     /* ── Mobile: CSS scroll snap ── */
     #<?php echo esc_attr($section_id); ?> .stories-scroll-track {
-        --mobile-story-card: clamp(260px, calc(100% - 88px), 320px);
+        --mobile-story-card: clamp(250px, calc(100% - 104px), 300px);
         display: flex;
         overflow-x: scroll;
         overflow-y: visible;

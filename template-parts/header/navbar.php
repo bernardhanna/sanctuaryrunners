@@ -137,12 +137,12 @@ $primary_navigation = Navi::make()->build('primary');
   >
 
     <!-- MOBILE TOP ROW -->
-    <div class="relative flex min-[1201px]:hidden justify-between items-center w-full">
-      <div class="flex justify-start items-center w-[56px] shrink-0">
+    <div class="relative z-50 flex min-[1201px]:hidden justify-between items-center w-full">
+      <div class="relative z-50 flex justify-start items-center w-[56px] shrink-0">
         <?php get_template_part('template-parts/header/navbar/mobile'); ?>
       </div>
 
-      <a href="<?php echo esc_url(home_url('/')); ?>" class="absolute left-1/2 -translate-x-1/2 flex btn" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
+      <a href="<?php echo esc_url(home_url('/')); ?>" class="absolute left-1/2 z-50 -translate-x-1/2 flex btn" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
         <?php if ($logo_url) : ?>
           <div class="w-[96px]">
             <img
@@ -154,7 +154,7 @@ $primary_navigation = Navi::make()->build('primary');
         <?php endif; ?>
       </a>
 
-      <div class="flex justify-end items-center w-[120px] shrink-0">
+      <div class="relative z-50 flex justify-end items-center w-[120px] shrink-0">
         <?php if (!empty($join_us_button['url']) && !empty($join_us_button['title'])) : ?>
           <a
             href="<?php echo esc_url($join_us_button['url']); ?>"
