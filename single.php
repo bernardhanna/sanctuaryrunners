@@ -57,7 +57,7 @@ get_header();
 
         $hero_content = '';
         if (!empty($event_meta_parts)) {
-            $hero_content .= '<div class="mt-3 flex flex-wrap items-center gap-2">' . implode('', $event_meta_parts) . '</div>';
+            $hero_content .= '<div class="flex flex-wrap gap-2 items-center mt-3">' . implode('', $event_meta_parts) . '</div>';
         }
 
         if (is_array($event_registration_link) && !empty($event_registration_link['url'])) {
@@ -79,23 +79,26 @@ get_header();
             $hero_content .= wpautop($excerpt);
         }
 
-        $post_meta_parts = [];
-        $post_meta_parts[] = '<span>' . esc_html(get_the_date('j M Y')) . '</span>';
-        $post_meta_parts[] = '<span>' . esc_html($read_time) . ' min read</span>';
-        $cats = get_the_category($post_id);
-        if (!empty($cats)) {
-            $post_meta_parts[] = '<span>' . esc_html($cats[0]->name) . '</span>';
-        }
-
-        if (!empty($post_meta_parts)) {
-            $hero_content .= '<div class="mt-3 flex flex-wrap items-center gap-2 text-[14px] leading-5 text-[var(--Gray-700,#00263E)]">';
-            foreach ($post_meta_parts as $index => $part) {
-                if ($index > 0) {
-                    $hero_content .= '<span aria-hidden="true">|</span>';
-                }
-                $hero_content .= $part;
+        // Show publish/read meta only on standard blog posts.
+        if ($post_type === 'post') {
+            $post_meta_parts = [];
+            $post_meta_parts[] = '<span>' . esc_html(get_the_date('j M Y')) . '</span>';
+            $post_meta_parts[] = '<span>' . esc_html($read_time) . ' min read</span>';
+            $cats = get_the_category($post_id);
+            if (!empty($cats)) {
+                $post_meta_parts[] = '<span>' . esc_html($cats[0]->name) . '</span>';
             }
-            $hero_content .= '</div>';
+
+            if (!empty($post_meta_parts)) {
+                $hero_content .= '<div class="mt-3 flex flex-wrap items-center gap-2 text-[14px] leading-5 text-[var(--Gray-700,#00263E)]">';
+                foreach ($post_meta_parts as $index => $part) {
+                    if ($index > 0) {
+                        $hero_content .= '<span aria-hidden="true">|</span>';
+                    }
+                    $hero_content .= $part;
+                }
+                $hero_content .= '</div>';
+            }
         }
     }
 
