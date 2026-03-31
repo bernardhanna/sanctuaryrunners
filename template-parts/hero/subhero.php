@@ -247,13 +247,14 @@ $section_id = 'subhero-' . uniqid();
 
                     <?php if (!empty($breadcrumbs)): ?>
                         <nav class="mb-4 max-sm:mb-6" aria-label="Breadcrumb navigation" role="navigation">
-                            <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
+                            <ol class="flex min-w-0 flex-nowrap items-center gap-2 overflow-hidden text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
                                 <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
                                     <li class="flex items-center gap-2 <?php echo $breadcrumb['is_current'] ? 'min-w-0 flex-1' : 'shrink-0'; ?>">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
-                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> min-w-0 break-words font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
+                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
                                                 aria-current="page"
+                                                title="<?php echo esc_attr($breadcrumb['title']); ?>"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
                                             </span>
@@ -267,7 +268,7 @@ $section_id = 'subhero-' . uniqid();
                                         <?php endif; ?>
 
                                         <?php if ($index < count($breadcrumbs) - 1): ?>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true" class="shrink-0">
                                                 <path d="M1 9L5 5L1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                         <?php endif; ?>
@@ -408,13 +409,14 @@ $section_id = 'subhero-' . uniqid();
 
                     <?php if (!empty($breadcrumbs)): ?>
                         <nav class="mt-[3rem] sm:mt-0 mb-4 max-sm:mb-6" aria-label="Breadcrumb navigation" role="navigation">
-                            <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
+                            <ol class="flex min-w-0 flex-nowrap items-center gap-2 overflow-hidden text-sm leading-5 <?php echo esc_attr($breadcrumb_text_class); ?>">
                                 <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
                                     <li class="flex items-center gap-2 <?php echo $breadcrumb['is_current'] ? 'min-w-0 flex-1' : 'shrink-0'; ?>">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
-                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> min-w-0 break-words font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
+                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
                                                 aria-current="page"
+                                                title="<?php echo esc_attr($breadcrumb['title']); ?>"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
                                             </span>
@@ -428,7 +430,7 @@ $section_id = 'subhero-' . uniqid();
                                         <?php endif; ?>
 
                                         <?php if ($index < count($breadcrumbs) - 1): ?>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true" class="shrink-0">
                                                 <path d="M1 9L5 5L1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                         <?php endif; ?>
