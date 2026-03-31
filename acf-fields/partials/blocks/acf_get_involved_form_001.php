@@ -61,11 +61,6 @@ $get_involved_form_001
             'default_value' => 'Existing Member Renewal Form',
             'conditional_logic' => [[['field' => 'enable_existing_member_switch', 'operator' => '==', 'value' => 1]]],
         ])
-        ->addTextarea('group_options', [
-            'label' => 'Group Options',
-            'instructions' => 'One group per line (used in group dropdown).',
-            'rows' => 8,
-        ])
         ->addSelect('location_fields_version', [
             'label' => 'Location Fields Version',
             'choices' => [
