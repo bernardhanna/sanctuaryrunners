@@ -9,6 +9,8 @@ $enable_existing_member_switch = (bool) get_sub_field('enable_existing_member_sw
 $existing_member_info_text = (string) get_sub_field('existing_member_info_text');
 $existing_member_trigger_text = trim((string) get_sub_field('existing_member_trigger_text'));
 $renewal_heading = get_sub_field('renewal_heading') ?: 'Renew your membership';
+$marketing_heading = get_sub_field('marketing_heading') ?: 'Keeping in touch with you';
+$marketing_description = get_sub_field('marketing_description') ?: "Stay connected with the Sanctuary Runners community! Join our monthly newsletter for the latest news, upcoming runs, and ways to support our mission of solidarity and friendship. We'll also send occasional invitations to special events and community gatherings. It's important to us that you receive timely and relevant updates. If you'd like to hear from us, please tick the box below.";
 
 $primary_form_name = get_sub_field('primary_form_name') ?: 'Get Involved Form';
 $renewal_form_name = get_sub_field('renewal_form_name') ?: 'Existing Member Renewal Form';
@@ -335,8 +337,8 @@ if ($location_fields_version === 'ireland') {
                         </div>
 
                         <div class="mt-4 w-full">
-                            <h3 style="color: #00628f; font-family: 'Public Sans'; font-size: 18px; font-style: normal; font-weight: bold; line-height: 24px; margin: 0 0 4px 0;">Keeping in touch with you</h3>
-                            <p class="text-sm leading-6 text-slate-700" style="margin: 0 0 6px 0;">Please tick the box if you would like to receive updates from Sanctuary Runners.</p>
+                            <h3 style="color: #00628f; font-family: 'Public Sans'; font-size: 18px; font-style: normal; font-weight: bold; line-height: 24px; margin: 0 0 4px 0;"><?php echo esc_html($marketing_heading); ?></h3>
+                            <p class="text-sm leading-6 text-slate-700" style="margin: 0 0 6px 0;"><?php echo esc_html($marketing_description); ?></p>
                             <div class="flex gap-2 items-center mt-0">
                                 <input class="w-6 h-6 shrink-0" type="checkbox" name="marketing_opt_in" value="yes">
                                 <label class="text-xs">Please tick the box to tell us you are happy to receive emails.</label>

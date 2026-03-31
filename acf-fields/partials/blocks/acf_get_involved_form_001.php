@@ -61,6 +61,15 @@ $get_involved_form_001
             'default_value' => 'Existing Member Renewal Form',
             'conditional_logic' => [[['field' => 'enable_existing_member_switch', 'operator' => '==', 'value' => 1]]],
         ])
+        ->addText('marketing_heading', [
+            'label' => 'Keeping In Touch Heading',
+            'default_value' => 'Keeping in touch with you',
+        ])
+        ->addTextarea('marketing_description', [
+            'label' => 'Keeping In Touch Description',
+            'rows' => 5,
+            'default_value' => "Stay connected with the Sanctuary Runners community! Join our monthly newsletter for the latest news, upcoming runs, and ways to support our mission of solidarity and friendship. We'll also send occasional invitations to special events and community gatherings. It's important to us that you receive timely and relevant updates. If you'd like to hear from us, please tick the box below.",
+        ])
         ->addSelect('location_fields_version', [
             'label' => 'Location Fields Version',
             'choices' => [
