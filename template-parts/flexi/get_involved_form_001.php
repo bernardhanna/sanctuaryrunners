@@ -184,6 +184,20 @@ if ($location_fields_version === 'ireland') {
                     normalizeCountry(value) {
                         return String(value || "").toLowerCase().trim();
                     },
+                    getPhonePrefix() {
+                        const country = this.normalizeCountry(this.selectedCountry);
+                        if (country === "ireland") return "+353";
+                        if (country === "united kingdom" || country === "uk" || country === "great britain") return "+44";
+                        if (country === "australia") return "+61";
+                        return "+";
+                    },
+                    get phonePlaceholder() {
+                        const prefix = this.getPhonePrefix();
+                        if (prefix === "+353") return "+353-86 123 1234";
+                        if (prefix === "+44") return "+44-7700 900123";
+                        if (prefix === "+61") return "+61-412 345 678";
+                        return "+123 456 7890";
+                    },
                     get locationMode() {
                         const country = this.normalizeCountry(this.selectedCountry);
                         if (country === "ireland") return "ireland";
@@ -234,7 +248,7 @@ if ($location_fields_version === 'ireland') {
                             </div>
                             <div class="flex-1 min-w-60">
                                 <label class="text-xs text-slate-900">Phone number</label>
-                                <div class="mt-0"><input class="w-full p-4 border border-slate-600 rounded" type="tel" name="phone" placeholder="+353-86 123 1234"></div>
+                                <div class="mt-0"><input class="w-full p-4 border border-slate-600 rounded" type="tel" name="phone" :placeholder="phonePlaceholder"></div>
                             </div>
                         </div>
 
