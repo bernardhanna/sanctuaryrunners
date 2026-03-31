@@ -163,7 +163,7 @@ if ($has_posts) {
                                                 href="<?php the_permalink(); ?>"
                                                 class="inline-flex justify-center items-center gap-2 px-5 py-2.5 w-full  font-['Public_Sans'] text-[12px] not-italic font-bold leading-[18px] text-white rounded-full md:w-fit whitespace-nowrap bg-[#008BCC] border-0 hover:border-0 hover:bg-[#00628F] transition-colors duration-200"
                                             >
-                                                <?php echo esc_html('Read ' . get_the_title() . '\'s story'); ?>
+                                                <?php echo esc_html('Read story'); ?>
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                                     <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
@@ -204,7 +204,7 @@ if ($has_posts) {
                                                 href="<?php echo esc_url(get_permalink($p->ID)); ?>"
                                                 class="inline-flex justify-center items-center gap-2 px-4 py-2 w-full  font-['Public_Sans'] text-[12px] not-italic font-bold leading-[18px] text-white rounded-full btn-primary whitespace-nowrap"
                                             >
-                                                <?php echo esc_html('Read ' . get_the_title($p->ID) . '\'s story'); ?>
+                                                <?php echo esc_html('Read story'); ?>
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                                     <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
