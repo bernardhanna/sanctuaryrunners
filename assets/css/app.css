@@ -10,6 +10,43 @@
   --Blue-SR-400: #008BCC;
   --Mint-500: #87CEB7;
   --Gradient-Blue-3: linear-gradient(313deg, #059DED 24.08%, #28B2FA 63%);
+  --Blue-SR-500: #00628F;
+  --Gray-700: #00263E;
+  --Gray-600: #475467;
+  --Gray-800: #001929;
+  --Turquoise-50: #CBF3F6;
+  --Color-White: #FFFFFF;
+  --Surface-Page: #F2F4F7;
+  --Surface-Warm: #FEFAE7;
+
+  /* Semantic token aliases for easy white-labeling */
+  --color-brand-primary: var(--Blue-SR-400);
+  --color-brand-primary-hover: var(--Blue-SR-500);
+  --color-brand-primary-soft: var(--Blue-SR-10);
+  --color-brand-secondary: #009DE6;
+  --color-brand-accent: var(--Turquoise-500);
+  --color-brand-accent-soft: var(--Turquoise-50);
+  --color-brand-accent-strong: #75E0E6;
+
+  --color-content-heading: var(--Gray-800);
+  --color-content-body: var(--Gray-700);
+  --color-content-muted: var(--Gray-600);
+  --color-content-inverse: var(--Color-White);
+
+  --color-surface-page: var(--Surface-Page);
+  --color-surface-panel: var(--Color-White);
+  --color-surface-warm: var(--Surface-Warm);
+
+  --color-state-danger: #F68DA7;
+  --color-state-interactive-hover: #F6F6F6;
+  --color-state-interactive-text: #041227;
+  --color-state-focus: var(--Turquoise-500);
+
+  --radius-field: 4px;
+  --radius-card: 16px;
+  --radius-pill: 100px;
+  --size-touch-target: 44px;
+  --size-form-field: 52px;
 }
 
 html {
@@ -169,7 +206,7 @@ body {
   .hamburger {
     font: inherit;
     color: inherit;
-    @apply lg:hidden overflow-visible m-0 p-[15px] cursor-pointer transition-[opacity,filter] duration-150 ease-linear normal-case border-0 bg-transparent;
+    @apply min-[1201px]:hidden overflow-visible m-0 p-[15px] cursor-pointer transition-[opacity,filter] duration-150 ease-linear normal-case border-0 bg-transparent;
   }
 
   .hamburger.is-active:hover,

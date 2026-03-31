@@ -49,10 +49,10 @@ get_header();
 
         $event_meta_parts = [];
         if ($event_when !== '') {
-            $event_meta_parts[] = '<span class="inline-flex items-center gap-2 rounded-full bg-[#EBF9FF] px-3 py-1 text-[14px] font-normal leading-5 text-[var(--Blue-SR-500,#00628F)]"><i class="fa-regular fa-clock text-[14px]" aria-hidden="true"></i><span>' . esc_html($event_when) . '</span></span>';
+            $event_meta_parts[] = '<span class="inline-flex items-center gap-2 rounded-pill bg-brand-primary-soft px-3 py-1 text-[14px] font-normal leading-5 text-brand-primary-hover"><i class="fa-regular fa-clock text-[14px]" aria-hidden="true"></i><span>' . esc_html($event_when) . '</span></span>';
         }
         if ($event_where !== '') {
-            $event_meta_parts[] = '<span class="inline-flex items-center gap-2 rounded-full bg-[#EBF9FF] px-3 py-1 text-[14px] font-normal leading-5 text-[var(--Blue-SR-500,#00628F)]"><i class="fa-solid fa-location-dot text-[14px]" aria-hidden="true"></i><span>' . esc_html($event_where) . '</span></span>';
+            $event_meta_parts[] = '<span class="inline-flex items-center gap-2 rounded-pill bg-brand-primary-soft px-3 py-1 text-[14px] font-normal leading-5 text-brand-primary-hover"><i class="fa-solid fa-location-dot text-[14px]" aria-hidden="true"></i><span>' . esc_html($event_where) . '</span></span>';
         }
 
         $hero_content = '';
@@ -98,7 +98,7 @@ get_header();
             }
 
             if (!empty($post_meta_parts)) {
-                $hero_content .= '<div class="mt-3 flex flex-wrap items-center gap-2 text-[14px] leading-5 text-[var(--Gray-700,#00263E)]">';
+                $hero_content .= '<div class="mt-3 flex flex-wrap items-center gap-2 text-[14px] leading-5 text-content-body">';
                 foreach ($post_meta_parts as $index => $part) {
                     if ($index > 0) {
                         $hero_content .= '<span aria-hidden="true">|</span>';
@@ -147,8 +147,8 @@ get_header();
     <section class="flex overflow-hidden relative bg-white">
         <div class="px-5 pt-8 pb-16 mx-auto w-full max-w-container lg:pt-12">
             <div class="mx-auto w-full max-w-[860px]">
-                <div class="mb-6 flex flex-wrap items-center gap-3 text-[14px] leading-5 text-[var(--Gray-700,#00263E)]" role="group" aria-label="<?php esc_attr_e('Share this post', 'matrix-starter'); ?>">
-                    <span class="font-sans font-semibold text-[var(--Blue-SR-500,#00628F)]"><?php esc_html_e('Share', 'matrix-starter'); ?></span>
+                <div class="mb-6 flex flex-wrap items-center gap-3 text-[14px] leading-5 text-content-body" role="group" aria-label="<?php esc_attr_e('Share this post', 'matrix-starter'); ?>">
+                    <span class="font-sans font-semibold text-brand-primary-hover"><?php esc_html_e('Share', 'matrix-starter'); ?></span>
                     <a href="<?php echo esc_url($share_facebook); ?>" class="btn w-fit hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="<?php esc_attr_e('Share on Facebook', 'matrix-starter'); ?>" target="_blank" rel="noopener">
                         <svg class="object-contain w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M22 12.06C22 6.48 17.52 2 11.94 2 6.36 2 1.88 6.48 1.88 12.06c0 4.99 3.65 9.13 8.43 9.94v-7.03H7.93v-2.91h2.38V9.41c0-2.35 1.4-3.65 3.55-3.65 1.03 0 2.1.18 2.1.18v2.3h-1.18c-1.16 0-1.52.72-1.52 1.46v1.77h2.58l-.41 2.91h-2.17V22c4.78-.81 8.43-4.95 8.43-9.94Z"/>
@@ -171,7 +171,7 @@ get_header();
                     </a>
                 </div>
 
-                <article class="wp_editor prose prose-lg max-w-none prose-headings:font-sans prose-headings:text-[var(--Blue-SR-500,#00628F)] prose-p:font-sans prose-p:text-[16px] prose-p:leading-[22px] prose-p:text-[var(--Gray-700,#00263E)] prose-a:text-[var(--Blue-SR-500,#00628F)]">
+                <article class="wp_editor prose prose-lg max-w-none prose-headings:font-sans prose-headings:text-brand-primary-hover prose-p:font-sans prose-p:text-[16px] prose-p:leading-[22px] prose-p:text-content-body prose-a:text-brand-primary-hover">
                     <?php the_content(); ?>
                 </article>
 
@@ -181,7 +181,7 @@ get_header();
                             href="<?php echo esc_url($event_registration_link['url']); ?>"
                             target="<?php echo esc_attr($event_registration_link['target'] ?? '_blank'); ?>"
                             rel="<?php echo esc_attr(($event_registration_link['target'] ?? '_blank') === '_blank' ? 'noopener' : ''); ?>"
-                            class="inline-flex h-[52px] items-center justify-center gap-2 rounded-full bg-[#008BCC] px-6 py-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white transition-colors duration-200 hover:bg-[#00628F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C959B] focus-visible:ring-offset-2"
+                            class="inline-flex h-[52px] items-center justify-center gap-2 rounded-pill bg-brand-primary px-6 py-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white transition-colors duration-200 hover:bg-brand-primary-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
                         >
                             <?php echo esc_html($event_registration_label); ?>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -191,8 +191,8 @@ get_header();
                     </div>
                 <?php endif; ?>
 
-                <div class="mt-8 pt-6 border-t border-[var(--Gray-200,#D0D5DD)] flex flex-wrap items-center gap-3 text-[14px] leading-5 text-[var(--Gray-700,#00263E)]" role="group" aria-label="<?php esc_attr_e('Share this post', 'matrix-starter'); ?>">
-                    <span class="font-sans font-semibold text-[var(--Blue-SR-500,#00628F)]"><?php esc_html_e('Share', 'matrix-starter'); ?></span>
+                <div class="mt-8 pt-6 border-t border-[var(--Gray-200,#D0D5DD)] flex flex-wrap items-center gap-3 text-[14px] leading-5 text-content-body" role="group" aria-label="<?php esc_attr_e('Share this post', 'matrix-starter'); ?>">
+                    <span class="font-sans font-semibold text-brand-primary-hover"><?php esc_html_e('Share', 'matrix-starter'); ?></span>
                     <a href="<?php echo esc_url($share_facebook); ?>" class="btn w-fit hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="<?php esc_attr_e('Share on Facebook', 'matrix-starter'); ?>" target="_blank" rel="noopener">
                         <svg class="object-contain w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M22 12.06C22 6.48 17.52 2 11.94 2 6.36 2 1.88 6.48 1.88 12.06c0 4.99 3.65 9.13 8.43 9.94v-7.03H7.93v-2.91h2.38V9.41c0-2.35 1.4-3.65 3.55-3.65 1.03 0 2.1.18 2.1.18v2.3h-1.18c-1.16 0-1.52.72-1.52 1.46v1.77h2.58l-.41 2.91h-2.17V22c4.78-.81 8.43-4.95 8.43-9.94Z"/>
@@ -226,7 +226,7 @@ get_header();
 <?php endwhile; else : ?>
     <section class="py-16">
         <div class="px-5 mx-auto w-full text-center max-w-container">
-            <p class="font-sans text-[16px] text-[var(--Gray-700,#00263E)]">No content found.</p>
+            <p class="font-sans text-[16px] text-content-body">No content found.</p>
         </div>
     </section>
 <?php endif; ?>

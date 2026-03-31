@@ -347,7 +347,7 @@ if ($location_fields_version === 'ireland') {
 
                         <div class="mt-4"><div class="cf-turnstile"></div></div>
 
-                        <button class="mt-4 inline-flex gap-2 justify-center items-center px-6 py-3 text-sm font-bold text-white rounded-[100px] w-full border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn-primary" type="submit">
+                        <button class="mt-4 inline-flex gap-2 justify-center items-center px-6 py-3 text-sm font-bold text-white rounded-pill w-full btn-primary" type="submit">
                             <span class="self-stretch my-auto">Submit</span>
                         </button>
                     </form>
@@ -355,7 +355,7 @@ if ($location_fields_version === 'ireland') {
 
                 <?php if ($enable_existing_member_switch) : ?>
                     <div x-show="formView === 'renewal'" x-cloak>
-                        <button type="button" class="mb-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#00628F] transition-colors duration-200 hover:bg-[#CBF3F6]" @click="formView = 'main'">Back to main form</button>
+                        <button type="button" class="mb-4 inline-flex items-center gap-2 rounded-pill bg-white px-4 py-2 text-sm font-bold text-brand-primary-hover transition-colors duration-200 hover:bg-brand-accent-soft a11y-focus" @click="formView = 'main'">Back to main form</button>
                         <h3 class="mb-4 text-2xl font-bold leading-8 text-sky-800"><?php echo esc_html($renewal_heading); ?></h3>
 
                         <form class="w-full" role="form" novalidate aria-labelledby="form-heading" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" data-theme-form="<?php echo esc_attr(get_row_index()); ?>">
@@ -448,7 +448,7 @@ if ($location_fields_version === 'ireland') {
                                 </label>
                             </div>
                             <div class="mt-4"><div class="cf-turnstile"></div></div>
-                            <button class="mt-4 inline-flex gap-2 justify-center items-center px-6 py-3 text-sm font-bold text-white rounded-[100px] w-full border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn-primary" type="submit">
+                            <button class="mt-4 inline-flex gap-2 justify-center items-center px-6 py-3 text-sm font-bold text-white rounded-pill w-full btn-primary" type="submit">
                                 <span class="self-stretch my-auto">Submit renewal</span>
                             </button>
                         </form>

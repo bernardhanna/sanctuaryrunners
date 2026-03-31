@@ -68,11 +68,11 @@ if ($has_posts) {
                 <a
                     href="<?php echo esc_url($read_all_link['url']); ?>"
                     target="<?php echo esc_attr($read_all_link['target'] ?: '_self'); ?>"
-                    class="hidden min-[1085px]:inline-flex h-[42px] justify-center items-center gap-2 py-4 pl-6 pr-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] rounded-full bg-white hover:bg-[var(--Turquoise-50,#CBF3F6)] active:bg-[var(--Turquoise-100,#75E0E6)] focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-white transition-colors duration-200"
+                    class="hidden min-[1085px]:inline-flex h-[42px] justify-center items-center gap-2 py-4 pl-6 pr-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-brand-primary-hover rounded-pill bg-white hover:bg-brand-accent-soft active:bg-brand-accent-strong focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-brand-accent focus-visible:bg-white transition-colors duration-200"
                 >
                     <?php echo esc_html($read_all_link['title']); ?>
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                        <path d="M1 5.66667H10.3333M10.3333 5.66667L5.66667 1M10.3333 5.66667L5.66667 10.3333" stroke="#00628F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M1 5.66667H10.3333M10.3333 5.66667L5.66667 1M10.3333 5.66667L5.66667 10.3333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </a>
             <?php endif; ?>
@@ -161,7 +161,7 @@ if ($has_posts) {
                                             </p>
                                             <a
                                                 href="<?php the_permalink(); ?>"
-                                                class="inline-flex justify-center items-center gap-2 px-5 py-2.5 w-full  font-['Public_Sans'] text-[12px] not-italic font-bold leading-[18px] text-white rounded-full md:w-fit whitespace-nowrap bg-[#008BCC] border-0 hover:border-0 hover:bg-[#00628F] transition-colors duration-200"
+                                                class="inline-flex justify-center items-center gap-2 px-5 py-2.5 w-full font-['Public_Sans'] text-[12px] not-italic font-bold leading-[18px] text-white rounded-pill md:w-fit whitespace-nowrap bg-brand-primary border-0 hover:border-0 hover:bg-brand-primary-hover transition-colors duration-200"
                                             >
                                                 <?php echo esc_html('Read story'); ?>
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -234,11 +234,11 @@ if ($has_posts) {
                     <a
                         href="<?php echo esc_url($read_all_link['url']); ?>"
                         target="<?php echo esc_attr($read_all_link['target'] ?: '_self'); ?>"
-                        class="inline-flex h-[52px] items-center justify-center gap-2 rounded-full bg-white px-6 text-[16px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] transition-colors duration-200 hover:bg-[var(--Turquoise-50,#CBF3F6)] active:bg-[var(--Turquoise-100,#75E0E6)] focus:outline-none focus-visible:ring-0"
+                        class="inline-flex h-[52px] items-center justify-center gap-2 rounded-pill bg-white px-6 text-[16px] font-bold leading-5 text-brand-primary-hover transition-colors duration-200 hover:bg-brand-accent-soft active:bg-brand-accent-strong focus:outline-none focus-visible:ring-0"
                     >
                         <?php echo esc_html($read_all_link['title']); ?>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#00628F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
                 <?php endif; ?>
@@ -343,7 +343,7 @@ if ($has_posts) {
         width: 14px;
         height: 14px;
         padding: 0;
-        border: 2px solid #00628F;
+        border: 2px solid var(--color-brand-primary-hover, #00628F);
         border-radius: 9999px;
         background: transparent;
         cursor: pointer;
@@ -351,7 +351,7 @@ if ($has_posts) {
         transition: background 0.2s;
     }
     #<?php echo esc_attr($section_id); ?> .stories-mobile-dots button.is-active {
-        background: #00628F;
+        background: var(--color-brand-primary-hover, #00628F);
     }
 </style>
 

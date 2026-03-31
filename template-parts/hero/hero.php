@@ -73,23 +73,23 @@ if (!in_array($media_presentation, $allowed_media_presentations, true)) {
 $is_full_height_right_media = $media_type === 'image' && !empty($media_image) && $media_presentation === 'full_height_right_svg';
 
 $hero_grid_classes = $is_full_height_right_media
-    ? 'relative grid grid-cols-1 gap-4 w-full max-lg:px-5 py-[2rem] lg:block lg:min-h-[500px] lg:py-0'
-    : 'grid grid-cols-1 gap-4 w-full max-xl:px-5 py-[2rem] lg:grid-cols-[35%_70%] lg:py-0';
+    ? 'relative grid grid-cols-1 gap-4 w-full max-[1200px]:px-5 py-[2rem] min-[1201px]:block min-[1201px]:min-h-[500px] min-[1201px]:py-0'
+    : 'grid grid-cols-1 gap-4 w-full max-xl:px-5 py-[2rem] min-[1201px]:grid-cols-[35%_70%] min-[1201px]:py-0';
 
 $header_classes = $is_full_height_right_media
-    ? 'relative z-[2] flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 lg:order-1 lg:max-w-[420px]'
-    : 'flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 lg:order-1';
+    ? 'relative z-[2] flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 min-[1201px]:order-1 min-[1201px]:max-w-[420px]'
+    : 'flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 min-[1201px]:order-1';
 
 $section_media_wrap_classes = $is_full_height_right_media
-    ? 'pointer-events-none absolute inset-y-0 right-0 z-[1] hidden lg:flex lg:w-[68%] lg:items-stretch lg:justify-end'
+    ? 'pointer-events-none absolute inset-y-0 right-0 z-[1] hidden min-[1201px]:flex min-[1201px]:w-[68%] min-[1201px]:items-stretch min-[1201px]:justify-end'
     : '';
 $section_media_figure_classes = $is_full_height_right_media
     ? 'h-full w-full overflow-hidden'
     : '';
 
 $media_wrap_classes = $is_full_height_right_media
-    ? 'flex order-1 justify-end min-w-0 lg:hidden'
-    : 'flex order-1 justify-end min-w-0 lg:order-2';
+    ? 'flex order-1 justify-end min-w-0 min-[1201px]:hidden'
+    : 'flex order-1 justify-end min-w-0 min-[1201px]:order-2';
 
 $media_figure_classes = $is_full_height_right_media
     ? 'relative flex w-full min-h-[260px] items-stretch justify-end overflow-hidden'
@@ -134,7 +134,7 @@ $hero_iframe_title = $title_inline !== ''
 
 <section
     id="<?php echo esc_attr($section_id); ?>"
-    class="overflow-hidden relative min-h-[500px] w-full flex items-center lg:pb-[50px]"
+    class="overflow-hidden relative min-h-[500px] w-full flex items-center min-[1201px]:pb-[50px]"
     style="background-color: <?php echo esc_attr($bg_color); ?>;"
     role="banner"
     aria-labelledby="<?php echo esc_attr($title_id); ?>"
@@ -177,13 +177,13 @@ $hero_iframe_title = $title_inline !== ''
                 </div>
 
                 <?php if (!empty($description)): ?>
-                    <div id="<?php echo esc_attr($desc_id); ?>" class="flex flex-col gap-[10px] text-left lg:max-w-[303px] text-[18px] leading-6 text-white">
+                    <div id="<?php echo esc_attr($desc_id); ?>" class="flex flex-col gap-[10px] text-left min-[1201px]:max-w-[303px] text-[18px] leading-6 text-white">
                         <?php echo wp_kses_post($description); ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if ($primary_cta || $secondary_cta): ?>
-                    <div class="flex gap-6 pt-0 md:pt-4 w-full lg:max-w-[400px]  md:justify-start">
+                    <div class="flex gap-6 pt-0 md:pt-4 w-full min-[1201px]:max-w-[400px] md:justify-start">
 
                         <?php if ($primary_cta): ?>
                             <a
