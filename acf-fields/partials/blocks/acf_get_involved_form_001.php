@@ -2,15 +2,15 @@
 
 use StoutLogic\AcfBuilder\FieldsBuilder;
 
-$contact_form_001 = new FieldsBuilder('contact_form_001', [
-    'label' => 'Contact Form',
+$get_involved_form_001 = new FieldsBuilder('get_involved_form_001', [
+    'label' => 'Get Involved Form',
 ]);
 
-$contact_form_001
+$get_involved_form_001
     ->addTab('Content')
         ->addText('heading', [
-            'label' => 'Form Heading',
-            'default_value' => 'Get in touch'
+            'label' => 'Heading',
+            'default_value' => 'Join Sanctuary Runners',
         ])
         ->addSelect('heading_tag', [
             'label' => 'Heading Tag',
@@ -21,144 +21,131 @@ $contact_form_001
                 'h4' => 'H4',
                 'h5' => 'H5',
                 'h6' => 'H6',
-                'p' => 'Paragraph',
-                'span' => 'Span'
             ],
             'default_value' => 'h2',
-        ])
-        ->addTextarea('description', [
-            'label' => 'Form Description',
-            'default_value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
-            'rows' => 3
-        ])
-        ->addWysiwyg('form_markup', [
-            'label' => 'Form HTML (paste static form here)',
-            'instructions' => 'Paste the static HTML form code here.',
-            'toolbar' => 'basic',
-            'media_upload' => 0,
-            'wrapper' => ['class' => 'wp_editor'],
-        ])
-        ->addTrueFalse('enable_existing_member_form_switch', [
-            'label' => 'Enable Existing Member Form Switch',
-            'instructions' => 'Allow clicking a link in the main form to switch to a different renewal form.',
-            'ui' => 1,
-            'default_value' => 0,
-        ])
-        ->addText('existing_member_trigger_text', [
-            'label' => 'Trigger Link Text',
-            'instructions' => 'Fallback text to find the link in the main form (e.g. "this form here"). You can also add data-renew-form-trigger to the link in your form HTML.',
-            'default_value' => 'this form here',
-            'conditional_logic' => [[['field' => 'enable_existing_member_form_switch', 'operator' => '==', 'value' => 1]]],
-        ])
-        ->addText('existing_member_form_name', [
-            'label' => 'Existing Member Internal Form Name',
-            'instructions' => 'Used in saved entries and email subjects for the renewal form.',
-            'default_value' => 'Existing Member Renewal Form',
-            'conditional_logic' => [[['field' => 'enable_existing_member_form_switch', 'operator' => '==', 'value' => 1]]],
-        ])
-        ->addWysiwyg('existing_member_form_markup', [
-            'label' => 'Existing Member Form HTML',
-            'instructions' => 'Paste the renewal form HTML shown when users click the existing member link.',
-            'toolbar' => 'basic',
-            'media_upload' => 0,
-            'wrapper' => ['class' => 'wp_editor'],
-            'conditional_logic' => [[['field' => 'enable_existing_member_form_switch', 'operator' => '==', 'value' => 1]]],
-        ])
-        ->addSelect('location_fields_version', [
-            'label' => 'Location Fields Version',
-            'instructions' => 'Choose how City/Country style fields are transformed for this form block.',
-            'choices' => [
-                'none' => 'No transform',
-                'ireland' => 'Ireland (County + Eircode + Country)',
-                'uk' => 'UK (County + Postcode + Country)',
-                'australia' => 'Australia (State/Territory + Postcode + Country)',
-                'global' => 'Global (City + Country)',
-            ],
-            'default_value' => 'none',
             'ui' => 1,
             'return_format' => 'value',
         ])
-        ->addTextarea('location_country_options', [
+        ->addTextarea('description', [
+            'label' => 'Description',
+            'rows' => 3,
+            'default_value' => 'Fill in the form below to join your nearest Sanctuary Runners group.',
+        ])
+        ->addTrueFalse('enable_existing_member_switch', [
+            'label' => 'Enable Existing Member Renewal Switch',
+            'ui' => 1,
+            'default_value' => 1,
+        ])
+        ->addText('existing_member_info_text', [
+            'label' => 'Existing Member Info Text',
+            'default_value' => 'For existing members complete this form here to renew your membership.',
+            'conditional_logic' => [[['field' => 'enable_existing_member_switch', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addText('existing_member_trigger_text', [
+            'label' => 'Existing Member Trigger Text',
+            'instructions' => 'The clickable text that opens the renewal form.',
+            'default_value' => 'this form here',
+            'conditional_logic' => [[['field' => 'enable_existing_member_switch', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addText('renewal_heading', [
+            'label' => 'Renewal Form Heading',
+            'default_value' => 'Renew your membership',
+            'conditional_logic' => [[['field' => 'enable_existing_member_switch', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addText('primary_form_name', [
+            'label' => 'Primary Form Name',
+            'default_value' => 'Get Involved Form',
+        ])
+        ->addText('renewal_form_name', [
+            'label' => 'Renewal Form Name',
+            'default_value' => 'Existing Member Renewal Form',
+            'conditional_logic' => [[['field' => 'enable_existing_member_switch', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addSelect('location_fields_version', [
+            'label' => 'Location Fields Version',
+            'choices' => [
+                'ireland' => 'Ireland (County + Eircode + Country)',
+                'uk' => 'UK (County + Postcode + Country)',
+                'australia' => 'Australia (State/Territory + Postcode + Country)',
+                'global' => 'Global (City + Country only)',
+            ],
+            'default_value' => 'ireland',
+            'ui' => 1,
+            'return_format' => 'value',
+        ])
+        ->addTextarea('country_options', [
             'label' => 'Country Dropdown Options',
-            'instructions' => 'Optional. One country per line (or comma separated). Used for Country select in UK/Australia/Global/Ireland modes.',
+            'instructions' => 'One country per line (or comma separated).',
             'rows' => 6,
             'default_value' => "Ireland\nUnited Kingdom\nAustralia\nUnited States\nCanada\nNew Zealand\nOther",
         ])
         ->addUrl('privacy_policy_url', [
             'label' => 'Privacy Policy URL',
-            'default_value' => '#'
+            'default_value' => '#',
         ])
         ->addUrl('terms_conditions_url', [
-            'label' => 'Terms and Conditions URL',
-            'default_value' => '#'
+            'label' => 'Terms & Conditions URL',
+            'default_value' => '#',
         ])
 
     ->addTab('Email')
-        ->addText('form_name', [
-            'label' => 'Internal Form Name',
-            'instructions' => 'Saved with each entry & used in email subject.',
-            'default_value' => 'Contact Form'
-        ])
         ->addText('from_name', [
             'label' => 'From Name (override)',
-            'instructions' => 'Optional. Leave empty to use Theme Options.',
         ])
         ->addEmail('from_email', [
             'label' => 'From Email (override)',
-            'instructions' => 'Use an address on your domain. Leave empty to use Theme Options.',
         ])
         ->addText('email_to', [
             'label' => 'Send To',
-            'instructions' => 'One or more addresses. Separate with commas or semicolons.',
-            'placeholder' => 'name@domain.ie, other@domain.ie',
             'default_value' => get_option('admin_email'),
+            'instructions' => 'One or more addresses. Separate with commas or semicolons.',
         ])
         ->addText('email_bcc', [
             'label' => 'BCC',
             'instructions' => 'Optional. Separate multiple with commas or semicolons.',
-            'placeholder' => 'first@domain.ie; second@domain.ie',
         ])
         ->addText('email_subject', [
             'label' => 'Subject',
-            'default_value' => 'Website contact form enquiry'
+            'default_value' => 'New get involved form enquiry',
         ])
         ->addTrueFalse('save_entries_to_db', [
             'label' => 'Save to DB?',
             'ui' => 1,
-            'default_value' => 1
+            'default_value' => 1,
         ])
 
     ->addTab('Autoresponder')
         ->addTrueFalse('enable_autoresponder', [
             'label' => 'Enable?',
-            'ui' => 1
+            'ui' => 1,
+            'default_value' => 0,
         ])
         ->addText('autoresponder_subject', [
             'label' => 'Autoresponder Subject',
+            'default_value' => 'Thank you for your message',
             'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
-            'default_value' => 'Thank you for your message'
         ])
         ->addWysiwyg('autoresponder_message', [
             'label' => 'Autoresponder Message',
+            'toolbar' => 'basic',
+            'media_upload' => 0,
+            'default_value' => '<p>Thank you for contacting us. We will get back to you as soon as possible.</p>',
             'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
-            'wrapper' => ['class' => 'wp_editor'],
-            'default_value' => '<p>Thank you for contacting us. We will get back to you as soon as possible.</p>'
         ])
 
     ->addTab('Design')
         ->addColorPicker('background_color', [
             'label' => 'Section Background Color',
-            'default_value' => '#ffffff'
+            'default_value' => '#ffffff',
         ])
         ->addColorPicker('form_background_color', [
             'label' => 'Form Background Color',
-            'default_value' => '#fef3c7'
+            'default_value' => '#fef3c7',
         ])
 
     ->addTab('Layout')
         ->addRepeater('padding_settings', [
             'label' => 'Padding Settings',
-            'instructions' => 'Customize padding for different screen sizes.',
             'button_label' => 'Add Padding',
         ])
             ->addSelect('screen_size', [
@@ -191,4 +178,4 @@ $contact_form_001
             ])
         ->endRepeater();
 
-return $contact_form_001;
+return $get_involved_form_001;
