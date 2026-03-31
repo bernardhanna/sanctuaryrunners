@@ -24,21 +24,39 @@ if (have_rows('padding_settings')) {
 
 // Prepare FAQ items based on source
 $faq_items = [];
+$read_more_min_chars = 140;
+$should_show_read_more = static function ($answer, $enabled = true) use ($read_more_min_chars) {
+    if (!$enabled) {
+        return false;
+    }
+
+    $plain_text = trim((string) wp_strip_all_tags((string) $answer));
+    if ($plain_text === '') {
+        return false;
+    }
+
+    $text_length = function_exists('mb_strlen') ? mb_strlen($plain_text) : strlen($plain_text);
+    return $text_length > $read_more_min_chars;
+};
+
 if ($faq_source === 'manual' && have_rows('manual_faqs')) {
     while (have_rows('manual_faqs')) {
         the_row();
+        $answer = get_sub_field('answer');
+        $manual_show_read_more = (bool) get_sub_field('show_read_more');
         $faq_items[] = [
             'question' => get_sub_field('question'),
-            'answer' => get_sub_field('answer'),
-            'show_read_more' => get_sub_field('show_read_more')
+            'answer' => $answer,
+            'show_read_more' => $should_show_read_more($answer, $manual_show_read_more)
         ];
     }
 } elseif ($faq_source === 'posts' && $selected_faqs) {
     foreach ($selected_faqs as $faq_post) {
+        $answer = apply_filters('the_content', get_post_field('post_content', $faq_post->ID));
         $faq_items[] = [
             'question' => get_the_title($faq_post->ID),
-            'answer' => apply_filters('the_content', get_post_field('post_content', $faq_post->ID)),
-            'show_read_more' => true
+            'answer' => $answer,
+            'show_read_more' => $should_show_read_more($answer, true)
         ];
     }
 } elseif ($faq_source === 'all') {
@@ -48,10 +66,11 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
         'post_status' => 'publish'
     ]);
     foreach ($faq_posts as $faq_post) {
+        $answer = apply_filters('the_content', $faq_post->post_content);
         $faq_items[] = [
             'question' => get_the_title($faq_post->ID),
-            'answer' => apply_filters('the_content', $faq_post->post_content),
-            'show_read_more' => true
+            'answer' => $answer,
+            'show_read_more' => $should_show_read_more($answer, true)
         ];
     }
 }
