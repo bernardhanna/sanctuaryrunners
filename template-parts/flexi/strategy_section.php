@@ -89,7 +89,7 @@ if (have_rows('padding_settings')) {
                     <header>
                         <<?php echo esc_attr($heading_tag); ?>
                             id="<?php echo esc_attr($section_id); ?>-heading"
-                            class="max-md:max-w-full font-sans text-[30px] font-bold not-italic leading-[38px] text-[var(--Blue-SR-500,#00628F)]"
+                            class="max-md:max-w-full font-sans text-[30px] font-bold not-italic leading-[38px] text-brand-primary-hover"
                         >
                             <?php echo esc_html($heading); ?>
                         </<?php echo esc_attr($heading_tag); ?>>
@@ -97,7 +97,7 @@ if (have_rows('padding_settings')) {
                 <?php endif; ?>
 
                 <?php if (!empty($content)): ?>
-                    <div class="wp_editor mt-4 max-w-[488px] font-sans text-[16px] font-normal not-italic leading-[22px] text-[var(--Gray-700,#00263E)] max-md:max-w-full [&_p]:font-sans [&_p]:text-[16px] [&_p]:font-normal [&_p]:not-italic [&_p]:leading-[22px] [&_p]:text-[var(--Gray-700,#00263E)]">
+                    <div class="wp_editor mt-4 max-w-[488px] font-sans text-[16px] font-normal not-italic leading-[22px] text-content-body max-md:max-w-full [&_p]:font-sans [&_p]:text-[16px] [&_p]:font-normal [&_p]:not-italic [&_p]:leading-[22px] [&_p]:text-content-body">
                         <?php echo wp_kses_post($content); ?>
                     </div>
                 <?php endif; ?>
@@ -106,7 +106,7 @@ if (have_rows('padding_settings')) {
                         <div class="flex pt-4 mt-4 w-full">
                             <a
                                 href="<?php echo esc_url($button['url']); ?>"
-                                class="inline-flex gap-2 justify-center items-center w-full md:w-fit px-6 py-3 text-sm font-bold text-white leading-5 whitespace-nowrap rounded-[100px] border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn-primary"
+                                class="inline-flex gap-2 justify-center items-center w-full md:w-fit px-6 py-3 text-sm font-bold text-white leading-5 whitespace-nowrap rounded-pill btn-primary"
                             >
                                 <?php echo esc_html($button['title']); ?>
                             </a>

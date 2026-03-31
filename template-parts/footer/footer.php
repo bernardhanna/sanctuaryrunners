@@ -170,7 +170,7 @@ function matrix_social_svg($icon) {
         </div>
 
         <nav class="footer-nav-block flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-1">
-          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
+          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-brand-secondary md:font-primary">
             <?php echo esc_html($col1_heading ?: 'About us'); ?>
           </h3>
           <?php
@@ -179,14 +179,14 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-[var(--Base-White,#FFF)] transition-colors duration-200 hover:text-[#75E0E6]">',
+              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-white transition-colors duration-200 hover:text-brand-accent-strong">',
               'link_after'     => '</span>',
           ]);
           ?>
         </nav>
 
         <nav class="footer-nav-block flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-2">
-          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
+          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-brand-secondary md:font-primary">
             <?php echo esc_html($col2_heading ?: 'About us'); ?>
           </h3>
           <?php
@@ -195,14 +195,14 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-[var(--Base-White,#FFF)] transition-colors duration-200 hover:text-[#75E0E6]">',
+              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-white transition-colors duration-200 hover:text-brand-accent-strong">',
               'link_after'     => '</span>',
           ]);
           ?>
         </nav>
 
         <nav class="footer-nav-block flex flex-col gap-4 py-6 border-t border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-3">
-          <h3 id="footer-col-3" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
+          <h3 id="footer-col-3" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-brand-secondary md:font-primary">
             <?php echo esc_html($col3_heading ?: 'Get involved'); ?>
           </h3>
           <?php
@@ -211,7 +211,7 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-[var(--Base-White,#FFF)] transition-colors duration-200 hover:text-[#75E0E6]">',
+              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-white transition-colors duration-200 hover:text-brand-accent-strong">',
               'link_after'     => '</span>',
           ]);
           ?>
@@ -224,13 +224,13 @@ function matrix_social_svg($icon) {
 
   <div style="background-color: <?php echo esc_attr($bottom_bg_color ?: '#F0F9FF'); ?>;">
     <div class="max-w-[1540px] mx-auto px-4 sm:px-8 lg:px-14 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 max-[479px]:flex-col max-[479px]:items-start max-[479px]:w-full max-[479px]:gap-2 font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467]">
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 max-[479px]:flex-col max-[479px]:items-start max-[479px]:w-full max-[479px]:gap-2 font-sans text-[12px] font-normal not-italic leading-[18px] text-content-muted">
         <?php if (!empty($legal_menu_options)) : ?>
           <div class="hidden max-[479px]:block max-[479px]:w-full">
             <label for="copyright-menu-select" class="sr-only">Copyright menu</label>
             <select
               id="copyright-menu-select"
-              class="w-full rounded-full border border-[#D0D5DD] bg-white px-4 py-2 font-sans text-[12px] font-normal leading-[18px] text-[#475467] focus:outline-none focus:ring-2 focus:ring-[#00628F]"
+              class="w-full rounded-pill border border-[#D0D5DD] bg-white px-4 py-2 font-sans text-[12px] font-normal leading-[18px] text-content-muted focus:outline-none focus:ring-2 focus:ring-brand-primary-hover"
               onchange="if (this.value) { window.location.href = this.value; }"
             >
               <option value="">Legal links</option>
@@ -244,7 +244,7 @@ function matrix_social_svg($icon) {
         <?php endif; ?>
 
         <span><?php echo esc_html($copyright_left); ?></span>
-        <span class="text-[#475467] max-[479px]:hidden" aria-hidden="true">|</span>
+        <span class="text-content-muted max-[479px]:hidden" aria-hidden="true">|</span>
 
         <div class="max-[479px]:hidden">
           <?php
@@ -253,20 +253,20 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class' => 'menu-copyright flex flex-wrap items-center gap-x-2 gap-y-1',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467] transition-colors duration-200 hover:text-[var(--Blue-SR-500,#00628F)] hover:underline underline-offset-2">',
-              'link_after' => '</span><span class="px-3 text-[#475467]" aria-hidden="true">|</span>',
+              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-content-muted transition-colors duration-200 hover:text-brand-primary-hover hover:underline underline-offset-2">',
+              'link_after' => '</span><span class="px-3 text-content-muted" aria-hidden="true">|</span>',
           ]);
           ?>
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center gap-1 whitespace-nowrap font-sans text-[12px] font-normal not-italic leading-[18px] text-[#475467]">
+      <div class="flex flex-wrap items-center gap-1 whitespace-nowrap font-sans text-[12px] font-normal not-italic leading-[18px] text-content-muted">
         <span><?php echo esc_html($credit_prefix ?: 'All Rights Reserved - Designed & Developed by'); ?></span>
         <?php if (is_array($credit_link) && !empty($credit_link['url'])) : ?>
           <a
             href="<?php echo esc_url($credit_link['url']); ?>"
             target="<?php echo esc_attr($credit_link['target'] ?? '_self'); ?>"
-            class="font-sans text-[12px] font-normal not-italic leading-[18px] transition-colors duration-200 hover:text-[var(--Blue-SR-500,#00628F)] hover:underline underline-offset-2 btn"
+            class="font-sans text-[12px] font-normal not-italic leading-[18px] transition-colors duration-200 hover:text-brand-primary-hover hover:underline underline-offset-2 btn"
           >
             <?php echo esc_html($credit_link['title'] ?: 'Matrix Internet'); ?>
           </a>

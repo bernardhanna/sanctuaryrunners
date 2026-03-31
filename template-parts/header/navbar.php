@@ -158,7 +158,7 @@ $primary_navigation = Navi::make()->build('primary');
         <?php if (!empty($join_us_button['url']) && !empty($join_us_button['title'])) : ?>
           <a
             href="<?php echo esc_url($join_us_button['url']); ?>"
-            class="inline-flex justify-center items-center w-10 h-10 p-0 rounded-full min-[480px]:w-auto min-[480px]:h-10 min-[480px]:px-4 min-[480px]:gap-2 min-[480px]:rounded-full text-white text-[14px] leading-5 font-bold bg-[linear-gradient(313deg,#059DED_24.08%,#28B2FA_63%)] whitespace-nowrap transition-all duration-200 hover:brightness-95 active:brightness-90 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#1C959B]"
+            class="inline-flex justify-center items-center w-10 h-10 p-0 rounded-pill min-[480px]:w-auto min-[480px]:h-10 min-[480px]:px-4 min-[480px]:gap-2 min-[480px]:rounded-pill text-white text-[14px] leading-5 font-bold bg-[linear-gradient(313deg,#059DED_24.08%,#28B2FA_63%)] whitespace-nowrap transition-all duration-200 hover:brightness-95 active:brightness-90 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-accent"
             aria-label="<?php echo esc_attr($join_us_button['title']); ?>"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -198,7 +198,7 @@ $primary_navigation = Navi::make()->build('primary');
                 @mouseleave="activeDropdown = null"
               <?php endif; ?>
             >
-              <div class="flex items-center py-1 hover:bg-[#75E0E6]">
+              <div class="flex items-center py-1 hover:bg-brand-accent-strong">
                 <a
                   href="<?php echo esc_url($item->url); ?>"
                   class="text-sky-800 hover:text-sky-900   px-3.5 py-2 transition-colors duration-300  <?php echo $item->active ? 'font-semibold' : ''; ?>"
@@ -238,13 +238,13 @@ $primary_navigation = Navi::make()->build('primary');
       <?php endif; ?>
 
       <!-- SEARCH -->
-      <div class="group w-12 h-12 flex items-center justify-center border border-gray-300 rounded-full hover:bg-[var(--Blue-SR-500,#00628F)] hover:shadow-[0_0_24px_0_#C2EDFF] transition-all duration-200">
+      <div class="group w-12 h-12 flex items-center justify-center border border-gray-300 rounded-pill text-brand-primary-hover hover:bg-brand-primary-hover hover:text-white hover:shadow-[0_0_24px_0_#C2EDFF] transition-all duration-200">
         <button type="button" @click="openSearch()" aria-label="Open search dialog" :aria-expanded="searchOpen.toString()" aria-controls="site-search-dialog">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" aria-hidden="true" focusable="false">
             <path
               d="M14 14L11.1 11.1M12.6 7.3A5.3 5.3 0 1 1 2 7.3a5.3 5.3 0 0 1 10.6 0Z"
               class="transition-colors duration-200 group-hover:stroke-white"
-              stroke="#00628F"
+              stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
             />
@@ -258,7 +258,7 @@ $primary_navigation = Navi::make()->build('primary');
         <!-- DONATE -->
         <a
           href="<?php echo esc_url($donate_button['url'] ?? '#'); ?>"
-          class="flex items-center gap-2 px-4 py-3 border border-sky-800 rounded-full transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Turquoise-500,#1C959B)]"
+          class="flex items-center gap-2 px-4 py-3 border border-sky-800 rounded-pill transition-all duration-200 hover:shadow-[0_0_0_4px_var(--color-brand-accent,#1C959B)] a11y-focus"
         >
           <?php if ($donate_icon) : ?>
             <img src="<?php echo esc_url($donate_icon['url']); ?>" class="w-4" alt="" />
@@ -270,7 +270,7 @@ $primary_navigation = Navi::make()->build('primary');
         <?php if ($contact_button) : ?>
           <a
             href="<?php echo esc_url($contact_button['url']); ?>"
-            class="flex items-center gap-2 px-4 py-3 text-white font-bold rounded-[100px] bg-[linear-gradient(313deg,#059DED_24.08%,#28B2FA_63%)] transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Mint-500,#87CEB7)]"
+            class="flex items-center gap-2 px-4 py-3 text-white font-bold rounded-pill bg-[linear-gradient(313deg,#059DED_24.08%,#28B2FA_63%)] transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Mint-500,#87CEB7)] a11y-focus"
           >
             <span><?php echo esc_html($contact_button['title']); ?></span>
           </a>

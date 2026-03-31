@@ -171,11 +171,11 @@ if (is_array($breadcrumbs_arg) && !empty($breadcrumbs_arg)) {
 }
 
 // Text color classes
-$text_color_class         = $use_white_text ? 'text-white' : 'text-[#00263E]';
+$text_color_class         = $use_white_text ? 'text-white' : 'text-content-body';
 $breadcrumb_text_class    = $use_white_text ? 'text-white' : 'text-gray-500';
-$breadcrumb_current_class = $use_white_text ? 'text-white' : 'text-[#00263E]';
+$breadcrumb_current_class = $use_white_text ? 'text-white' : 'text-content-body';
 $heading_color_class      = $use_white_text ? 'text-white' : 'text-sky-800';
-$content_color_class      = $is_dark_background ? 'text-white [&_p]:!text-white' : 'text-[#00263E]';
+$content_color_class      = $is_dark_background ? 'text-white [&_p]:!text-white' : 'text-content-body';
 
 // Padding classes
 $padding_classes = [];
@@ -307,7 +307,7 @@ $section_id = 'subhero-' . uniqid();
                                 <a
                                     href="<?php echo esc_url($primary_cta['url']); ?>"
                                     target="<?php echo esc_attr($primary_cta['target'] ?? '_self'); ?>"
-                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#009DEA] px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white  hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white  focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200" 
+                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-pill bg-brand-secondary px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white hover:bg-brand-primary-hover hover:text-white focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-brand-accent focus-visible:bg-brand-primary-hover focus-visible:text-white transition-colors duration-200" 
                                     aria-label="<?php echo esc_attr($primary_cta['title']); ?>"
                                 >
                                     <?php if ($primary_cta_icon): ?>
@@ -329,7 +329,7 @@ $section_id = 'subhero-' . uniqid();
                                 <a
                                     href="<?php echo esc_url($secondary_cta['url']); ?>"
                                     target="<?php echo esc_attr($secondary_cta['target'] ?? '_self'); ?>"
-                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full border border-[#009DEA] px-6 py-4 text-[0.875rem] leading-5 font-bold text-[#009DEA] transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
+                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-pill border border-brand-secondary px-6 py-4 text-[0.875rem] leading-5 font-bold text-brand-secondary transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
                                     aria-label="<?php echo esc_attr($secondary_cta['title']); ?>"
                                 >
                                     <?php if ($secondary_cta_icon): ?>
@@ -469,7 +469,7 @@ $section_id = 'subhero-' . uniqid();
                                 <a
                                     href="<?php echo esc_url($primary_cta['url']); ?>"
                                     target="<?php echo esc_attr($primary_cta['target'] ?? '_self'); ?>"
-                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#009DEA] px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
+                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-pill bg-brand-secondary px-6 py-4 text-center text-[0.875rem] leading-5 font-bold text-white transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
                                     aria-label="<?php echo esc_attr($primary_cta['title']); ?>"
                                 >
                                     <?php if ($primary_cta_icon): ?>
@@ -491,7 +491,7 @@ $section_id = 'subhero-' . uniqid();
                                 <a
                                     href="<?php echo esc_url($secondary_cta['url']); ?>"
                                     target="<?php echo esc_attr($secondary_cta['target'] ?? '_self'); ?>"
-                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-full border border-[#009DEA] px-6 py-4 text-[0.875rem] leading-5 font-bold text-[#009DEA] transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
+                                    class="hero-cta inline-flex w-fit items-center justify-center gap-2 rounded-pill border border-brand-secondary px-6 py-4 text-[0.875rem] leading-5 font-bold text-brand-secondary transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-700 whitespace-nowrap"
                                     aria-label="<?php echo esc_attr($secondary_cta['title']); ?>"
                                 >
                                     <?php if ($secondary_cta_icon): ?>

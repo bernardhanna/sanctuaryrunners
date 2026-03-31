@@ -38,17 +38,17 @@ $button_target = !empty($button_link_data['target']) ? $button_link_data['target
       </div>
 
       <article class="flex flex-col">
-        <h1 class="text-[40px] font-bold leading-[1.15] text-[var(--Blue-SR-500,#00628F)] md:text-[56px]">
+        <h1 class="text-[40px] font-bold leading-[1.15] text-brand-primary-hover md:text-[56px]">
           <?php echo esc_html($title); ?>
         </h1>
-        <div class="mt-4 text-[18px] leading-6 text-[var(--Gray-700,#00263E)]">
+        <div class="mt-4 text-[18px] leading-6 text-content-body">
           <?php echo wp_kses_post($text); ?>
         </div>
         <div class="mt-8">
           <a
             href="<?php echo esc_url($button_url); ?>"
             target="<?php echo esc_attr($button_target); ?>"
-            class="inline-flex gap-2 justify-center items-center px-6 py-3 text-sm font-bold text-white rounded-[100px] w-full md:w-fit border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn-primary"
+            class="inline-flex w-full justify-center items-center gap-2 px-6 py-3 text-sm font-bold text-white rounded-pill md:w-fit btn-primary"
           >
             <?php echo esc_html($button_title); ?>
           </a>

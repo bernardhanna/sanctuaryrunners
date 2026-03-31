@@ -169,6 +169,32 @@ Ensure you have the following installed on your system:
 * **log1x/modern-acf-options** for modern ACF options pages
 * **log1x/modern-login** for a modern WordPress login screen
 
+### Theme Tokens (for fast site duplication)
+
+To re-skin this theme quickly for a new client/site, update semantic tokens in `tailwind.config.js`:
+
+- `THEME_TOKENS.brand` for primary/secondary/accent brand colors
+- `THEME_TOKENS.text` for heading/body/muted text colors
+- `THEME_TOKENS.surface` for page/panel/background colors
+- `THEME_TOKENS.shape` for field/card/pill radii
+- `THEME_TOKENS.size` for touch target and form field heights
+
+These tokens are additive and mapped to existing values by default, so current styles stay visually consistent.
+
+#### New semantic utility examples
+
+- `bg-brand-primary`, `hover:bg-brand-primary-hover`
+- `text-content-heading`, `text-content-muted`
+- `bg-surface-page`, `bg-surface-warm`
+- `rounded-field`, `rounded-card`, `rounded-pill`
+- `min-h-touch`, `min-h-field`
+
+#### Accessibility helpers
+
+- `a11y-focus` for consistent `:focus-visible` ring
+- `tap-target` for minimum 44px interactive hit area
+- `hocus:` variant to share hover + keyboard focus styles (example: `hocus:bg-brand-primary-hover`)
+
 ### Getting Started
 
 (Your quick-start docs or examples can go here.)
