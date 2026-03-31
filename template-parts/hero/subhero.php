@@ -379,7 +379,7 @@ $section_id = 'subhero-' . uniqid();
         <?php endif; ?>
 
         <div
-            class="relative max-xl:px-5 mx-auto flex w-full max-w-container <?php echo esc_attr($layout_2_container_padding_class); ?> <?php echo esc_attr($layout_2_min_height_class); ?> lg:items-center"
+            class="relative max-xl:px-5 mx-auto flex w-full pb-4 max-w-container <?php echo esc_attr($layout_2_container_padding_class); ?> <?php echo esc_attr($layout_2_min_height_class); ?> lg:items-center"
             style="<?php echo esc_attr($layout_2_min_height_style); ?>"
         >
             <div class="<?php echo esc_attr($layout_2_grid_class); ?>">
