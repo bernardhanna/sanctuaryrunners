@@ -1103,7 +1103,7 @@ body {
 }
 
 .entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6 {
-  @apply pt-4 pb-4 mb-4 font-primary;
+  @apply py-2 pt-0 font-primary;
   color: var(--Blue-SR-500, #00628F);
 }
 
@@ -1253,14 +1253,22 @@ body.home #site-nav.headroom--top > nav {
   line-height: 22px;
 }
 
-@media (max-width: 768px) {
-  /* Content Editor block: add small-screen side breathing room */
+@media (max-width: 1200px) {
+  /* Content Editor block: add side breathing room from 1200px down */
   .wp_editor.content-editor-rich,
   .content-editor-rich .entry-content {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }
 
+  /* Post/Page editor content: keep readable gutters on tablets/smaller laptops */
+  .wp-singular .wp_editor > .entry-content {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
   /* Tighten paragraph spacing further on small devices */
   .wp_editor.content-editor-rich p,
   .content-editor-rich .entry-content p {
