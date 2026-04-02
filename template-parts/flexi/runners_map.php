@@ -120,17 +120,25 @@ foreach ($running_group_ids as $group_id) {
         continue;
     }
 
-    $markers_payload[] = [
+    $show_popup_link = get_field('show_map_popup_link', $group_id);
+    $show_popup_link = ($show_popup_link === 1 || $show_popup_link === '1' || $show_popup_link === true);
+
+    $marker_item = [
         'title'       => (string) get_the_title($group_id),
         'description' => (string) wp_strip_all_tags((string) get_field('address', $group_id)),
         'lat'         => (float) $lat,
         'lng'         => (float) $lng,
-        'link'        => [
+    ];
+
+    if ($show_popup_link) {
+        $marker_item['link'] = [
             'url'    => (string) get_permalink($group_id),
             'title'  => 'View group',
             'target' => '_self',
-        ],
-    ];
+        ];
+    }
+
+    $markers_payload[] = $marker_item;
 }
 ?>
 

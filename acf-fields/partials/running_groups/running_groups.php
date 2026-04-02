@@ -70,6 +70,12 @@ $running_groups
         'instructions' => 'Average number of participants.',
         'min' => 1,
     ])
+    ->addTrueFalse('show_map_popup_link', [
+        'label' => 'Show "View group" link in map popups',
+        'instructions' => 'Enable this only if this running group should show a popup link on maps.',
+        'default_value' => 0,
+        'ui' => 1,
+    ])
     ->addTrueFalse('beginner_friendly', [
         'label' => 'Beginner Friendly',
         'instructions' => 'Is this group suitable for beginners?',
