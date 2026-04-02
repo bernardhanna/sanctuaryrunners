@@ -108,6 +108,39 @@ $menu_array = $primary_navigation->toArray();
       }
     }
 
+    $render_mobile_nav_actions = function () use ($contact_button, $donate_button, $donate_icon) {
+      ?>
+      <div class="pt-4 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
+        <?php if (!empty($contact_button['url']) && !empty($contact_button['title'])): ?>
+          <a
+            href="<?php echo esc_url($contact_button['url']); ?>"
+            class="flex gap-2 justify-center items-center px-4 w-full h-12 text-white font-bold rounded-full bg-[linear-gradient(313deg,#059DED_24.08%,#28B2FA_63%)] transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Mint-500,#87CEB7)]"
+            @click="isOpen = false"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M11.6667 4.00008C12.5871 4.00008 13.3333 3.25389 13.3333 2.33341C13.3333 1.41294 12.5871 0.666748 11.6667 0.666748C10.7462 0.666748 10 1.41294 10 2.33341C10 3.25389 10.7462 4.00008 11.6667 4.00008Z" fill="white"/>
+              <path d="M10.4729 7.61176C10.6493 7.8668 10.902 8.06298 11.1969 8.17377C11.4918 8.28455 11.8145 8.30458 12.1215 8.23116L14.6665 7.61251L14.2958 6.16476L11.7508 6.78341L10.6924 5.24088C10.5807 5.07748 10.437 4.93709 10.2695 4.82773C10.102 4.71838 9.91394 4.64221 9.71612 4.60358L6.76431 4.02896C6.43409 3.96478 6.09134 4.00796 5.78886 4.15184C5.48637 4.29573 5.24094 4.53234 5.09038 4.82522L3.81787 7.29982L5.19093 7.96773L6.46345 5.49238L7.97312 5.7864L4.06961 12.1125H0.666504V13.605H4.06961C4.60532 13.605 5.10957 13.3274 5.38587 12.8804L6.85794 10.4953L10.8252 11.267L12.2189 15.3333L13.6741 14.8609L12.2811 10.7953C12.1949 10.5458 12.0428 10.3228 11.8399 10.1485C11.637 9.97433 11.3905 9.85508 11.1253 9.80278L8.79281 9.3498L10.1528 7.14535L10.4729 7.61176Z" fill="white"/>
+            </svg>
+            <span><?php echo esc_html($contact_button['title']); ?></span>
+          </a>
+        <?php endif; ?>
+
+        <?php if (!empty($donate_button['url']) && !empty($donate_button['title'])): ?>
+          <a
+            href="<?php echo esc_url($donate_button['url']); ?>"
+            class="flex gap-2 justify-center items-center px-4 mt-3 w-full min-h-[48px] h-12 font-bold text-[#00628F] rounded-full border border-sky-800 transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Turquoise-500,#1C959B)]"
+            @click="isOpen = false"
+          >
+            <?php if (!empty($donate_icon['url'])) : ?>
+              <img src="<?php echo esc_url($donate_icon['url']); ?>" class="w-4" alt="" />
+            <?php endif; ?>
+            <span><?php echo esc_html($donate_button['title']); ?></span>
+          </a>
+        <?php endif; ?>
+      </div>
+      <?php
+    };
+
   ?>
   <div
     x-data='{
@@ -214,45 +247,48 @@ $menu_array = $primary_navigation->toArray();
           class="absolute inset-0 flex flex-col px-5 pt-4 pb-3 transition-transform duration-300"
           :class="flyLevel === 0 ? 'translate-x-0' : '-translate-x-full'"
         >
-          <ul role="list" class="flex-1 overflow-y-auto">
-            <?php $top_items = $menu_array; ?>
-            <?php foreach ($top_items as $i => $item): ?>
-              <?php
-              $subtree = [];
-              if (!empty($item->children)) {
-                foreach ($item->children as $child) {
-                  $subtree[] = matrix_encode_menu_subtree($child);
+          <div class="flex-1 overflow-y-auto">
+            <ul role="list">
+              <?php $top_items = $menu_array; ?>
+              <?php foreach ($top_items as $i => $item): ?>
+                <?php
+                $subtree = [];
+                if (!empty($item->children)) {
+                  foreach ($item->children as $child) {
+                    $subtree[] = matrix_encode_menu_subtree($child);
+                  }
                 }
-              }
-              $data_children = esc_attr(wp_json_encode($subtree, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP));
-              ?>
-              <li class="<?php echo esc_attr($item->classes); ?> <?php echo $item->active ? 'current-item' : ''; ?>">
-                <div class="flex justify-between items-center py-4 px-3">
-                  <a
-                    href="<?php echo esc_url($item->url); ?>"
-                    class="font-['Public_Sans'] text-[14px] font-bold leading-5 text-[#1D3C94]"
-                    @click="isOpen = false"
-                  >
-                    <?php echo esc_html($item->label); ?>
-                  </a>
+                $data_children = esc_attr(wp_json_encode($subtree, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP));
+                ?>
+                <li class="<?php echo esc_attr($item->classes); ?> <?php echo $item->active ? 'current-item' : ''; ?>">
+                  <div class="flex justify-between items-center py-4 px-3">
+                    <a
+                      href="<?php echo esc_url($item->url); ?>"
+                      class="font-['Public_Sans'] text-[14px] font-bold leading-5 text-[#1D3C94]"
+                      @click="isOpen = false"
+                    >
+                      <?php echo esc_html($item->label); ?>
+                    </a>
 
-                  <?php if (!empty($item->children)) : ?>
-                    <button
-                      type="button"
-                      class="ml-4 text-[#123B63]"
-                      data-label="<?php echo esc_attr($item->label); ?>"
-                      data-children="<?php echo $data_children; ?>"
-                      @click.prevent="openSecondFrom($el)"
-                      aria-label="View sub-menu">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-                        <path d="M6.375 12.75L10.625 8.5L6.375 4.25" stroke="#1D3C94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </button>
-                  <?php endif; ?>
-                </div>
-              </li>
-            <?php endforeach; ?>
-          </ul>
+                    <?php if (!empty($item->children)) : ?>
+                      <button
+                        type="button"
+                        class="ml-4 text-[#123B63]"
+                        data-label="<?php echo esc_attr($item->label); ?>"
+                        data-children="<?php echo $data_children; ?>"
+                        @click.prevent="openSecondFrom($el)"
+                        aria-label="View sub-menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                          <path d="M6.375 12.75L10.625 8.5L6.375 4.25" stroke="#1D3C94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                    <?php endif; ?>
+                  </div>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+            <?php $render_mobile_nav_actions(); ?>
+          </div>
         </div>
 
         <!-- LEVEL 1: Second-tier of selected top item -->
@@ -261,29 +297,32 @@ $menu_array = $primary_navigation->toArray();
           :class="flyLevel === 1 ? 'translate-x-0' : (flyLevel < 1 ? 'translate-x-full' : '-translate-x-full')"
           style="display:block;"
         >
-          <ul role="list" class="flex-1 overflow-y-auto">
-            <template x-for="(child, cidx) in secondItems" :key="cidx">
-              <li>
-                <div
-                  class="flex justify-between items-center py-4 px-3"
-                >
-                  <a :href="child.url" class="font-['Public_Sans'] text-[14px] font-bold leading-5 text-[#1D3C94]" @click="isOpen = false" x-text="child.label"></a>
+          <div class="flex-1 overflow-y-auto">
+            <ul role="list">
+              <template x-for="(child, cidx) in secondItems" :key="cidx">
+                <li>
+                  <div
+                    class="flex justify-between items-center py-4 px-3"
+                  >
+                    <a :href="child.url" class="font-['Public_Sans'] text-[14px] font-bold leading-5 text-[#1D3C94]" @click="isOpen = false" x-text="child.label"></a>
 
-                  <template x-if="hasDescendants(child)">
-                    <button
-                      type="button"
-                      class="ml-4 text-[#123B63]"
-                      @click.prevent="openFlatten(cidx)"
-                      aria-label="View deeper items">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-                        <path d="M6.375 12.75L10.625 8.5L6.375 4.25" stroke="#1D3C94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </button>
-                  </template>
-                </div>
-              </li>
-            </template>
-          </ul>
+                    <template x-if="hasDescendants(child)">
+                      <button
+                        type="button"
+                        class="ml-4 text-[#123B63]"
+                        @click.prevent="openFlatten(cidx)"
+                        aria-label="View deeper items">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                          <path d="M6.375 12.75L10.625 8.5L6.375 4.25" stroke="#1D3C94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                    </template>
+                  </div>
+                </li>
+              </template>
+            </ul>
+            <?php $render_mobile_nav_actions(); ?>
+          </div>
         </div>
 
         <!-- LEVEL 2: Flattened descendants (3rd/4th/5th) -->
@@ -292,50 +331,24 @@ $menu_array = $primary_navigation->toArray();
           :class="flyLevel === 2 ? 'translate-x-0' : 'translate-x-full'"
           style="display:block;"
         >
-          <ul role="list" class="flex-1 overflow-y-auto">
-            <template x-for="(leaf, lidx) in flattened" :key="lidx">
-              <li>
-                <div
-                  class="py-4 px-3"
-                >
-                  <a :href="leaf.url" class="block font-['Public_Sans'] text-[14px] font-bold leading-5 text-[#1D3C94]" @click="isOpen = false" x-text="leaf.label"></a>
-                </div>
-              </li>
-            </template>
-            <template x-if="!flattened.length">
-              <li class="py-6 px-3 text-sm text-gray-500">No additional items.</li>
-            </template>
-          </ul>
+          <div class="flex-1 overflow-y-auto">
+            <ul role="list">
+              <template x-for="(leaf, lidx) in flattened" :key="lidx">
+                <li>
+                  <div
+                    class="py-4 px-3"
+                  >
+                    <a :href="leaf.url" class="block font-['Public_Sans'] text-[14px] font-bold leading-5 text-[#1D3C94]" @click="isOpen = false" x-text="leaf.label"></a>
+                  </div>
+                </li>
+              </template>
+              <template x-if="!flattened.length">
+                <li class="py-6 px-3 text-sm text-gray-500">No additional items.</li>
+              </template>
+            </ul>
+            <?php $render_mobile_nav_actions(); ?>
+          </div>
         </div>
-      </div>
-
-      <div class="sticky right-0 bottom-0 left-0 z-20 px-5 pt-4 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)] bg-white">
-        <?php if (!empty($contact_button['url']) && !empty($contact_button['title'])): ?>
-          <a
-            href="<?php echo esc_url($contact_button['url']); ?>"
-            class="flex gap-2 justify-center items-center px-4 w-full h-12 text-white font-bold rounded-full bg-[linear-gradient(313deg,#059DED_24.08%,#28B2FA_63%)] transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Mint-500,#87CEB7)]"
-            @click="isOpen = false"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M11.6667 4.00008C12.5871 4.00008 13.3333 3.25389 13.3333 2.33341C13.3333 1.41294 12.5871 0.666748 11.6667 0.666748C10.7462 0.666748 10 1.41294 10 2.33341C10 3.25389 10.7462 4.00008 11.6667 4.00008Z" fill="white"/>
-              <path d="M10.4729 7.61176C10.6493 7.8668 10.902 8.06298 11.1969 8.17377C11.4918 8.28455 11.8145 8.30458 12.1215 8.23116L14.6665 7.61251L14.2958 6.16476L11.7508 6.78341L10.6924 5.24088C10.5807 5.07748 10.437 4.93709 10.2695 4.82773C10.102 4.71838 9.91394 4.64221 9.71612 4.60358L6.76431 4.02896C6.43409 3.96478 6.09134 4.00796 5.78886 4.15184C5.48637 4.29573 5.24094 4.53234 5.09038 4.82522L3.81787 7.29982L5.19093 7.96773L6.46345 5.49238L7.97312 5.7864L4.06961 12.1125H0.666504V13.605H4.06961C4.60532 13.605 5.10957 13.3274 5.38587 12.8804L6.85794 10.4953L10.8252 11.267L12.2189 15.3333L13.6741 14.8609L12.2811 10.7953C12.1949 10.5458 12.0428 10.3228 11.8399 10.1485C11.637 9.97433 11.3905 9.85508 11.1253 9.80278L8.79281 9.3498L10.1528 7.14535L10.4729 7.61176Z" fill="white"/>
-            </svg>
-            <span><?php echo esc_html($contact_button['title']); ?></span>
-          </a>
-        <?php endif; ?>
-
-        <?php if (!empty($donate_button['url']) && !empty($donate_button['title'])): ?>
-          <a
-            href="<?php echo esc_url($donate_button['url']); ?>"
-            class="flex gap-2 justify-center items-center px-4 mt-3 w-full min-h-[48px] h-12 font-bold text-[#00628F] rounded-full border border-sky-800 transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Turquoise-500,#1C959B)]"
-            @click="isOpen = false"
-          >
-            <?php if (!empty($donate_icon['url'])) : ?>
-              <img src="<?php echo esc_url($donate_icon['url']); ?>" class="w-4" alt="" />
-            <?php endif; ?>
-            <span><?php echo esc_html($donate_button['title']); ?></span>
-          </a>
-        <?php endif; ?>
       </div>
     </nav>
   </div>
