@@ -67,6 +67,12 @@ $contact_info
     ->endRepeater()
 
     ->addTab('Layout', ['label' => 'Layout'])
+    ->addTrueFalse('use_two_columns_for_two_items', [
+        'label' => 'Use 2 columns when only 2 items',
+        'instructions' => 'If enabled, desktop layout switches to 2 columns when exactly 2 contact locations are added.',
+        'ui' => 1,
+        'default_value' => 1,
+    ])
     ->addRepeater('padding_settings', [
         'label' => 'Padding Settings',
         'instructions' => 'Customize padding for different screen sizes.',
