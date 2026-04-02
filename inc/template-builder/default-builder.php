@@ -229,8 +229,8 @@ add_filter('acf/update_value/type=flexible_content', function ($value, $post_id,
  * HERO DEFAULTS
  * --------------------
  * - Posts: banner_image
- * - Pages: hero_001
- * - Sectors/practice_areas: hero_001
+ * - Pages: subhero
+ * - Sectors/practice_areas: subhero
  */
 // Respect empty hero if user removed it
 add_filter('acf/update_value/name=hero_content_blocks', function ($value, $post_id, $field) {
@@ -264,9 +264,14 @@ add_filter('acf/load_value/name=hero_content_blocks', function ($value, $post_id
     }
 
     $type = matrix_resolve_post_type_for_acf($post_id);
-    if ($type === 'post' || $type === 'page') {
+    if ($type === 'page') {
         update_post_meta((int)$post_id, '_matrix_hero_default_applied', 1);
-        return [ ['acf_fc_layout' => 'hero_001'] ];
+        return [ ['acf_fc_layout' => 'subhero'] ];
+    }
+
+    if ($type === 'post') {
+        update_post_meta((int)$post_id, '_matrix_hero_default_applied', 1);
+        return [ ['acf_fc_layout' => 'hero'] ];
     }
 
     return $value;

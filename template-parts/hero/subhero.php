@@ -10,14 +10,17 @@ $sf = static function (string $key, $default = null) use ($args) {
 };
 
 // Get fields / overrides
-$heading            = $sf('heading', 'About Sanctuary Runners');
+$heading            = $sf('heading', '');
 $heading_tag        = $sf('heading_tag', 'h1');
-$content            = $sf('content', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.');
+$content            = $sf('content', '');
 $primary_cta        = $sf('primary_cta');
 $secondary_cta      = $sf('secondary_cta');
 $primary_cta_icon   = $sf('primary_cta_icon');
 $secondary_cta_icon = $sf('secondary_cta_icon');
+$media_type         = $sf('media_type', 'image');
 $image              = $sf('image');
+$video_file         = $sf('video_file');
+$video_url          = trim((string) $sf('video_url', ''));
 $image_presentation = $sf('image_presentation', 'default');
 $image_alt          = $image ? (get_post_meta($image, '_wp_attachment_image_alt', true) ?: 'Featured image') : '';
 $background_color   = $sf('background_color', '#EEF6FC');
@@ -51,6 +54,11 @@ if (is_singular()) {
     }
 }
 
+// If heading is empty for singular entries, use page/post title fallback.
+if (is_singular() && trim(wp_strip_all_tags((string) $heading)) === '') {
+    $heading = (string) get_the_title();
+}
+
 $is_layout_2         = $layout_option === 'layout_2';
 $is_dark_background  = strtolower($background_color) !== '#eef6fc';
 $layout_2_min_height_class = 'lg:min-h-[var(--layout-2-min-height)]';
@@ -60,7 +68,28 @@ $allowed_image_presentations = ['default', 'contain', 'contain_right', 'full_hei
 if (!in_array($image_presentation, $allowed_image_presentations, true)) {
     $image_presentation = 'default';
 }
-$is_full_height_right_image = !empty($image) && $image_presentation === 'full_height_right_svg';
+
+$is_video_mode = $media_type === 'video';
+$video_src = '';
+$video_mime = 'video/mp4';
+if ($is_video_mode) {
+    if (is_array($video_file) && !empty($video_file['url'])) {
+        $video_src = (string) $video_file['url'];
+        if (!empty($video_file['mime_type'])) {
+            $video_mime = (string) $video_file['mime_type'];
+        }
+    } elseif ($video_url !== '') {
+        $video_src = $video_url;
+        $filetype = wp_check_filetype((string) $video_src);
+        if (!empty($filetype['type'])) {
+            $video_mime = (string) $filetype['type'];
+        }
+    }
+}
+$has_video = $is_video_mode && $video_src !== '';
+$has_image = !$is_video_mode && !empty($image);
+$has_media = $has_image || $has_video;
+$is_full_height_right_image = $has_image && $image_presentation === 'full_height_right_svg';
 
 $layout_1_grid_class = $is_full_height_right_image
     ? 'relative grid w-full grid-cols-1 items-center gap-12 max-md:gap-10 md:grid-cols-12 lg:flex lg:min-h-[420px] lg:items-center'
@@ -102,6 +131,8 @@ $layout_2_text_col_class = $is_full_height_right_image
 
 $layout_1_image_class = 'w-full max-h-[522px] h-auto rounded-lg object-cover object-center';
 $layout_2_image_class = 'w-full max-h-[300px] h-auto rounded-lg object-contain md:object-right max-md:object-center';
+$layout_1_video_class = 'w-full h-full max-h-[522px] rounded-lg object-cover object-center';
+$layout_2_video_class = 'w-full h-full max-h-[300px] rounded-lg object-cover object-center';
 
 if ($image_presentation === 'contain') {
     $layout_1_image_class = 'w-full max-h-[522px] h-auto rounded-lg object-contain object-center';
@@ -222,17 +253,23 @@ $section_id = 'subhero-' . uniqid();
         <div class="relative pb-6 mx-auto w-full max-xl:px-5 max-w-container md:pb-8">
             <div class="<?php echo esc_attr($layout_1_grid_class); ?>">
 
-                <?php if ($image): ?>
+                <?php if ($has_media): ?>
                     <div class="<?php echo esc_attr($layout_1_media_col_class); ?>">
                         <figure class="<?php echo esc_attr($layout_1_figure_class); ?>">
-                            <?php
-                            echo wp_get_attachment_image($image, 'full', false, [
-                                'alt'      => esc_attr($image_alt),
-                                'class'    => $layout_1_image_class,
-                                'loading'  => 'lazy',
-                                'decoding' => 'async',
-                            ]);
-                            ?>
+                            <?php if ($has_video): ?>
+                                <video class="<?php echo esc_attr($layout_1_video_class); ?>" autoplay muted loop playsinline preload="metadata">
+                                    <source src="<?php echo esc_url($video_src); ?>" type="<?php echo esc_attr($video_mime); ?>">
+                                </video>
+                            <?php else: ?>
+                                <?php
+                                echo wp_get_attachment_image($image, 'full', false, [
+                                    'alt'      => esc_attr($image_alt),
+                                    'class'    => $layout_1_image_class,
+                                    'loading'  => 'lazy',
+                                    'decoding' => 'async',
+                                ]);
+                                ?>
+                            <?php endif; ?>
 
                             <?php if ($image_alt): ?>
                                 <figcaption class="sr-only">
@@ -384,17 +421,23 @@ $section_id = 'subhero-' . uniqid();
         >
             <div class="<?php echo esc_attr($layout_2_grid_class); ?>">
 
-                <?php if ($image): ?>
+                <?php if ($has_media): ?>
                     <div class="<?php echo esc_attr($layout_2_media_col_class); ?>">
                         <figure class="<?php echo esc_attr($layout_2_figure_class); ?>">
-                            <?php
-                            echo wp_get_attachment_image($image, 'full', false, [
-                                'alt'      => esc_attr($image_alt),
-                                'class'    => $layout_2_image_class,
-                                'loading'  => 'lazy',
-                                'decoding' => 'async',
-                            ]);
-                            ?>
+                            <?php if ($has_video): ?>
+                                <video class="<?php echo esc_attr($layout_2_video_class); ?>" autoplay muted loop playsinline preload="metadata">
+                                    <source src="<?php echo esc_url($video_src); ?>" type="<?php echo esc_attr($video_mime); ?>">
+                                </video>
+                            <?php else: ?>
+                                <?php
+                                echo wp_get_attachment_image($image, 'full', false, [
+                                    'alt'      => esc_attr($image_alt),
+                                    'class'    => $layout_2_image_class,
+                                    'loading'  => 'lazy',
+                                    'decoding' => 'async',
+                                ]);
+                                ?>
+                            <?php endif; ?>
 
                             <?php if ($image_alt): ?>
                                 <figcaption class="sr-only">

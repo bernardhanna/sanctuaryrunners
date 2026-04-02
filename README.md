@@ -155,6 +155,26 @@ Ensure you have the following installed on your system:
 
   * Consider using [nvm](https://github.com/nvm-sh/nvm) or adjusting file permissions.
 
+### E2E Smoke Tests
+
+Run multisite smoke checks (Ireland/UK/AU/Global):
+
+```bash
+npm run test:e2e:network
+```
+
+The default target is:
+
+```text
+http://localhost:10014
+```
+
+You can override with:
+
+```bash
+BASE_URL="http://your-local-domain-or-port" npm run test:e2e:network
+```
+
 ---
 
 ### Features
