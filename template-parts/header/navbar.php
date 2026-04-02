@@ -78,10 +78,10 @@ $primary_navigation = Navi::make()->build('primary');
     });
 
     const target =
-      document.querySelector('main > section:first-of-type') ||
-      document.querySelector('main section:first-of-type') ||
-      document.querySelector('.site-main > section:first-of-type') ||
-      document.querySelector('.site-main section:first-of-type');
+      document.querySelector('main > section:first-of-type, main > article:first-of-type, main > div:first-of-type') ||
+      document.querySelector('main section:first-of-type, main article:first-of-type, main div:first-of-type') ||
+      document.querySelector('.site-main > section:first-of-type, .site-main > article:first-of-type, .site-main > div:first-of-type') ||
+      document.querySelector('.site-main section:first-of-type, .site-main article:first-of-type, .site-main div:first-of-type');
 
     if (target && !this.shouldSkipNavOffset(target)) {
       const baseOffsetRem = window.innerWidth <= 480 ? 6 : (window.innerWidth <= 1200 ? 5 : 7.5);
@@ -121,6 +121,11 @@ $primary_navigation = Navi::make()->build('primary');
     window.addEventListener('resize', () => {
       checkWindowSize();
       setContentOffset();
+    });
+
+    window.addEventListener('load', () => {
+      setContentOffset();
+      setTimeout(() => setContentOffset(), 120);
     });
 
     window.addEventListener('scroll', () => handleScroll());
