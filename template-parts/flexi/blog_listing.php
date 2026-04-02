@@ -179,25 +179,49 @@ $section_id = 'blog-listing-' . uniqid();
                         $post_categories = get_the_category($post_id);
                         $category_slugs  = array();
                         $primary_category = null;
+                        $queried_category_slug = (is_category() && $queried_object instanceof WP_Term && $queried_object->taxonomy === 'category')
+                            ? (string) $queried_object->slug
+                            : '';
 
                         if (!empty($post_categories)) {
                             foreach ($post_categories as $cat) {
                                 $category_slugs[] = $cat->slug;
+                                // On category archives, prefer showing the currently viewed category as the badge.
+                                if ($queried_category_slug !== '' && $cat->slug === $queried_category_slug) {
+                                    $primary_category = $cat;
+                                }
                             }
-                            $primary_category = $post_categories[0];
+                            if (!$primary_category) {
+                                $primary_category = $post_categories[0];
+                            }
                         }
 
                         $featured_image = get_post_thumbnail_id($post_id);
                         $image_alt      = get_post_meta($featured_image, '_wp_attachment_image_alt', true) ?: get_the_title();
                         $post_date      = get_the_date('j M Y');
                         $reading_time   = '12 mins';
+                        $post_permalink = get_permalink($post_id);
+                        $external_source_link = get_field('post_external_source_link', $post_id);
+                        $open_external_source = get_field('post_listing_open_external_source', $post_id);
+                        $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
+                        $has_external_source_url = is_array($external_source_link) && !empty($external_source_link['url']);
+                        $card_target_url = $post_permalink;
+                        $card_target_window = '_self';
+                        $card_rel = '';
+
+                        if ($open_external_source && $has_external_source_url) {
+                            $card_target_url = (string) $external_source_link['url'];
+                            $card_target_window = '_blank';
+                            $card_rel = 'noopener noreferrer';
+                        }
                         ?>
 
                         <article
                             class="overflow-hidden flex-1 bg-yellow-50 rounded-[4px] shrink basis-0 min-w-60 post-item cursor-pointer transition-all duration-200 hover:bg-[#FCF4C5] hover:shadow-[0_0_0_4px_#009DE6]"
                             data-categories="<?php echo esc_attr(implode(' ', $category_slugs)); ?>"
                             data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>"
-                            data-url="<?php echo esc_url(get_permalink()); ?>"
+                            data-url="<?php echo esc_url($card_target_url); ?>"
+                            data-url-target="<?php echo esc_attr($card_target_window); ?>"
                             tabindex="0"
                         >
                             <!-- Featured Image with Tag -->
@@ -232,7 +256,12 @@ $section_id = 'blog-listing-' . uniqid();
                                 </div>
 
                                 <h3 class="mt-2 font-sans text-[18px] font-bold not-italic leading-[24px] <?php echo $is_layout_2 ? 'text-[#F68DA7]' : 'text-sky-800'; ?>">
-                                    <a href="<?php echo esc_url(get_permalink()); ?>" class="hover:underline focus:underline">
+                                    <a
+                                        href="<?php echo esc_url($card_target_url); ?>"
+                                        target="<?php echo esc_attr($card_target_window); ?>"
+                                        <?php if (!empty($card_rel)) : ?>rel="<?php echo esc_attr($card_rel); ?>"<?php endif; ?>
+                                        class="hover:underline focus:underline"
+                                    >
                                         <?php the_title(); ?>
                                     </a>
                                 </h3>
@@ -373,7 +402,7 @@ function blogFilter(initialSearchTerm = '') {
         },
 
         filterPosts() {
-            const posts = document.querySelectorAll('.post-item');
+            const posts = document.querySelectorAll('#<?php echo esc_js($section_id); ?> .post-item');
 
             posts.forEach(post => {
                 const categories = post.dataset.categories || '';
@@ -448,7 +477,13 @@ document.addEventListener('DOMContentLoaded', function () {
         card.addEventListener('click', function (e) {
             if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
             var url = card.getAttribute('data-url');
-            if (url) window.location.href = url;
+            var target = card.getAttribute('data-url-target') || '_self';
+            if (!url) return;
+            if (target === '_blank') {
+                window.open(url, '_blank', 'noopener');
+                return;
+            }
+            window.location.href = url;
         });
 
         card.addEventListener('keydown', function (e) {
@@ -456,7 +491,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
             e.preventDefault();
             var url = card.getAttribute('data-url');
-            if (url) window.location.href = url;
+            var target = card.getAttribute('data-url-target') || '_self';
+            if (!url) return;
+            if (target === '_blank') {
+                window.open(url, '_blank', 'noopener');
+                return;
+            }
+            window.location.href = url;
         });
     });
 });

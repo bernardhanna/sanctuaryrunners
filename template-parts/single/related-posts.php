@@ -108,11 +108,25 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
           $thumb_id = get_post_thumbnail_id($pid);
           $img_alt  = $thumb_id ? (get_post_meta($thumb_id, '_wp_attachment_image_alt', true) ?: $title) : $title;
           $excerpt = wp_trim_words(get_the_excerpt($pid), 20);
+          $external_source_link = get_field('post_external_source_link', $pid);
+          $open_external_source = get_field('post_listing_open_external_source', $pid);
+          $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
+          $has_external_source_url = is_array($external_source_link) && !empty($external_source_link['url']);
+          $card_target_url = $permalink;
+          $card_target_window = '_self';
+          $card_rel = '';
+
+          if ($open_external_source && $has_external_source_url) {
+            $card_target_url = (string) $external_source_link['url'];
+            $card_target_window = '_blank';
+            $card_rel = 'noopener noreferrer';
+          }
           ?>
           <article
              class="post-item cursor-pointer overflow-hidden rounded-[4px] bg-yellow-50 transition-all duration-200 hover:bg-[#FCF4C5] hover:shadow-[0_0_0_4px_#009DE6]"
              data-categories="<?php echo esc_attr($cats_attr); ?>"
-             data-url="<?php echo esc_url($permalink); ?>"
+             data-url="<?php echo esc_url($card_target_url); ?>"
+             data-url-target="<?php echo esc_attr($card_target_window); ?>"
              tabindex="0"
              aria-label="<?php echo esc_attr('Read full article: ' . $title); ?>"
           >
@@ -142,7 +156,12 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
               </div>
 
               <h3 class="mt-2 font-sans text-[18px] font-bold not-italic leading-[24px] text-sky-800">
-                <a href="<?php echo esc_url($permalink); ?>" class="hover:underline focus:underline">
+                <a
+                  href="<?php echo esc_url($card_target_url); ?>"
+                  target="<?php echo esc_attr($card_target_window); ?>"
+                  <?php if (!empty($card_rel)) : ?>rel="<?php echo esc_attr($card_rel); ?>"<?php endif; ?>
+                  class="hover:underline focus:underline"
+                >
                   <?php echo esc_html($title); ?>
                 </a>
               </h3>
@@ -167,7 +186,13 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
           card.addEventListener('click', function (e) {
             if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
             var url = card.getAttribute('data-url');
-            if (url) window.location.href = url;
+            var target = card.getAttribute('data-url-target') || '_self';
+            if (!url) return;
+            if (target === '_blank') {
+              window.open(url, '_blank', 'noopener');
+              return;
+            }
+            window.location.href = url;
           });
 
           card.addEventListener('keydown', function (e) {
@@ -175,7 +200,13 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
             if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
             e.preventDefault();
             var url = card.getAttribute('data-url');
-            if (url) window.location.href = url;
+            var target = card.getAttribute('data-url-target') || '_self';
+            if (!url) return;
+            if (target === '_blank') {
+              window.open(url, '_blank', 'noopener');
+              return;
+            }
+            window.location.href = url;
           });
         });
       });
