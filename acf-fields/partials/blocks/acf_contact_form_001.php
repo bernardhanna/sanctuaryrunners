@@ -28,7 +28,8 @@ $contact_form_001
         ])
         ->addTextarea('description', [
             'label' => 'Form Description',
-            'default_value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
+            'instructions' => 'Optional. Leave empty to hide the description text.',
+            'default_value' => '',
             'rows' => 3
         ])
         ->addWysiwyg('form_markup', [

@@ -2,7 +2,7 @@
 // === Variables (always use get_sub_field) ===
 $heading = get_sub_field('heading') ?: 'Get in touch';
 $heading_tag = get_sub_field('heading_tag') ?: 'h2';
-$description = get_sub_field('description') ?: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.';
+$description = get_sub_field('description');
 $form_markup = get_sub_field('form_markup', false, false);
 $enable_existing_member_form_switch = (bool) get_sub_field('enable_existing_member_form_switch');
 $existing_member_form_markup = get_sub_field('existing_member_form_markup', false, false);
