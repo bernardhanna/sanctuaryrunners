@@ -163,10 +163,15 @@ $section_id = 'events-listing-' . uniqid();
 
                                 <button
                                     type="submit"
-                                    class="flex -ml-px gap-2 justify-center items-center px-6 py-4 h-full min-h-[60px] font-bold whitespace-nowrap bg-yellow-300 text-slate-800 max-md:px-5 w-fit hover:bg-[#FCF4C5] focus:ring-yellow-300 border-0 rounded-r-[100px] shadow-none"
+                                    class="flex -ml-px gap-2 justify-center items-center px-6 py-4 h-full min-h-[60px] font-bold whitespace-nowrap bg-yellow-300 text-slate-800 max-md:px-5 w-fit hover:bg-[#FCF4C5] focus:ring-yellow-300 border-0 rounded-r-[100px] shadow-none min-[769px]:max-[998px]:px-4"
                                     aria-label="Search events"
                                 >
-                                    Search
+                                    <span class="min-[769px]:max-[998px]:hidden">Search</span>
+                                    <span class="hidden min-[769px]:max-[998px]:inline-flex" aria-hidden="true">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
                                 </button>
                             </div>
                         </div>

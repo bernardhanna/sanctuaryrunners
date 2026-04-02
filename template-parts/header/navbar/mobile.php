@@ -211,10 +211,10 @@ $menu_array = $primary_navigation->toArray();
       <div class="relative flex-1 overflow-hidden">
         <!-- LEVEL 0: Top-level -->
         <div
-          class="overflow-y-auto absolute inset-0 px-5 pt-4 pb-36 transition-transform duration-300"
+          class="absolute inset-0 flex flex-col px-5 pt-4 pb-3 transition-transform duration-300"
           :class="flyLevel === 0 ? 'translate-x-0' : '-translate-x-full'"
         >
-          <ul role="list">
+          <ul role="list" class="flex-1 overflow-y-auto">
             <?php $top_items = $menu_array; ?>
             <?php foreach ($top_items as $i => $item): ?>
               <?php
@@ -257,11 +257,11 @@ $menu_array = $primary_navigation->toArray();
 
         <!-- LEVEL 1: Second-tier of selected top item -->
         <div
-          class="overflow-y-auto absolute inset-0 px-5 pt-4 pb-36 bg-white transition-transform duration-300"
+          class="absolute inset-0 flex flex-col px-5 pt-4 pb-3 bg-white transition-transform duration-300"
           :class="flyLevel === 1 ? 'translate-x-0' : (flyLevel < 1 ? 'translate-x-full' : '-translate-x-full')"
           style="display:block;"
         >
-          <ul role="list">
+          <ul role="list" class="flex-1 overflow-y-auto">
             <template x-for="(child, cidx) in secondItems" :key="cidx">
               <li>
                 <div
@@ -288,11 +288,11 @@ $menu_array = $primary_navigation->toArray();
 
         <!-- LEVEL 2: Flattened descendants (3rd/4th/5th) -->
         <div
-          class="overflow-y-auto absolute inset-0 px-5 pt-4 pb-36 bg-white transition-transform duration-300"
+          class="absolute inset-0 flex flex-col px-5 pt-4 pb-3 bg-white transition-transform duration-300"
           :class="flyLevel === 2 ? 'translate-x-0' : 'translate-x-full'"
           style="display:block;"
         >
-          <ul role="list">
+          <ul role="list" class="flex-1 overflow-y-auto">
             <template x-for="(leaf, lidx) in flattened" :key="lidx">
               <li>
                 <div
