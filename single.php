@@ -74,6 +74,9 @@ get_header();
         if ($post_type === 'post') {
             $archive_label = $posts_page_id ? get_the_title($posts_page_id) : 'News & Media';
             $archive_url = $posts_page_id ? get_permalink($posts_page_id) : home_url('/news-and-media/');
+        } elseif ($post_type === 'running_group') {
+            $archive_label = 'Running Groups';
+            $archive_url = home_url('/find-a-group-near-you/');
         } else {
             $post_type_obj = get_post_type_object($post_type);
             $archive_label = ($post_type_obj && !empty($post_type_obj->labels->name))

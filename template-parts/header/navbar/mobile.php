@@ -309,7 +309,7 @@ $menu_array = $primary_navigation->toArray();
         </div>
       </div>
 
-      <div class="absolute right-0 bottom-0 left-0 px-5 pt-4 pb-6 bg-white">
+      <div class="sticky right-0 bottom-0 left-0 z-20 px-5 pt-4 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)] bg-white">
         <?php if (!empty($contact_button['url']) && !empty($contact_button['title'])): ?>
           <a
             href="<?php echo esc_url($contact_button['url']); ?>"
@@ -327,7 +327,7 @@ $menu_array = $primary_navigation->toArray();
         <?php if (!empty($donate_button['url']) && !empty($donate_button['title'])): ?>
           <a
             href="<?php echo esc_url($donate_button['url']); ?>"
-            class="flex gap-2 justify-center items-center px-4 mt-3 w-full h-12 font-bold text-[#00628F] rounded-full border border-sky-800 transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Turquoise-500,#1C959B)]"
+            class="flex gap-2 justify-center items-center px-4 mt-3 w-full min-h-[48px] h-12 font-bold text-[#00628F] rounded-full border border-sky-800 transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Turquoise-500,#1C959B)]"
             @click="isOpen = false"
           >
             <?php if (!empty($donate_icon['url'])) : ?>

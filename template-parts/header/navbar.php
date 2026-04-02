@@ -84,7 +84,7 @@ $primary_navigation = Navi::make()->build('primary');
       document.querySelector('.site-main section:first-of-type');
 
     if (target && !this.shouldSkipNavOffset(target)) {
-      const baseOffsetRem = window.innerWidth <= 1200 ? 5 : 7.5;
+      const baseOffsetRem = window.innerWidth <= 480 ? 6 : (window.innerWidth <= 1200 ? 5 : 7.5);
       const rootFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 16;
       let offsetPx = Math.round(baseOffsetRem * rootFontSize);
 

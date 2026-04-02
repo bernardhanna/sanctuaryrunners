@@ -99,7 +99,10 @@ foreach ($running_group_ids as $group_id) {
         continue;
     }
 
-    $groups_payload[] = [
+    $show_popup_link = get_field('show_map_popup_link', $group_id);
+    $show_popup_link = ($show_popup_link === 1 || $show_popup_link === '1' || $show_popup_link === true);
+
+    $group_item = [
         'id'           => (int) $group_id,
         'title'        => (string) get_the_title($group_id),
         'lat'          => (float) $lat,
@@ -107,8 +110,13 @@ foreach ($running_group_ids as $group_id) {
         'address'      => (string) get_field('address', $group_id),
         'meeting_time' => (string) get_field('meeting_time', $group_id),
         'contact_info' => (string) get_field('contact_info', $group_id),
-        'url'          => (string) get_permalink($group_id),
     ];
+
+    if ($show_popup_link) {
+        $group_item['url'] = (string) get_permalink($group_id);
+    }
+
+    $groups_payload[] = $group_item;
 }
 ?>
 

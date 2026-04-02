@@ -10,9 +10,9 @@ $subhero
     ->addTab('Content', ['label' => 'Content'])
     ->addText('heading', [
         'label' => 'Heading Text',
-        'instructions' => 'Enter the main heading for the subhero section.',
-        'default_value' => 'About Sanctuary Runners',
-        'required' => 1,
+        'instructions' => 'Optional. If left empty, this falls back to the current page/post title.',
+        'default_value' => '',
+        'required' => 0,
     ])
     ->addSelect('heading_tag', [
         'label' => 'Heading HTML Tag',
@@ -33,7 +33,7 @@ $subhero
     ->addWysiwyg('content', [
         'label' => 'Content Description',
         'instructions' => 'Add the descriptive content for the subhero section.',
-        'default_value' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>',
+        'default_value' => '',
         'media_upload' => 0,
         'tabs' => 'all',
         'toolbar' => 'full',
@@ -64,6 +64,16 @@ $subhero
         'preview_size' => 'thumbnail',
         'library' => 'all',
     ])
+    ->addSelect('media_type', [
+        'label' => 'Subhero Media Type',
+        'instructions' => 'Choose whether this subhero should display an image or a video.',
+        'choices' => [
+            'image' => 'Image',
+            'video' => 'Video',
+        ],
+        'default_value' => 'image',
+        'ui' => 1,
+    ])
 
     ->addImage('image', [
         'label' => 'Featured Image',
@@ -71,6 +81,44 @@ $subhero
         'return_format' => 'id',
         'preview_size' => 'medium',
         'library' => 'all',
+        'conditional_logic' => [
+            [
+                [
+                    'field' => 'media_type',
+                    'operator' => '==',
+                    'value' => 'image',
+                ],
+            ],
+        ],
+    ])
+    ->addFile('video_file', [
+        'label' => 'Video File',
+        'instructions' => 'Upload MP4 or WebM video for subhero media.',
+        'return_format' => 'array',
+        'mime_types' => 'mp4,webm',
+        'library' => 'all',
+        'conditional_logic' => [
+            [
+                [
+                    'field' => 'media_type',
+                    'operator' => '==',
+                    'value' => 'video',
+                ],
+            ],
+        ],
+    ])
+    ->addUrl('video_url', [
+        'label' => 'External Video URL',
+        'instructions' => 'Optional external MP4/WebM URL (used if no file is selected).',
+        'conditional_logic' => [
+            [
+                [
+                    'field' => 'media_type',
+                    'operator' => '==',
+                    'value' => 'video',
+                ],
+            ],
+        ],
     ])
     ->addSelect('image_presentation', [
         'label' => 'Image Presentation',
@@ -84,6 +132,15 @@ $subhero
         'default_value' => 'default',
         'required' => 0,
         'ui' => 1,
+        'conditional_logic' => [
+            [
+                [
+                    'field' => 'media_type',
+                    'operator' => '==',
+                    'value' => 'image',
+                ],
+            ],
+        ],
     ])
     ->addTrueFalse('custom_breadcrumbs', [
         'label' => 'Use Custom Breadcrumbs',
