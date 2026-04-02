@@ -192,11 +192,26 @@ $section_id = 'events-listing-' . uniqid();
                         $location_name         = ($event_locations_terms && !is_wp_error($event_locations_terms)) ? $event_locations_terms[0]->name : 'Location TBD';
                         $featured_image        = get_post_thumbnail_id($post_id);
                         $image_alt             = get_post_meta($featured_image, '_wp_attachment_image_alt', true) ?: get_the_title();
+                        $event_permalink       = get_permalink($post_id);
+                        $registration_link     = get_field('event_registration_link', $post_id);
+                        $direct_registration   = get_field('event_listing_open_registration_direct', $post_id);
+                        $direct_registration   = ($direct_registration === 1 || $direct_registration === '1' || $direct_registration === true);
+                        $has_registration_url  = is_array($registration_link) && !empty($registration_link['url']);
+                        $card_target_url       = $event_permalink;
+                        $card_target_window    = '_self';
+                        $card_rel              = '';
+
+                        if ($direct_registration && $has_registration_url) {
+                            $card_target_url = (string) $registration_link['url'];
+                            $card_target_window = '_blank';
+                            $card_rel = 'noopener noreferrer';
+                        }
                         ?>
 
                         <article 
     class="overflow-hidden flex-1 bg-sky-950 rounded-lg shrink basis-0 min-w-60 event-item cursor-pointer transition-all duration-200 hover:shadow-[0_0_0_4px_#F68DA7]"
-    data-url="<?php echo esc_url(get_permalink()); ?>"
+    data-url="<?php echo esc_url($card_target_url); ?>"
+    data-url-target="<?php echo esc_attr($card_target_window); ?>"
     tabindex="0"
 >
                             <!-- Featured Image -->
@@ -214,7 +229,9 @@ $section_id = 'events-listing-' . uniqid();
                             <div class="flex flex-col p-6 w-full text-sm max-md:px-5">
                                 <h3 class="font-sans text-[18px] font-bold not-italic leading-[24px] text-[#F68DA7]">
                                     <a
-                                        href="<?php echo esc_url(get_permalink()); ?>"
+                                        href="<?php echo esc_url($card_target_url); ?>"
+                                        target="<?php echo esc_attr($card_target_window); ?>"
+                                        <?php if (!empty($card_rel)) : ?>rel="<?php echo esc_attr($card_rel); ?>"<?php endif; ?>
                                         class="hover:underline focus:underline"
                                     >
                                         <?php the_title(); ?>
@@ -495,7 +512,13 @@ document.addEventListener('DOMContentLoaded', function () {
         card.addEventListener('click', function (e) {
             if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
             var url = card.getAttribute('data-url');
-            if (url) window.location.href = url;
+            var target = card.getAttribute('data-url-target') || '_self';
+            if (!url) return;
+            if (target === '_blank') {
+                window.open(url, '_blank', 'noopener');
+                return;
+            }
+            window.location.href = url;
         });
 
         card.addEventListener('keydown', function (e) {
@@ -503,7 +526,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
             e.preventDefault();
             var url = card.getAttribute('data-url');
-            if (url) window.location.href = url;
+            var target = card.getAttribute('data-url-target') || '_self';
+            if (!url) return;
+            if (target === '_blank') {
+                window.open(url, '_blank', 'noopener');
+                return;
+            }
+            window.location.href = url;
         });
     });
 });
