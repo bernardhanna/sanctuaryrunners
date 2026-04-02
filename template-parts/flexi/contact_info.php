@@ -3,6 +3,8 @@ $section_id = 'contact-info-' . uniqid();
 $heading = get_sub_field('heading');
 $heading_tag = get_sub_field('heading_tag');
 $background_color = get_sub_field('background_color');
+$use_two_columns_for_two_items_raw = get_sub_field('use_two_columns_for_two_items');
+$use_two_columns_for_two_items = ($use_two_columns_for_two_items_raw === null || $use_two_columns_for_two_items_raw === '' || $use_two_columns_for_two_items_raw === 1 || $use_two_columns_for_two_items_raw === '1' || $use_two_columns_for_two_items_raw === true);
 
 $padding_classes = [];
 if (have_rows('padding_settings')) {
@@ -29,6 +31,11 @@ if (have_rows('contact_locations')) {
         ];
     }
 }
+
+$desktop_grid_columns_class = 'lg:grid-cols-3';
+if ($use_two_columns_for_two_items && count($contact_locations) === 2) {
+    $desktop_grid_columns_class = 'lg:grid-cols-2';
+}
 ?>
 
 <section
@@ -49,7 +56,7 @@ if (have_rows('contact_locations')) {
 
         <?php if (!empty($contact_locations)): ?>
             <!-- Desktop / large screens -->
-            <div class="hidden gap-8 items-stretch w-full lg:grid lg:grid-cols-3 max-md:max-w-full" role="list">
+            <div class="hidden gap-8 items-stretch w-full lg:grid <?php echo esc_attr($desktop_grid_columns_class); ?> max-md:max-w-full" role="list">
                 <?php foreach ($contact_locations as $location):
                     $office_name = $location['office_name'];
                     $address = $location['address'];
