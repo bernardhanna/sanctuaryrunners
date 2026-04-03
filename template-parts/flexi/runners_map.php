@@ -267,6 +267,21 @@ foreach ($running_group_ids as $group_id) {
             zoomControl: false
         }).setView([lat, lng], zoom);
 
+        var isTouchViewport = false;
+        if (window.matchMedia) {
+            isTouchViewport = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 1024px)').matches;
+        }
+
+        if (isTouchViewport) {
+            container.style.touchAction = 'pan-y';
+            if (map.dragging) map.dragging.disable();
+            if (map.touchZoom) map.touchZoom.disable();
+            if (map.doubleClickZoom) map.doubleClickZoom.disable();
+            if (map.boxZoom) map.boxZoom.disable();
+            if (map.keyboard) map.keyboard.disable();
+            if (map.tap) map.tap.disable();
+        }
+
         var tileUrl = '';
         var tileOptions = {};
 

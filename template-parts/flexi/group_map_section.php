@@ -329,6 +329,21 @@ foreach ($running_group_ids as $group_id) {
 
     const map = L.map(container, { scrollWheelZoom: false, zoomControl: false }).setView([lat, lng], zoom);
 
+    let isTouchViewport = false;
+    if (window.matchMedia) {
+      isTouchViewport = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 1024px)').matches;
+    }
+
+    if (isTouchViewport) {
+      container.style.touchAction = 'pan-y';
+      if (map.dragging) map.dragging.disable();
+      if (map.touchZoom) map.touchZoom.disable();
+      if (map.doubleClickZoom) map.doubleClickZoom.disable();
+      if (map.boxZoom) map.boxZoom.disable();
+      if (map.keyboard) map.keyboard.disable();
+      if (map.tap) map.tap.disable();
+    }
+
     // Tile layer with Jawg fallback if token missing
     let tileUrl, tileOpts = {};
     const wantsJawg = (provider === "jawg-light" || provider === "jawg-dark");
