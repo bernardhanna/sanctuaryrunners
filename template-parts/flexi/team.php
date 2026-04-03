@@ -147,7 +147,7 @@ $people_query = new WP_Query($query_args);
 
                           $content_plain = trim((string) wp_strip_all_tags((string) strip_shortcodes($raw_content)));
                           if ($content_plain !== '') {
-                              $content_snippet = wp_trim_words($content_plain, 28, '...');
+                              $content_snippet = $content_plain;
                           }
                       }
                       ?>

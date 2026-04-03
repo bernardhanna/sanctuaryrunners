@@ -7,6 +7,7 @@ $description = get_sub_field('description');
 $button = get_sub_field('button');
 $show_button_icon = (bool) get_sub_field('show_button_icon');
 $alignment = get_sub_field('alignment') ?: 'center';
+$button_size = get_sub_field('button_size') ?: 'large';
 $background_color = get_sub_field('background_color') ?: '#ffffff';
 
 $allowed_heading_tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span'];
@@ -34,6 +35,15 @@ if ($alignment === 'left') {
 } elseif ($alignment === 'right') {
     $container_align_class = 'items-end text-right';
     $button_wrap_class = 'justify-end';
+}
+
+$button_size_class = 'px-8 py-4 text-base w-full md:w-fit';
+if ($button_size === 'xsmall') {
+    $button_size_class = 'px-4 py-2 text-xs w-full md:w-fit';
+} elseif ($button_size === 'medium') {
+    $button_size_class = 'px-6 py-3 text-sm w-full md:w-fit';
+} elseif ($button_size === 'full_width') {
+    $button_size_class = 'px-6 py-3 text-sm w-full';
 }
 ?>
 
@@ -64,7 +74,7 @@ if ($alignment === 'left') {
                 <a
                     href="<?php echo esc_url($button['url']); ?>"
                     target="<?php echo esc_attr($button['target'] ?? '_self'); ?>"
-                    class="inline-flex gap-2 justify-center items-center px-8 py-4 text-base font-bold text-white rounded-pill w-full md:w-fit border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn-primary"
+                    class="inline-flex gap-2 justify-center items-center <?php echo esc_attr($button_size_class); ?> font-bold text-white rounded-pill border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn-primary"
                     aria-label="<?php echo esc_attr($button['title']); ?>"
                 >
                     <?php echo esc_html($button['title']); ?>
