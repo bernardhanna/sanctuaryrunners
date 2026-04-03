@@ -290,15 +290,16 @@ foreach ($running_group_ids as $group_id) {
             overlay.style.inset = '0';
             overlay.style.zIndex = '6000';
             overlay.style.display = 'flex';
-            overlay.style.alignItems = 'flex-end';
+            overlay.style.alignItems = 'center';
             overlay.style.justifyContent = 'center';
-            overlay.style.padding = '12px';
+            overlay.style.padding = '0';
             overlay.style.background = 'linear-gradient(to top, rgba(0,38,62,0.12), rgba(0,38,62,0.03))';
             overlay.style.color = '#00628F';
             overlay.style.fontSize = '12px';
             overlay.style.fontWeight = '700';
             overlay.style.lineHeight = '1';
             overlay.style.cursor = 'pointer';
+            overlay.style.textShadow = '0 1px 0 rgba(255,255,255,0.55)';
             overlay.textContent = 'Tap map to interact';
 
             function lockMap() {
