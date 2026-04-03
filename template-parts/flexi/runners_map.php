@@ -276,51 +276,61 @@ foreach ($running_group_ids as $group_id) {
             }
         }
 
-        function addMobileMapToggle(mapInstance) {
-            var wrapper = container.parentElement;
-            if (!wrapper || wrapper.querySelector('[data-mobile-map-toggle]')) {
+        function addMobileMapOverlayLock(mapInstance) {
+            if (container.querySelector('[data-mobile-map-overlay]')) {
                 return;
             }
 
-            if (window.getComputedStyle(wrapper).position === 'static') {
-                wrapper.style.position = 'relative';
+            var interactive = false;
+            var overlay = document.createElement('button');
+            overlay.type = 'button';
+            overlay.setAttribute('data-mobile-map-overlay', '1');
+            overlay.setAttribute('aria-label', 'Tap to interact with map');
+            overlay.style.position = 'absolute';
+            overlay.style.inset = '0';
+            overlay.style.zIndex = '6000';
+            overlay.style.display = 'flex';
+            overlay.style.alignItems = 'flex-end';
+            overlay.style.justifyContent = 'center';
+            overlay.style.padding = '12px';
+            overlay.style.background = 'linear-gradient(to top, rgba(0,38,62,0.12), rgba(0,38,62,0.03))';
+            overlay.style.color = '#00628F';
+            overlay.style.fontSize = '12px';
+            overlay.style.fontWeight = '700';
+            overlay.style.lineHeight = '1';
+            overlay.style.cursor = 'pointer';
+            overlay.textContent = 'Tap map to interact';
+
+            function lockMap() {
+                interactive = false;
+                setMapInteractions(mapInstance, false);
+                overlay.style.display = 'flex';
             }
 
-            var button = document.createElement('button');
-            button.type = 'button';
-            button.setAttribute('data-mobile-map-toggle', '1');
-            button.setAttribute('aria-pressed', 'false');
-            button.style.position = 'absolute';
-            button.style.right = '12px';
-            button.style.bottom = '12px';
-            button.style.zIndex = '9000';
-            button.style.padding = '8px 12px';
-            button.style.borderRadius = '999px';
-            button.style.border = '2px solid #1C959B';
-            button.style.background = '#008BCC';
-            button.style.color = '#fff';
-            button.style.fontSize = '12px';
-            button.style.fontWeight = '700';
-            button.style.lineHeight = '1';
-            button.style.cursor = 'pointer';
-            button.textContent = 'Use map';
+            function unlockMap() {
+                interactive = true;
+                setMapInteractions(mapInstance, true);
+                overlay.style.display = 'none';
+            }
 
-            var interactive = false;
-            button.addEventListener('click', function (event) {
+            overlay.addEventListener('click', function (event) {
                 event.preventDefault();
                 event.stopPropagation();
-                interactive = !interactive;
-                setMapInteractions(mapInstance, interactive);
-                button.setAttribute('aria-pressed', interactive ? 'true' : 'false');
-                button.textContent = interactive ? 'Done' : 'Use map';
-                if (interactive) {
-                    button.style.background = '#00628F';
-                } else {
-                    button.style.background = '#008BCC';
-                }
+                unlockMap();
             });
 
-            wrapper.appendChild(button);
+            document.addEventListener('pointerdown', function (event) {
+                if (!interactive) {
+                    return;
+                }
+
+                if (!container.contains(event.target)) {
+                    lockMap();
+                }
+            }, true);
+
+            container.appendChild(overlay);
+            lockMap();
         }
 
         var provider = container.getAttribute('data-provider') || 'osm';
@@ -341,7 +351,7 @@ foreach ($running_group_ids as $group_id) {
 
         if (isTouchViewport) {
             setMapInteractions(map, false);
-            addMobileMapToggle(map);
+            addMobileMapOverlayLock(map);
         }
 
         var tileUrl = '';
