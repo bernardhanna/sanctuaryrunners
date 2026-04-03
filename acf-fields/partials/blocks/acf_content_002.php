@@ -46,6 +46,11 @@ $content_002
         'tabs' => 'all',
         'toolbar' => 'full',
     ])
+    ->addLink('content_button', [
+        'label' => 'Optional Button',
+        'instructions' => 'Optional CTA button shown below the body content.',
+        'return_format' => 'array',
+    ])
     ->addImage('image', [
         'label' => 'Content Image',
         'instructions' => 'Upload an image for the right column. Recommended size: 448x448 pixels or larger.',

@@ -4,6 +4,7 @@ $heading = get_sub_field('heading');
 $heading_tag = get_sub_field('heading_tag');
 $description = get_sub_field('description');
 $body_content = get_sub_field('body_content');
+$content_button = get_sub_field('content_button');
 $image = get_sub_field('image');
 $image_alt = get_post_meta($image, '_wp_attachment_image_alt', true) ?: 'Content image';
 $reverse_layout = (bool) get_sub_field('reverse_layout');
@@ -52,6 +53,20 @@ if (have_rows('padding_settings')) {
                     <?php if (!empty($body_content)): ?>
                         <div class="mt-6 text-base leading-6 text-sky-950 max-md:max-w-full wp_editor">
                             <?php echo wp_kses_post($body_content); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (is_array($content_button) && !empty($content_button['url']) && !empty($content_button['title'])): ?>
+                        <div class="mt-6">
+                            <a
+                                href="<?php echo esc_url($content_button['url']); ?>"
+                                target="<?php echo esc_attr($content_button['target'] ?? '_self'); ?>"
+                                <?php if (($content_button['target'] ?? '') === '_blank') : ?>rel="noopener noreferrer"<?php endif; ?>
+                                class="inline-flex gap-2 justify-center items-center px-6 py-3 mx-auto text-sm font-bold text-white rounded-[100px] w-full md:w-fit border-[3px] border-[var(--Turquoise-500,#1C959B)] bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-500,#00628F)] focus-visible:text-white transition-colors duration-200 btn-primary"
+                                aria-label="<?php echo esc_attr($content_button['title']); ?>"
+                            >
+                                <?php echo esc_html($content_button['title']); ?>
+                            </a>
                         </div>
                     <?php endif; ?>
                 </article>
