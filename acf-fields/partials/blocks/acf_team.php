@@ -143,6 +143,22 @@ $team
         ])
 
     ->addTab('layout', ['label' => 'Layout'])
+        ->addSelect('desktop_columns', [
+            'label' => 'Desktop Grid Columns',
+            'instructions' => 'Choose the number of columns on desktop screens.',
+            'choices' => [
+                '4' => '4 columns',
+                '3' => '3 columns',
+            ],
+            'default_value' => '4',
+            'ui' => 1,
+        ])
+        ->addTrueFalse('show_content_snippet', [
+            'label' => 'Show Post Content Snippet',
+            'instructions' => 'Show a short excerpt from the team member post content under the role line.',
+            'ui' => 1,
+            'default_value' => 1,
+        ])
         ->addRepeater('padding_settings', [
             'label' => 'Padding Settings',
             'instructions' => 'Customize padding for different screen sizes.',

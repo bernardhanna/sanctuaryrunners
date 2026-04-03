@@ -19,6 +19,8 @@ $posts_per_page = get_sub_field('posts_per_page');
 $role_filter = get_sub_field('role_filter');
 $orderby = get_sub_field('orderby');
 $order = get_sub_field('order');
+$desktop_columns = (string) get_sub_field('desktop_columns');
+$show_content_snippet = (bool) get_sub_field('show_content_snippet');
 
 $padding_classes = [];
 if (have_rows('padding_settings')) {
@@ -44,6 +46,7 @@ if (!in_array($heading_tag, $allowed_heading_tags, true)) {
 }
 
 $heading_id = $section_id . '-heading';
+$desktop_grid_class = ($desktop_columns === '3') ? 'lg:grid-cols-3' : 'lg:grid-cols-4';
 
 $query_args = [
     'post_type' => 'people',
@@ -100,7 +103,7 @@ $people_query = new WP_Query($query_args);
                 <?php } ?>
                 </div>
           <?php if ($people_query->have_posts()) { ?>
-              <div class="grid grid-cols-2 gap-6 w-full md:grid-cols-3 lg:grid-cols-4">
+              <div class="grid grid-cols-2 gap-6 w-full md:grid-cols-3 <?php echo esc_attr($desktop_grid_class); ?>">
                   <?php while ($people_query->have_posts()) { ?>
                       <?php
                       $people_query->the_post();
@@ -129,6 +132,15 @@ $people_query = new WP_Query($query_args);
                           $terms = get_the_terms($person_id, 'people_role');
                           if (!is_wp_error($terms) && !empty($terms)) {
                               $role_text = $terms[0]->name;
+                          }
+                      }
+
+                      $content_snippet = '';
+                      if ($show_content_snippet) {
+                          $raw_content = (string) get_post_field('post_content', $person_id);
+                          $content_plain = trim((string) wp_strip_all_tags((string) strip_shortcodes($raw_content)));
+                          if ($content_plain !== '') {
+                              $content_snippet = wp_trim_words($content_plain, 28, '...');
                           }
                       }
                       ?>
@@ -171,6 +183,15 @@ $people_query = new WP_Query($query_args);
                                           style="color: <?php echo esc_attr($body_text_color); ?>;"
                                       >
                                           <?php echo esc_html($role_text); ?>
+                                      </p>
+                                  <?php } ?>
+
+                                  <?php if (!empty($content_snippet)) { ?>
+                                      <p
+                                          class="break-words text-left text-[0.875rem] font-[400] leading-[1.25rem] font-['Public Sans']"
+                                          style="color: <?php echo esc_attr($body_text_color); ?>;"
+                                      >
+                                          <?php echo esc_html($content_snippet); ?>
                                       </p>
                                   <?php } ?>
                               </div>
