@@ -48,6 +48,7 @@ if (!in_array($heading_tag, $allowed_heading_tags, true)) {
 
 $heading_id = $section_id . '-heading';
 $desktop_grid_class = ($desktop_columns === '3') ? 'lg:grid-cols-3' : 'lg:grid-cols-4';
+$snippet_preview_max_chars = 217;
 
 $query_args = [
     'post_type' => 'people',
@@ -150,10 +151,19 @@ $people_query = new WP_Query($query_args);
                           $content_plain = trim((string) wp_strip_all_tags((string) strip_shortcodes($raw_content)));
                           if ($content_plain !== '') {
                               $content_snippet = $content_plain;
-                              $snippet_words = preg_split('/\s+/', $content_snippet, -1, PREG_SPLIT_NO_EMPTY);
-                              $snippet_word_count = is_array($snippet_words) ? count($snippet_words) : 0;
-                              if ($snippet_word_count > 42) {
-                                  $content_snippet_preview = wp_trim_words($content_snippet, 42, '...');
+                              if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+                                  if (mb_strlen($content_snippet) > $snippet_preview_max_chars) {
+                                      $truncated = mb_substr($content_snippet, 0, $snippet_preview_max_chars);
+                                      $truncated = preg_replace('/\s+\S*$/u', '', $truncated);
+                                      $content_snippet_preview = rtrim((string) $truncated, " \t\n\r\0\x0B.,;:!?") . '...';
+                                      $show_read_more = true;
+                                  } else {
+                                      $content_snippet_preview = $content_snippet;
+                                  }
+                              } elseif (strlen($content_snippet) > $snippet_preview_max_chars) {
+                                  $truncated = substr($content_snippet, 0, $snippet_preview_max_chars);
+                                  $truncated = preg_replace('/\s+\S*$/', '', $truncated);
+                                  $content_snippet_preview = rtrim((string) $truncated, " \t\n\r\0\x0B.,;:!?") . '...';
                                   $show_read_more = true;
                               } else {
                                   $content_snippet_preview = $content_snippet;
@@ -161,8 +171,8 @@ $people_query = new WP_Query($query_args);
                           }
                       }
                       ?>
-                      <article class="flex flex-col gap-4 h-full">
-                          <div class="flex flex-col gap-4 h-full">
+                      <article class="flex flex-col gap-4">
+                          <div class="flex flex-col gap-4">
                               <div class="w-full max-lg:h-auto h-[20rem] overflow-hidden <?php echo esc_attr($image_radius); ?>">
                                   <?php if (!empty($thumb_url)) { ?>
                                       <img
@@ -186,7 +196,7 @@ $people_query = new WP_Query($query_args);
                                   <?php } ?>
                               </div>
 
-                              <div class="flex flex-col gap-1 h-full">
+                              <div class="flex flex-col gap-1">
                                   <p
                                       class="break-words text-left text-[1.125rem] font-[700] leading-[1.5rem] font-['Public Sans']"
                                       style="color: <?php echo esc_attr($body_text_color); ?>;"
@@ -204,7 +214,7 @@ $people_query = new WP_Query($query_args);
                                   <?php } ?>
 
                                   <?php if (!empty($content_snippet_preview)) { ?>
-                                      <div class="flex flex-col flex-1 pt-1">
+                                      <div class="pt-1" data-team-snippet-wrap>
                                           <p
                                               class="break-words text-left text-[0.875rem] font-[400] leading-[1.25rem] font-['Public Sans']"
                                               style="color: <?php echo esc_attr($body_text_color); ?>;"
@@ -218,8 +228,7 @@ $people_query = new WP_Query($query_args);
                                           <?php if ($show_read_more) { ?>
                                               <button
                                                   type="button"
-                                                  class="mt-2 inline-flex w-fit text-left text-[0.8125rem] font-[700] leading-[1.125rem] underline"
-                                                  style="color: <?php echo esc_attr($body_text_color); ?>;"
+                                                  class="mt-2 inline-flex w-fit text-left text-[0.8125rem] font-[700] leading-[1.125rem] underline text-[var(--Blue-SR-400,#008BCC)] hover:text-[var(--Blue-SR-500,#00628F)] focus:outline-none focus-visible:ring-0 transition-colors duration-200"
                                                   data-team-snippet-toggle
                                                   aria-expanded="false"
                                               >
@@ -253,7 +262,7 @@ $people_query = new WP_Query($query_args);
     var toggles = section.querySelectorAll('[data-team-snippet-toggle]');
     toggles.forEach(function(toggle) {
         toggle.addEventListener('click', function() {
-            var wrapper = toggle.closest('.flex.flex-col.flex-1');
+            var wrapper = toggle.closest('[data-team-snippet-wrap]');
             if (!wrapper) {
                 return;
             }
