@@ -167,7 +167,7 @@ if ($location_fields_version === 'ireland') {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
     <div class="flex flex-col items-center pt-10 pb-14 mx-auto w-full max-w-[1024px] max-xl:px-5">
-        <div class="px-20 py-16 w-full rounded-2xl max-lg:px-5 max-lg:max-w-full" style="background-color: <?php echo esc_attr($form_background_color); ?>;">
+        <div class="px-20 py-6 w-full rounded-2xl lg:py-16 max-lg:px-5 max-lg:max-w-full" style="background-color: <?php echo esc_attr($form_background_color); ?>;">
             <<?php echo esc_attr($heading_tag); ?> class="text-3xl leading-none text-sky-800 max-lg:max-w-full">
                 <?php echo esc_html($heading); ?>
             </<?php echo esc_attr($heading_tag); ?>>
@@ -232,11 +232,11 @@ if ($location_fields_version === 'ireland') {
                             </div>
                         <?php endif; ?>
 
-                        <div class="flex flex-wrap gap-4 w-full mt-4">
+                        <div class="flex flex-wrap gap-4 mt-4 w-full">
                             <div class="flex-1 min-w-60">
                                 <label class="text-xs text-slate-900">Which Sanctuary Runners group would you like to join?*</label>
                                 <div class="mt-0">
-                                    <select class="w-full p-4 border border-slate-600 rounded bg-white" name="group" required aria-required="true">
+                                    <select class="p-4 w-full bg-white rounded border border-slate-600" name="group" required aria-required="true">
                                         <?php if (!empty($group_options)) : ?>
                                             <option value="">Select group</option>
                                             <?php foreach ($group_options as $group_option) : ?>
@@ -250,29 +250,29 @@ if ($location_fields_version === 'ireland') {
                             </div>
                             <div class="flex-1 min-w-60">
                                 <label class="text-xs text-slate-900">Phone number</label>
-                                <div class="mt-0"><input class="w-full p-4 border border-slate-600 rounded" type="tel" name="phone" :placeholder="phonePlaceholder"></div>
+                                <div class="mt-0"><input class="p-4 w-full rounded border border-slate-600" type="tel" name="phone" :placeholder="phonePlaceholder"></div>
                             </div>
                         </div>
 
                         <div class="flex flex-wrap gap-4 mt-4 w-full">
-                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">First name*</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="first_name" placeholder="First name" required aria-required="true"></div>
-                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Last name*</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="last_name" placeholder="Last name" required aria-required="true"></div>
+                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">First name*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="first_name" placeholder="First name" required aria-required="true"></div>
+                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Last name*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="last_name" placeholder="Last name" required aria-required="true"></div>
                         </div>
 
                         <div class="flex flex-wrap gap-4 mt-4 w-full">
-                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Email address*</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="email" name="email" placeholder="Email address" required aria-required="true"></div>
-                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Date of birth</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="date_of_birth" placeholder="DD/MM/YYYY"></div>
+                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Email address*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="email" name="email" placeholder="Email address" required aria-required="true"></div>
+                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Date of birth</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="date_of_birth" placeholder="DD/MM/YYYY"></div>
                         </div>
 
                         <div class="flex flex-wrap gap-4 mt-4 w-full">
-                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Address line 1</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="address_line_1" placeholder="Address line 1"></div>
-                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Address line 2</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="address_line_2" placeholder="Address line 2"></div>
+                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Address line 1</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="address_line_1" placeholder="Address line 1"></div>
+                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Address line 2</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="address_line_2" placeholder="Address line 2"></div>
                         </div>
 
                         <div class="flex flex-wrap gap-4 mt-4 w-full">
                             <div class="flex-1 min-w-60" x-show="locationMode === 'ireland'">
                                 <label class="text-xs text-slate-900">County*</label>
-                                <select class="w-full p-4 border border-slate-600 rounded mt-0" name="county" required aria-required="true" :disabled="locationMode !== 'ireland'">
+                                <select class="p-4 mt-0 w-full rounded border border-slate-600" name="county" required aria-required="true" :disabled="locationMode !== 'ireland'">
                                     <option value="">Select county</option>
                                     <template x-for="county in irelandCounties" :key="county">
                                         <option :value="county" x-text="county"></option>
@@ -282,12 +282,12 @@ if ($location_fields_version === 'ireland') {
 
                             <div class="flex-1 min-w-60" x-show="locationMode === 'uk'">
                                 <label class="text-xs text-slate-900">County*</label>
-                                <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="county" placeholder="Enter county" required aria-required="true" :disabled="locationMode !== 'uk'">
+                                <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="county" placeholder="Enter county" required aria-required="true" :disabled="locationMode !== 'uk'">
                             </div>
 
                             <div class="flex-1 min-w-60" x-show="locationMode === 'australia'">
                                 <label class="text-xs text-slate-900">State / Territory*</label>
-                                <select class="w-full p-4 border border-slate-600 rounded mt-0" name="state" required aria-required="true" :disabled="locationMode !== 'australia'">
+                                <select class="p-4 mt-0 w-full rounded border border-slate-600" name="state" required aria-required="true" :disabled="locationMode !== 'australia'">
                                     <option value="">Select state / territory</option>
                                     <template x-for="state in australiaStates" :key="state">
                                         <option :value="state" x-text="state"></option>
@@ -297,12 +297,12 @@ if ($location_fields_version === 'ireland') {
 
                             <div class="flex-1 min-w-60" x-show="locationMode === 'global'">
                                 <label class="text-xs text-slate-900">City*</label>
-                                <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="city" placeholder="Enter city" required aria-required="true" :disabled="locationMode !== 'global'">
+                                <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="city" placeholder="Enter city" required aria-required="true" :disabled="locationMode !== 'global'">
                             </div>
 
                             <div class="flex-1 min-w-60">
                                 <label class="text-xs text-slate-900">Country*</label>
-                                <select class="w-full p-4 border border-slate-600 rounded mt-0" name="country" required aria-required="true" x-model="selectedCountry">
+                                <select class="p-4 mt-0 w-full rounded border border-slate-600" name="country" required aria-required="true" x-model="selectedCountry">
                                     <option value="">Select country</option>
                                     <?php foreach ($country_options as $country) : ?>
                                         <option value="<?php echo esc_attr($country); ?>" <?php selected($country, $default_country); ?>><?php echo esc_html($country); ?></option>
@@ -314,15 +314,15 @@ if ($location_fields_version === 'ireland') {
                         <div class="flex flex-wrap gap-4 mt-4 w-full">
                             <div class="flex-1 min-w-60" x-show="locationMode === 'ireland'">
                                 <label class="text-xs text-slate-900">Eircode*</label>
-                                <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="eircode" placeholder="Eircode" :required="locationMode === 'ireland'" :aria-required="(locationMode === 'ireland').toString()" :disabled="locationMode !== 'ireland'">
+                                <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="eircode" placeholder="Eircode" :required="locationMode === 'ireland'" :aria-required="(locationMode === 'ireland').toString()" :disabled="locationMode !== 'ireland'">
                             </div>
                             <div class="flex-1 min-w-60" x-show="locationMode === 'uk' || locationMode === 'australia'">
                                 <label class="text-xs text-slate-900">Postcode*</label>
-                                <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="postcode" placeholder="Postcode" :required="locationMode === 'uk' || locationMode === 'australia'" :aria-required="(locationMode === 'uk' || locationMode === 'australia').toString()" :disabled="!(locationMode === 'uk' || locationMode === 'australia')">
+                                <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="postcode" placeholder="Postcode" :required="locationMode === 'uk' || locationMode === 'australia'" :aria-required="(locationMode === 'uk' || locationMode === 'australia').toString()" :disabled="!(locationMode === 'uk' || locationMode === 'australia')">
                             </div>
                             <div class="flex-1 min-w-60" x-show="locationMode === 'global'">
                                 <label class="text-xs text-slate-900">Postal code</label>
-                                <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="postal_code" placeholder="Postal code (optional)" :disabled="locationMode !== 'global'">
+                                <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="postal_code" placeholder="Postal code (optional)" :disabled="locationMode !== 'global'">
                             </div>
                         </div>
 
@@ -330,9 +330,9 @@ if ($location_fields_version === 'ireland') {
                             <input class="w-6 h-6" type="checkbox" name="terms_conditions" required aria-required="true">
                             <label class="text-xs">
                                 By submitting this form you agree with the
-                                <a class="text-sky-800 font-bold" href="<?php echo esc_url($terms_conditions_url); ?>">Terms and Conditions</a>
+                                <a class="font-bold text-sky-800" href="<?php echo esc_url($terms_conditions_url); ?>">Terms and Conditions</a>
                                 and
-                                <a class="text-sky-800 font-bold" href="<?php echo esc_url($privacy_policy_url); ?>">Privacy Policy</a>.
+                                <a class="font-bold text-sky-800" href="<?php echo esc_url($privacy_policy_url); ?>">Privacy Policy</a>.
                             </label>
                         </div>
 
@@ -347,7 +347,7 @@ if ($location_fields_version === 'ireland') {
 
                         <div class="mt-4"><div class="cf-turnstile"></div></div>
 
-                        <button class="mt-4 inline-flex gap-2 justify-center items-center px-6 py-3 text-sm font-bold text-white rounded-pill w-full btn-primary" type="submit">
+                        <button class="inline-flex gap-2 justify-center items-center px-6 py-3 mt-4 w-full text-sm font-bold text-white rounded-pill btn-primary" type="submit">
                             <span class="self-stretch my-auto">Submit</span>
                         </button>
                     </form>
@@ -355,27 +355,27 @@ if ($location_fields_version === 'ireland') {
 
                 <?php if ($enable_existing_member_switch) : ?>
                     <div x-show="formView === 'renewal'" x-cloak>
-                        <button type="button" class="mb-4 inline-flex items-center gap-2 rounded-pill bg-white px-4 py-2 text-sm font-bold text-brand-primary-hover transition-colors duration-200 hover:bg-brand-accent-soft a11y-focus" @click="formView = 'main'">Back to main form</button>
+                        <button type="button" class="inline-flex gap-2 items-center px-4 py-2 mb-4 text-sm font-bold bg-white transition-colors duration-200 rounded-pill text-brand-primary-hover hover:bg-brand-accent-soft a11y-focus" @click="formView = 'main'">Back to main form</button>
                         <h3 class="mb-4 text-2xl font-bold leading-8 text-sky-800"><?php echo esc_html($renewal_heading); ?></h3>
 
                         <form class="w-full" role="form" novalidate aria-labelledby="form-heading" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" data-theme-form="<?php echo esc_attr(get_row_index()); ?>">
                             <?php echo $build_hidden_fields($renewal_form_name); ?>
                             <div class="flex flex-wrap gap-4 mt-0 w-full">
-                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">First name*</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="first_name" placeholder="First name" required aria-required="true"></div>
-                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Last name*</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="last_name" placeholder="Last name" required aria-required="true"></div>
+                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">First name*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="first_name" placeholder="First name" required aria-required="true"></div>
+                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Last name*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="last_name" placeholder="Last name" required aria-required="true"></div>
                             </div>
                             <div class="flex flex-wrap gap-4 mt-4 w-full">
-                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Email address*</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="email" name="email" placeholder="Email address" required aria-required="true"></div>
-                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Member ID (optional)</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="member_id" placeholder="Member ID"></div>
+                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Email address*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="email" name="email" placeholder="Email address" required aria-required="true"></div>
+                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Member ID (optional)</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="member_id" placeholder="Member ID"></div>
                             </div>
                             <div class="flex flex-wrap gap-4 mt-4 w-full">
-                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Address line 1</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="address_line_1" placeholder="Address line 1"></div>
-                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Address line 2</label><input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="address_line_2" placeholder="Address line 2"></div>
+                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Address line 1</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="address_line_1" placeholder="Address line 1"></div>
+                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Address line 2</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="address_line_2" placeholder="Address line 2"></div>
                             </div>
                             <div class="flex flex-wrap gap-4 mt-4 w-full">
                                 <div class="flex-1 min-w-60" x-show="locationMode === 'ireland'">
                                     <label class="text-xs text-slate-900">County*</label>
-                                    <select class="w-full p-4 border border-slate-600 rounded mt-0" name="county" required aria-required="true" :disabled="locationMode !== 'ireland'">
+                                    <select class="p-4 mt-0 w-full rounded border border-slate-600" name="county" required aria-required="true" :disabled="locationMode !== 'ireland'">
                                         <option value="">Select county</option>
                                         <template x-for="county in irelandCounties" :key="'renew-'+county">
                                             <option :value="county" x-text="county"></option>
@@ -384,11 +384,11 @@ if ($location_fields_version === 'ireland') {
                                 </div>
                                 <div class="flex-1 min-w-60" x-show="locationMode === 'uk'">
                                     <label class="text-xs text-slate-900">County*</label>
-                                    <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="county" placeholder="Enter county" required aria-required="true" :disabled="locationMode !== 'uk'">
+                                    <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="county" placeholder="Enter county" required aria-required="true" :disabled="locationMode !== 'uk'">
                                 </div>
                                 <div class="flex-1 min-w-60" x-show="locationMode === 'australia'">
                                     <label class="text-xs text-slate-900">State / Territory*</label>
-                                    <select class="w-full p-4 border border-slate-600 rounded mt-0" name="state" required aria-required="true" :disabled="locationMode !== 'australia'">
+                                    <select class="p-4 mt-0 w-full rounded border border-slate-600" name="state" required aria-required="true" :disabled="locationMode !== 'australia'">
                                         <option value="">Select state / territory</option>
                                         <template x-for="state in australiaStates" :key="'renew-'+state">
                                             <option :value="state" x-text="state"></option>
@@ -397,11 +397,11 @@ if ($location_fields_version === 'ireland') {
                                 </div>
                                 <div class="flex-1 min-w-60" x-show="locationMode === 'global'">
                                     <label class="text-xs text-slate-900">City*</label>
-                                    <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="city" placeholder="Enter city" required aria-required="true" :disabled="locationMode !== 'global'">
+                                    <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="city" placeholder="Enter city" required aria-required="true" :disabled="locationMode !== 'global'">
                                 </div>
                                 <div class="flex-1 min-w-60">
                                     <label class="text-xs text-slate-900">Country*</label>
-                                    <select class="w-full p-4 border border-slate-600 rounded mt-0" name="country" required aria-required="true" x-model="selectedCountry">
+                                    <select class="p-4 mt-0 w-full rounded border border-slate-600" name="country" required aria-required="true" x-model="selectedCountry">
                                         <option value="">Select country</option>
                                         <?php foreach ($country_options as $country) : ?>
                                             <option value="<?php echo esc_attr($country); ?>" <?php selected($country, $default_country); ?>><?php echo esc_html($country); ?></option>
@@ -412,21 +412,21 @@ if ($location_fields_version === 'ireland') {
                             <div class="flex flex-wrap gap-4 mt-4 w-full">
                                 <div class="flex-1 min-w-60" x-show="locationMode === 'ireland'">
                                     <label class="text-xs text-slate-900">Eircode*</label>
-                                    <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="eircode" placeholder="Eircode" :required="locationMode === 'ireland'" :aria-required="(locationMode === 'ireland').toString()" :disabled="locationMode !== 'ireland'">
+                                    <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="eircode" placeholder="Eircode" :required="locationMode === 'ireland'" :aria-required="(locationMode === 'ireland').toString()" :disabled="locationMode !== 'ireland'">
                                 </div>
                                 <div class="flex-1 min-w-60" x-show="locationMode === 'uk' || locationMode === 'australia'">
                                     <label class="text-xs text-slate-900">Postcode*</label>
-                                    <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="postcode" placeholder="Postcode" :required="locationMode === 'uk' || locationMode === 'australia'" :aria-required="(locationMode === 'uk' || locationMode === 'australia').toString()" :disabled="!(locationMode === 'uk' || locationMode === 'australia')">
+                                    <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="postcode" placeholder="Postcode" :required="locationMode === 'uk' || locationMode === 'australia'" :aria-required="(locationMode === 'uk' || locationMode === 'australia').toString()" :disabled="!(locationMode === 'uk' || locationMode === 'australia')">
                                 </div>
                                 <div class="flex-1 min-w-60" x-show="locationMode === 'global'">
                                     <label class="text-xs text-slate-900">Postal code</label>
-                                    <input class="w-full p-4 border border-slate-600 rounded mt-0" type="text" name="postal_code" placeholder="Postal code (optional)" :disabled="locationMode !== 'global'">
+                                    <input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="postal_code" placeholder="Postal code (optional)" :disabled="locationMode !== 'global'">
                                 </div>
                             </div>
-                            <div class="flex flex-wrap gap-4 w-full mt-4">
+                            <div class="flex flex-wrap gap-4 mt-4 w-full">
                                 <div class="flex-1 min-w-60">
                                     <label class="text-xs text-slate-900">Which Sanctuary Runners group are you renewing with?*</label>
-                                    <select class="w-full p-4 border border-slate-600 rounded bg-white" name="group" required aria-required="true">
+                                    <select class="p-4 w-full bg-white rounded border border-slate-600" name="group" required aria-required="true">
                                         <?php if (!empty($group_options)) : ?>
                                             <option value="">Select group</option>
                                             <?php foreach ($group_options as $group_option) : ?>
@@ -442,13 +442,13 @@ if ($location_fields_version === 'ireland') {
                                 <input class="w-6 h-6" type="checkbox" name="terms_conditions" required aria-required="true">
                                 <label class="text-xs">
                                     By submitting this form you agree with the
-                                    <a class="text-sky-800 font-bold" href="<?php echo esc_url($terms_conditions_url); ?>">Terms and Conditions</a>
+                                    <a class="font-bold text-sky-800" href="<?php echo esc_url($terms_conditions_url); ?>">Terms and Conditions</a>
                                     and
-                                    <a class="text-sky-800 font-bold" href="<?php echo esc_url($privacy_policy_url); ?>">Privacy Policy</a>.
+                                    <a class="font-bold text-sky-800" href="<?php echo esc_url($privacy_policy_url); ?>">Privacy Policy</a>.
                                 </label>
                             </div>
                             <div class="mt-4"><div class="cf-turnstile"></div></div>
-                            <button class="mt-4 inline-flex gap-2 justify-center items-center px-6 py-3 text-sm font-bold text-white rounded-pill w-full btn-primary" type="submit">
+                            <button class="inline-flex gap-2 justify-center items-center px-6 py-3 mt-4 w-full text-sm font-bold text-white rounded-pill btn-primary" type="submit">
                                 <span class="self-stretch my-auto">Submit renewal</span>
                             </button>
                         </form>
