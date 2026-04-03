@@ -55,6 +55,18 @@ $cta_large_button
         'default_value' => 'center',
         'ui' => 1,
     ])
+    ->addSelect('button_size', [
+        'label' => 'Button Size',
+        'instructions' => 'Choose the button size style.',
+        'choices' => [
+            'xsmall' => 'X-Small',
+            'medium' => 'Medium',
+            'large' => 'Large',
+            'full_width' => 'Full Width',
+        ],
+        'default_value' => 'large',
+        'ui' => 1,
+    ])
 
     ->addTab('Design', ['label' => 'Design'])
     ->addColorPicker('background_color', [
