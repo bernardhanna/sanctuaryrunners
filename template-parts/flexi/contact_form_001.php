@@ -124,7 +124,7 @@ $existing_member_form_markup = $has_existing_member_form ? $prepare_form_markup(
 >
     <div class="flex flex-col items-center pt-10 pb-14 mx-auto w-full max-w-[1024px] max-xl:px-5">
         <div
-            class="px-20 py-16 w-full rounded-2xl max-lg:px-5 max-lg:max-w-full"
+            class="px-20 py-6 w-full rounded-2xl lg:py-16 max-lg:px-5 max-lg:max-w-full"
             style="background-color: <?php echo esc_attr($form_background_color); ?>;"
         >
             <?php if ($heading): ?>
