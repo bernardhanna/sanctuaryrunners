@@ -107,6 +107,7 @@ $people_query = new WP_Query($query_args);
 
                       $person_id = get_the_ID();
                       $person_name = get_the_title($person_id);
+                      $person_permalink = get_permalink($person_id);
 
                       $thumb_id = get_post_thumbnail_id($person_id);
                       $thumb_url = $thumb_id ? wp_get_attachment_image_url($thumb_id, 'large') : '';
@@ -132,46 +133,48 @@ $people_query = new WP_Query($query_args);
                       }
                       ?>
                       <article class="flex flex-col gap-4">
-                          <div class="w-full max-lg:h-auto h-[20rem] overflow-hidden <?php echo esc_attr($image_radius); ?>">
-                              <?php if (!empty($thumb_url)) { ?>
-                                  <img
-                                      src="<?php echo esc_url($thumb_url); ?>"
-                                      alt="<?php echo esc_attr($thumb_alt); ?>"
-                                      title="<?php echo esc_attr($thumb_title); ?>"
-                                      loading="lazy"
-                                      decoding="async"
-                                      class="object-cover w-full h-full rounded-lg max-lg:h-auto max-lg:object-contain"
-                                  >
-                              <?php } else { ?>
-                                  <div
-                                      class="w-full h-[20rem] flex items-center justify-center bg-[#e8ebf4] <?php echo esc_attr($image_radius); ?>"
-                                      role="img"
-                                      aria-label="<?php echo esc_attr($thumb_alt); ?>"
-                                  >
-                                      <span class="text-sm" style="color: <?php echo esc_attr($body_text_color); ?>;">
-                                          <?php echo esc_html($person_name); ?>
-                                      </span>
-                                  </div>
-                              <?php } ?>
-                          </div>
+                          <a href="<?php echo esc_url($person_permalink); ?>" class="flex flex-col gap-4 group" aria-label="<?php echo esc_attr(sprintf(__('View profile for %s', 'matrix-starter'), $person_name)); ?>">
+                              <div class="w-full max-lg:h-auto h-[20rem] overflow-hidden <?php echo esc_attr($image_radius); ?>">
+                                  <?php if (!empty($thumb_url)) { ?>
+                                      <img
+                                          src="<?php echo esc_url($thumb_url); ?>"
+                                          alt="<?php echo esc_attr($thumb_alt); ?>"
+                                          title="<?php echo esc_attr($thumb_title); ?>"
+                                          loading="lazy"
+                                          decoding="async"
+                                          class="object-cover w-full h-full rounded-lg max-lg:h-auto max-lg:object-contain"
+                                      >
+                                  <?php } else { ?>
+                                      <div
+                                          class="w-full h-[20rem] flex items-center justify-center bg-[#e8ebf4] <?php echo esc_attr($image_radius); ?>"
+                                          role="img"
+                                          aria-label="<?php echo esc_attr($thumb_alt); ?>"
+                                      >
+                                          <span class="text-sm" style="color: <?php echo esc_attr($body_text_color); ?>;">
+                                              <?php echo esc_html($person_name); ?>
+                                          </span>
+                                      </div>
+                                  <?php } ?>
+                              </div>
 
-                          <div class="flex flex-col gap-1">
-                              <p
-                                  class="break-words text-left text-[1.125rem] font-[700] leading-[1.5rem] font-['Public Sans']"
-                                  style="color: <?php echo esc_attr($body_text_color); ?>;"
-                              >
-                                  <?php echo esc_html($person_name); ?>
-                              </p>
-
-                              <?php if (!empty($role_text)) { ?>
+                              <div class="flex flex-col gap-1">
                                   <p
-                                      class="break-words text-left text-[0.875rem] font-[400] leading-[1.25rem] font-['Public Sans']"
+                                      class="break-words text-left text-[1.125rem] font-[700] leading-[1.5rem] font-['Public Sans'] group-hover:underline"
                                       style="color: <?php echo esc_attr($body_text_color); ?>;"
                                   >
-                                      <?php echo esc_html($role_text); ?>
+                                      <?php echo esc_html($person_name); ?>
                                   </p>
-                              <?php } ?>
-                          </div>
+
+                                  <?php if (!empty($role_text)) { ?>
+                                      <p
+                                          class="break-words text-left text-[0.875rem] font-[400] leading-[1.25rem] font-['Public Sans']"
+                                          style="color: <?php echo esc_attr($body_text_color); ?>;"
+                                      >
+                                          <?php echo esc_html($role_text); ?>
+                                      </p>
+                                  <?php } ?>
+                              </div>
+                          </a>
                       </article>
                   <?php } ?>
               </div>
