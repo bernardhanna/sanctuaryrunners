@@ -11,12 +11,17 @@ $archive_title = is_category()
     ? single_cat_title('', false)
     : wp_strip_all_tags(get_the_archive_title());
 $archive_title = preg_replace('/^\s*Archives?:\s*/i', '', (string) $archive_title);
+$is_people_archive = is_post_type_archive('people');
 $archive_desc  = trim((string) get_the_archive_description());
 if ($archive_desc === '') {
-    $archive_desc = 'Browse updates, stories, and announcements from Sanctuary Runners.';
+    $archive_desc = $is_people_archive
+        ? 'Meet the Sanctuary Runners team.'
+        : 'Browse updates, stories, and announcements from Sanctuary Runners.';
 }
 $posts_page_id = (int) get_option('page_for_posts');
 $news_media_url = $posts_page_id ? get_permalink($posts_page_id) : home_url('/news-and-media/');
+$archive_parent_label = $is_people_archive ? 'Our Team' : 'News & Media';
+$archive_parent_url = $is_people_archive ? home_url('/about/our-team/') : $news_media_url;
 
 $breadcrumbs = [
     [
@@ -25,8 +30,8 @@ $breadcrumbs = [
         'is_current' => false,
     ],
     [
-        'title'      => 'News & Media',
-        'url'        => $news_media_url,
+        'title'      => $archive_parent_label,
+        'url'        => $archive_parent_url,
         'is_current' => false,
     ],
     [
@@ -49,8 +54,12 @@ get_template_part('template-parts/hero/subhero', null, matrix_get_archive_subher
     'secondary_cta'      => null,
 ]));
 
-get_template_part('template-parts/flexi/blog_listing');
-get_template_part('template-parts/flexi/newsletter_001');
+if ($is_people_archive) {
+    get_template_part('template-parts/flexi/people_listing');
+} else {
+    get_template_part('template-parts/flexi/blog_listing');
+    get_template_part('template-parts/flexi/newsletter_001');
+}
 
 get_footer();
 
