@@ -256,6 +256,73 @@ foreach ($running_group_ids as $group_id) {
             return;
         }
 
+        function setMapInteractions(mapInstance, enabled) {
+            if (enabled) {
+                if (mapInstance.dragging) mapInstance.dragging.enable();
+                if (mapInstance.touchZoom) mapInstance.touchZoom.enable();
+                if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.enable();
+                if (mapInstance.boxZoom) mapInstance.boxZoom.enable();
+                if (mapInstance.keyboard) mapInstance.keyboard.enable();
+                if (mapInstance.tap) mapInstance.tap.enable();
+                container.style.touchAction = 'auto';
+            } else {
+                if (mapInstance.dragging) mapInstance.dragging.disable();
+                if (mapInstance.touchZoom) mapInstance.touchZoom.disable();
+                if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.disable();
+                if (mapInstance.boxZoom) mapInstance.boxZoom.disable();
+                if (mapInstance.keyboard) mapInstance.keyboard.disable();
+                if (mapInstance.tap) mapInstance.tap.disable();
+                container.style.touchAction = 'pan-y';
+            }
+        }
+
+        function addMobileMapToggle(mapInstance) {
+            var wrapper = container.parentElement;
+            if (!wrapper || wrapper.querySelector('[data-mobile-map-toggle]')) {
+                return;
+            }
+
+            if (window.getComputedStyle(wrapper).position === 'static') {
+                wrapper.style.position = 'relative';
+            }
+
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.setAttribute('data-mobile-map-toggle', '1');
+            button.setAttribute('aria-pressed', 'false');
+            button.style.position = 'absolute';
+            button.style.right = '12px';
+            button.style.bottom = '12px';
+            button.style.zIndex = '9000';
+            button.style.padding = '8px 12px';
+            button.style.borderRadius = '999px';
+            button.style.border = '2px solid #1C959B';
+            button.style.background = '#008BCC';
+            button.style.color = '#fff';
+            button.style.fontSize = '12px';
+            button.style.fontWeight = '700';
+            button.style.lineHeight = '1';
+            button.style.cursor = 'pointer';
+            button.textContent = 'Use map';
+
+            var interactive = false;
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                interactive = !interactive;
+                setMapInteractions(mapInstance, interactive);
+                button.setAttribute('aria-pressed', interactive ? 'true' : 'false');
+                button.textContent = interactive ? 'Done' : 'Use map';
+                if (interactive) {
+                    button.style.background = '#00628F';
+                } else {
+                    button.style.background = '#008BCC';
+                }
+            });
+
+            wrapper.appendChild(button);
+        }
+
         var provider = container.getAttribute('data-provider') || 'osm';
         var token = container.getAttribute('data-token') || '';
         var lat = parseFloat(container.getAttribute('data-lat') || '53.349805');
@@ -273,13 +340,8 @@ foreach ($running_group_ids as $group_id) {
         }
 
         if (isTouchViewport) {
-            container.style.touchAction = 'pan-y';
-            if (map.dragging) map.dragging.disable();
-            if (map.touchZoom) map.touchZoom.disable();
-            if (map.doubleClickZoom) map.doubleClickZoom.disable();
-            if (map.boxZoom) map.boxZoom.disable();
-            if (map.keyboard) map.keyboard.disable();
-            if (map.tap) map.tap.disable();
+            setMapInteractions(map, false);
+            addMobileMapToggle(map);
         }
 
         var tileUrl = '';
