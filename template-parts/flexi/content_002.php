@@ -113,7 +113,7 @@ if (have_rows('padding_settings')) {
                     ))
                 ): ?>
                     <div class="overflow-hidden  rounded-lg w-full max-md:max-w-full <?php echo $reverse_layout ? 'md:order-1' : 'md:order-2'; ?>">
-                        <div class="flex relative flex-col w-full <?php echo $is_embed_video ? 'h-[300px]' : 'xl:min-h-[448px]'; ?> max-md:max-w-full">
+                        <div class="flex relative flex-col w-full <?php echo $is_embed_video ? '' : 'xl:min-h-[448px]'; ?> max-md:max-w-full">
                             <?php if ($media_type === 'video'): ?>
                                 <?php if ($video_source === 'local' && is_array($video_file) && !empty($video_file['url'])): ?>
                                     <video
@@ -129,17 +129,15 @@ if (have_rows('padding_settings')) {
                                         >
                                     </video>
                                 <?php elseif (($video_source === 'youtube' || $video_source === 'vimeo') && $video_embed_url !== ''): ?>
-                                    <div class="relative h-[300px] w-full">
-                                        <div class="overflow-hidden absolute inset-0 rounded-lg sr-embed-cover">
-                                            <iframe
-                                                class="absolute inset-0 h-full w-full rounded-lg sr-embed-cover-iframe"
-                                                src="<?php echo esc_url($video_embed_url); ?>"
-                                                title="<?php echo esc_attr($heading ?: __('Embedded video', 'matrix-starter')); ?>"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                allowfullscreen
-                                                loading="lazy"
-                                            ></iframe>
-                                        </div>
+                                    <div class="relative h-[300px] w-full overflow-hidden rounded-lg sr-embed-cover">
+                                        <iframe
+                                            class="absolute inset-0 h-full w-full rounded-lg sr-embed-cover-iframe"
+                                            src="<?php echo esc_url($video_embed_url); ?>"
+                                            title="<?php echo esc_attr($heading ?: __('Embedded video', 'matrix-starter')); ?>"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen
+                                            loading="lazy"
+                                        ></iframe>
                                     </div>
                                 <?php endif; ?>
                             <?php else: ?>
