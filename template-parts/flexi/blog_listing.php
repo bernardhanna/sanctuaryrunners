@@ -39,6 +39,10 @@ $search_query = is_search() ? get_search_query() : '';
 if ($search_query === '' && isset($_GET['s'])) {
     $search_query = sanitize_text_field(wp_unslash($_GET['s']));
 }
+$selected_filter_slug = '';
+if (isset($_GET['blog_category'])) {
+    $selected_filter_slug = sanitize_title((string) wp_unslash($_GET['blog_category']));
+}
 $queried_object = get_queried_object();
 $no_posts_message = 'No posts found.';
 
@@ -58,10 +62,23 @@ if (is_category() && $queried_object instanceof WP_Term && $queried_object->taxo
     if ($category_label !== '') {
         $no_posts_message = sprintf('No %s found.', strtolower($category_label));
     }
+} elseif ($selected_filter_slug !== '') {
+    $selected_filter_term = get_term_by('slug', $selected_filter_slug, 'category');
+    if ($selected_filter_term instanceof WP_Term) {
+        $args['cat'] = (int) $selected_filter_term->term_id;
+        $selected_filter_slug = (string) $selected_filter_term->slug;
+        $category_label = trim((string) $selected_filter_term->name);
+        if ($category_label !== '') {
+            $no_posts_message = sprintf('No %s found.', strtolower($category_label));
+        }
+    } else {
+        $selected_filter_slug = '';
+    }
 }
 
 $blog_query = new WP_Query($args);
 $is_category_archive = is_category();
+$initial_active_filter = $selected_filter_slug !== '' ? $selected_filter_slug : 'all';
 
 // Get categories for filters
 $categories = get_categories(array(
@@ -77,7 +94,7 @@ $section_id = 'blog-listing-' . uniqid();
     id="<?php echo esc_attr($section_id); ?>"
     class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
-    x-data="blogFilter('<?php echo esc_js($search_query); ?>')"
+    x-data="blogFilter('<?php echo esc_js($search_query); ?>', '<?php echo esc_js($initial_active_filter); ?>')"
     x-init="filterPosts()"
 >
     <div class="flex flex-col items-center pt-5 lg:pt-[3.5rem] pb-5 mx-auto w-full max-w-container max-lg:px-5">
@@ -108,7 +125,7 @@ $section_id = 'blog-listing-' . uniqid();
                                 :class="activeFilter === 'all'
                                     ? 'bg-sky-500 text-white'
                                     : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
-                                @click="setFilter('all', '')"
+                                @click="setFilter('all')"
                                 aria-pressed="true"
                             >
                                 All
@@ -121,7 +138,7 @@ $section_id = 'blog-listing-' . uniqid();
                                     :class="activeFilter === '<?php echo esc_attr($category->slug); ?>'
                                         ? 'bg-sky-500 text-white'
                                         : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
-                                    @click="setFilter('<?php echo esc_attr($category->slug); ?>', '<?php echo esc_url(get_category_link($category->term_id)); ?>')"
+                                    @click="setFilter('<?php echo esc_attr($category->slug); ?>')"
                                     aria-pressed="false"
                                 >
                                     <?php echo esc_html($category->name); ?>
@@ -434,23 +451,28 @@ $section_id = 'blog-listing-' . uniqid();
 </section>
 
 <script>
-function blogFilter(initialSearchTerm = '') {
+function blogFilter(initialSearchTerm = '', initialFilter = 'all') {
     return {
-        activeFilter: 'all',
+        activeFilter: initialFilter || 'all',
         searchTerm: initialSearchTerm || '',
-        visibleCount: 0,
 
-        setFilter(filter, categoryUrl = '') {
+        setFilter(filter) {
+            if (this.activeFilter === filter) return;
             this.activeFilter = filter;
-            this.filterPosts();
-            if (filter !== 'all' && this.visibleCount === 0 && categoryUrl) {
-                window.location.href = categoryUrl;
+
+            const url = new URL(window.location.href);
+            if (filter === 'all') {
+                url.searchParams.delete('blog_category');
+            } else {
+                url.searchParams.set('blog_category', filter);
             }
+            url.searchParams.delete('paged');
+            url.searchParams.delete('page');
+            window.location.href = url.toString();
         },
 
         filterPosts() {
             const posts = document.querySelectorAll('#<?php echo esc_js($section_id); ?> .post-item');
-            let visibleCount = 0;
 
             posts.forEach(post => {
                 const categories = post.dataset.categories || '';
@@ -461,12 +483,10 @@ function blogFilter(initialSearchTerm = '') {
 
                 if (matchesFilter && matchesSearch) {
                     post.style.display = 'block';
-                    visibleCount++;
                 } else {
                     post.style.display = 'none';
                 }
             });
-            this.visibleCount = visibleCount;
         }
     }
 }

@@ -109,6 +109,12 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
           $thumb_id = get_post_thumbnail_id($pid);
           $img_alt  = $thumb_id ? (get_post_meta($thumb_id, '_wp_attachment_image_alt', true) ?: $title) : $title;
           $excerpt = wp_trim_words(get_the_excerpt($pid), 20);
+          $press_logo_custom_id = (int) get_field('post_listing_logo_custom', $pid);
+          $press_logo_quick_select = trim((string) get_field('post_listing_logo_quick_select', $pid));
+          $press_logo_bg_raw = trim((string) get_field('post_listing_logo_bg_color', $pid));
+          $press_logo_bg = sanitize_hex_color($press_logo_bg_raw) ?: '#FFFFFF';
+          $press_logo_bg_style = $has_press_release_category ? 'background-color: ' . $press_logo_bg . ';' : '';
+          $use_press_logo_override = $has_press_release_category && ($press_logo_custom_id > 0 || $press_logo_quick_select !== '');
           $external_source_link = get_field('post_external_source_link', $pid);
           $open_external_source = get_field('post_listing_open_external_source', $pid);
           $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
@@ -136,10 +142,29 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
              aria-label="<?php echo esc_attr('Read full article: ' . $title); ?>"
           >
             <div class="relative flex aspect-[1.565] min-h-[232px] w-full flex-col items-start gap-2.5 overflow-hidden rounded-t-[8px] pb-44 pt-6 text-xs font-bold text-sky-800 whitespace-nowrap max-md:pb-24">
-              <?php if ($thumb_id): ?>
+              <?php if ($use_press_logo_override): ?>
+                <?php if ($press_logo_custom_id > 0): ?>
+                  <?php echo wp_get_attachment_image($press_logo_custom_id, 'large', false, [
+                    'alt'     => esc_attr($img_alt),
+                    'class'   => 'absolute inset-0 size-full object-contain',
+                    'style'   => $press_logo_bg_style,
+                    'loading' => 'lazy',
+                  ]); ?>
+                <?php else: ?>
+                  <img
+                    src="<?php echo esc_url($press_logo_quick_select); ?>"
+                    alt="<?php echo esc_attr($img_alt); ?>"
+                    class="absolute inset-0 size-full object-contain"
+                    style="<?php echo esc_attr($press_logo_bg_style); ?>"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                <?php endif; ?>
+              <?php elseif ($thumb_id): ?>
                 <?php echo wp_get_attachment_image($thumb_id, 'large', false, [
                   'alt'     => esc_attr($img_alt),
-                  'class'   => 'absolute inset-0 size-full object-cover',
+                  'class'   => $has_press_release_category ? 'absolute inset-0 size-full object-contain' : 'absolute inset-0 size-full object-cover',
+                  'style'   => $press_logo_bg_style,
                   'loading' => 'lazy',
                 ]); ?>
               <?php endif; ?>

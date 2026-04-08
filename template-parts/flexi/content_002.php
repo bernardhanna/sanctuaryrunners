@@ -5,8 +5,12 @@ $heading_tag = get_sub_field('heading_tag');
 $description = get_sub_field('description');
 $body_content = get_sub_field('body_content');
 $content_button = get_sub_field('content_button');
+$media_type = get_sub_field('media_type') ?: 'image';
 $image = get_sub_field('image');
 $image_alt = get_post_meta($image, '_wp_attachment_image_alt', true) ?: 'Content image';
+$video_file = get_sub_field('video_file');
+$video_poster = get_sub_field('video_poster');
+$video_poster_url = $video_poster ? wp_get_attachment_image_url((int) $video_poster, 'full') : '';
 $reverse_layout = (bool) get_sub_field('reverse_layout');
 $background_color = get_sub_field('background_color');
 
@@ -71,16 +75,31 @@ if (have_rows('padding_settings')) {
                     <?php endif; ?>
                 </article>
 
-                <?php if ($image): ?>
+                <?php if (($media_type === 'image' && $image) || ($media_type === 'video' && is_array($video_file) && !empty($video_file['url']))): ?>
                     <div class="overflow-hidden  rounded-lg w-full max-md:max-w-full <?php echo $reverse_layout ? 'md:order-1' : 'md:order-2'; ?>">
                         <div class="flex relative flex-col w-full xl:min-h-[448px] max-md:max-w-full">
-                            <?php
-                            echo wp_get_attachment_image($image, 'full', false, [
-                                'alt' => esc_attr($image_alt),
-                                'class' => 'object-cover w-full h-full rounded-lg',
-                                'loading' => 'lazy'
-                            ]);
-                            ?>
+                            <?php if ($media_type === 'video' && is_array($video_file) && !empty($video_file['url'])): ?>
+                                <video
+                                    class="object-cover w-full h-full rounded-lg"
+                                    controls
+                                    playsinline
+                                    preload="metadata"
+                                    <?php echo $video_poster_url ? 'poster="' . esc_url($video_poster_url) . '"' : ''; ?>
+                                >
+                                    <source
+                                        src="<?php echo esc_url($video_file['url']); ?>"
+                                        type="<?php echo esc_attr($video_file['mime_type'] ?? 'video/mp4'); ?>"
+                                    >
+                                </video>
+                            <?php else: ?>
+                                <?php
+                                echo wp_get_attachment_image($image, 'full', false, [
+                                    'alt' => esc_attr($image_alt),
+                                    'class' => 'object-cover w-full h-full rounded-lg',
+                                    'loading' => 'lazy'
+                                ]);
+                                ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endif; ?>

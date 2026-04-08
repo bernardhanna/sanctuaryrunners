@@ -51,6 +51,16 @@ $content_002
         'instructions' => 'Optional CTA button shown below the body content.',
         'return_format' => 'array',
     ])
+    ->addSelect('media_type', [
+        'label' => 'Media Type',
+        'instructions' => 'Choose whether the right column uses an image or a video.',
+        'choices' => [
+            'image' => 'Image',
+            'video' => 'Video',
+        ],
+        'default_value' => 'image',
+        'ui' => 1,
+    ])
     ->addImage('image', [
         'label' => 'Content Image',
         'instructions' => 'Upload an image for the right column. Recommended size: 448x448 pixels or larger.',
@@ -58,6 +68,23 @@ $content_002
         'preview_size' => 'medium',
         'library' => 'all',
     ])
+        ->conditional('media_type', '==', 'image')
+    ->addFile('video_file', [
+        'label' => 'Video File',
+        'instructions' => 'Upload a local MP4/WebM video for the right column.',
+        'return_format' => 'array',
+        'library' => 'all',
+        'mime_types' => 'mp4,webm,mov',
+    ])
+        ->conditional('media_type', '==', 'video')
+    ->addImage('video_poster', [
+        'label' => 'Video Poster',
+        'instructions' => 'Optional. Displayed before the video plays.',
+        'return_format' => 'id',
+        'preview_size' => 'medium',
+        'library' => 'all',
+    ])
+        ->conditional('media_type', '==', 'video')
 
     ->addTab('Design', ['label' => 'Design'])
     ->addColorPicker('background_color', [
