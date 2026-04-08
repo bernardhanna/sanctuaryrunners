@@ -170,7 +170,7 @@ $section_id = 'blog-listing-' . uniqid();
 
         <!-- Blog Posts Grid -->
         <main class="flex flex-col mt-4 w-full max-md:max-w-full" role="main" aria-label="Blog posts">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 lg:gap-y-24 w-full min-h-[454px] max-md:max-w-full" id="posts-container">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 lg:gap-y-24 w-full min-h-[454px] max-md:max-w-full pb-16" id="posts-container" data-disable-nav-offset="true">
 
                 <?php if ($blog_query->have_posts()): ?>
                     <?php while ($blog_query->have_posts()): $blog_query->the_post(); ?>
@@ -201,6 +201,7 @@ $section_id = 'blog-listing-' . uniqid();
                         $post_date      = get_the_date('j M Y');
                         $reading_time   = '12 mins';
                         $post_permalink = get_permalink($post_id);
+                        $has_press_release_category = in_array('press-releases', $category_slugs, true);
                         $external_source_link = get_field('post_external_source_link', $post_id);
                         $open_external_source = get_field('post_listing_open_external_source', $post_id);
                         $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
@@ -229,7 +230,9 @@ $section_id = 'blog-listing-' . uniqid();
                                 <?php if ($featured_image): ?>
                                     <?php echo wp_get_attachment_image($featured_image, 'large', false, [
                                         'alt'     => esc_attr($image_alt),
-                                        'class'   => 'object-cover absolute inset-0 size-full',
+                                        'class'   => $has_press_release_category
+                                            ? 'object-contain bg-white absolute inset-0 size-full'
+                                            : 'object-cover absolute inset-0 size-full',
                                         'loading' => 'lazy'
                                     ]); ?>
                                 <?php endif; ?>
