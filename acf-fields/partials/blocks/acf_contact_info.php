@@ -32,19 +32,17 @@ $contact_info
         'label' => 'Contact Locations',
         'instructions' => 'Add contact information for different office locations.',
         'button_label' => 'Add Location',
-        'min' => 1,
+        'min' => 0,
         'max' => 6,
         'layout' => 'block',
     ])
         ->addText('office_name', [
             'label' => 'Office Name',
             'instructions' => 'Enter the name of the office (e.g., "Dublin Head Office").',
-            'required' => 1,
         ])
         ->addWysiwyg('address', [
             'label' => 'Address',
             'instructions' => 'Enter the full address for this location.',
-            'required' => 1,
             'media_upload' => 0,
             'tabs' => 'visual',
             'toolbar' => 'basic',
@@ -52,12 +50,10 @@ $contact_info
         ->addText('phone', [
             'label' => 'Phone Number',
             'instructions' => 'Enter the phone number for this location.',
-            'required' => 1,
         ])
         ->addEmail('email', [
             'label' => 'Email Address',
             'instructions' => 'Enter the email address for this location.',
-            'required' => 1,
         ])
         ->addLink('directions_link', [
             'label' => 'Directions Link',
