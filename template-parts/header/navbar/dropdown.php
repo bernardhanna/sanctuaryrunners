@@ -70,7 +70,7 @@ $has_dropdown_image = $img_url !== '';
 
             <!-- Megamenu Container -->
             <div
-                class="flex overflow-hidden flex-wrap <?php echo $has_dropdown_image ? 'py-0' : 'py-0'; ?> pl-14 w-full max-w-[1168px] mx-auto text-sm leading-none text-sky-800 bg-white rounded-lg shadow-lg max-md:pl-5"
+                class="flex overflow-x-hidden overflow-y-auto flex-wrap <?php echo $has_dropdown_image ? 'py-0' : 'py-0'; ?> pl-14 w-full max-w-[1168px] max-h-[calc(100vh-140px)] mx-auto text-sm leading-none text-sky-800 bg-white rounded-lg shadow-lg max-md:pl-5"
                 role="navigation"
                 aria-label="<?php echo esc_attr($item->label); ?> menu"
                 x-data="{ activeTier3Index: null }"
@@ -86,7 +86,7 @@ $has_dropdown_image = $img_url !== '';
                 <!-- Second-level nav -->
                 <?php if ($item_children) : ?>
                     <section
-                        class="flex flex-col grow shrink justify-center self-start px-8 font-bold text-blue-900 min-h-[336px] w-[241px] max-md:px-5"
+                        class="flex flex-col grow shrink justify-center self-start px-8 font-bold text-blue-900 min-h-[420px] w-[241px] max-md:px-5"
                         aria-label="Main navigation items"
                     >
                         <ul class="py-16 space-y-2" role="list">
@@ -140,7 +140,7 @@ $has_dropdown_image = $img_url !== '';
                 <?php endif; ?>
 
                 <!-- Right column -->
-                <div class="relative flex grow shrink justify-center min-w-60 w-[563px] max-md:max-w-full overflow-hidden min-h-[336px]">
+                <div class="relative flex grow shrink justify-center min-w-60 w-[563px] max-md:max-w-full overflow-hidden min-h-[420px]">
                     <!-- Default image -->
                     <?php if ($img_url) : ?>
                         <div
@@ -199,7 +199,7 @@ $has_dropdown_image = $img_url !== '';
                                     x-transition:leave="transition ease-in duration-150"
                                     x-transition:leave-start="opacity-100"
                                     x-transition:leave-end="opacity-0"
-                                    class="absolute inset-0 grow shrink pr-6 bg-sky-50 w-full max-md:max-w-full min-h-[336px]"
+                                    class="absolute inset-0 grow shrink pr-6 bg-sky-50 w-full max-md:max-w-full min-h-[420px] overflow-y-auto"
                                     aria-label="<?php echo esc_attr($child->label); ?> submenu"
                                     @mouseenter="activeTier3Index = <?php echo (int) $child_index; ?>"
                                     style="display: none;"
