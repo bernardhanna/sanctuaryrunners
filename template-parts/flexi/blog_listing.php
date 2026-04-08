@@ -1,14 +1,21 @@
 <?php
-// Get ACF fields
+// Get ACF fields (support both flexi context and template include context)
 $section_heading     = get_sub_field('section_heading') ?: 'Latest Posts';
 $section_heading_tag = get_sub_field('section_heading_tag') ?: 'h2';
-$show_filters        = get_sub_field('show_filters');
-if ($show_filters === null) $show_filters = true;
-$show_search         = get_sub_field('show_search');
-if ($show_search === null) $show_search = true;
-$posts_per_page      = get_sub_field('posts_per_page') ?: get_option('posts_per_page') ?: 6;
-$show_pagination     = get_sub_field('show_pagination');
-if ($show_pagination === null) $show_pagination = true;
+
+$has_show_filters_field = is_array(get_sub_field_object('show_filters'));
+$show_filters = $has_show_filters_field ? (bool) get_sub_field('show_filters') : true;
+
+$has_show_search_field = is_array(get_sub_field_object('show_search'));
+$show_search = $has_show_search_field ? (bool) get_sub_field('show_search') : true;
+
+$has_posts_per_page_field = is_array(get_sub_field_object('posts_per_page'));
+$posts_per_page = $has_posts_per_page_field
+    ? ((int) get_sub_field('posts_per_page') ?: (int) get_option('posts_per_page') ?: 6)
+    : ((int) get_option('posts_per_page') ?: 6);
+
+$has_show_pagination_field = is_array(get_sub_field_object('show_pagination'));
+$show_pagination = $has_show_pagination_field ? (bool) get_sub_field('show_pagination') : true;
 $background_color    = get_sub_field('background_color') ?: '#ffffff';
 $layout_option       = get_sub_field('layout_option') ?: 'layout_1';
 $is_layout_2         = $layout_option === 'layout_2';
@@ -26,8 +33,8 @@ if (have_rows('padding_settings')) {
     }
 }
 
-// Get current page for pagination
-$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+// Get current page for pagination (supports both paged and page vars)
+$paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
 $search_query = is_search() ? get_search_query() : '';
 if ($search_query === '' && isset($_GET['s'])) {
     $search_query = sanitize_text_field(wp_unslash($_GET['s']));
@@ -202,6 +209,12 @@ $section_id = 'blog-listing-' . uniqid();
                         $reading_time   = '12 mins';
                         $post_permalink = get_permalink($post_id);
                         $has_press_release_category = in_array('press-releases', $category_slugs, true);
+                        $press_logo_custom_id = (int) get_field('post_listing_logo_custom', $post_id);
+                        $press_logo_quick_select = trim((string) get_field('post_listing_logo_quick_select', $post_id));
+                        $press_logo_bg_raw = trim((string) get_field('post_listing_logo_bg_color', $post_id));
+                        $press_logo_bg = sanitize_hex_color($press_logo_bg_raw) ?: '#FFFFFF';
+                        $press_logo_bg_style = $has_press_release_category ? 'background-color: ' . $press_logo_bg . ';' : '';
+                        $use_press_logo_override = $has_press_release_category && ($press_logo_custom_id > 0 || $press_logo_quick_select !== '');
                         $external_source_link = get_field('post_external_source_link', $post_id);
                         $open_external_source = get_field('post_listing_open_external_source', $post_id);
                         $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
@@ -227,12 +240,31 @@ $section_id = 'blog-listing-' . uniqid();
                         >
                             <!-- Featured Image with Tag -->
                             <div class="flex overflow-hidden relative flex-col gap-2.5 items-start pt-6 pb-44 w-full text-xs font-bold text-sky-800 whitespace-nowrap aspect-[1.565] min-h-[232px] max-md:pb-24 rounded-t-[8px]">
-                                <?php if ($featured_image): ?>
+                                <?php if ($use_press_logo_override): ?>
+                                    <?php if ($press_logo_custom_id > 0): ?>
+                                        <?php echo wp_get_attachment_image($press_logo_custom_id, 'large', false, [
+                                            'alt'     => esc_attr($image_alt),
+                                            'class'   => 'object-contain absolute inset-0 size-full',
+                                            'style'   => $press_logo_bg_style,
+                                            'loading' => 'lazy'
+                                        ]); ?>
+                                    <?php else: ?>
+                                        <img
+                                            src="<?php echo esc_url($press_logo_quick_select); ?>"
+                                            alt="<?php echo esc_attr($image_alt); ?>"
+                                            class="object-contain absolute inset-0 size-full"
+                                            style="<?php echo esc_attr($press_logo_bg_style); ?>"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                    <?php endif; ?>
+                                <?php elseif ($featured_image): ?>
                                     <?php echo wp_get_attachment_image($featured_image, 'large', false, [
                                         'alt'     => esc_attr($image_alt),
                                         'class'   => $has_press_release_category
-                                            ? 'object-contain bg-white absolute inset-0 size-full'
+                                            ? 'object-contain absolute inset-0 size-full'
                                             : 'object-cover absolute inset-0 size-full',
+                                        'style'   => $press_logo_bg_style,
                                         'loading' => 'lazy'
                                     ]); ?>
                                 <?php endif; ?>
