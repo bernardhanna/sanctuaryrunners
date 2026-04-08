@@ -37,6 +37,16 @@ $blog_listing
         'instructions' => 'Display search functionality.',
         'default_value' => 1,
     ])
+    ->addTaxonomy('limit_to_category', [
+        'label' => 'Limit to Category',
+        'instructions' => 'Optional. If selected, this block will only show posts from this category (and its children). Filters (if enabled) will show child categories of the selected category.',
+        'taxonomy' => 'category',
+        'field_type' => 'select',
+        'allow_null' => 1,
+        'add_term' => 0,
+        'return_format' => 'id',
+        'multiple' => 0,
+    ])
     ->addNumber('posts_per_page', [
         'label' => 'Posts Per Page',
         'instructions' => 'Number of posts to display per page.',

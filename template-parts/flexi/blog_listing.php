@@ -9,6 +9,9 @@ $show_filters = $has_show_filters_field ? (bool) get_sub_field('show_filters') :
 $has_show_search_field = is_array(get_sub_field_object('show_search'));
 $show_search = $has_show_search_field ? (bool) get_sub_field('show_search') : true;
 
+$has_limit_to_category_field = is_array(get_sub_field_object('limit_to_category'));
+$limit_to_category_id = $has_limit_to_category_field ? (int) get_sub_field('limit_to_category') : 0;
+
 $has_posts_per_page_field = is_array(get_sub_field_object('posts_per_page'));
 $posts_per_page = $has_posts_per_page_field
     ? ((int) get_sub_field('posts_per_page') ?: (int) get_option('posts_per_page') ?: 6)
@@ -62,6 +65,9 @@ if (is_category() && $queried_object instanceof WP_Term && $queried_object->taxo
     if ($category_label !== '') {
         $no_posts_message = sprintf('No %s found.', strtolower($category_label));
     }
+} elseif ($limit_to_category_id > 0) {
+    // Default to the configured category unless a valid child filter is selected below.
+    $args['cat'] = $limit_to_category_id;
 } elseif ($selected_filter_slug !== '') {
     $selected_filter_term = get_term_by('slug', $selected_filter_slug, 'category');
     if ($selected_filter_term instanceof WP_Term) {
@@ -76,16 +82,43 @@ if (is_category() && $queried_object instanceof WP_Term && $queried_object->taxo
     }
 }
 
+// If this block is limited to a category, only allow filtering to that category or its descendants.
+if (!is_category() && $limit_to_category_id > 0 && $selected_filter_slug !== '') {
+    $selected_filter_term = get_term_by('slug', $selected_filter_slug, 'category');
+    if ($selected_filter_term instanceof WP_Term) {
+        $allowed_ids = get_term_children($limit_to_category_id, 'category');
+        $allowed_ids = array_map('intval', is_array($allowed_ids) ? $allowed_ids : []);
+        $allowed_ids[] = (int) $limit_to_category_id;
+
+        if (in_array((int) $selected_filter_term->term_id, $allowed_ids, true)) {
+            $args['cat'] = (int) $selected_filter_term->term_id;
+        } else {
+            $selected_filter_slug = '';
+            $args['cat'] = $limit_to_category_id;
+        }
+    } else {
+        $selected_filter_slug = '';
+        $args['cat'] = $limit_to_category_id;
+    }
+}
+
 $blog_query = new WP_Query($args);
 $is_category_archive = is_category();
 $initial_active_filter = $selected_filter_slug !== '' ? $selected_filter_slug : 'all';
 
 // Get categories for filters
-$categories = get_categories(array(
+$categories_args = array(
     'hide_empty' => true,
     'orderby'    => 'name',
-    'order'      => 'ASC'
-));
+    'order'      => 'ASC',
+);
+
+if (!$is_category_archive && $limit_to_category_id > 0) {
+    // When locked to a category, show only its child categories as filters.
+    $categories_args['parent'] = $limit_to_category_id;
+}
+
+$categories = get_categories($categories_args);
 
 $section_id = 'blog-listing-' . uniqid();
 ?>

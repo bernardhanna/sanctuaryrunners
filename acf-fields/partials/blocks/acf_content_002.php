@@ -3,7 +3,7 @@
 use StoutLogic\AcfBuilder\FieldsBuilder;
 
 $content_002 = new FieldsBuilder('content_002', [
-    'label' => 'Content Section Two',
+    'label' => 'Content with Image or Video',
 ]);
 
 $content_002
@@ -77,6 +77,30 @@ $content_002
         'mime_types' => 'mp4,webm,mov',
     ])
         ->conditional('media_type', '==', 'video')
+    ->addSelect('video_source', [
+        'label' => 'Video Source',
+        'instructions' => 'Choose where the video should load from.',
+        'choices' => [
+            'local' => 'Local upload',
+            'youtube' => 'YouTube',
+            'vimeo' => 'Vimeo',
+        ],
+        'default_value' => 'local',
+        'ui' => 1,
+    ])
+        ->conditional('media_type', '==', 'video')
+    ->addUrl('video_youtube_url', [
+        'label' => 'YouTube URL',
+        'instructions' => 'Paste a YouTube URL (watch, share, shorts, or embed).',
+    ])
+        ->conditional('media_type', '==', 'video')
+        ->conditional('video_source', '==', 'youtube')
+    ->addUrl('video_vimeo_url', [
+        'label' => 'Vimeo URL',
+        'instructions' => 'Paste a Vimeo URL.',
+    ])
+        ->conditional('media_type', '==', 'video')
+        ->conditional('video_source', '==', 'vimeo')
     ->addImage('video_poster', [
         'label' => 'Video Poster',
         'instructions' => 'Optional. Displayed before the video plays.',
@@ -85,6 +109,7 @@ $content_002
         'library' => 'all',
     ])
         ->conditional('media_type', '==', 'video')
+        ->conditional('video_source', '==', 'local')
 
     ->addTab('Design', ['label' => 'Design'])
     ->addColorPicker('background_color', [

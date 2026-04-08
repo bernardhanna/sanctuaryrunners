@@ -9,10 +9,36 @@ $media_type = get_sub_field('media_type') ?: 'image';
 $image = get_sub_field('image');
 $image_alt = get_post_meta($image, '_wp_attachment_image_alt', true) ?: 'Content image';
 $video_file = get_sub_field('video_file');
+$video_source = get_sub_field('video_source') ?: 'local';
+$video_youtube_url = trim((string) get_sub_field('video_youtube_url'));
+$video_vimeo_url = trim((string) get_sub_field('video_vimeo_url'));
 $video_poster = get_sub_field('video_poster');
 $video_poster_url = $video_poster ? wp_get_attachment_image_url((int) $video_poster, 'full') : '';
 $reverse_layout = (bool) get_sub_field('reverse_layout');
 $background_color = get_sub_field('background_color');
+
+$video_embed_url = '';
+if ($media_type === 'video') {
+    $embed_opts = [
+        'autoplay' => false,
+        'mute' => false,
+        'loop' => false,
+        'controls' => true,
+        'playsinline' => true,
+    ];
+
+    if ($video_source === 'youtube' && $video_youtube_url !== '') {
+        $yt_id = function_exists('matrix_hero_parse_youtube_id') ? matrix_hero_parse_youtube_id($video_youtube_url) : '';
+        if ($yt_id !== '' && function_exists('matrix_hero_youtube_embed_url')) {
+            $video_embed_url = matrix_hero_youtube_embed_url($yt_id, $embed_opts);
+        }
+    } elseif ($video_source === 'vimeo' && $video_vimeo_url !== '') {
+        $vm_id = function_exists('matrix_hero_parse_vimeo_id') ? matrix_hero_parse_vimeo_id($video_vimeo_url) : '';
+        if ($vm_id !== '' && function_exists('matrix_hero_vimeo_embed_url')) {
+            $video_embed_url = matrix_hero_vimeo_embed_url($vm_id, $embed_opts);
+        }
+    }
+}
 
 $padding_classes = [];
 if (have_rows('padding_settings')) {
@@ -75,22 +101,39 @@ if (have_rows('padding_settings')) {
                     <?php endif; ?>
                 </article>
 
-                <?php if (($media_type === 'image' && $image) || ($media_type === 'video' && is_array($video_file) && !empty($video_file['url']))): ?>
+                <?php if (
+                    ($media_type === 'image' && $image) ||
+                    ($media_type === 'video' && (
+                        ($video_source === 'local' && is_array($video_file) && !empty($video_file['url'])) ||
+                        (($video_source === 'youtube' || $video_source === 'vimeo') && $video_embed_url !== '')
+                    ))
+                ): ?>
                     <div class="overflow-hidden  rounded-lg w-full max-md:max-w-full <?php echo $reverse_layout ? 'md:order-1' : 'md:order-2'; ?>">
                         <div class="flex relative flex-col w-full xl:min-h-[448px] max-md:max-w-full">
-                            <?php if ($media_type === 'video' && is_array($video_file) && !empty($video_file['url'])): ?>
-                                <video
-                                    class="object-cover w-full h-full rounded-lg"
-                                    controls
-                                    playsinline
-                                    preload="metadata"
-                                    <?php echo $video_poster_url ? 'poster="' . esc_url($video_poster_url) . '"' : ''; ?>
-                                >
-                                    <source
-                                        src="<?php echo esc_url($video_file['url']); ?>"
-                                        type="<?php echo esc_attr($video_file['mime_type'] ?? 'video/mp4'); ?>"
+                            <?php if ($media_type === 'video'): ?>
+                                <?php if ($video_source === 'local' && is_array($video_file) && !empty($video_file['url'])): ?>
+                                    <video
+                                        class="object-cover w-full h-full rounded-lg"
+                                        controls
+                                        playsinline
+                                        preload="metadata"
+                                        <?php echo $video_poster_url ? 'poster="' . esc_url($video_poster_url) . '"' : ''; ?>
                                     >
-                                </video>
+                                        <source
+                                            src="<?php echo esc_url($video_file['url']); ?>"
+                                            type="<?php echo esc_attr($video_file['mime_type'] ?? 'video/mp4'); ?>"
+                                        >
+                                    </video>
+                                <?php elseif (($video_source === 'youtube' || $video_source === 'vimeo') && $video_embed_url !== ''): ?>
+                                    <iframe
+                                        class="absolute inset-0 w-full h-full rounded-lg"
+                                        src="<?php echo esc_url($video_embed_url); ?>"
+                                        title="<?php echo esc_attr($heading ?: __('Embedded video', 'matrix-starter')); ?>"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen
+                                        loading="lazy"
+                                    ></iframe>
+                                <?php endif; ?>
                             <?php else: ?>
                                 <?php
                                 echo wp_get_attachment_image($image, 'full', false, [
