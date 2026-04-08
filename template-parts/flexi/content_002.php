@@ -40,6 +40,10 @@ if ($media_type === 'video') {
     }
 }
 
+$is_embed_video = $media_type === 'video'
+    && ($video_source === 'youtube' || $video_source === 'vimeo')
+    && $video_embed_url !== '';
+
 $padding_classes = [];
 if (have_rows('padding_settings')) {
     while (have_rows('padding_settings')) {
@@ -109,7 +113,7 @@ if (have_rows('padding_settings')) {
                     ))
                 ): ?>
                     <div class="overflow-hidden  rounded-lg w-full max-md:max-w-full <?php echo $reverse_layout ? 'md:order-1' : 'md:order-2'; ?>">
-                        <div class="flex relative flex-col w-full xl:min-h-[448px] max-md:max-w-full">
+                        <div class="flex relative flex-col w-full <?php echo $is_embed_video ? 'min-h-[300px]' : ''; ?> xl:min-h-[448px] max-md:max-w-full">
                             <?php if ($media_type === 'video'): ?>
                                 <?php if ($video_source === 'local' && is_array($video_file) && !empty($video_file['url'])): ?>
                                     <video
