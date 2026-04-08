@@ -193,6 +193,7 @@ foreach ($running_group_ids as $group_id) {
 
                 <!-- After map in DOM + high z-index so the bar sits visually on top, centered -->
                 <div
+                    id="<?php echo esc_attr($section_id); ?>-map-search-wrap"
                     class="absolute inset-x-0 top-4 z-[8000] flex justify-center px-4 pointer-events-none md:top-5"
                     role="search"
                 >
@@ -404,6 +405,14 @@ foreach ($running_group_ids as $group_id) {
 
     const map = L.map(container, { scrollWheelZoom: true, zoomControl: false }).setView([lat, lng], zoom);
 
+    // Toggle map search overlay while any marker popup is open.
+    const sectionPrefix = container.id.replace(/-map$/, "");
+    const searchWrap = document.getElementById(sectionPrefix + "-map-search-wrap");
+    function setSearchVisible(visible) {
+      if (!searchWrap) return;
+      searchWrap.style.display = visible ? "" : "none";
+    }
+
     let isTouchViewport = false;
     if (window.matchMedia) {
       isTouchViewport = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 1024px)').matches;
@@ -421,6 +430,13 @@ foreach ($running_group_ids as $group_id) {
     if (popupPane) {
       popupPane.style.zIndex = "9000";
     }
+
+    map.on("popupopen", function () {
+      setSearchVisible(false);
+    });
+    map.on("popupclose", function () {
+      setSearchVisible(true);
+    });
 
     // Tile layer with Jawg fallback if token missing
     let tileUrl, tileOpts = {};
@@ -502,7 +518,6 @@ foreach ($running_group_ids as $group_id) {
     container.dataset.initialized = "1";
 
     // Sync Alpine search if user typed before map finished init
-    const sectionPrefix = container.id.replace(/-map$/, "");
     const searchInput = document.getElementById(sectionPrefix + "-map-search");
     if (searchInput && searchInput.value) {
       applyGroupMapFilter(searchInput.value);
