@@ -19,6 +19,12 @@ $post_single
         'default_value' => 0,
         'ui' => 1,
     ])
+    ->addTrueFalse('post_force_index', [
+        'label' => 'Force index this post',
+        'instructions' => 'Override default SEO behavior and allow indexing even if this post is a press-release external link-out.',
+        'default_value' => 0,
+        'ui' => 1,
+    ])
     ->addImage('post_listing_logo_custom', [
         'label' => 'Press Listing Logo (Custom)',
         'instructions' => 'Optional. Upload a custom logo/image for press-release listing thumbnails.',

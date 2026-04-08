@@ -223,6 +223,10 @@ $section_id = 'blog-listing-' . uniqid();
                         $open_external_source = get_field('post_listing_open_external_source', $post_id);
                         $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
                         $has_external_source_url = is_array($external_source_link) && !empty($external_source_link['url']);
+                        $auto_external_for_press_release = $has_press_release_category && $has_external_source_url;
+                        if ($auto_external_for_press_release) {
+                            $open_external_source = true;
+                        }
                         $card_target_url = $post_permalink;
                         $card_target_window = '_self';
                         $card_rel = '';

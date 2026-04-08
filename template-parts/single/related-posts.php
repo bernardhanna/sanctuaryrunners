@@ -103,6 +103,7 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
           $p_terms = get_the_terms($pid, 'category') ?: [];
           $cats_attr = implode(' ', wp_list_pluck($p_terms, 'slug'));
           $primary_category = !empty($p_terms) ? $p_terms[0] : null;
+          $has_press_release_category = in_array('press-releases', wp_list_pluck($p_terms, 'slug'), true);
 
           // featured image + excerpt
           $thumb_id = get_post_thumbnail_id($pid);
@@ -112,6 +113,10 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
           $open_external_source = get_field('post_listing_open_external_source', $pid);
           $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
           $has_external_source_url = is_array($external_source_link) && !empty($external_source_link['url']);
+          $auto_external_for_press_release = $has_press_release_category && $has_external_source_url;
+          if ($auto_external_for_press_release) {
+            $open_external_source = true;
+          }
           $card_target_url = $permalink;
           $card_target_window = '_self';
           $card_rel = '';

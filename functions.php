@@ -360,3 +360,82 @@ add_filter('safe_style_css', function ($styles) {
 
     return array_unique(array_merge($styles, $extra_styles));
 });
+
+/**
+ * SEO rule for link-out press-release posts:
+ * Default to noindex when post is in "press-releases" and points externally,
+ * unless explicitly overridden by post_force_index.
+ */
+if (!function_exists('matrix_should_noindex_post')) {
+    function matrix_should_noindex_post(int $post_id): bool {
+        if ($post_id <= 0 || get_post_type($post_id) !== 'post') {
+            return false;
+        }
+
+        if (!function_exists('get_field')) {
+            return false;
+        }
+
+        $force_index = get_field('post_force_index', $post_id);
+        $force_index = ($force_index === 1 || $force_index === '1' || $force_index === true);
+        if ($force_index) {
+            return false;
+        }
+
+        $external_source_link = get_field('post_external_source_link', $post_id);
+        $has_external_source_url = is_array($external_source_link) && !empty($external_source_link['url']);
+
+        $open_external_source = get_field('post_listing_open_external_source', $post_id);
+        $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
+
+        $category_slugs = [];
+        $terms = get_the_terms($post_id, 'category');
+        if (!empty($terms) && !is_wp_error($terms)) {
+            $category_slugs = wp_list_pluck($terms, 'slug');
+        }
+        $is_press_release = in_array('press-releases', $category_slugs, true);
+
+        return $has_external_source_url && ($is_press_release || $open_external_source);
+    }
+}
+
+add_filter('wp_robots', function (array $robots): array {
+    if (!is_singular('post')) {
+        return $robots;
+    }
+
+    $post_id = (int) get_queried_object_id();
+    if (!$post_id || !matrix_should_noindex_post($post_id)) {
+        return $robots;
+    }
+
+    $robots['noindex'] = true;
+    $robots['nofollow'] = false;
+    return $robots;
+}, 20);
+
+add_filter('wpseo_robots', function ($robots) {
+    if (!is_singular('post')) {
+        return $robots;
+    }
+
+    $post_id = (int) get_queried_object_id();
+    if (!$post_id || !matrix_should_noindex_post($post_id)) {
+        return $robots;
+    }
+
+    return 'noindex,follow';
+}, 20);
+
+add_filter('rank_math/frontend/robots', function ($robots) {
+    if (!is_singular('post')) {
+        return $robots;
+    }
+
+    $post_id = (int) get_queried_object_id();
+    if (!$post_id || !matrix_should_noindex_post($post_id)) {
+        return $robots;
+    }
+
+    return 'noindex,follow';
+}, 20);
