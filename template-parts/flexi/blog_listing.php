@@ -61,6 +61,7 @@ if (is_category() && $queried_object instanceof WP_Term && $queried_object->taxo
 }
 
 $blog_query = new WP_Query($args);
+$is_category_archive = is_category();
 
 // Get categories for filters
 $categories = get_categories(array(
@@ -86,7 +87,10 @@ $section_id = 'blog-listing-' . uniqid();
 
             <?php if ($show_filters && !empty($categories)): ?>
                 <!-- Filters -->
-                <div class="flex gap-4 items-center self-stretch my-auto min-w-0 w-full">
+                <div
+                    class="flex gap-4 items-center self-stretch my-auto min-w-0 w-full <?php echo $is_category_archive ? 'invisible' : ''; ?>"
+                    <?php if ($is_category_archive) : ?>aria-hidden="true"<?php endif; ?>
+                >
                     <div class="self-stretch my-auto text-sky-950">
                         Filter by:
                     </div>
