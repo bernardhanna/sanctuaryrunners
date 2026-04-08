@@ -125,9 +125,9 @@ if (have_rows('padding_settings')) {
                                         >
                                     </video>
                                 <?php elseif (($video_source === 'youtube' || $video_source === 'vimeo') && $video_embed_url !== ''): ?>
-                                    <div class="sr-embed-cover absolute inset-0 overflow-hidden rounded-lg">
+                                    <div class="overflow-hidden absolute inset-0 rounded-lg sr-embed-cover">
                                         <iframe
-                                            class="sr-embed-cover-iframe absolute left-1/2 top-1/2 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2"
+                                            class="absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 sr-embed-cover-iframe"
                                             src="<?php echo esc_url($video_embed_url); ?>"
                                             title="<?php echo esc_attr($heading ?: __('Embedded video', 'matrix-starter')); ?>"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
