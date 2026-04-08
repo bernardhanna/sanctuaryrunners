@@ -14,8 +14,8 @@ $limit_to_category_id = $has_limit_to_category_field ? (int) get_sub_field('limi
 
 $has_posts_per_page_field = is_array(get_sub_field_object('posts_per_page'));
 $posts_per_page = $has_posts_per_page_field
-    ? ((int) get_sub_field('posts_per_page') ?: (int) get_option('posts_per_page') ?: 6)
-    : ((int) get_option('posts_per_page') ?: 6);
+    ? ((int) get_sub_field('posts_per_page') ?: (int) get_option('posts_per_page') ?: 12)
+    : ((int) get_option('posts_per_page') ?: 12);
 
 $has_show_pagination_field = is_array(get_sub_field_object('show_pagination'));
 $show_pagination = $has_show_pagination_field ? (bool) get_sub_field('show_pagination') : true;
@@ -131,6 +131,14 @@ $section_id = 'blog-listing-' . uniqid();
     x-init="filterPosts()"
 >
     <div class="flex flex-col items-center pt-5 lg:pt-[3.5rem] pb-5 mx-auto w-full max-w-container max-lg:px-5">
+
+        <?php if (trim((string) $section_heading) !== '') : ?>
+            <<?php echo esc_attr($section_heading_tag); ?>
+                class="w-full font-['Public_Sans'] text-[24px] font-bold not-italic leading-[32px] text-[var(--Blue-SR-500,#00628F)] sm:text-[36px] sm:leading-[44px] sm:tracking-[-0.72px]"
+            >
+                <?php echo esc_html($section_heading); ?>
+            </<?php echo esc_attr($section_heading_tag); ?>>
+        <?php endif; ?>
 
         <!-- Filters and Search Section -->
         <div class="grid grid-cols-1 gap-6 items-center pb-4 w-full text-sm leading-none md:grid-cols-[60%_40%]">
@@ -373,7 +381,7 @@ $section_id = 'blog-listing-' . uniqid();
                 <?php endif; ?>
             </div>
 
-            <?php if ($show_pagination && $blog_query->max_num_pages > 1): ?>
+            <?php if ($show_pagination && $blog_query->max_num_pages > 1 && (int) $blog_query->found_posts > (int) $posts_per_page): ?>
                 <!-- Pagination -->
                 <nav
                     class="flex flex-wrap gap-3 md:gap-8 justify-evenly md:justify-center items-center self-center max-w-full pt-8 pb-6 md:pt-20 md:pb-12 mt-6 text-base leading-none text-sky-600 whitespace-nowrap"

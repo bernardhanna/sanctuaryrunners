@@ -50,7 +50,7 @@ $blog_listing
     ->addNumber('posts_per_page', [
         'label' => 'Posts Per Page',
         'instructions' => 'Number of posts to display per page.',
-        'default_value' => 6,
+        'default_value' => 12,
         'min' => 1,
         'max' => 20,
     ])
