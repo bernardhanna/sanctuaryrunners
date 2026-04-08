@@ -258,6 +258,7 @@ foreach ($running_group_ids as $group_id) {
 
         function setMapInteractions(mapInstance, enabled) {
             if (enabled) {
+                if (mapInstance.scrollWheelZoom) mapInstance.scrollWheelZoom.enable();
                 if (mapInstance.dragging) mapInstance.dragging.enable();
                 if (mapInstance.touchZoom) mapInstance.touchZoom.enable();
                 if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.enable();
@@ -266,6 +267,7 @@ foreach ($running_group_ids as $group_id) {
                 if (mapInstance.tap) mapInstance.tap.enable();
                 container.style.touchAction = 'auto';
             } else {
+                if (mapInstance.scrollWheelZoom) mapInstance.scrollWheelZoom.disable();
                 if (mapInstance.dragging) mapInstance.dragging.disable();
                 if (mapInstance.touchZoom) mapInstance.touchZoom.disable();
                 if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.disable();
@@ -341,7 +343,7 @@ foreach ($running_group_ids as $group_id) {
         var zoom = parseInt(container.getAttribute('data-zoom') || '6', 10);
 
         var map = L.map(container, {
-            scrollWheelZoom: false,
+            scrollWheelZoom: true,
             zoomControl: false
         }).setView([lat, lng], zoom);
 
@@ -353,6 +355,14 @@ foreach ($running_group_ids as $group_id) {
         if (isTouchViewport) {
             setMapInteractions(map, false);
             addMobileMapOverlayLock(map);
+        } else {
+            setMapInteractions(map, true);
+        }
+
+        // Keep popups above any floating controls layered over the map.
+        var popupPane = map.getPanes && map.getPanes().popupPane ? map.getPanes().popupPane : null;
+        if (popupPane) {
+            popupPane.style.zIndex = '9000';
         }
 
         var tileUrl = '';

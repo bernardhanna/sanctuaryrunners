@@ -313,6 +313,7 @@ foreach ($running_group_ids as $group_id) {
 
     function setMapInteractions(mapInstance, enabled) {
       if (enabled) {
+        if (mapInstance.scrollWheelZoom) mapInstance.scrollWheelZoom.enable();
         if (mapInstance.dragging) mapInstance.dragging.enable();
         if (mapInstance.touchZoom) mapInstance.touchZoom.enable();
         if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.enable();
@@ -321,6 +322,7 @@ foreach ($running_group_ids as $group_id) {
         if (mapInstance.tap) mapInstance.tap.enable();
         container.style.touchAction = "auto";
       } else {
+        if (mapInstance.scrollWheelZoom) mapInstance.scrollWheelZoom.disable();
         if (mapInstance.dragging) mapInstance.dragging.disable();
         if (mapInstance.touchZoom) mapInstance.touchZoom.disable();
         if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.disable();
@@ -400,7 +402,7 @@ foreach ($running_group_ids as $group_id) {
       try { groups = JSON.parse(jsonEl.textContent || "[]"); } catch (e) {}
     }
 
-    const map = L.map(container, { scrollWheelZoom: false, zoomControl: false }).setView([lat, lng], zoom);
+    const map = L.map(container, { scrollWheelZoom: true, zoomControl: false }).setView([lat, lng], zoom);
 
     let isTouchViewport = false;
     if (window.matchMedia) {
@@ -410,6 +412,14 @@ foreach ($running_group_ids as $group_id) {
     if (isTouchViewport) {
       setMapInteractions(map, false);
       addMobileMapOverlayLock(map);
+    } else {
+      setMapInteractions(map, true);
+    }
+
+    // Keep map popups above floating search controls.
+    const popupPane = map.getPanes && map.getPanes().popupPane ? map.getPanes().popupPane : null;
+    if (popupPane) {
+      popupPane.style.zIndex = "9000";
     }
 
     // Tile layer with Jawg fallback if token missing
