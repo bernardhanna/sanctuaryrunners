@@ -11,7 +11,7 @@ $blog_listing
     ->addText('section_heading', [
         'label' => 'Section Heading',
         'instructions' => 'Optional heading for the blog section.',
-        'default_value' => 'Latest Posts',
+        'required' => 0,
     ])
     ->addSelect('section_heading_tag', [
         'label' => 'Heading Tag',

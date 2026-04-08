@@ -1,6 +1,6 @@
 <?php
 // Get ACF fields (support both flexi context and template include context)
-$section_heading     = get_sub_field('section_heading') ?: 'Latest Posts';
+$section_heading     = (string) get_sub_field('section_heading');
 $section_heading_tag = get_sub_field('section_heading_tag') ?: 'h2';
 
 $has_show_filters_field = is_array(get_sub_field_object('show_filters'));
@@ -105,6 +105,7 @@ if (!is_category() && $limit_to_category_id > 0 && $selected_filter_slug !== '')
 $blog_query = new WP_Query($args);
 $is_category_archive = is_category();
 $initial_active_filter = $selected_filter_slug !== '' ? $selected_filter_slug : 'all';
+$pagination_threshold = 12;
 
 // Get categories for filters
 $categories_args = array(
@@ -381,7 +382,7 @@ $section_id = 'blog-listing-' . uniqid();
                 <?php endif; ?>
             </div>
 
-            <?php if ($show_pagination && $blog_query->max_num_pages > 1 && (int) $blog_query->found_posts > (int) $posts_per_page): ?>
+            <?php if ($show_pagination && $blog_query->max_num_pages > 1 && (int) $blog_query->found_posts > (int) $pagination_threshold): ?>
                 <!-- Pagination -->
                 <nav
                     class="flex flex-wrap gap-3 md:gap-8 justify-evenly md:justify-center items-center self-center max-w-full pt-8 pb-6 md:pt-20 md:pb-12 mt-6 text-base leading-none text-sky-600 whitespace-nowrap"
