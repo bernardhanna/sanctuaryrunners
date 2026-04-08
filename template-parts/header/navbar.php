@@ -178,7 +178,7 @@ $primary_navigation = Navi::make()->build('primary');
 
     <!-- LOGO (desktop) -->
     <div class="hidden min-[1201px]:flex shrink-0 items-center max-w-[250px]">
-      <a href="<?php echo esc_url(home_url('/')); ?>" class="flex btn">
+      <a href="<?php echo esc_url(home_url('/')); ?>" class="flex">
         <?php if ($logo_url) : ?>
           <div class="max-w-[124px]" style="z-index: 99999999999999;">
             <img
