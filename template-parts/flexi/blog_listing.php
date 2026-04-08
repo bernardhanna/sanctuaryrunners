@@ -108,7 +108,7 @@ $section_id = 'blog-listing-' . uniqid();
                                 :class="activeFilter === 'all'
                                     ? 'bg-sky-500 text-white'
                                     : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
-                                @click="setFilter('all')"
+                                @click="setFilter('all', '')"
                                 aria-pressed="true"
                             >
                                 All
@@ -121,7 +121,7 @@ $section_id = 'blog-listing-' . uniqid();
                                     :class="activeFilter === '<?php echo esc_attr($category->slug); ?>'
                                         ? 'bg-sky-500 text-white'
                                         : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
-                                    @click="setFilter('<?php echo esc_attr($category->slug); ?>')"
+                                    @click="setFilter('<?php echo esc_attr($category->slug); ?>', '<?php echo esc_url(get_category_link($category->term_id)); ?>')"
                                     aria-pressed="false"
                                 >
                                     <?php echo esc_html($category->name); ?>
@@ -434,14 +434,19 @@ function blogFilter(initialSearchTerm = '') {
     return {
         activeFilter: 'all',
         searchTerm: initialSearchTerm || '',
+        visibleCount: 0,
 
-        setFilter(filter) {
+        setFilter(filter, categoryUrl = '') {
             this.activeFilter = filter;
             this.filterPosts();
+            if (filter !== 'all' && this.visibleCount === 0 && categoryUrl) {
+                window.location.href = categoryUrl;
+            }
         },
 
         filterPosts() {
             const posts = document.querySelectorAll('#<?php echo esc_js($section_id); ?> .post-item');
+            let visibleCount = 0;
 
             posts.forEach(post => {
                 const categories = post.dataset.categories || '';
@@ -452,10 +457,12 @@ function blogFilter(initialSearchTerm = '') {
 
                 if (matchesFilter && matchesSearch) {
                     post.style.display = 'block';
+                    visibleCount++;
                 } else {
                     post.style.display = 'none';
                 }
             });
+            this.visibleCount = visibleCount;
         }
     }
 }
