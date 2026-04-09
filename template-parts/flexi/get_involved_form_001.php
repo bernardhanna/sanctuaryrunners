@@ -262,7 +262,7 @@ if ($location_fields_version === 'ireland') {
 
                         <div class="flex flex-wrap gap-4 mt-4 w-full">
                             <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Email address*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="email" name="email" placeholder="Email address" required aria-required="true"></div>
-                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Date of birth</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="date_of_birth" placeholder="DD/MM/YYYY"></div>
+                            <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Date of birth</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="date" name="date_of_birth"></div>
                         </div>
 
                         <div class="flex flex-wrap gap-4 mt-4 w-full">
