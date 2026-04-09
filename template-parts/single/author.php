@@ -104,7 +104,7 @@ $share_bluesky  = 'https://bsky.app/intent/compose?text=' . $share_title . '%20'
           aria-label="<?php esc_attr_e('Share on X (Twitter)', 'matrix-starter'); ?>"
           target="_blank" rel="noopener"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false"><mask id="mask0_895_324" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="2" y="2" width="14" height="14"><path d="M15.25 2.75V15.25H2.75V2.75H15.25Z" fill="white" stroke="white"></path></mask><g mask="url(#mask0_895_324)"><path d="M13.8516 3.38257L10.0527 7.73608L9.78516 8.04175L10.0303 8.36597L14.7461 14.6169H11.8311L8.7168 10.5378L8.34473 10.0505L7.94238 10.5125L4.36133 14.6169H3.61523L7.72852 9.90112L7.99707 9.59351L7.75 9.26929L3.26074 3.38354H6.27246L9.06934 7.09253L9.44043 7.58472L9.8457 7.12085L13.1084 3.38257H13.8516ZM4.2666 4.36304L11.7559 14.1785L11.9062 14.3757H14.3047L13.7002 13.574L6.29395 3.75854L6.14453 3.5603H3.6543L4.2666 4.36304Z" fill="#020617" stroke="#0A1119"></path></g></svg>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M10 10L22 22M22 10L10 22" stroke="#00628F" stroke-width="2.5" stroke-linecap="round"/></svg>
         </a>
 
         <a
