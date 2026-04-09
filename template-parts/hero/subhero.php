@@ -117,7 +117,7 @@ $layout_2_media_col_class = $is_full_height_right_image
 
 $layout_1_figure_class = $is_full_height_right_image
     ? 'flex h-full w-full min-h-[260px] items-stretch justify-end overflow-hidden'
-    : 'w-full max-sm:mt-12';
+    : 'w-full max-sm:mt-4';
 $layout_2_figure_class = $is_full_height_right_image
     ? ($disable_mobile_absolute_media ? 'w-full h-full' : 'w-full h-full max-md:absolute max-md:top-0 max-md:bottom-0 max-md:right-[-1rem] max-md:h-full')
     : ($disable_mobile_absolute_media ? 'w-full' : 'w-full max-md:absolute max-md:inset-0 max-md:h-full');
