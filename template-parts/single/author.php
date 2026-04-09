@@ -104,7 +104,7 @@ $share_bluesky  = 'https://bsky.app/intent/compose?text=' . $share_title . '%20'
           aria-label="<?php esc_attr_e('Share on X (Twitter)', 'matrix-starter'); ?>"
           target="_blank" rel="noopener"
         >
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M10 10L22 22M22 10L10 22" stroke="#00628F" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <i class="fa-brands fa-x-twitter text-[16px] leading-none text-[#00628F]" aria-hidden="true"></i>
         </a>
 
         <a
