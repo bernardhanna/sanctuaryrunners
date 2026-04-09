@@ -250,7 +250,7 @@ $section_id = 'subhero-' . uniqid();
             </div>
         <?php endif; ?>
 
-        <div class="relative pb-6 mx-auto mt-5 w-full max-xl:px-5 max-w-container md:pb-8">
+        <div class="relative pb-6 mx-auto max-md:mt-[3rem] mt-5 w-full max-xl:px-5 max-w-container md:pb-8">
             <div class="<?php echo esc_attr($layout_1_grid_class); ?>">
 
                 <?php if ($has_media): ?>
