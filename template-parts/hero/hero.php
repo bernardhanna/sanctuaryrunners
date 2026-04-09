@@ -150,7 +150,7 @@ $hero_iframe_title = $title_inline !== ''
         </div>
     <?php endif; ?>
 
-    <div class="relative mx-auto w-full max-w-container">
+    <div class="relative mx-auto mt-5 w-full max-w-container">
 
         <div class="<?php echo esc_attr($hero_grid_classes); ?>">
 
