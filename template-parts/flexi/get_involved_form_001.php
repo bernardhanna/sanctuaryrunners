@@ -238,6 +238,7 @@ if ($location_fields_version === 'ireland') {
                                 <div class="mt-0">
                                     <select class="p-4 w-full bg-white rounded border border-slate-600" name="group" required aria-required="true">
                                         <?php if (!empty($group_options)) : ?>
+                                            <option value="">Select group</option>
                                             <option value="I don't know">I don't know</option>
                                             <?php foreach ($group_options as $group_option) : ?>
                                                 <option value="<?php echo esc_attr($group_option); ?>"><?php echo esc_html($group_option); ?></option>
@@ -428,6 +429,7 @@ if ($location_fields_version === 'ireland') {
                                     <label class="text-xs text-slate-900">Which Sanctuary Runners group are you renewing with?*</label>
                                     <select class="p-4 w-full bg-white rounded border border-slate-600" name="group" required aria-required="true">
                                         <?php if (!empty($group_options)) : ?>
+                                            <option value="">Select group</option>
                                             <option value="I don't know">I don't know</option>
                                             <?php foreach ($group_options as $group_option) : ?>
                                                 <option value="<?php echo esc_attr($group_option); ?>"><?php echo esc_html($group_option); ?></option>
