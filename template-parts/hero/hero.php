@@ -72,10 +72,6 @@ if (!in_array($media_presentation, $allowed_media_presentations, true)) {
 
 $is_full_height_right_media = $media_type === 'image' && !empty($media_image) && $media_presentation === 'full_height_right_svg';
 
-$is_hero_embed_video = $media_type === 'video'
-    && ($video_source === 'youtube' || $video_source === 'vimeo')
-    && $video_embed_url !== '';
-
 $hero_grid_classes = $is_full_height_right_media
     ? 'relative grid grid-cols-1 gap-4 w-full max-[1200px]:px-5 py-[2rem] min-[1201px]:block min-[1201px]:min-h-[500px] min-[1201px]:py-0'
     : 'grid grid-cols-1 gap-4 w-full max-xl:px-5 py-[2rem] min-[1201px]:grid-cols-[35%_70%] min-[1201px]:py-0';
@@ -97,11 +93,7 @@ $media_wrap_classes = $is_full_height_right_media
 
 $media_figure_classes = $is_full_height_right_media
     ? 'relative flex w-full min-h-[260px] items-stretch justify-end overflow-hidden'
-    : (
-        $is_hero_embed_video
-            ? 'hero-embed-figure relative overflow-hidden w-full rounded-lg xl:max-w-[768px] ' . $media_ratio_class
-            : 'relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] ' . $media_ratio_class
-    );
+    : 'relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] ' . $media_ratio_class;
 
 $image_classes = 'w-full h-full object-cover';
 if ($media_presentation === 'contain') {
@@ -264,7 +256,7 @@ $hero_iframe_title = $title_inline !== ''
                             </video>
                         <?php elseif (($video_source === 'youtube' || $video_source === 'vimeo') && $video_embed_url !== '') : ?>
                             <iframe
-                                class="hero-embed-iframe absolute inset-0 h-full w-full border-0"
+                                class="<?php echo esc_attr($video_media_classes); ?>"
                                 src="<?php echo esc_url($video_embed_url); ?>"
                                 title="<?php echo esc_attr($hero_iframe_title); ?>"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -286,25 +278,5 @@ $hero_iframe_title = $title_inline !== ''
         </div>
 
     </div>
-
-    <?php if ($is_hero_embed_video && !$is_full_height_right_media) : ?>
-        <style>
-            #<?php echo esc_attr($section_id); ?> .hero-embed-figure iframe.hero-embed-iframe {
-                border: 0 !important;
-            }
-            @media (min-width: 1201px) {
-                #<?php echo esc_attr($section_id); ?> .hero-embed-figure iframe.hero-embed-iframe {
-                    left: 50%;
-                    top: 50%;
-                    right: auto;
-                    bottom: auto;
-                    width: 100%;
-                    height: 100%;
-                    transform: translate(-50%, -50%) scale(1.085);
-                    transform-origin: center center;
-                }
-            }
-        </style>
-    <?php endif; ?>
 
 </section>
