@@ -196,7 +196,6 @@ if (!in_array($hero_tag, $allowed_tags, true)) {
                 $slug    = esc_attr($cat->slug);
                 $name    = esc_html($cat->name);
                 $checked = ($slug === $current_slug) ? 'true' : 'false';
-                $tab     = ($slug === $current_slug) ? '0' : '-1';
               ?>
                 <button
                   type="button"
@@ -204,7 +203,7 @@ if (!in_array($hero_tag, $allowed_tags, true)) {
                   class="gap-2 px-6 py-2 whitespace-nowrap bg-white rounded-lg hover:bg-[#0098D8] filter-btn hover:border-white hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
                   data-filter="<?php echo $slug; ?>"
                   aria-checked="<?php echo $checked; ?>"
-                  tabindex="<?php echo $tab; ?>">
+                  tabindex="<?php echo $checked === 'true' ? '0' : '-1'; ?>">
                   <?php echo $name; ?>
                 </button>
               <?php endforeach; ?>
@@ -269,7 +268,7 @@ if (!in_array($hero_tag, $allowed_tags, true)) {
         </div>
 
         <!-- Blog Posts Grid — property-card design -->
-        <main class="w-full" role="main" aria-label="Blog posts">
+        <main id="main-content" class="w-full" role="main" aria-label="Blog posts">
           <!-- Below lg: 2 columns with the 3rd item spanning 2 cols; At lg: 3 equal columns -->
           <div class="grid grid-cols-1 gap-12 w-full sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 max-md:gap-8 max-sm:gap-6">
             <?php
@@ -404,11 +403,53 @@ document.addEventListener('DOMContentLoaded', function() {
     clearFilters.classList.toggle('hidden', !needsClear);
   }
 
+  function setActiveFilterButton(nextBtn) {
+    buttons.forEach((b) => {
+      const isActive = b === nextBtn;
+      b.setAttribute('aria-checked', isActive ? 'true' : 'false');
+      b.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
+  }
+
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      buttons.forEach(b => b.setAttribute('aria-pressed','false'));
-      btn.setAttribute('aria-pressed','true');
+      setActiveFilterButton(btn);
       activeFilter = btn.getAttribute('data-filter');
+      applyFilter();
+    });
+
+    btn.addEventListener('keydown', (e) => {
+      const key = e.key;
+      if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(key)) {
+        return;
+      }
+
+      if (key === 'Enter' || key === ' ') {
+        e.preventDefault();
+        btn.click();
+        return;
+      }
+
+      e.preventDefault();
+      const list = Array.from(buttons);
+      const currentIndex = list.indexOf(btn);
+      let nextIndex = currentIndex;
+
+      if (key === 'ArrowRight' || key === 'ArrowDown') {
+        nextIndex = (currentIndex + 1) % list.length;
+      } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+        nextIndex = (currentIndex - 1 + list.length) % list.length;
+      } else if (key === 'Home') {
+        nextIndex = 0;
+      } else if (key === 'End') {
+        nextIndex = list.length - 1;
+      }
+
+      const nextBtn = list[nextIndex];
+      if (!nextBtn) return;
+      setActiveFilterButton(nextBtn);
+      nextBtn.focus();
+      activeFilter = nextBtn.getAttribute('data-filter');
       applyFilter();
     });
   });
@@ -423,7 +464,8 @@ document.addEventListener('DOMContentLoaded', function() {
   clearFilters.addEventListener('click', () => {
     activeFilter = 'all';
     buttons.forEach(b => {
-      b.setAttribute('aria-pressed', b.getAttribute('data-filter') === 'all' ? 'true' : 'false');
+      b.setAttribute('aria-checked', b.getAttribute('data-filter') === 'all' ? 'true' : 'false');
+      b.setAttribute('tabindex', b.getAttribute('data-filter') === 'all' ? '0' : '-1');
     });
     if (searchInput) {
       searchInput.value = '';

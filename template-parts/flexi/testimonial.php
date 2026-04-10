@@ -53,7 +53,7 @@ if (have_rows('padding_settings')) {
                 </div>
                 <?php endif; ?>
 
-                <div class="flex flex-col flex-1 pt-6 pl-12 max-md:w-full md:pl-0" role="main">
+                <div class="flex flex-col flex-1 pt-6 pl-12 max-md:w-full md:pl-0">
 
                    <?php if (!empty($main_quote)): ?>
 

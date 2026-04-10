@@ -16,6 +16,7 @@ $button_target = !empty($button_link_data['target']) ? $button_link_data['target
 ?>
 
 <main
+  id="main-content"
   class="flex items-center w-full site-main"
   style="background-color: <?php echo esc_attr($bg_color); ?>; color: <?php echo esc_attr($text_color); ?>; padding-top: var(--site-nav-offset, 5rem); min-height: calc(100vh - var(--site-nav-offset, 5rem));"
 >

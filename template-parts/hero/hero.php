@@ -37,7 +37,7 @@ $video_url         = trim((string) get_sub_field('video_url'));
 $video_youtube_url = get_sub_field('video_youtube_url');
 $video_vimeo_url   = get_sub_field('video_vimeo_url');
 
-$video_autoplay    = matrix_hero_acf_bool(get_sub_field('video_autoplay'), true);
+$video_autoplay    = false;
 $video_muted       = matrix_hero_acf_bool(get_sub_field('video_muted'), true);
 $video_loop        = matrix_hero_acf_bool(get_sub_field('video_loop'), true);
 $video_playsinline = matrix_hero_acf_bool(get_sub_field('video_playsinline'), true);
@@ -136,7 +136,6 @@ $hero_iframe_title = $title_inline !== ''
     id="<?php echo esc_attr($section_id); ?>"
     class="overflow-hidden relative min-h-[500px] w-full flex items-center min-[1201px]:pb-[50px]"
     style="background-color: <?php echo esc_attr($bg_color); ?>;"
-    role="banner"
     aria-labelledby="<?php echo esc_attr($title_id); ?>"
 >
 

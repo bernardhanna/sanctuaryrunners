@@ -86,7 +86,7 @@ $section_id = 'events-' . uniqid();
             </header>
 
             <?php if ($events_query->have_posts()): ?>
-                <main class="grid grid-cols-1 gap-4 items-stretch mt-6 w-full xl:grid-cols-3">
+                <section class="grid grid-cols-1 gap-4 items-stretch mt-6 w-full xl:grid-cols-3" aria-label="Upcoming events">
                     <?php while ($events_query->have_posts()): $events_query->the_post(); ?>
                         <?php
                         $event_id  = get_the_ID();
@@ -134,7 +134,7 @@ $section_id = 'events-' . uniqid();
                             </a>
                         </article>
                     <?php endwhile; wp_reset_postdata(); ?>
-                </main>
+                </section>
 
                 <?php if ($view_all_html): ?>
                     <div class="flex justify-center mt-6 md:hidden">

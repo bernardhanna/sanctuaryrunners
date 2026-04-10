@@ -2,7 +2,7 @@
 get_header();
 ?>
 
-<main class="overflow-hidden w-full min-h-screen site-main">
+<main id="main-content" class="overflow-hidden w-full min-h-screen site-main">
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
     <?php
     $post_id = get_the_ID();

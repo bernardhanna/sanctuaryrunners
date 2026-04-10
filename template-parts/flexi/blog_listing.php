@@ -157,18 +157,22 @@ $section_id = 'blog-listing-' . uniqid();
                     <div class="relative flex-1 min-w-0">
                         <div
                             class="chip-slider flex gap-2 items-center self-stretch my-auto font-semibold text-sky-800 overflow-x-auto whitespace-nowrap select-none cursor-grab active:cursor-grabbing pr-6"
-                            role="group"
+                            role="radiogroup"
                             aria-label="Filter posts by category"
                             data-chip-slider
                         >
                             <button
                                 type="button"
+                                role="radio"
                                 class="shrink-0 flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                                data-filter-option="all"
                                 :class="activeFilter === 'all'
                                     ? 'bg-sky-500 text-white'
                                     : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
                                 @click="setFilter('all')"
-                                aria-pressed="true"
+                                :aria-checked="activeFilter === 'all' ? 'true' : 'false'"
+                                :tabindex="activeFilter === 'all' ? '0' : '-1'"
+                                @keydown="onFilterKeydown($event, 'all')"
                             >
                                 All
                             </button>
@@ -176,12 +180,16 @@ $section_id = 'blog-listing-' . uniqid();
                             <?php foreach ($categories as $category): ?>
                                 <button
                                     type="button"
+                                    role="radio"
                                     class="shrink-0 flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full min-h-9 w-fit transition-colors duration-200 focus:ring-sky-500"
+                                    data-filter-option="<?php echo esc_attr($category->slug); ?>"
                                     :class="activeFilter === '<?php echo esc_attr($category->slug); ?>'
                                         ? 'bg-sky-500 text-white'
                                         : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
                                     @click="setFilter('<?php echo esc_attr($category->slug); ?>')"
-                                    aria-pressed="false"
+                                    :aria-checked="activeFilter === '<?php echo esc_attr($category->slug); ?>' ? 'true' : 'false'"
+                                    :tabindex="activeFilter === '<?php echo esc_attr($category->slug); ?>' ? '0' : '-1'"
+                                    @keydown="onFilterKeydown($event, '<?php echo esc_attr($category->slug); ?>')"
                                 >
                                     <?php echo esc_html($category->name); ?>
                                 </button>
@@ -239,7 +247,7 @@ $section_id = 'blog-listing-' . uniqid();
         </div>
 
         <!-- Blog Posts Grid -->
-        <main class="flex flex-col mt-4 w-full max-md:max-w-full" role="main" aria-label="Blog posts">
+        <section class="flex flex-col mt-4 w-full max-md:max-w-full" aria-label="Blog posts">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 lg:gap-y-24 w-full min-h-[454px] max-md:max-w-full pb-16" id="posts-container" data-disable-nav-offset="true">
 
                 <?php if ($blog_query->have_posts()): ?>
@@ -303,7 +311,6 @@ $section_id = 'blog-listing-' . uniqid();
                             data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>"
                             data-url="<?php echo esc_url($card_target_url); ?>"
                             data-url-target="<?php echo esc_attr($card_target_window); ?>"
-                            tabindex="0"
                         >
                             <!-- Featured Image with Tag -->
                             <div class="flex overflow-hidden relative flex-col gap-2.5 items-start pt-6 pb-44 w-full text-xs font-bold text-sky-800 whitespace-nowrap aspect-[1.565] min-h-[232px] max-md:pb-24 rounded-t-[8px]">
@@ -488,7 +495,7 @@ $section_id = 'blog-listing-' . uniqid();
                     
                 </nav>
             <?php endif; ?>
-        </main>
+        </section>
     </div>
 </section>
 
@@ -497,6 +504,12 @@ function blogFilter(initialSearchTerm = '', initialFilter = 'all') {
     return {
         activeFilter: initialFilter || 'all',
         searchTerm: initialSearchTerm || '',
+        filterOptions: ['all', <?php
+            $slugs = array_map(static function($category) {
+                return "'" . esc_js((string) $category->slug) . "'";
+            }, $categories);
+            echo implode(', ', $slugs);
+        ?>],
 
         setFilter(filter) {
             if (this.activeFilter === filter) return;
@@ -511,6 +524,47 @@ function blogFilter(initialSearchTerm = '', initialFilter = 'all') {
             url.searchParams.delete('paged');
             url.searchParams.delete('page');
             window.location.href = url.toString();
+        },
+
+        onFilterKeydown(event, currentFilter) {
+            const key = event.key;
+            if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(key)) {
+                return;
+            }
+
+            if (key === 'Enter' || key === ' ') {
+                event.preventDefault();
+                this.setFilter(currentFilter);
+                return;
+            }
+
+            event.preventDefault();
+            const options = this.filterOptions || [];
+            if (!options.length) return;
+
+            let currentIndex = options.indexOf(currentFilter);
+            if (currentIndex < 0) currentIndex = 0;
+            let nextIndex = currentIndex;
+
+            if (key === 'ArrowRight' || key === 'ArrowDown') {
+                nextIndex = (currentIndex + 1) % options.length;
+            } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+                nextIndex = (currentIndex - 1 + options.length) % options.length;
+            } else if (key === 'Home') {
+                nextIndex = 0;
+            } else if (key === 'End') {
+                nextIndex = options.length - 1;
+            }
+
+            const nextFilter = options[nextIndex];
+            if (!nextFilter) return;
+
+            this.activeFilter = nextFilter;
+            this.$nextTick(() => {
+                const nextBtn = this.$root.querySelector('[data-filter-option="' + nextFilter + '"]');
+                if (nextBtn) nextBtn.focus();
+            });
+            this.setFilter(nextFilter);
         },
 
         filterPosts() {

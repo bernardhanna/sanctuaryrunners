@@ -91,18 +91,22 @@ $section_id = 'events-listing-' . uniqid();
                         <div class="relative flex-1 min-w-0">
                             <div
                                 class="chip-slider flex gap-2 items-center self-stretch my-auto font-semibold text-sky-800 overflow-x-auto whitespace-nowrap select-none cursor-grab active:cursor-grabbing pr-6"
-                                role="group"
+                                role="radiogroup"
                                 aria-label="Filter events by location"
                                 data-chip-slider
                             >
                                 <button
                                     type="button"
+                                    role="radio"
                                     class="shrink-0 flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full border-2 border-sky-500 transition-colors duration-200 min-h-9 w-fit focus:ring-sky-500"
+                                    data-filter-option=""
                                     :class="selectedLocation === ''
                                         ? 'bg-sky-500 text-white'
                                         : 'bg-white text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
                                     @click="filterEvents('')"
-                                    aria-pressed="true"
+                                    :aria-checked="selectedLocation === '' ? 'true' : 'false'"
+                                    :tabindex="selectedLocation === '' ? '0' : '-1'"
+                                    @keydown="onFilterKeydown($event, '')"
                                 >
                                     All
                                 </button>
@@ -110,12 +114,16 @@ $section_id = 'events-listing-' . uniqid();
                                 <?php foreach ($event_locations as $location): ?>
                                     <button
                                         type="button"
+                                        role="radio"
                                         class="shrink-0 flex flex-col justify-center items-center self-stretch px-4 py-2 my-auto whitespace-nowrap rounded-full transition-colors duration-200 min-h-9 w-fit focus:ring-sky-500"
+                                        data-filter-option="<?php echo esc_attr($location->slug); ?>"
                                         :class="selectedLocation === '<?php echo esc_attr($location->slug); ?>'
                                             ? 'bg-sky-500 text-white'
                                             : 'bg-blue-200 text-sky-800 hover:bg-[#87c0e8] hover:text-white'"
                                         @click="filterEvents('<?php echo esc_attr($location->slug); ?>')"
-                                        aria-pressed="false"
+                                        :aria-checked="selectedLocation === '<?php echo esc_attr($location->slug); ?>' ? 'true' : 'false'"
+                                        :tabindex="selectedLocation === '<?php echo esc_attr($location->slug); ?>' ? '0' : '-1'"
+                                        @keydown="onFilterKeydown($event, '<?php echo esc_attr($location->slug); ?>')"
                                     >
                                         <?php echo esc_html($location->name); ?>
                                     </button>
@@ -184,7 +192,7 @@ $section_id = 'events-listing-' . uniqid();
         <?php endif; ?>
 
         <!-- Events Grid -->
-        <main class="flex flex-col mt-4 w-full max-md:max-w-full" role="main" aria-label="Events listing">
+        <section class="flex flex-col mt-4 w-full max-md:max-w-full" aria-label="Events listing">
             <div class="grid grid-cols-1 gap-x-6 gap-y-6 w-full md:grid-cols-2 lg:grid-cols-3 lg:gap-y-24 max-md:max-w-full" x-show="!loading">
 
                 <?php if ($events_query->have_posts()): ?>
@@ -217,7 +225,6 @@ $section_id = 'events-listing-' . uniqid();
     class="overflow-hidden flex-1 bg-sky-950 rounded-lg shrink basis-0 min-w-60 event-item cursor-pointer transition-all duration-200 hover:shadow-[0_0_0_4px_#F68DA7]"
     data-url="<?php echo esc_url($card_target_url); ?>"
     data-url-target="<?php echo esc_attr($card_target_window); ?>"
-    tabindex="0"
 >
                             <!-- Featured Image -->
                             <div class="flex overflow-hidden relative flex-col gap-2.5 items-start w-full aspect-[1.565] min-h-[232px] rounded-t-[8px]">
@@ -418,7 +425,7 @@ $section_id = 'events-listing-' . uniqid();
                     
                 </nav>
             <?php endif; ?>
-        </main>
+        </section>
     </div>
 </section>
 
@@ -428,10 +435,58 @@ function eventsFilter() {
         selectedLocation: '<?php echo esc_js($selected_location); ?>',
         searchKeyword: '<?php echo esc_js($search_keyword); ?>',
         loading: false,
+        filterOptions: ['', <?php
+            $event_slugs = array_map(static function($location) {
+                return "'" . esc_js((string) $location->slug) . "'";
+            }, is_array($event_locations) ? $event_locations : []);
+            echo implode(', ', $event_slugs);
+        ?>],
 
         filterEvents(location) {
             this.selectedLocation = location;
             this.updateUrl();
+        },
+
+        onFilterKeydown(event, currentLocation) {
+            const key = event.key;
+            if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(key)) {
+                return;
+            }
+
+            if (key === 'Enter' || key === ' ') {
+                event.preventDefault();
+                this.filterEvents(currentLocation);
+                return;
+            }
+
+            event.preventDefault();
+            const options = this.filterOptions || [];
+            if (!options.length) return;
+
+            let currentIndex = options.indexOf(currentLocation);
+            if (currentIndex < 0) currentIndex = 0;
+            let nextIndex = currentIndex;
+
+            if (key === 'ArrowRight' || key === 'ArrowDown') {
+                nextIndex = (currentIndex + 1) % options.length;
+            } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+                nextIndex = (currentIndex - 1 + options.length) % options.length;
+            } else if (key === 'Home') {
+                nextIndex = 0;
+            } else if (key === 'End') {
+                nextIndex = options.length - 1;
+            }
+
+            const nextLocation = options[nextIndex];
+            if (typeof nextLocation === 'undefined') return;
+
+            this.selectedLocation = nextLocation;
+            this.$nextTick(() => {
+                const selector = '[data-filter-option="' + nextLocation + '"]';
+                const nextBtn = this.$root.querySelector(selector);
+                if (nextBtn) nextBtn.focus();
+            });
+            this.filterEvents(nextLocation);
         },
 
         searchEvents() {

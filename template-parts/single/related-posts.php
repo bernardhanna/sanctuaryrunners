@@ -138,7 +138,6 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
              data-categories="<?php echo esc_attr($cats_attr); ?>"
              data-url="<?php echo esc_url($card_target_url); ?>"
              data-url-target="<?php echo esc_attr($card_target_window); ?>"
-             tabindex="0"
              aria-label="<?php echo esc_attr('Read full article: ' . $title); ?>"
           >
             <div class="relative flex aspect-[1.565] min-h-[232px] w-full flex-col items-start gap-2.5 overflow-hidden rounded-t-[8px] pb-44 pt-6 text-xs font-bold text-sky-800 whitespace-nowrap max-md:pb-24">

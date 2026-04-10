@@ -232,7 +232,6 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
-        role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
         <?php if ($is_full_height_right_image && $image): ?>
@@ -257,7 +256,7 @@ $section_id = 'subhero-' . uniqid();
                     <div class="<?php echo esc_attr($layout_1_media_col_class); ?>">
                         <figure class="<?php echo esc_attr($layout_1_figure_class); ?>">
                             <?php if ($has_video): ?>
-                                <video class="<?php echo esc_attr($layout_1_video_class); ?>" autoplay muted loop playsinline preload="metadata">
+                                <video class="<?php echo esc_attr($layout_1_video_class); ?>" muted loop playsinline preload="metadata" controls>
                                     <source src="<?php echo esc_url($video_src); ?>" type="<?php echo esc_attr($video_mime); ?>">
                                 </video>
                             <?php else: ?>
@@ -397,7 +396,6 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
-        role="banner"
         aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
         <?php if ($is_full_height_right_image && $image): ?>
@@ -425,7 +423,7 @@ $section_id = 'subhero-' . uniqid();
                     <div class="<?php echo esc_attr($layout_2_media_col_class); ?>">
                         <figure class="<?php echo esc_attr($layout_2_figure_class); ?>">
                             <?php if ($has_video): ?>
-                                <video class="<?php echo esc_attr($layout_2_video_class); ?>" autoplay muted loop playsinline preload="metadata">
+                                <video class="<?php echo esc_attr($layout_2_video_class); ?>" muted loop playsinline preload="metadata" controls>
                                     <source src="<?php echo esc_url($video_src); ?>" type="<?php echo esc_attr($video_mime); ?>">
                                 </video>
                             <?php else: ?>
