@@ -82,6 +82,28 @@ For `/events/page/3/`:
   - Ensure controls clearly indicate when selected
   - Ensure drag and drop movements have an accessible alternative
 
+## Get involved targeted pass
+
+For `get_involved` / `get_involved_form_001` templates:
+
+- Updated `template-parts/flexi/get_involved.php`:
+  - switched involvement grid wrapper to semantic list (`ul`/`li`)
+  - improved icon semantics (decorative icon handling with empty `alt` + `aria-hidden`)
+  - removed verbose window-target wording from button `aria-label`
+
+- Updated `template-parts/flexi/get_involved_form_001.php`:
+  - added explicit form instruction IDs and wired with `aria-describedby`
+  - grouped existing-member radio controls in `fieldset` + `legend`
+  - added explicit IDs and `for` labels for key consent checkboxes/radios
+  - added renewal-form instruction copy for better field guidance
+
+- Expected impact:
+  - Ensure form controls have labels
+  - Labels must have a unique for attribute
+  - Wrap items with the same name inside a fieldset
+  - Ensure lists are marked up correctly
+  - Ensure instructions are provided for appropriate fields
+
 
 ## HTML/ID issue test file follow-up
 
