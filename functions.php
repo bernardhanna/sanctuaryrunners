@@ -454,6 +454,37 @@ add_action('wp_footer', function () {
             return prefix + '-' + Math.random().toString(36).slice(2, 10);
         }
 
+        function dedupeElementIds() {
+            var seen = new Set();
+            var idMap = new Map();
+            var nodes = document.querySelectorAll('[id]');
+
+            nodes.forEach(function (node) {
+                var id = node.id;
+                if (!id) return;
+                if (!seen.has(id)) {
+                    seen.add(id);
+                    return;
+                }
+                var newId = uniqueId(id);
+                node.id = newId;
+                idMap.set(id, idMap.get(id) || []);
+                idMap.get(id).push(newId);
+            });
+
+            if (idMap.size === 0) return;
+
+            var labels = document.querySelectorAll('label[for]');
+            labels.forEach(function (label) {
+                var target = label.getAttribute('for');
+                if (!target || !idMap.has(target)) return;
+                var replacementIds = idMap.get(target);
+                if (replacementIds && replacementIds.length) {
+                    label.setAttribute('for', replacementIds.shift());
+                }
+            });
+        }
+
         function wireFormLabels() {
             var forms = document.querySelectorAll('form');
             forms.forEach(function (form) {
@@ -500,9 +531,56 @@ add_action('wp_footer', function () {
             });
         }
 
+        function setIframeTitles() {
+            var iframes = document.querySelectorAll('iframe');
+            var count = 0;
+            iframes.forEach(function (iframe) {
+                var title = (iframe.getAttribute('title') || '').trim();
+                if (!title) {
+                    count += 1;
+                    iframe.setAttribute('title', 'Embedded content ' + count);
+                }
+            });
+        }
+
+        function applyAutocompleteHints() {
+            var map = {
+                'first_name': 'given-name',
+                'firstname': 'given-name',
+                'last_name': 'family-name',
+                'lastname': 'family-name',
+                'full_name': 'name',
+                'name': 'name',
+                'email': 'email',
+                'phone': 'tel',
+                'mobile': 'tel',
+                'address_line_1': 'address-line1',
+                'address_line_2': 'address-line2',
+                'city': 'address-level2',
+                'county': 'address-level1',
+                'state': 'address-level1',
+                'postcode': 'postal-code',
+                'postal_code': 'postal-code',
+                'country': 'country-name'
+            };
+            var controls = document.querySelectorAll('input[name], textarea[name]');
+            controls.forEach(function (control) {
+                var current = (control.getAttribute('autocomplete') || '').trim();
+                if (current) return;
+                var rawName = (control.getAttribute('name') || '').toLowerCase();
+                var normalized = rawName.replace(/\[\]$/, '');
+                if (map[normalized]) {
+                    control.setAttribute('autocomplete', map[normalized]);
+                }
+            });
+        }
+
         function runA11yEnhancements() {
+            dedupeElementIds();
             wireFormLabels();
             fixNewTabLinks();
+            setIframeTitles();
+            applyAutocompleteHints();
         }
 
         if (document.readyState === 'loading') {

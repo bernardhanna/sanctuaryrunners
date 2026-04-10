@@ -13,10 +13,13 @@ $archive_title = is_category()
 $archive_title = preg_replace('/^\s*Archives?:\s*/i', '', (string) $archive_title);
 $is_people_archive = is_post_type_archive('people');
 $is_faq_archive = is_post_type_archive('faq');
+$is_event_archive = is_post_type_archive('event');
 $archive_desc  = trim((string) get_the_archive_description());
 if ($archive_desc === '') {
     if ($is_people_archive) {
         $archive_desc = 'Meet the Sanctuary Runners team.';
+    } elseif ($is_event_archive) {
+        $archive_desc = 'Browse upcoming Sanctuary Runners events and races.';
     } elseif ($is_faq_archive) {
         $archive_desc = 'Browse all frequently asked questions.';
     } else {
@@ -33,6 +36,9 @@ if ($is_people_archive) {
 } elseif ($is_faq_archive) {
     $archive_parent_label = 'FAQs';
     $archive_parent_url = $faq_archive_url;
+} elseif ($is_event_archive) {
+    $archive_parent_label = 'Events & Races';
+    $archive_parent_url = get_post_type_archive_link('event') ?: home_url('/events/');
 } else {
     $archive_parent_label = 'News & Media';
     $archive_parent_url = $news_media_url;
@@ -78,6 +84,8 @@ get_template_part('template-parts/hero/subhero', null, matrix_get_archive_subher
 
 if ($is_people_archive) {
     get_template_part('template-parts/flexi/people_listing');
+} elseif ($is_event_archive) {
+    get_template_part('template-parts/flexi/events_listing');
 } elseif ($is_faq_archive) {
     get_template_part('template-parts/flexi/faq_listing');
 } else {

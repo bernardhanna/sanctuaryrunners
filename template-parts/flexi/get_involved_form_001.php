@@ -1,5 +1,7 @@
 <?php
 $section_id = 'get-involved-form-' . wp_generate_uuid4();
+$main_form_heading_id = $section_id . '-main-form-heading';
+$renewal_form_heading_id = $section_id . '-renewal-form-heading';
 
 $heading = get_sub_field('heading') ?: 'Join Sanctuary Runners';
 $heading_tag = get_sub_field('heading_tag') ?: 'h2';
@@ -168,7 +170,7 @@ if ($location_fields_version === 'ireland') {
 >
     <div class="flex flex-col items-center pt-10 pb-14 mx-auto w-full max-w-[1024px] max-xl:px-5">
         <div class="px-20 py-6 w-full rounded-2xl lg:py-16 max-lg:px-5 max-lg:max-w-full" style="background-color: <?php echo esc_attr($form_background_color); ?>;">
-            <<?php echo esc_attr($heading_tag); ?> class="text-3xl leading-none text-sky-800 max-lg:max-w-full">
+            <<?php echo esc_attr($heading_tag); ?> id="<?php echo esc_attr($main_form_heading_id); ?>" class="text-3xl leading-none text-sky-800 max-lg:max-w-full">
                 <?php echo esc_html($heading); ?>
             </<?php echo esc_attr($heading_tag); ?>>
 
@@ -213,7 +215,7 @@ if ($location_fields_version === 'ireland') {
                 }'
             >
                 <div x-show="formView === 'main'">
-                    <form class="w-full" role="form" novalidate aria-labelledby="form-heading" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" data-theme-form="<?php echo esc_attr(get_row_index()); ?>">
+                    <form class="w-full" role="form" novalidate aria-labelledby="<?php echo esc_attr($main_form_heading_id); ?>" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" data-theme-form="<?php echo esc_attr(get_row_index()); ?>">
                         <?php echo $build_hidden_fields($primary_form_name); ?>
 
                         <?php if ($enable_existing_member_switch) : ?>
@@ -357,9 +359,9 @@ if ($location_fields_version === 'ireland') {
                 <?php if ($enable_existing_member_switch) : ?>
                     <div x-show="formView === 'renewal'" x-cloak>
                         <button type="button" class="inline-flex gap-2 items-center px-4 py-2 mb-4 text-sm font-bold bg-white transition-colors duration-200 rounded-pill text-brand-primary-hover hover:bg-brand-accent-soft a11y-focus" @click="formView = 'main'">Back to main form</button>
-                        <h3 class="mb-4 text-2xl font-bold leading-8 text-sky-800"><?php echo esc_html($renewal_heading); ?></h3>
+                        <h3 id="<?php echo esc_attr($renewal_form_heading_id); ?>" class="mb-4 text-2xl font-bold leading-8 text-sky-800"><?php echo esc_html($renewal_heading); ?></h3>
 
-                        <form class="w-full" role="form" novalidate aria-labelledby="form-heading" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" data-theme-form="<?php echo esc_attr(get_row_index()); ?>">
+                        <form class="w-full" role="form" novalidate aria-labelledby="<?php echo esc_attr($renewal_form_heading_id); ?>" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" data-theme-form="<?php echo esc_attr(get_row_index()); ?>">
                             <?php echo $build_hidden_fields($renewal_form_name); ?>
                             <div class="flex flex-wrap gap-4 mt-0 w-full">
                                 <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">First name*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="first_name" placeholder="First name" required aria-required="true"></div>

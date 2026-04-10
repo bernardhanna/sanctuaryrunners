@@ -186,7 +186,7 @@ function matrix_social_svg($icon) {
         </nav>
 
         <nav class="footer-nav-block flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-2">
-          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-brand-secondary md:font-primary">
+          <h3 id="footer-col-2" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-brand-secondary md:font-primary">
             <?php echo esc_html($col2_heading ?: 'About us'); ?>
           </h3>
           <?php

@@ -1,0 +1,75 @@
+Name,Success Criterion,Issues,Progress,Status,Owner Lane,Notes
+Fix missing ARIA label IDs,WCAG 2.0 A 1.3.1,34,1.74%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Ensure form controls have labels,WCAG 2.0 A 1.3.1,8,1.24%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Ensure lists are marked up correctly,WCAG 2.0 A 4.1.1,3,3.48%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure text has sufficient contrast (AA),WCAG 2.0 AA 1.4.3,27,11.14%,needs_design_contrast_review,design-theme,Needs visual contrast audit and token/style updates.
+Ensure text placed over images or gradients has sufficient contrast,WCAG 2.0 AA 1.4.3,18,0%,needs_design_contrast_review,design-theme,Needs visual contrast audit and token/style updates.
+Ensure links explain their purpose,WCAG 2.0 A 2.4.4,1,92.37%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure controls clearly indicate when they are selected,WCAG 2.2 AAA 2.4.13,21,79.39%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Ensure PDFs have a title,WCAG 2.0 A 2.4.2,7,30%,manual_pdf,content-team,Requires fixing source PDFs and re-uploading.
+Check images have been correctly defined as decorative,WCAG 2.0 A 1.1.1,75,1.24%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Check PDFs have sufficient text contrast,WCAG 2.0 A 1.4.3,10,0%,manual_pdf,content-team,Requires fixing source PDFs and re-uploading.
+Ensure help is presented consistently,WCAG 2.2 A 3.2.6,6,1.99%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Allow users to quickly skip to content,WCAG 2.0 A 2.4.1,26,87.06%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Tag all PDFs,WCAG 2.0 A 1.3.1,4,60%,manual_pdf,content-team,Requires fixing source PDFs and re-uploading.
+Ensure focus is not fully obscured,WCAG 2.2 AA 2.4.11,3,99.16%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Check that each page has an appropriate title,WCAG 2.0 A 2.4.2,132,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure HTML is in a meaningful sequence,WCAG 2.0 A 1.3.2,201,0%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure PDF content is in a meaningful sequence,WCAG 2.0 A 1.3.2,10,0%,manual_pdf,content-team,Requires fixing source PDFs and re-uploading.
+Specify alternative text for images inside links,WCAG 2.0 A 1.1.1,10,98.26%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure PDFs are machine readable,WCAG 2.0 A 1.1.1,2,80%,manual_pdf,content-team,Requires fixing source PDFs and re-uploading.
+Specify alternative text for appropriate images,WCAG 2.0 A 1.1.1,3,99.5%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure alternative text is appropriate,WCAG 2.0 A 1.1.1,357,1.24%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Avoid redundant entry,WCAG 2.2 A 3.3.9,126,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure drag and drop movements have an accessible alternative,WCAG 2.2 AA 2.5.7,201,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure form controls contrast sufficiently with their surroundings,WCAG 2.1 AA 1.4.11,3,71.39%,needs_design_contrast_review,design-theme,Needs visual contrast audit and token/style updates.
+Ensure users can pause or hide animated content,WCAG 2.0 A 2.2.2,201,0%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure pages with inactivity time limits do not cause data loss,WCAG 2.1 AAA 2.2.5,201,0%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure interactive components are far enough apart,WCAG 2.2 AA 2.5.8,49,85.27%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Fix duplicate IDs,WCAG 2.0 A 4.1.1,2,1.24%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Ensure content is not too difficult to understand,WCAG 2.0 AAA 3.1.5,10,70.9%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure every page contains a top-level heading,WCAG 2.0 A 1.3.1,6,83.5%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure functionality is available to keyboard users,WCAG 2.0 A 2.1.1,2,89.3%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Identify the purpose of fields programmatically,WCAG 2.1 AA 1.3.5,15,90.55%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Avoid linking to anchors that do not exist,WCAG 2.0 A 2.4.1,1,91.38%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Specify headings for every PDF,WCAG 2.0 A 1.3.1,7,30%,manual_pdf,content-team,Requires fixing source PDFs and re-uploading.
+Avoid using the same link text for different destinations,WCAG 2.0 A 2.4.4,11,34.48%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure users can find definitions of unusual words,WCAG 2.0 AAA 3.1.3,201,0%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure focus is not partly obscured,WCAG 2.2 AAA 2.4.12,11,81.31%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure PDFs specify a default language,WCAG 2.0 A 3.1.1,3,70%,manual_pdf,content-team,Requires fixing source PDFs and re-uploading.
+Aim for large interactive controls,WCAG 2.1 AAA 2.5.5,926,18.92%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Add a legend for all fieldsets,WCAG 2.0 A 1.3.1,9,77.36%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Add headers to tables,WCAG 2.0 A 1.3.1,1,99.67%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure headings include text,WCAG 2.0 A 1.3.1,2,99.34%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Write lists or groups of links semantically,WCAG 2.0 A 1.3.1,1,99.5%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure users can control the visual presentation of text,WCAG 2.0 AAA 1.4.8,201,0%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure pages with interruptions can be postponed or suppressed by the user,WCAG 2.0 AAA 2.2.4,201,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Aim for text to have very high contrast (AAA),WCAG 2.0 AAA 1.4.6,50,1.36%,needs_design_contrast_review,design-theme,Needs visual contrast audit and token/style updates.
+Add a submit button to all forms,WCAG 2.0 A 3.2.2,3,91.79%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Fix missing ARIA description IDs,WCAG 2.0 A 1.3.1,2,98.01%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Labels must have a unique for attribute,WCAG 2.0 A 1.3.1,2,94.78%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Ensure links explain they open in a new tab,WCAG 2.0 AAA 3.2.5,23,95.52%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Ensure links can be used by screen readers,WCAG 2.0 A 4.1.2,11,98.34%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Check if text should be marked as a heading,WCAG 2.0 A 1.3.1,1,99%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Improve weak PDF titles,WCAG 2.0 A 2.4.2,1,90%,manual_pdf,content-team,Requires fixing source PDFs and re-uploading.
+Ensure labels in the document fragment point to valid IDs,WCAG 2.0 A 1.3.1,1,97.26%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Ensure labels in the document point to valid IDs,WCAG 2.0 A 1.3.1,1,97.26%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Ensure components are identified consistently,WCAG 2.0 AA 3.2.4,201,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure that navigation remains consistent,WCAG 2.0 AA 3.2.3,201,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Check pages for three flashes (Level A),WCAG 2.0 A 2.3.1,201,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Check pages for flashing content (Level AAA),WCAG 2.0 AAA 2.3.2,201,0%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure images of text are decorative only,WCAG 2.0 AAA 1.4.9,201,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure users can identify the meaning of abbreviations,WCAG 2.0 AAA 3.1.4,201,0%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Use text to convey information where possible,WCAG 2.0 AA 1.4.5,201,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Check that headings and labels are descriptive,WCAG 2.0 AA 2.4.6,201,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure there are multiple ways to access a page,WCAG 2.0 AA 2.4.5,201,0%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure timing is not an essential part of an event or activity presented by the content,WCAG 2.0 AAA 2.2.3,201,0%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Ensure instructions are provided for appropriate fields,WCAG 2.0 A 3.3.2,24,18.41%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+"Check if an error prevention mechanism is required (for legal, financial, data)",WCAG 2.0 AA 3.3.4,145,28.11%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Check if an error prevention mechanism is required (for all forms),WCAG 2.0 AAA 3.3.6,145,28.11%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Check context-sensitive help is available for forms,WCAG 2.0 AAA 3.3.5,145,28.11%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure suggested corrections are provided where applicable,WCAG 2.0 AA 3.3.3,145,28.11%,manual_review,ux-content,Requires content/UX/policy review and per-page decisions.
+Ensure custom tabbing order makes sense,WCAG 2.0 A 2.4.3,4,49%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Wrap items with the same name inside a fieldset,WCAG 2.0 A 1.3.1,3,89.8%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
+Check that each frame has an appropriate title,WCAG 2.0 A 2.4.1,4,98.01%,fixed_or_improved_in_theme,theme-dev,Global accessibility enhancements added; verify remaining instances in next scan.
+Consider using summary attributes on tables,WCAG 2.0 A 1.3.1,1,99.67%,needs_theme_or_page_fix,theme-dev,Needs targeted remediation and re-scan verification.
