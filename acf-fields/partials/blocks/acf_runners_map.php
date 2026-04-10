@@ -33,7 +33,7 @@ $runners_map
     ->addWysiwyg('description', [
         'label' => 'Description',
         'instructions' => 'Main content below the map.',
-        'default_value' => '<p>Every week, people from different backgrounds come together in blue to move, connect and build friendships. Show up, get in touch with the local organiser to say hello, or send us an email to find out more via our contact us form. You\'ll be met with a warm welcome.</p>',
+        'default_value' => '<p>Every week, people from different backgrounds come together in blue to move, connect and build friendships. Show up, get in touch with the local organiser to say hello, or send us an email to find out more via our <a href="https://sanctuaryrunners.s1.matrix-test.com/contact/">contact us form</a>. You\'ll be met with a warm welcome.</p>',
         'media_upload' => 0,
         'tabs' => 'all',
         'toolbar' => 'full',

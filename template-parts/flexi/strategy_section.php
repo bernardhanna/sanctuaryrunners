@@ -11,6 +11,7 @@ $secondary_image_2  = get_sub_field('secondary_image_2');
 $secondary_image_2_alt = get_post_meta($secondary_image_2, '_wp_attachment_image_alt', true) ?: 'Strategy secondary image';
 $button             = get_sub_field('button');
 $background_color   = get_sub_field('background_color');
+$reverse_layout     = (bool) get_sub_field('reverse_layout');
 
 // Generate unique section ID
 $section_id = 'strategy-' . uniqid();
@@ -36,17 +37,17 @@ if (have_rows('padding_settings')) {
     role="region"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="flex flex-col items-center pt-8 pb-8 md:pt-16 md:pb-16 w-full max-lg:px-5">
+    <div class="flex flex-col items-center pt-8 pb-8 w-full md:pt-16 md:pb-16">
         <!-- Changed: remove flex-wrap + enforce stacked mobile / 2-col desktop -->
-        <div class="flex flex-col md:flex-row overflow-hidden gap-10 items-center w-full pr-0 lg:pr-24">
+        <div class="flex overflow-hidden flex-col gap-10 items-center w-full md:flex-row <?php echo $reverse_layout ? 'md:flex-row-reverse' : ''; ?> max-w-[1280px] mx-auto">
 
 
             <!-- Images Section (50%) -->
-            <div class="w-full md:w-1/2 min-w-0 flex gap-4 my-auto" role="img" aria-label="Strategy visual content">
+            <div class="flex gap-4 my-auto w-full min-w-0 md:w-1/2" role="img" aria-label="Strategy visual content">
 
                 <!-- Main Image (always 50%) -->
                 <?php if ($main_image): ?>
-                    <div class="w-1/2 min-w-0 object-contain self-start">
+                    <div class="object-contain self-start w-1/2 min-w-0">
                         <?php echo wp_get_attachment_image($main_image, 'full', false, [
                             'alt'     => esc_attr($main_image_alt),
                             'class'   => 'object-contain w-full h-auto',
@@ -56,10 +57,10 @@ if (have_rows('padding_settings')) {
                 <?php endif; ?>
 
                 <!-- Secondary Images (always 50%) -->
-                <div class="w-1/2 min-w-0 flex flex-col justify-center">
+                <div class="flex flex-col justify-center w-1/2 min-w-0">
 
                     <?php if ($secondary_image_1): ?>
-                        <div class="overflow-hidden w-full bg-gray-50 rounded-none">
+                        <div class="overflow-hidden w-full bg-gray-50 rounded-none <?php echo $reverse_layout ? 'lg:rounded-tl-2xl' : 'lg:rounded-tr-2xl'; ?>">
                             <?php echo wp_get_attachment_image($secondary_image_1, 'full', false, [
                                 'alt'     => esc_attr($secondary_image_1_alt),
                                 'class'   => 'object-contain w-full h-auto',
@@ -69,7 +70,7 @@ if (have_rows('padding_settings')) {
                     <?php endif; ?>
 
                     <?php if ($secondary_image_2): ?>
-                        <div class="overflow-hidden mt-4 w-full bg-gray-50 rounded-none">
+                        <div class="overflow-hidden mt-4 w-full bg-gray-50 rounded-none <?php echo $reverse_layout ? 'lg:rounded-bl-2xl' : 'lg:rounded-br-2xl'; ?>">
                             <?php echo wp_get_attachment_image($secondary_image_2, 'full', false, [
                                 'alt'     => esc_attr($secondary_image_2_alt),
                                 'class'   => 'object-contain w-full h-auto',
@@ -82,13 +83,13 @@ if (have_rows('padding_settings')) {
             </div>
 
             <!-- Content Section (50%) -->
-            <article class="w-full md:w-1/2 min-w-0 my-auto font-bold text-sky-800">
+            <article class="my-auto w-full min-w-0 font-bold text-sky-800 max-lg:px-5 md:w-1/2">
 
                 <?php if (!empty($heading)): ?>
                     <header>
                         <<?php echo esc_attr($heading_tag); ?>
                             id="<?php echo esc_attr($section_id); ?>-heading"
-                            class="text-3xl leading-none text-sky-800 max-md:max-w-full"
+                            class="max-md:max-w-full font-sans text-[30px] font-bold not-italic leading-[38px] text-brand-primary-hover"
                         >
                             <?php echo esc_html($heading); ?>
                         </<?php echo esc_attr($heading_tag); ?>>
@@ -96,7 +97,7 @@ if (have_rows('padding_settings')) {
                 <?php endif; ?>
 
                 <?php if (!empty($content)): ?>
-                    <div class="mt-4 text-base leading-6 text-sky-950 max-md:max-w-full wp_editor">
+                    <div class="wp_editor mt-4 max-w-[488px] font-sans text-[16px] font-normal not-italic leading-[22px] text-content-body max-md:max-w-full [&_p]:font-sans [&_p]:text-[16px] [&_p]:font-normal [&_p]:not-italic [&_p]:leading-[22px] [&_p]:text-content-body">
                         <?php echo wp_kses_post($content); ?>
                     </div>
                 <?php endif; ?>
@@ -105,7 +106,7 @@ if (have_rows('padding_settings')) {
                         <div class="flex pt-4 mt-4 w-full">
                             <a
                                 href="<?php echo esc_url($button['url']); ?>"
-                                class="flex justify-center items-center w-full md:w-fit px-6 py-4 text-sm leading-none whitespace-nowrap rounded-[100px] border border-[#00628F] bg-transparent md:bg-[#EBF9FF] text-[#00628F] transition-all duration-200 hover:border-transparent hover:shadow-[0_0_0_4px_#1C959B]"
+                                class="inline-flex gap-2 justify-center items-center w-full md:w-fit px-6 py-3 text-sm font-bold text-white leading-5 whitespace-nowrap rounded-pill btn-primary"
                             >
                                 <?php echo esc_html($button['title']); ?>
                             </a>
@@ -117,3 +118,29 @@ if (have_rows('padding_settings')) {
         </div>
     </div>
 </section>
+
+<style>
+    #<?php echo esc_attr($section_id); ?> .wp_editor ul {
+        list-style: none;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    #<?php echo esc_attr($section_id); ?> .wp_editor ul li {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 8px;
+    }
+
+    #<?php echo esc_attr($section_id); ?> .wp_editor ul li::before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 0;
+        width: 16px;
+        height: 16px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M13.3327 4L5.99935 11.3333L2.66602 8' stroke='%236EC4A9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+    }
+</style>

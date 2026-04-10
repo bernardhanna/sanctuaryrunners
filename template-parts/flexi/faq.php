@@ -24,21 +24,20 @@ if (have_rows('padding_settings')) {
 
 // Prepare FAQ items based on source
 $faq_items = [];
+
 if ($faq_source === 'manual' && have_rows('manual_faqs')) {
     while (have_rows('manual_faqs')) {
         the_row();
         $faq_items[] = [
             'question' => get_sub_field('question'),
-            'answer' => get_sub_field('answer'),
-            'show_read_more' => get_sub_field('show_read_more')
+            'answer' => get_sub_field('answer')
         ];
     }
 } elseif ($faq_source === 'posts' && $selected_faqs) {
     foreach ($selected_faqs as $faq_post) {
         $faq_items[] = [
             'question' => get_the_title($faq_post->ID),
-            'answer' => apply_filters('the_content', get_post_field('post_content', $faq_post->ID)),
-            'show_read_more' => true
+            'answer' => apply_filters('the_content', get_post_field('post_content', $faq_post->ID))
         ];
     }
 } elseif ($faq_source === 'all') {
@@ -50,8 +49,7 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
     foreach ($faq_posts as $faq_post) {
         $faq_items[] = [
             'question' => get_the_title($faq_post->ID),
-            'answer' => apply_filters('the_content', $faq_post->post_content),
-            'show_read_more' => true
+            'answer' => apply_filters('the_content', $faq_post->post_content)
         ];
     }
 }
@@ -63,7 +61,7 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="flex flex-col items-center max-lg:py-5 py-20 mx-auto w-full max-w-[960px] max-md:px-5">
+    <div class="flex flex-col items-center max-lg:py-5 py-16 mx-auto w-full max-w-[768px] max-xl:px-5">
 
         <?php if (!empty($heading)): ?>
             <<?php echo esc_attr($heading_tag); ?>
@@ -145,15 +143,6 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
                                         <?php echo wp_kses_post($faq['answer']); ?>
                                     </div>
 
-                                    <?php if ($faq['show_read_more']): ?>
-                                        <div class="flex flex-col justify-center self-start pt-0.5 mt-2 text-sm leading-none">
-                                            <div class="flex gap-1 items-center">
-                                                <span class="self-stretch my-auto font-bold text-sky-800">
-                                                    Read more
-                                                </span>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +155,7 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
             <div class="self-start pt-4 mt-4 text-sm leading-none text-white">
                 <a
                     href="<?php echo esc_url($button['url']); ?>"
-                    class="btn-primary flex gap-2 justify-center items-center px-6 py-3.5 min-h-[52px] rounded-full w-fit whitespace-nowrap max-md:px-5"
+                    class="btn-primary flex gap-2 justify-center items-center px-6 py-3.5 min-h-[52px] rounded-pill w-fit whitespace-nowrap max-md:px-5 active:!bg-brand-primary"
                     target="<?php echo esc_attr($button['target'] ?? '_self'); ?>"
                     aria-label="<?php echo esc_attr($button['title']); ?>"
                 >

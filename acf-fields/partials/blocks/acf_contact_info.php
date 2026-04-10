@@ -32,19 +32,17 @@ $contact_info
         'label' => 'Contact Locations',
         'instructions' => 'Add contact information for different office locations.',
         'button_label' => 'Add Location',
-        'min' => 1,
+        'min' => 0,
         'max' => 6,
         'layout' => 'block',
     ])
         ->addText('office_name', [
             'label' => 'Office Name',
             'instructions' => 'Enter the name of the office (e.g., "Dublin Head Office").',
-            'required' => 1,
         ])
         ->addWysiwyg('address', [
             'label' => 'Address',
             'instructions' => 'Enter the full address for this location.',
-            'required' => 1,
             'media_upload' => 0,
             'tabs' => 'visual',
             'toolbar' => 'basic',
@@ -52,12 +50,10 @@ $contact_info
         ->addText('phone', [
             'label' => 'Phone Number',
             'instructions' => 'Enter the phone number for this location.',
-            'required' => 1,
         ])
         ->addEmail('email', [
             'label' => 'Email Address',
             'instructions' => 'Enter the email address for this location.',
-            'required' => 1,
         ])
         ->addLink('directions_link', [
             'label' => 'Directions Link',
@@ -67,6 +63,12 @@ $contact_info
     ->endRepeater()
 
     ->addTab('Layout', ['label' => 'Layout'])
+    ->addTrueFalse('use_two_columns_for_two_items', [
+        'label' => 'Use 2 columns when only 2 items',
+        'instructions' => 'If enabled, desktop layout switches to 2 columns when exactly 2 contact locations are added.',
+        'ui' => 1,
+        'default_value' => 1,
+    ])
     ->addRepeater('padding_settings', [
         'label' => 'Padding Settings',
         'instructions' => 'Customize padding for different screen sizes.',

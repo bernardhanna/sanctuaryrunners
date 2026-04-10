@@ -28,7 +28,8 @@ $contact_form_001
         ])
         ->addTextarea('description', [
             'label' => 'Form Description',
-            'default_value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
+            'instructions' => 'Optional. Leave empty to hide the description text.',
+            'default_value' => '',
             'rows' => 3
         ])
         ->addWysiwyg('form_markup', [
@@ -37,6 +38,52 @@ $contact_form_001
             'toolbar' => 'basic',
             'media_upload' => 0,
             'wrapper' => ['class' => 'wp_editor'],
+        ])
+        ->addTrueFalse('enable_existing_member_form_switch', [
+            'label' => 'Enable Existing Member Form Switch',
+            'instructions' => 'Allow clicking a link in the main form to switch to a different renewal form.',
+            'ui' => 1,
+            'default_value' => 0,
+        ])
+        ->addText('existing_member_trigger_text', [
+            'label' => 'Trigger Link Text',
+            'instructions' => 'Fallback text to find the link in the main form (e.g. "this form here"). You can also add data-renew-form-trigger to the link in your form HTML.',
+            'default_value' => 'this form here',
+            'conditional_logic' => [[['field' => 'enable_existing_member_form_switch', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addText('existing_member_form_name', [
+            'label' => 'Existing Member Internal Form Name',
+            'instructions' => 'Used in saved entries and email subjects for the renewal form.',
+            'default_value' => 'Existing Member Renewal Form',
+            'conditional_logic' => [[['field' => 'enable_existing_member_form_switch', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addWysiwyg('existing_member_form_markup', [
+            'label' => 'Existing Member Form HTML',
+            'instructions' => 'Paste the renewal form HTML shown when users click the existing member link.',
+            'toolbar' => 'basic',
+            'media_upload' => 0,
+            'wrapper' => ['class' => 'wp_editor'],
+            'conditional_logic' => [[['field' => 'enable_existing_member_form_switch', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addSelect('location_fields_version', [
+            'label' => 'Location Fields Version',
+            'instructions' => 'Choose how City/Country style fields are transformed for this form block.',
+            'choices' => [
+                'none' => 'No transform',
+                'ireland' => 'Ireland (County + Eircode + Country)',
+                'uk' => 'UK (County + Postcode + Country)',
+                'australia' => 'Australia (State/Territory + Postcode + Country)',
+                'global' => 'Global (City + Country)',
+            ],
+            'default_value' => 'none',
+            'ui' => 1,
+            'return_format' => 'value',
+        ])
+        ->addTextarea('location_country_options', [
+            'label' => 'Country Dropdown Options',
+            'instructions' => 'Optional. One country per line (or comma separated). Used for Country select in UK/Australia/Global/Ireland modes.',
+            'rows' => 6,
+            'default_value' => "Ireland\nUnited Kingdom\nAustralia\nUnited States\nCanada\nNew Zealand\nOther",
         ])
         ->addUrl('privacy_policy_url', [
             'label' => 'Privacy Policy URL',

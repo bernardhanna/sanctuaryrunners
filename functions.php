@@ -67,8 +67,10 @@ if (file_exists(get_template_directory() . '/vendor/autoload.php')) {
  */
 require_once get_template_directory() . '/inc/enqueue-fonts.php';
 require_once get_template_directory() . '/inc/enqueue-scripts.php';
+require_once get_template_directory() . '/inc/archive-hero-functions.php';
 require_once get_template_directory() . '/inc/hero-functions.php';
 require_once get_template_directory() . '/inc/flexible-content-functions.php';
+require_once get_template_directory() . '/inc/admin-dashboard-controls.php';
 require_once get_template_directory() . '/inc/helpers/utils/menu-icon.php';
 
 /**
@@ -308,7 +310,7 @@ add_filter('acf/load_field/name=menu_item', function ($field) {
     return $field;
 });
 
-//Supress Gravity Forms licenece demands
+// Suppress Gravity Forms license demands
 add_action( 'admin_head', function() {
     echo '<style>[data-js="setup-wizard"] { display: none !important; }</style>';
 });
@@ -358,3 +360,157 @@ add_filter('safe_style_css', function ($styles) {
 
     return array_unique(array_merge($styles, $extra_styles));
 });
+
+/**
+ * SEO rule for link-out press-release posts:
+ * Default to noindex when post is in "press-releases" and points externally,
+ * unless explicitly overridden by post_force_index.
+ */
+if (!function_exists('matrix_should_noindex_post')) {
+    function matrix_should_noindex_post(int $post_id): bool {
+        if ($post_id <= 0 || get_post_type($post_id) !== 'post') {
+            return false;
+        }
+
+        if (!function_exists('get_field')) {
+            return false;
+        }
+
+        $force_index = get_field('post_force_index', $post_id);
+        $force_index = ($force_index === 1 || $force_index === '1' || $force_index === true);
+        if ($force_index) {
+            return false;
+        }
+
+        $external_source_link = get_field('post_external_source_link', $post_id);
+        $has_external_source_url = is_array($external_source_link) && !empty($external_source_link['url']);
+
+        $open_external_source = get_field('post_listing_open_external_source', $post_id);
+        $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
+
+        $category_slugs = [];
+        $terms = get_the_terms($post_id, 'category');
+        if (!empty($terms) && !is_wp_error($terms)) {
+            $category_slugs = wp_list_pluck($terms, 'slug');
+        }
+        $is_press_release = in_array('press-releases', $category_slugs, true);
+
+        return $has_external_source_url && ($is_press_release || $open_external_source);
+    }
+}
+
+add_filter('wp_robots', function (array $robots): array {
+    if (!is_singular('post')) {
+        return $robots;
+    }
+
+    $post_id = (int) get_queried_object_id();
+    if (!$post_id || !matrix_should_noindex_post($post_id)) {
+        return $robots;
+    }
+
+    $robots['noindex'] = true;
+    $robots['nofollow'] = false;
+    return $robots;
+}, 20);
+
+add_filter('wpseo_robots', function ($robots) {
+    if (!is_singular('post')) {
+        return $robots;
+    }
+
+    $post_id = (int) get_queried_object_id();
+    if (!$post_id || !matrix_should_noindex_post($post_id)) {
+        return $robots;
+    }
+
+    return 'noindex,follow';
+}, 20);
+
+add_filter('rank_math/frontend/robots', function ($robots) {
+    if (!is_singular('post')) {
+        return $robots;
+    }
+
+    $post_id = (int) get_queried_object_id();
+    if (!$post_id || !matrix_should_noindex_post($post_id)) {
+        return $robots;
+    }
+
+    return 'noindex,follow';
+}, 20);
+
+/**
+ * Frontend accessibility baseline fixes applied site-wide.
+ */
+add_action('wp_footer', function () {
+    if (is_admin()) {
+        return;
+    }
+    ?>
+    <script>
+    (function () {
+        function uniqueId(prefix) {
+            return prefix + '-' + Math.random().toString(36).slice(2, 10);
+        }
+
+        function wireFormLabels() {
+            var forms = document.querySelectorAll('form');
+            forms.forEach(function (form) {
+                var labels = form.querySelectorAll('label:not([for])');
+                labels.forEach(function (label) {
+                    var control = label.querySelector('input, select, textarea');
+                    if (!control) {
+                        var sibling = label.nextElementSibling;
+                        if (sibling) {
+                            control = sibling.matches('input, select, textarea')
+                                ? sibling
+                                : sibling.querySelector('input, select, textarea');
+                        }
+                    }
+
+                    if (!control) return;
+                    if (!control.id) {
+                        var namePart = control.getAttribute('name') || 'field';
+                        control.id = uniqueId('a11y-' + namePart.replace(/[^a-z0-9_-]/gi, '-'));
+                    }
+                    label.setAttribute('for', control.id);
+                });
+            });
+        }
+
+        function fixNewTabLinks() {
+            var links = document.querySelectorAll('a[target="_blank"]');
+            links.forEach(function (link) {
+                var rel = (link.getAttribute('rel') || '').trim();
+                var relParts = rel ? rel.split(/\s+/) : [];
+                if (!relParts.includes('noopener')) relParts.push('noopener');
+                if (!relParts.includes('noreferrer')) relParts.push('noreferrer');
+                link.setAttribute('rel', relParts.join(' ').trim());
+
+                var label = (link.getAttribute('aria-label') || '').trim();
+                var text = (link.textContent || '').trim();
+                var suffix = '(opens in a new tab)';
+                if (!label) {
+                    label = text ? text + ' ' + suffix : 'Link ' + suffix;
+                    link.setAttribute('aria-label', label);
+                } else if (label.toLowerCase().indexOf('new tab') === -1) {
+                    link.setAttribute('aria-label', label + ' ' + suffix);
+                }
+            });
+        }
+
+        function runA11yEnhancements() {
+            wireFormLabels();
+            fixNewTabLinks();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runA11yEnhancements);
+        } else {
+            runA11yEnhancements();
+        }
+    })();
+    </script>
+    <?php
+}, 100);

@@ -3,7 +3,7 @@
 use StoutLogic\AcfBuilder\FieldsBuilder;
 
 $content_002 = new FieldsBuilder('content_002', [
-    'label' => 'Content Section Two',
+    'label' => 'Content with Image or Video',
 ]);
 
 $content_002
@@ -46,6 +46,21 @@ $content_002
         'tabs' => 'all',
         'toolbar' => 'full',
     ])
+    ->addLink('content_button', [
+        'label' => 'Optional Button',
+        'instructions' => 'Optional CTA button shown below the body content.',
+        'return_format' => 'array',
+    ])
+    ->addSelect('media_type', [
+        'label' => 'Media Type',
+        'instructions' => 'Choose whether the right column uses an image or a video.',
+        'choices' => [
+            'image' => 'Image',
+            'video' => 'Video',
+        ],
+        'default_value' => 'image',
+        'ui' => 1,
+    ])
     ->addImage('image', [
         'label' => 'Content Image',
         'instructions' => 'Upload an image for the right column. Recommended size: 448x448 pixels or larger.',
@@ -53,6 +68,48 @@ $content_002
         'preview_size' => 'medium',
         'library' => 'all',
     ])
+        ->conditional('media_type', '==', 'image')
+    ->addFile('video_file', [
+        'label' => 'Video File',
+        'instructions' => 'Upload a local MP4/WebM video for the right column.',
+        'return_format' => 'array',
+        'library' => 'all',
+        'mime_types' => 'mp4,webm,mov',
+    ])
+        ->conditional('media_type', '==', 'video')
+    ->addSelect('video_source', [
+        'label' => 'Video Source',
+        'instructions' => 'Choose where the video should load from.',
+        'choices' => [
+            'local' => 'Local upload',
+            'youtube' => 'YouTube',
+            'vimeo' => 'Vimeo',
+        ],
+        'default_value' => 'local',
+        'ui' => 1,
+    ])
+        ->conditional('media_type', '==', 'video')
+    ->addUrl('video_youtube_url', [
+        'label' => 'YouTube URL',
+        'instructions' => 'Paste a YouTube URL (watch, share, shorts, or embed).',
+    ])
+        ->conditional('media_type', '==', 'video')
+        ->conditional('video_source', '==', 'youtube')
+    ->addUrl('video_vimeo_url', [
+        'label' => 'Vimeo URL',
+        'instructions' => 'Paste a Vimeo URL.',
+    ])
+        ->conditional('media_type', '==', 'video')
+        ->conditional('video_source', '==', 'vimeo')
+    ->addImage('video_poster', [
+        'label' => 'Video Poster',
+        'instructions' => 'Optional. Displayed before the video plays.',
+        'return_format' => 'id',
+        'preview_size' => 'medium',
+        'library' => 'all',
+    ])
+        ->conditional('media_type', '==', 'video')
+        ->conditional('video_source', '==', 'local')
 
     ->addTab('Design', ['label' => 'Design'])
     ->addColorPicker('background_color', [
@@ -62,6 +119,12 @@ $content_002
     ])
 
     ->addTab('Layout', ['label' => 'Layout'])
+    ->addTrueFalse('reverse_layout', [
+        'label' => 'Reverse Layout',
+        'instructions' => 'Swap the body content and image columns on desktop.',
+        'default_value' => 0,
+        'ui' => 1,
+    ])
     ->addRepeater('padding_settings', [
         'label' => 'Padding Settings',
         'instructions' => 'Customize padding for different screen sizes.',

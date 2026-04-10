@@ -2,43 +2,104 @@
 /**
  * Language dropdown for the navbar.
  * Opens on hover; styled as a white panel with no box shadow.
- * Uses Polylang languages when available, otherwise a static list.
+ * Uses manual country options from theme settings, otherwise a static list.
  */
 
 $languages = [];
+$nav_settings = get_field('navigation_settings_start', 'option') ?: [];
+$show_country_picker = !array_key_exists('show_country_picker', $nav_settings) || (bool) $nav_settings['show_country_picker'];
 
-if (function_exists('pll_the_languages')) {
-    $pll_languages = pll_the_languages(['raw' => 1]);
-    if (is_array($pll_languages)) {
-        foreach ($pll_languages as $slug => $lang) {
-            $languages[] = [
-                'value' => $slug,
-                'label' => $lang['name'] ?? $slug,
-                'url'   => $lang['url'] ?? '#',
-                'flag'  => $lang['flag'] ?? null,
-            ];
+if (!$show_country_picker) {
+    return;
+}
+
+$country_picker_options = $nav_settings['country_picker_options'] ?? [];
+
+if (!empty($country_picker_options) && is_array($country_picker_options)) {
+    foreach ($country_picker_options as $option) {
+        $value = sanitize_title((string) ($option['value'] ?? ''));
+        $label = trim((string) ($option['label'] ?? ''));
+        $link = $option['link'] ?? null;
+        $flag_icon = $option['flag_icon'] ?? null;
+
+        $url = '#';
+        $target = '';
+        if (is_array($link) && !empty($link['url'])) {
+            $url = $link['url'];
+            $target = !empty($link['target']) ? $link['target'] : '';
         }
+
+        $flag_url = null;
+        if (is_array($flag_icon) && !empty($flag_icon['url'])) {
+            $flag_url = $flag_icon['url'];
+        }
+
+        if ($value === '' || $label === '') {
+            continue;
+        }
+
+        $languages[] = [
+            'value' => $value,
+            'label' => $label,
+            'url'   => $url,
+            'flag'  => $flag_url,
+            'target' => $target,
+        ];
     }
 }
 
 if (empty($languages)) {
-    // Fallback when Polylang is not active
+    // Fallback when no manual options are configured
     $languages = [
-        ['value' => 'ie', 'label' => 'Ireland', 'url' => '#', 'flag' => 'https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/ab16b90e79c12d127d396904f040cf46e7cb5eaa?placeholderIfAbsent=true'],
-        ['value' => 'uk', 'label' => 'United Kingdom', 'url' => '#', 'flag' => null],
-        ['value' => 'australia', 'label' => 'Australia', 'url' => '#', 'flag' => 'https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/01e57acce2567c69db9be0aa06c4f52ee1a53efd?placeholderIfAbsent=true'],
-        ['value' => 'global', 'label' => 'Global', 'url' => '#', 'flag' => null],
+        ['value' => 'ie', 'label' => 'Ireland', 'url' => '#', 'flag' => 'https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/ab16b90e79c12d127d396904f040cf46e7cb5eaa?placeholderIfAbsent=true', 'target' => ''],
+        ['value' => 'uk', 'label' => 'United Kingdom', 'url' => '#', 'flag' => null, 'target' => ''],
+        ['value' => 'australia', 'label' => 'Australia', 'url' => '#', 'flag' => 'https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/01e57acce2567c69db9be0aa06c4f52ee1a53efd?placeholderIfAbsent=true', 'target' => ''],
+        ['value' => 'global', 'label' => 'Global', 'url' => '#', 'flag' => null, 'target' => ''],
     ];
 }
 
 $current = $languages[0] ?? null;
-if (function_exists('pll_current_language')) {
-    $current_slug = pll_current_language();
-    foreach ($languages as $lang) {
-        if (($lang['value'] ?? '') === $current_slug) {
-            $current = $lang;
-            break;
-        }
+
+// Auto-select current country by matching the current site URL/host to option links.
+$current_site_url = home_url('/');
+$current_site_host = (string) wp_parse_url($current_site_url, PHP_URL_HOST);
+$current_site_path = (string) wp_parse_url($current_site_url, PHP_URL_PATH);
+$current_site_path = untrailingslashit($current_site_path);
+
+$normalize_host = static function ($host) {
+    $host = strtolower((string) $host);
+    return preg_replace('/^www\./', '', $host);
+};
+
+$current_site_host = $normalize_host($current_site_host);
+
+foreach ($languages as $lang) {
+    $lang_url = (string) ($lang['url'] ?? '');
+    if ($lang_url === '' || $lang_url === '#') {
+        continue;
+    }
+
+    $lang_host = (string) wp_parse_url($lang_url, PHP_URL_HOST);
+    $lang_path = (string) wp_parse_url($lang_url, PHP_URL_PATH);
+    $lang_path = untrailingslashit($lang_path);
+
+    if ($normalize_host($lang_host) !== $current_site_host) {
+        continue;
+    }
+
+    // If host matches and no path is specified, this is the active country.
+    if ($lang_path === '' || $lang_path === '/') {
+        $current = $lang;
+        break;
+    }
+
+    // If a path is specified, require exact or nested path match.
+    if (
+        $current_site_path === $lang_path ||
+        strpos($current_site_path . '/', $lang_path . '/') === 0
+    ) {
+        $current = $lang;
+        break;
     }
 }
 ?>
@@ -56,6 +117,7 @@ if (function_exists('pll_current_language')) {
       <a
         href="<?php echo esc_url($current['url'] ?? '#'); ?>"
         class="flex gap-1 justify-center items-center px-1 py-2.5 w-full bg-transparent rounded-t transition-colors duration-200"
+        <?php if (!empty($current['target'])) : ?>target="<?php echo esc_attr($current['target']); ?>"<?php endif; ?>
         aria-haspopup="listbox"
         :aria-expanded="open"
         aria-labelledby="language-dropdown-label"
@@ -103,6 +165,7 @@ if (function_exists('pll_current_language')) {
                 href="<?php echo esc_url($lang['url']); ?>"
                 class="flex items-center px-4 py-2.5 w-full text-left transition-colors duration-200 btn hover:bg-gray-50 focus:bg-gray-50"
                 data-value="<?php echo esc_attr($lang['value']); ?>"
+                <?php if (!empty($lang['target'])) : ?>target="<?php echo esc_attr($lang['target']); ?>"<?php endif; ?>
               >
                 <div class="flex gap-2 items-center">
                   <?php if (!empty($lang['flag'])) : ?>

@@ -39,7 +39,7 @@ $group_map_section
     ->addText('secondary_heading', [
         'label' => 'Secondary Heading',
         'instructions' => 'Enter the secondary heading text.',
-        'default_value' => 'No group in you area?',
+        'default_value' => 'No group in your area?',
     ])
     ->addSelect('secondary_heading_tag', [
         'label' => 'Secondary Heading Tag',
@@ -108,6 +108,12 @@ $group_map_section
         'default_value' => '#fef3c7',
     ])
     ->addTab('Layout', ['label' => 'Layout'])
+    ->addTrueFalse('reverse_layout', [
+        'label' => 'Reverse Layout',
+        'instructions' => 'Swap text and map columns on desktop.',
+        'default_value' => 0,
+        'ui' => 1,
+    ])
     ->addRepeater('padding_settings', [
         'label' => 'Padding Settings',
         'instructions' => 'Customize padding for different screen sizes.',

@@ -19,6 +19,9 @@ $posts_per_page = get_sub_field('posts_per_page');
 $role_filter = get_sub_field('role_filter');
 $orderby = get_sub_field('orderby');
 $order = get_sub_field('order');
+$desktop_columns = (string) get_sub_field('desktop_columns');
+$show_content_snippet_raw = get_sub_field('show_content_snippet');
+$show_content_snippet = ($show_content_snippet_raw === null || $show_content_snippet_raw === '') ? true : (bool) $show_content_snippet_raw;
 
 $padding_classes = [];
 if (have_rows('padding_settings')) {
@@ -44,6 +47,8 @@ if (!in_array($heading_tag, $allowed_heading_tags, true)) {
 }
 
 $heading_id = $section_id . '-heading';
+$desktop_grid_class = ($desktop_columns === '3') ? 'lg:grid-cols-3' : 'lg:grid-cols-4';
+$snippet_preview_max_chars = 217;
 
 $query_args = [
     'post_type' => 'people',
@@ -79,7 +84,7 @@ $people_query = new WP_Query($query_args);
     aria-labelledby="<?php echo esc_attr($heading_id); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
-    <div class="flex flex-col items-center w-full mx-auto max-w-container pt-5 pb-5 max-lg:px-5 <?php echo esc_attr($padding_class_string); ?>">
+    <div class="flex flex-col items-center w-full mx-auto max-w-[1120px] pt-5 pb-5 lg:py-12 max-xl:px-5 <?php echo esc_attr($padding_class_string); ?>">
         <div class="flex flex-col gap-8 w-full">
             <div class="flex flex-col gap-2 w-full">
                 <<?php echo esc_html($heading_tag); ?>
@@ -100,7 +105,7 @@ $people_query = new WP_Query($query_args);
                 <?php } ?>
                 </div>
           <?php if ($people_query->have_posts()) { ?>
-              <div class="grid grid-cols-2 gap-6 w-full md:grid-cols-3 lg:grid-cols-4">
+              <div class="grid grid-cols-2 gap-6 w-full md:grid-cols-3 <?php echo esc_attr($desktop_grid_class); ?>">
                   <?php while ($people_query->have_posts()) { ?>
                       <?php
                       $people_query->the_post();
@@ -130,47 +135,109 @@ $people_query = new WP_Query($query_args);
                               $role_text = $terms[0]->name;
                           }
                       }
+
+                      $content_snippet = '';
+                      $content_snippet_preview = '';
+                      $show_read_more = false;
+                      if ($show_content_snippet) {
+                          $raw_content = (string) get_post_field('post_content', $person_id);
+                          if ($raw_content === '') {
+                              $raw_content = (string) get_the_content(null, false, $person_id);
+                          }
+                          if ($raw_content === '') {
+                              $raw_content = (string) get_the_excerpt($person_id);
+                          }
+
+                          $content_plain = trim((string) wp_strip_all_tags((string) strip_shortcodes($raw_content)));
+                          if ($content_plain !== '') {
+                              $content_snippet = $content_plain;
+                              if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+                                  if (mb_strlen($content_snippet) > $snippet_preview_max_chars) {
+                                      $truncated = mb_substr($content_snippet, 0, $snippet_preview_max_chars);
+                                      $truncated = preg_replace('/\s+\S*$/u', '', $truncated);
+                                      $content_snippet_preview = rtrim((string) $truncated, " \t\n\r\0\x0B.,;:!?") . '...';
+                                      $show_read_more = true;
+                                  } else {
+                                      $content_snippet_preview = $content_snippet;
+                                  }
+                              } elseif (strlen($content_snippet) > $snippet_preview_max_chars) {
+                                  $truncated = substr($content_snippet, 0, $snippet_preview_max_chars);
+                                  $truncated = preg_replace('/\s+\S*$/', '', $truncated);
+                                  $content_snippet_preview = rtrim((string) $truncated, " \t\n\r\0\x0B.,;:!?") . '...';
+                                  $show_read_more = true;
+                              } else {
+                                  $content_snippet_preview = $content_snippet;
+                              }
+                          }
+                      }
                       ?>
                       <article class="flex flex-col gap-4">
-                          <div class="w-full max-lg:h-auto h-[20rem] overflow-hidden <?php echo esc_attr($image_radius); ?>">
-                              <?php if (!empty($thumb_url)) { ?>
-                                  <img
-                                      src="<?php echo esc_url($thumb_url); ?>"
-                                      alt="<?php echo esc_attr($thumb_alt); ?>"
-                                      title="<?php echo esc_attr($thumb_title); ?>"
-                                      loading="lazy"
-                                      decoding="async"
-                                      class="object-cover w-full h-full rounded-lg max-lg:h-auto max-lg:object-contain"
-                                  >
-                              <?php } else { ?>
-                                  <div
-                                      class="w-full h-[20rem] flex items-center justify-center bg-[#e8ebf4] <?php echo esc_attr($image_radius); ?>"
-                                      role="img"
-                                      aria-label="<?php echo esc_attr($thumb_alt); ?>"
-                                  >
-                                      <span class="text-sm" style="color: <?php echo esc_attr($body_text_color); ?>;">
-                                          <?php echo esc_html($person_name); ?>
-                                      </span>
-                                  </div>
-                              <?php } ?>
-                          </div>
+                          <div class="flex flex-col gap-4">
+                              <div class="w-full max-lg:h-auto h-[20rem] overflow-hidden <?php echo esc_attr($image_radius); ?>">
+                                  <?php if (!empty($thumb_url)) { ?>
+                                      <img
+                                          src="<?php echo esc_url($thumb_url); ?>"
+                                          alt="<?php echo esc_attr($thumb_alt); ?>"
+                                          title="<?php echo esc_attr($thumb_title); ?>"
+                                          loading="lazy"
+                                          decoding="async"
+                                          class="object-cover w-full h-full rounded-lg max-lg:h-auto max-lg:object-contain"
+                                      >
+                                  <?php } else { ?>
+                                      <div
+                                          class="w-full h-[20rem] flex items-center justify-center bg-[#e8ebf4] <?php echo esc_attr($image_radius); ?>"
+                                          role="img"
+                                          aria-label="<?php echo esc_attr($thumb_alt); ?>"
+                                      >
+                                          <span class="text-sm" style="color: <?php echo esc_attr($body_text_color); ?>;">
+                                              <?php echo esc_html($person_name); ?>
+                                          </span>
+                                      </div>
+                                  <?php } ?>
+                              </div>
 
-                          <div class="flex flex-col gap-1">
-                              <p
-                                  class="break-words text-left text-[1.125rem] font-[700] leading-[1.5rem] font-['Public Sans']"
-                                  style="color: <?php echo esc_attr($body_text_color); ?>;"
-                              >
-                                  <?php echo esc_html($person_name); ?>
-                              </p>
-
-                              <?php if (!empty($role_text)) { ?>
+                              <div class="flex flex-col gap-1">
                                   <p
-                                      class="break-words text-left text-[0.875rem] font-[400] leading-[1.25rem] font-['Public Sans']"
+                                      class="break-words text-left text-[1.125rem] font-[700] leading-[1.5rem] font-['Public Sans']"
                                       style="color: <?php echo esc_attr($body_text_color); ?>;"
                                   >
-                                      <?php echo esc_html($role_text); ?>
+                                      <?php echo esc_html($person_name); ?>
                                   </p>
-                              <?php } ?>
+
+                                  <?php if (!empty($role_text)) { ?>
+                                      <p
+                                          class="break-words text-left text-[0.875rem] font-[400] leading-[1.25rem] font-['Public Sans']"
+                                          style="color: <?php echo esc_attr($body_text_color); ?>;"
+                                      >
+                                          <?php echo esc_html($role_text); ?>
+                                      </p>
+                                  <?php } ?>
+
+                                  <?php if (!empty($content_snippet_preview)) { ?>
+                                      <div class="pt-1" data-team-snippet-wrap>
+                                          <p
+                                              class="break-words text-left text-[0.875rem] font-[400] leading-[1.25rem] font-['Public Sans']"
+                                              style="color: <?php echo esc_attr($body_text_color); ?>;"
+                                              data-team-snippet-content
+                                              data-collapsed="<?php echo esc_attr($content_snippet_preview); ?>"
+                                              data-expanded="<?php echo esc_attr($content_snippet); ?>"
+                                          >
+                                              <?php echo esc_html($content_snippet_preview); ?>
+                                          </p>
+
+                                          <?php if ($show_read_more) { ?>
+                                              <button
+                                                  type="button"
+                                                  class="mt-2 inline-flex w-fit text-left text-[0.8125rem] font-[700] leading-[1.125rem] underline text-[var(--Blue-SR-400,#008BCC)] hover:text-[var(--Blue-SR-500,#00628F)] focus:outline-none focus-visible:ring-0 transition-colors duration-200"
+                                                  data-team-snippet-toggle
+                                                  aria-expanded="false"
+                                              >
+                                                  <?php echo esc_html__('Read more', 'matrix-starter'); ?>
+                                              </button>
+                                          <?php } ?>
+                                      </div>
+                                  <?php } ?>
+                              </div>
                           </div>
                       </article>
                   <?php } ?>
@@ -184,3 +251,38 @@ $people_query = new WP_Query($query_args);
         </div>
     </div>
 </section>
+
+<script>
+(function() {
+    var section = document.getElementById('<?php echo esc_js($section_id); ?>');
+    if (!section) {
+        return;
+    }
+
+    var toggles = section.querySelectorAll('[data-team-snippet-toggle]');
+    toggles.forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+            var wrapper = toggle.closest('[data-team-snippet-wrap]');
+            if (!wrapper) {
+                return;
+            }
+
+            var content = wrapper.querySelector('[data-team-snippet-content]');
+            if (!content) {
+                return;
+            }
+
+            var isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+            if (isExpanded) {
+                content.textContent = content.getAttribute('data-collapsed') || '';
+                toggle.textContent = '<?php echo esc_js(__('Read more', 'matrix-starter')); ?>';
+                toggle.setAttribute('aria-expanded', 'false');
+            } else {
+                content.textContent = content.getAttribute('data-expanded') || '';
+                toggle.textContent = '<?php echo esc_js(__('Read less', 'matrix-starter')); ?>';
+                toggle.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+})();
+</script>

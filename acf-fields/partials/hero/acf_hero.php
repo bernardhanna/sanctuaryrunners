@@ -67,10 +67,25 @@ $hero
             'library' => 'all',
         ])
             ->conditional('media_type', '==', 'image')
+        ->addSelect('media_presentation', [
+            'label' => 'Image Presentation',
+            'instructions' => 'Choose how image media should fit. Use "Full-height right SVG" for decorative SVGs that should align to the right edge and fill the hero height.',
+            'choices' => [
+                'default'               => 'Default (cover)',
+                'contain'               => 'Contain (centered)',
+                'contain_right'         => 'Contain (right aligned)',
+                'full_height_right_svg' => 'Full-height right SVG',
+            ],
+            'default_value' => 'default',
+            'ui' => 1,
+            'return_format' => 'value',
+        ])
+            ->conditional('media_type', '==', 'image')
         ->addSelect('video_source', [
             'label' => 'Video source',
             'choices' => [
                 'local' => 'Uploaded file (MP4 / WebM)',
+                'url' => 'External URL (MP4 / WebM, incl. Amazon S3/CloudFront)',
                 'youtube' => 'YouTube',
                 'vimeo' => 'Vimeo',
             ],
@@ -89,6 +104,12 @@ $hero
         ])
             ->conditional('media_type', '==', 'video')
             ->and('video_source', '==', 'local')
+        ->addUrl('video_url', [
+            'label' => 'External video URL',
+            'instructions' => 'Paste a direct MP4/WebM URL (e.g. Amazon S3/CloudFront).',
+        ])
+            ->conditional('media_type', '==', 'video')
+            ->and('video_source', '==', 'url')
         ->addUrl('video_youtube_url', [
             'label' => 'YouTube URL',
             'instructions' => 'Paste a watch, youtu.be, shorts, or embed link.',
@@ -101,14 +122,6 @@ $hero
         ])
             ->conditional('media_type', '==', 'video')
             ->and('video_source', '==', 'vimeo')
-        ->addImage('video_poster', [
-            'label' => 'Video poster (optional)',
-            'instructions' => 'Shown before playback and as fallback; recommended for performance.',
-            'return_format' => 'id',
-            'preview_size' => 'medium',
-            'library' => 'all',
-        ])
-            ->conditional('media_type', '==', 'video')
         ->addTrueFalse('video_autoplay', [
             'label' => 'Autoplay',
             'ui' => 1,

@@ -432,7 +432,7 @@ add_action('wp_footer', function () {
   </script>
 <?php }, 100);
 
-//ORDER RECIEVED
+// ORDER RECEIVED
 /**
  * Move "Order summary" heading inside #order_review, above the table.
  * - Print our heading at priority 5 (before Woo's table at priority 10)

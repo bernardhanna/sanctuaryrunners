@@ -20,8 +20,10 @@ add_action('acf/init', function () {
     $dirs = [
         get_template_directory() . '/acf-fields/partials/post-types',
         get_template_directory() . '/acf-fields/partials/options',
+        get_template_directory() . '/acf-fields/partials/taxonomies',
         get_template_directory() . '/acf-fields/post-types',
         get_template_directory() . '/acf-fields/options',
+        get_template_directory() . '/acf-fields/taxonomies',
     ];
 
     foreach ($dirs as $dir) {

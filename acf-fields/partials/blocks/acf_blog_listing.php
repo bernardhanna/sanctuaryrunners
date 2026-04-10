@@ -11,7 +11,7 @@ $blog_listing
     ->addText('section_heading', [
         'label' => 'Section Heading',
         'instructions' => 'Optional heading for the blog section.',
-        'default_value' => 'Latest Posts',
+        'required' => 0,
     ])
     ->addSelect('section_heading_tag', [
         'label' => 'Heading Tag',
@@ -37,10 +37,20 @@ $blog_listing
         'instructions' => 'Display search functionality.',
         'default_value' => 1,
     ])
+    ->addTaxonomy('limit_to_category', [
+        'label' => 'Limit to Category',
+        'instructions' => 'Optional. If selected, this block will only show posts from this category (and its children). Filters (if enabled) will show child categories of the selected category.',
+        'taxonomy' => 'category',
+        'field_type' => 'select',
+        'allow_null' => 1,
+        'add_term' => 0,
+        'return_format' => 'id',
+        'multiple' => 0,
+    ])
     ->addNumber('posts_per_page', [
         'label' => 'Posts Per Page',
         'instructions' => 'Number of posts to display per page.',
-        'default_value' => 6,
+        'default_value' => 12,
         'min' => 1,
         'max' => 20,
     ])

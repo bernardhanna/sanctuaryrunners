@@ -19,6 +19,13 @@ $not_found
     'label' => 'Hero Text',
     'default_value' => 'Here are some helpful links to get you back on track:',
   ])
+  ->addImage('hero_image', [
+    'label' => 'Hero Image',
+    'instructions' => 'Image shown on the left side of the 404 layout.',
+    'return_format' => 'array',
+    'preview_size' => 'medium',
+    'library' => 'all',
+  ])
   ->addRepeater('links', [
     'label' => 'Helpful Links',
     'layout' => 'table',

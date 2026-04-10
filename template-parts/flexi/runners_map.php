@@ -17,7 +17,7 @@ $section_id = 'runners-map-' . wp_generate_uuid4();
 // -------------------------------------------------
 $sr_heading_text = get_sub_field('sr_heading_text') ?: 'Community Connection and Friendship Building';
 $sr_heading_tag  = get_sub_field('sr_heading_tag') ?: 'h1';
-$description     = get_sub_field('description') ?: 'Every week, people from different backgrounds come together in blue to move, connect and build friendships. Show up, get in touch with the local organiser to say hello, or send us an email to find out more via our contact us form. You\'ll be met with a warm welcome.';
+$description     = get_sub_field('description') ?: 'Every week, people from different backgrounds come together in blue to move, connect and build friendships. Show up, get in touch with the local organiser to say hello, or send us an email to find out more via our <a href="https://sanctuaryrunners.s1.matrix-test.com/contact/">contact us form</a>. You\'ll be met with a warm welcome.';
 
 // -------------------------------------------------
 // Images
@@ -120,17 +120,25 @@ foreach ($running_group_ids as $group_id) {
         continue;
     }
 
-    $markers_payload[] = [
+    $show_popup_link = get_field('show_map_popup_link', $group_id);
+    $show_popup_link = ($show_popup_link === 1 || $show_popup_link === '1' || $show_popup_link === true);
+
+    $marker_item = [
         'title'       => (string) get_the_title($group_id),
         'description' => (string) wp_strip_all_tags((string) get_field('address', $group_id)),
         'lat'         => (float) $lat,
         'lng'         => (float) $lng,
-        'link'        => [
+    ];
+
+    if ($show_popup_link) {
+        $marker_item['link'] = [
             'url'    => (string) get_permalink($group_id),
             'title'  => 'View group',
             'target' => '_self',
-        ],
-    ];
+        ];
+    }
+
+    $markers_payload[] = $marker_item;
 }
 ?>
 
@@ -147,7 +155,7 @@ foreach ($running_group_ids as $group_id) {
                 />
             <?php endif; ?>
 
-            <div class="flex relative flex-col items-center w-full min-h-[641px] max-md:px-5 max-md:pt-24 max-md:max-w-full">
+            <div class="flex relative flex-col items-center w-full min-h-[641px] max-md:px-5 max-md:pt-8 max-md:max-w-full">
                 <?php if (!empty($overlay_image_url)) : ?>
                     <img
                         src="<?php echo esc_url($overlay_image_url); ?>"
@@ -248,6 +256,86 @@ foreach ($running_group_ids as $group_id) {
             return;
         }
 
+        function setMapInteractions(mapInstance, enabled) {
+            if (enabled) {
+                if (mapInstance.scrollWheelZoom) mapInstance.scrollWheelZoom.enable();
+                if (mapInstance.dragging) mapInstance.dragging.enable();
+                if (mapInstance.touchZoom) mapInstance.touchZoom.enable();
+                if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.enable();
+                if (mapInstance.boxZoom) mapInstance.boxZoom.enable();
+                if (mapInstance.keyboard) mapInstance.keyboard.enable();
+                if (mapInstance.tap) mapInstance.tap.enable();
+                container.style.touchAction = 'auto';
+            } else {
+                if (mapInstance.scrollWheelZoom) mapInstance.scrollWheelZoom.disable();
+                if (mapInstance.dragging) mapInstance.dragging.disable();
+                if (mapInstance.touchZoom) mapInstance.touchZoom.disable();
+                if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.disable();
+                if (mapInstance.boxZoom) mapInstance.boxZoom.disable();
+                if (mapInstance.keyboard) mapInstance.keyboard.disable();
+                if (mapInstance.tap) mapInstance.tap.disable();
+                container.style.touchAction = 'pan-y';
+            }
+        }
+
+        function addMobileMapOverlayLock(mapInstance) {
+            if (container.querySelector('[data-mobile-map-overlay]')) {
+                return;
+            }
+
+            var interactive = false;
+            var overlay = document.createElement('button');
+            overlay.type = 'button';
+            overlay.setAttribute('data-mobile-map-overlay', '1');
+            overlay.setAttribute('aria-label', 'Tap to interact with map');
+            overlay.style.position = 'absolute';
+            overlay.style.inset = '0';
+            overlay.style.zIndex = '6000';
+            overlay.style.display = 'flex';
+            overlay.style.alignItems = 'center';
+            overlay.style.justifyContent = 'center';
+            overlay.style.padding = '0';
+            overlay.style.background = 'linear-gradient(to top, rgba(0,38,62,0.12), rgba(0,38,62,0.03))';
+            overlay.style.color = '#00628F';
+            overlay.style.fontSize = '12px';
+            overlay.style.fontWeight = '700';
+            overlay.style.lineHeight = '1';
+            overlay.style.cursor = 'pointer';
+            overlay.style.textShadow = '0 1px 0 rgba(255,255,255,0.55)';
+            overlay.textContent = 'Tap map to interact';
+
+            function lockMap() {
+                interactive = false;
+                setMapInteractions(mapInstance, false);
+                overlay.style.display = 'flex';
+            }
+
+            function unlockMap() {
+                interactive = true;
+                setMapInteractions(mapInstance, true);
+                overlay.style.display = 'none';
+            }
+
+            overlay.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                unlockMap();
+            });
+
+            document.addEventListener('pointerdown', function (event) {
+                if (!interactive) {
+                    return;
+                }
+
+                if (!container.contains(event.target)) {
+                    lockMap();
+                }
+            }, true);
+
+            container.appendChild(overlay);
+            lockMap();
+        }
+
         var provider = container.getAttribute('data-provider') || 'osm';
         var token = container.getAttribute('data-token') || '';
         var lat = parseFloat(container.getAttribute('data-lat') || '53.349805');
@@ -255,9 +343,27 @@ foreach ($running_group_ids as $group_id) {
         var zoom = parseInt(container.getAttribute('data-zoom') || '6', 10);
 
         var map = L.map(container, {
-            scrollWheelZoom: false,
+            scrollWheelZoom: true,
             zoomControl: false
         }).setView([lat, lng], zoom);
+
+        var isTouchViewport = false;
+        if (window.matchMedia) {
+            isTouchViewport = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 1024px)').matches;
+        }
+
+        if (isTouchViewport) {
+            setMapInteractions(map, false);
+            addMobileMapOverlayLock(map);
+        } else {
+            setMapInteractions(map, true);
+        }
+
+        // Keep popups above any floating controls layered over the map.
+        var popupPane = map.getPanes && map.getPanes().popupPane ? map.getPanes().popupPane : null;
+        if (popupPane) {
+            popupPane.style.zIndex = '9000';
+        }
 
         var tileUrl = '';
         var tileOptions = {};

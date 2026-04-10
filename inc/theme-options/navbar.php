@@ -17,6 +17,10 @@ $navigationFields
             'label' => 'Contact Button',
             'instructions' => 'Set contact button link and text',
         ])
+        ->addLink('join_us_button', [
+            'label' => 'Join Us Button (Mobile Top Row)',
+            'instructions' => 'Set mobile top-row Join Us button link and text. Falls back to Contact Button if empty.',
+        ])
         ->addLink('donate_button', [
             'label' => 'Donate Button',
             'instructions' => 'Set donate button link and text. Leave empty to hide.',
@@ -28,6 +32,45 @@ $navigationFields
             'preview_size' => 'thumbnail',
             'library' => 'all',
         ])
+        ->addTrueFalse('show_country_picker', [
+            'label' => 'Show Country Picker',
+            'instructions' => 'Disable to completely hide the country picker from the header.',
+            'default_value' => 1,
+            'ui' => 1,
+        ])
+        ->addRepeater('country_picker_options', [
+            'label'        => 'Country Picker Options',
+            'instructions' => 'Add custom options for the country picker dropdown in the header. If this has rows, these options are used instead of the default fallback list.',
+            'layout'       => 'row',
+            'button_label' => 'Add Country Option',
+            'min'          => 0,
+            'max'          => 20,
+        ])
+            ->conditional('show_country_picker', '==', '1')
+            ->addText('value', [
+                'label'        => 'Value',
+                'instructions' => 'Unique value/slug used in the option data attribute (e.g., ie, uk, global).',
+                'required'     => 1,
+                'placeholder'  => 'ie',
+            ])
+            ->addText('label', [
+                'label'        => 'Label',
+                'instructions' => 'Visible country/region name.',
+                'required'     => 1,
+                'placeholder'  => 'Ireland',
+            ])
+            ->addLink('link', [
+                'label'        => 'Link',
+                'instructions' => 'Destination URL for this country option.',
+            ])
+            ->addImage('flag_icon', [
+                'label'         => 'Flag Icon (SVG/PNG)',
+                'instructions'  => 'Upload a flag icon. SVG is supported when enabled on the site.',
+                'return_format' => 'array',
+                'preview_size'  => 'thumbnail',
+                'library'       => 'all',
+            ])
+        ->endRepeater()
 
         /*
         |----------------------------------------------------------------------

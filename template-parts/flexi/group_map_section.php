@@ -12,10 +12,11 @@ if (!defined('ABSPATH')) exit;
 $heading               = get_sub_field('heading') ?: 'Find your tribe.';
 $heading_tag           = get_sub_field('heading_tag') ?: 'h2';
 $description           = get_sub_field('description') ?: 'You don\'t have to run alone. Use our map to find a Sanctuary Runners group near you.<br>Whether you want to run, jog, or just walk and have a coffee, there is a place for you here. Simply enter your city or use your location to see where we meet this week.';
-$secondary_heading     = get_sub_field('secondary_heading') ?: 'No group in you area?';
+$secondary_heading     = get_sub_field('secondary_heading') ?: 'No group in your area?';
 $secondary_heading_tag = get_sub_field('secondary_heading_tag') ?: 'h3';
 $start_group_button    = get_sub_field('start_group_button');
 $find_groups_button    = get_sub_field('find_groups_button');
+$reverse_layout        = (bool) get_sub_field('reverse_layout');
 
 // -------------------------------------------------
 // ACF: Map settings
@@ -98,7 +99,10 @@ foreach ($running_group_ids as $group_id) {
         continue;
     }
 
-    $groups_payload[] = [
+    $show_popup_link = get_field('show_map_popup_link', $group_id);
+    $show_popup_link = ($show_popup_link === 1 || $show_popup_link === '1' || $show_popup_link === true);
+
+    $group_item = [
         'id'           => (int) $group_id,
         'title'        => (string) get_the_title($group_id),
         'lat'          => (float) $lat,
@@ -106,8 +110,13 @@ foreach ($running_group_ids as $group_id) {
         'address'      => (string) get_field('address', $group_id),
         'meeting_time' => (string) get_field('meeting_time', $group_id),
         'contact_info' => (string) get_field('contact_info', $group_id),
-        'url'          => (string) get_permalink($group_id),
     ];
+
+    if ($show_popup_link) {
+        $group_item['url'] = (string) get_permalink($group_id);
+    }
+
+    $groups_payload[] = $group_item;
 }
 ?>
 
@@ -117,24 +126,24 @@ foreach ($running_group_ids as $group_id) {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="px-5 py-16 pt-6 pb-6 md:pt-16 md:pb-16 mx-auto w-full max-w-[1240px] lg:px-10">
+    <div class="px-5 py-16 pt-6 pb-6 md:pt-16 md:pb-16 mx-auto w-full max-w-[1136px] lg:px-10">
 
         <div class="grid grid-cols-1 gap-10 items-start lg:grid-cols-12">
 
             <!-- Text Content -->
-            <article class="flex flex-col justify-center p-0 pb-0 md:pt-8 md:pb-8 w-full h-full lg:col-span-5" role="article">
+            <article class="flex flex-col justify-center p-0 pb-0 w-full h-full md:pt-8 md:pb-8 lg:col-span-5 <?php echo $reverse_layout ? 'lg:order-2' : 'lg:order-1'; ?>" role="article">
                 <header>
                     <?php if (!empty($heading)): ?>
                         <<?php echo esc_attr($heading_tag); ?>
                             id="<?php echo esc_attr($section_id); ?>-heading"
-                            class="font-['Public_Sans'] text-[36px] font-bold leading-[44px] tracking-[-0.72px] text-[var(--Blue-SR-500,#00628F)]"
+                            class="font-['Public_Sans'] text-[24px] font-bold not-italic leading-[32px] text-[var(--Blue-SR-500,#00628F)] sm:text-[36px] sm:leading-[44px] sm:tracking-[-0.72px]"
                         >
                             <?php echo esc_html($heading); ?>
                         </<?php echo esc_attr($heading_tag); ?>>
                     <?php endif; ?>
 
                     <?php if (!empty($description)): ?>
-                        <div class="mt-4 text-base leading-6 text-sky-950 max-w-[380px] wp_editor">
+                        <div class="mt-4 text-base leading-6 text-sky-950 lg:max-w-[380px] wp_editor max-sm:[&_p]:!text-[16px] max-sm:[&_p]:!font-normal max-sm:[&_p]:!not-italic max-sm:[&_p]:!leading-[22px]">
                             <?php echo wp_kses_post($description); ?>
                         </div>
                     <?php endif; ?>
@@ -152,7 +161,7 @@ foreach ($running_group_ids as $group_id) {
                             <div class="mt-4">
                                 <a
                                     href="<?php echo esc_url($start_group_button['url']); ?>"
-                                    class="group-map-start-btn inline-flex justify-center items-center px-6 py-4 w-full font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] rounded-full border border-[var(--Blue-SR-500,#00628F)] hover:border-[var(--Turquoise-500,#1C959B)] active:border-[var(--Blue-SR-500,#00628F)] active:bg-[var(--Blue-SR-10,#EBF9FF)] focus:outline-none focus-visible:ring-0 focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-10,#EBF9FF)] transition-colors duration-200 btn"
+                                    class="group-map-start-btn inline-flex w-full items-center justify-center rounded-full border border-[var(--Blue-SR-500,#00628F)] bg-transparent px-4 py-0 font-['Public_Sans'] text-[var(--Blue-SR-500,#00628F)] hover:border-[var(--Turquoise-500,#1C959B)] active:border-[var(--Blue-SR-500,#00628F)] active:bg-[var(--Blue-SR-10,#EBF9FF)] focus:outline-none focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Blue-SR-10,#EBF9FF)] focus-visible:ring-0 transition-colors duration-200 btn sm:px-6 sm:py-4 sm:text-[14px] sm:font-bold sm:leading-5"
                                     target="<?php echo esc_attr($start_group_button['target'] ?? '_self'); ?>"
                                     aria-label="<?php echo esc_attr($start_group_button['title']); ?>"
                                 >
@@ -166,7 +175,7 @@ foreach ($running_group_ids as $group_id) {
 
             <!-- Map Column -->
             <div
-                class="relative isolate lg:col-span-7"
+                class="isolate relative lg:col-span-7 <?php echo $reverse_layout ? 'lg:order-1' : 'lg:order-2'; ?>"
                 x-data="{ mapQuery: '' }"
             >
                 <div
@@ -184,6 +193,7 @@ foreach ($running_group_ids as $group_id) {
 
                 <!-- After map in DOM + high z-index so the bar sits visually on top, centered -->
                 <div
+                    id="<?php echo esc_attr($section_id); ?>-map-search-wrap"
                     class="absolute inset-x-0 top-4 z-[8000] flex justify-center px-4 pointer-events-none md:top-5"
                     role="search"
                 >
@@ -191,7 +201,7 @@ foreach ($running_group_ids as $group_id) {
                         <?php echo esc_html__('Search groups by city or county', 'matrix-starter'); ?>
                     </label>
                     <div
-                        class="flex h-12 w-[258px] max-w-full shrink-0 items-center justify-between rounded-[1000px] border border-[var(--Gray-300,#D0D5DD)] bg-white px-6 py-0 pointer-events-auto"
+                        class="flex h-[38px] max-h-[38px] w-[258px] max-w-full shrink-0 items-center justify-between rounded-[1000px] border border-[var(--Gray-300,#D0D5DD)] bg-white px-6 py-0 pointer-events-auto sm:h-12 sm:max-h-none"
                     >
                         <input
                             id="<?php echo esc_attr($section_id); ?>-map-search"
@@ -202,11 +212,11 @@ foreach ($running_group_ids as $group_id) {
                             @input.debounce.300ms="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
                             @keydown.enter.prevent="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
                             placeholder="<?php echo esc_attr__('Search by city or county...', 'matrix-starter'); ?>"
-                            class="min-w-0 h-full flex-1 !border-0 bg-transparent font-['Public_Sans'] text-[14px] font-normal not-italic leading-[20px] text-[var(--Blue-SR-500,#00628F)] placeholder:text-[var(--Blue-SR-500,#00628F)]/60 !outline-none focus:!border-0 !ring-0 focus:!ring-0 pr-2"
+                            class="h-full min-w-0 flex-1 !border-0 bg-transparent !pl-0 pr-2 font-['Public_Sans'] text-[12px] font-normal not-italic leading-[18px] text-[var(--Blue-SR-500,#00628F)] placeholder:text-[var(--Blue-SR-500,#00628F)]/60 !outline-none !ring-0 focus:!border-0 focus:!ring-0 sm:text-[14px] sm:leading-[20px]"
                         />
                         <button
                             type="button"
-                            class="flex shrink-0 justify-center items-center p-0 text-[#00628F] hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--Turquoise-500,#1C959B)] focus-visible:ring-offset-2 rounded-full"
+                            class="flex h-full max-h-[38px] max-w-[38px] shrink-0 items-center justify-center rounded-full p-0 text-[#00628F] hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--Turquoise-500,#1C959B)] focus-visible:ring-offset-2 sm:max-h-none sm:max-w-none"
                             aria-label="<?php echo esc_attr__('Search map', 'matrix-starter'); ?>"
                             @click="window.srGroupMapApplyFilter && window.srGroupMapApplyFilter('<?php echo esc_js($section_id); ?>', mapQuery)"
                         >
@@ -226,7 +236,7 @@ foreach ($running_group_ids as $group_id) {
                     <div class="flex absolute right-0 left-0 bottom-8 z-[7500] justify-center items-center mx-auto pointer-events-none">
                         <a 
                           href="<?php echo esc_url($find_groups_button['url']); ?>" 
-                          class="group-map-find-btn pointer-events-auto inline-flex shrink-0 justify-center items-center gap-2 w-[170px] h-[42px] p-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-white rounded-full border-0 shadow-none outline-none ring-0 bg-[var(--Blue-SR-400,#008BCC)] hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white hover:border-0 hover:shadow-none hover:outline-none hover:ring-0 focus:border-0 focus:shadow-none focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 transition-colors duration-200 btn"
+                          class="group-map-find-btn pointer-events-auto inline-flex w-[170px] shrink-0 items-center justify-center gap-2 rounded-full border-0 bg-[var(--Blue-SR-400,#008BCC)] p-0 font-['Public_Sans'] text-white shadow-none outline-none ring-0 hover:border-0 hover:bg-[var(--Blue-SR-500,#00628F)] hover:text-white hover:shadow-none hover:outline-none hover:ring-0 focus:border-0 focus:shadow-none focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 transition-colors duration-200 btn sm:h-[42px] sm:p-4 sm:text-[14px] sm:font-bold sm:leading-5"
                           target="<?php echo esc_attr($find_groups_button['target'] ?? '_self'); ?>"
                           aria-label="<?php echo esc_attr($find_groups_button['title']); ?>"
                         >
@@ -302,11 +312,89 @@ foreach ($running_group_ids as $group_id) {
     if (!container || container.dataset.initialized === "1") return;
     if (typeof window.L === "undefined") return;
 
+    function setMapInteractions(mapInstance, enabled) {
+      if (enabled) {
+        if (mapInstance.scrollWheelZoom) mapInstance.scrollWheelZoom.enable();
+        if (mapInstance.dragging) mapInstance.dragging.enable();
+        if (mapInstance.touchZoom) mapInstance.touchZoom.enable();
+        if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.enable();
+        if (mapInstance.boxZoom) mapInstance.boxZoom.enable();
+        if (mapInstance.keyboard) mapInstance.keyboard.enable();
+        if (mapInstance.tap) mapInstance.tap.enable();
+        container.style.touchAction = "auto";
+      } else {
+        if (mapInstance.scrollWheelZoom) mapInstance.scrollWheelZoom.disable();
+        if (mapInstance.dragging) mapInstance.dragging.disable();
+        if (mapInstance.touchZoom) mapInstance.touchZoom.disable();
+        if (mapInstance.doubleClickZoom) mapInstance.doubleClickZoom.disable();
+        if (mapInstance.boxZoom) mapInstance.boxZoom.disable();
+        if (mapInstance.keyboard) mapInstance.keyboard.disable();
+        if (mapInstance.tap) mapInstance.tap.disable();
+        container.style.touchAction = "pan-y";
+      }
+    }
+
+    function addMobileMapOverlayLock(mapInstance) {
+      if (container.querySelector("[data-mobile-map-overlay]")) return;
+
+      let interactive = false;
+      const overlay = document.createElement("button");
+      overlay.type = "button";
+      overlay.setAttribute("data-mobile-map-overlay", "1");
+      overlay.setAttribute("aria-label", "Tap to interact with map");
+      overlay.style.position = "absolute";
+      overlay.style.inset = "0";
+      overlay.style.zIndex = "6000";
+      overlay.style.display = "flex";
+      overlay.style.alignItems = "center";
+      overlay.style.justifyContent = "center";
+      overlay.style.padding = "0";
+      overlay.style.background = "linear-gradient(to top, rgba(0,38,62,0.12), rgba(0,38,62,0.03))";
+      overlay.style.color = "#00628F";
+      overlay.style.fontSize = "12px";
+      overlay.style.fontWeight = "700";
+      overlay.style.lineHeight = "1";
+      overlay.style.cursor = "pointer";
+      overlay.style.textShadow = "0 1px 0 rgba(255,255,255,0.55)";
+      overlay.textContent = "Tap map to interact";
+
+      function lockMap() {
+        interactive = false;
+        setMapInteractions(mapInstance, false);
+        overlay.style.display = "flex";
+      }
+
+      function unlockMap() {
+        interactive = true;
+        setMapInteractions(mapInstance, true);
+        overlay.style.display = "none";
+      }
+
+      overlay.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        unlockMap();
+      });
+
+      document.addEventListener("pointerdown", function (event) {
+        if (!interactive) return;
+        if (!container.contains(event.target)) {
+          lockMap();
+        }
+      }, true);
+
+      container.appendChild(overlay);
+      lockMap();
+    }
+
     const provider = container.getAttribute("data-provider") || "osm";
     const token    = container.getAttribute("data-token") || "";
-    const lat      = parseFloat(container.getAttribute("data-lat") || "53.349805");
-    const lng      = parseFloat(container.getAttribute("data-lng") || "-6.26031");
+    const lat      = parseFloat(container.getAttribute("data-lat") || "53.35");
+    const lng      = parseFloat(container.getAttribute("data-lng") || "-8");
     const zoom     = parseInt(container.getAttribute("data-zoom") || "6", 10);
+
+    // Whole-island frame (ROI + NI); avoids auto-fit zooming into a Dublin-only cluster
+    const IRELAND_BOUNDS = L.latLngBounds([51.22, -10.75], [55.44, -5.98]);
 
     // Safe JSON read
     let groups = [];
@@ -315,7 +403,40 @@ foreach ($running_group_ids as $group_id) {
       try { groups = JSON.parse(jsonEl.textContent || "[]"); } catch (e) {}
     }
 
-    const map = L.map(container, { scrollWheelZoom: false, zoomControl: false }).setView([lat, lng], zoom);
+    const map = L.map(container, { scrollWheelZoom: true, zoomControl: false }).setView([lat, lng], zoom);
+
+    // Toggle map search overlay while any marker popup is open.
+    const sectionPrefix = container.id.replace(/-map$/, "");
+    const searchWrap = document.getElementById(sectionPrefix + "-map-search-wrap");
+    function setSearchVisible(visible) {
+      if (!searchWrap) return;
+      searchWrap.style.display = visible ? "" : "none";
+    }
+
+    let isTouchViewport = false;
+    if (window.matchMedia) {
+      isTouchViewport = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 1024px)').matches;
+    }
+
+    if (isTouchViewport) {
+      setMapInteractions(map, false);
+      addMobileMapOverlayLock(map);
+    } else {
+      setMapInteractions(map, true);
+    }
+
+    // Keep map popups above floating search controls.
+    const popupPane = map.getPanes && map.getPanes().popupPane ? map.getPanes().popupPane : null;
+    if (popupPane) {
+      popupPane.style.zIndex = "9000";
+    }
+
+    map.on("popupopen", function () {
+      setSearchVisible(false);
+    });
+    map.on("popupclose", function () {
+      setSearchVisible(true);
+    });
 
     // Tile layer with Jawg fallback if token missing
     let tileUrl, tileOpts = {};
@@ -391,14 +512,12 @@ foreach ($running_group_ids as $group_id) {
 
     container._applyGroupMapFilter = applyGroupMapFilter;
 
-    // Auto-fit if we have markers
-    if (bounds.length > 1) map.fitBounds(bounds, { padding: [30, 30] });
-    if (bounds.length === 1) map.setView(bounds[0], Math.max(zoom, 12));
+    // Default view: all of Ireland (marker auto-fit was zooming tight on Dublin clusters)
+    map.fitBounds(IRELAND_BOUNDS, { padding: [28, 28] });
 
     container.dataset.initialized = "1";
 
     // Sync Alpine search if user typed before map finished init
-    const sectionPrefix = container.id.replace(/-map$/, "");
     const searchInput = document.getElementById(sectionPrefix + "-map-search");
     if (searchInput && searchInput.value) {
       applyGroupMapFilter(searchInput.value);

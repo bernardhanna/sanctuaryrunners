@@ -71,6 +71,24 @@ $menu_latest      = 'footer_two';
 $menu_getinvolved = 'footer_three';
 $menu_legal       = 'copyright';
 
+$legal_menu_options = [];
+$legal_menu_locations = get_nav_menu_locations();
+if (!empty($legal_menu_locations[$menu_legal])) {
+    $legal_menu_id = (int) $legal_menu_locations[$menu_legal];
+    $legal_menu_items = wp_get_nav_menu_items($legal_menu_id);
+    if (!empty($legal_menu_items) && is_array($legal_menu_items)) {
+        foreach ($legal_menu_items as $item) {
+            if (!is_object($item) || empty($item->url) || empty($item->title)) {
+                continue;
+            }
+            $legal_menu_options[] = [
+                'url' => (string) $item->url,
+                'title' => wp_strip_all_tags((string) $item->title),
+            ];
+        }
+    }
+}
+
 /** SVGs for social icons */
 function matrix_social_svg($icon) {
     if ($icon === 'bluesky') {
@@ -95,9 +113,9 @@ function matrix_social_svg($icon) {
   <?php if ( ! ( function_exists( 'matrix_donations_is_donation_flow' ) && matrix_donations_is_donation_flow() ) ) : ?>
   <div style="background-color: <?php echo esc_attr($main_bg_color ?: '#00263E'); ?>;">
     <div class="max-w-[1440px] mx-auto px-8 sm:px-8 lg:px-14 py-8 md:py-14 <?php echo esc_attr($padding_class_string); ?>">
-      <div class="flex flex-col gap-0 lg:flex-row lg:gap-16 xl:gap-32">
+      <div class="footer-main-layout flex flex-col gap-0 md:flex-row lg:gap-16 xl:gap-32">
 
-        <div class="flex flex-row justify-around md:flex-col md:justify-start gap-4 shrink-0 pb-6 md:pb-0">
+        <div class="footer-brand-block flex flex-row gap-4 justify-around pb-6 md:flex-col md:justify-start shrink-0 md:pb-0">
           <div class="w-40">
             <?php if ($footer_logo) : ?>
               <?php
@@ -144,15 +162,15 @@ function matrix_social_svg($icon) {
           <?php endif; ?>
 
           <?php if ($footer_reg_text !== '') : ?>
-            <p class="text-white font-primary text-[10px] leading-4 max-w-[180px] mt-3 md:mt-5">
+            <p class="mt-3 max-w-[180px] font-sans text-[12px] font-normal not-italic leading-[18px] text-white md:mt-5">
               <?php echo esc_html($footer_reg_text); ?>
             </p>
           <?php endif; ?>
           </div>
         </div>
 
-        <nav class="flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-1">
-          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
+        <nav class="footer-nav-block flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-1">
+          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-brand-secondary md:font-primary">
             <?php echo esc_html($col1_heading ?: 'About us'); ?>
           </h3>
           <?php
@@ -161,14 +179,14 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="text-sm font-bold leading-5 text-white transition-colors font-primary hover:text-[#54A5DE]">',
+              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-white transition-colors duration-200 hover:text-brand-accent-strong">',
               'link_after'     => '</span>',
           ]);
           ?>
         </nav>
 
-        <nav class="flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-2">
-          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
+        <nav class="footer-nav-block flex flex-col gap-4 py-6 border-y border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-2">
+          <h3 id="footer-col-1" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-brand-secondary md:font-primary">
             <?php echo esc_html($col2_heading ?: 'About us'); ?>
           </h3>
           <?php
@@ -177,14 +195,14 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="text-sm font-bold leading-5 text-white transition-colors font-primary hover:text-[#54A5DE]">',
+              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-white transition-colors duration-200 hover:text-brand-accent-strong">',
               'link_after'     => '</span>',
           ]);
           ?>
         </nav>
 
-        <nav class="flex flex-col gap-4 py-6 border-t border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-3">
-          <h3 id="footer-col-3" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-[#54A5DE] md:font-primary">
+        <nav class="footer-nav-block flex flex-col gap-4 py-6 border-t border-white/30 md:border-0 md:py-0" aria-labelledby="footer-col-3">
+          <h3 id="footer-col-3" class="text-2xl font-bold leading-8 text-[#EEF6FC] font-['Public_Sans'] md:text-2xl md:font-light md:leading-8 md:text-brand-secondary md:font-primary">
             <?php echo esc_html($col3_heading ?: 'Get involved'); ?>
           </h3>
           <?php
@@ -193,7 +211,7 @@ function matrix_social_svg($icon) {
               'container'      => false,
               'menu_class'     => 'flex flex-col gap-4',
               'fallback_cb'    => '__return_empty_string',
-              'link_before'    => '<span class="text-sm font-bold leading-5 text-white transition-colors font-primary hover:text-[#54A5DE]">',
+              'link_before'    => '<span class="font-sans text-[14px] font-bold not-italic leading-[20px] text-white transition-colors duration-200 hover:text-brand-accent-strong">',
               'link_after'     => '</span>',
           ]);
           ?>
@@ -206,29 +224,49 @@ function matrix_social_svg($icon) {
 
   <div style="background-color: <?php echo esc_attr($bottom_bg_color ?: '#F0F9FF'); ?>;">
     <div class="max-w-[1540px] mx-auto px-4 sm:px-8 lg:px-14 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[#475467] font-primary text-xs leading-[18px]">
-        <span><?php echo esc_html($copyright_left); ?></span>
-        <span class="text-[#475467]" aria-hidden="true">|</span>
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 max-[479px]:flex-col max-[479px]:items-start max-[479px]:w-full max-[479px]:gap-2 font-sans text-[12px] font-normal not-italic leading-[18px] text-content-muted">
+        <?php if (!empty($legal_menu_options)) : ?>
+          <div class="hidden max-[479px]:block max-[479px]:w-full">
+            <label for="copyright-menu-select" class="sr-only">Copyright menu</label>
+            <select
+              id="copyright-menu-select"
+              class="w-full rounded-pill border border-[#D0D5DD] bg-white px-4 py-2 font-sans text-[12px] font-normal leading-[18px] text-content-muted focus:outline-none focus:ring-2 focus:ring-brand-primary-hover"
+              onchange="if (this.value) { window.location.href = this.value; }"
+            >
+              <option value="">Legal links</option>
+              <?php foreach ($legal_menu_options as $option) : ?>
+                <option value="<?php echo esc_url($option['url']); ?>">
+                  <?php echo esc_html($option['title']); ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+        <?php endif; ?>
 
-        <?php
-        wp_nav_menu([
-            'theme_location' => $menu_legal,
-            'container'      => false,
-            'menu_class' => 'menu-copyright flex flex-wrap items-center gap-x-2 gap-y-1',
-            'fallback_cb'    => '__return_empty_string',
-            'link_before'    => '<span class="transition-colors hover:text-sr-blue-500">',
-            'link_after' => '</span><span class="px-3 text-[#475467]" aria-hidden="true">|</span>',
-        ]);
-        ?>
+        <span><?php echo esc_html($copyright_left); ?></span>
+        <span class="text-content-muted max-[479px]:hidden" aria-hidden="true">|</span>
+
+        <div class="max-[479px]:hidden">
+          <?php
+          wp_nav_menu([
+              'theme_location' => $menu_legal,
+              'container'      => false,
+              'menu_class' => 'menu-copyright flex flex-wrap items-center gap-x-2 gap-y-1',
+              'fallback_cb'    => '__return_empty_string',
+              'link_before'    => '<span class="font-sans text-[12px] font-normal not-italic leading-[18px] text-content-muted transition-colors duration-200 hover:text-brand-primary-hover hover:underline underline-offset-2">',
+              'link_after' => '</span><span class="px-3 text-content-muted" aria-hidden="true">|</span>',
+          ]);
+          ?>
+        </div>
       </div>
 
-      <div class="flex items-center gap-1 text-[#475467] font-primary text-xs leading-[18px] whitespace-nowrap flex-wrap">
+      <div class="flex flex-wrap items-center gap-1 whitespace-nowrap font-sans text-[12px] font-normal not-italic leading-[18px] text-content-muted">
         <span><?php echo esc_html($credit_prefix ?: 'All Rights Reserved - Designed & Developed by'); ?></span>
         <?php if (is_array($credit_link) && !empty($credit_link['url'])) : ?>
           <a
             href="<?php echo esc_url($credit_link['url']); ?>"
             target="<?php echo esc_attr($credit_link['target'] ?? '_self'); ?>"
-            class="font-medium transition-colors hover:text-sr-blue-500 btn"
+            class="font-sans text-[12px] font-normal not-italic leading-[18px] transition-colors duration-200 hover:text-brand-primary-hover hover:underline underline-offset-2 btn"
           >
             <?php echo esc_html($credit_link['title'] ?: 'Matrix Internet'); ?>
           </a>
@@ -237,5 +275,32 @@ function matrix_social_svg($icon) {
     </div>
   </div>
 </footer>
+
+<style>
+  /* Tablet-only footer layout tuning to avoid squashed columns */
+  @media (min-width: 768px) and (max-width: 1084px) {
+    .footer-main-layout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 2rem;
+      row-gap: 2rem;
+    }
+
+    .footer-brand-block {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 0;
+    }
+
+    .footer-nav-block {
+      padding-top: 0;
+      padding-bottom: 0;
+      border-top: 0;
+      border-bottom: 0;
+    }
+  }
+</style>
 
 <?php wp_footer(); ?>

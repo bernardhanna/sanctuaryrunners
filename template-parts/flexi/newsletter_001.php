@@ -77,7 +77,7 @@ if (!$icon_alt) {
             <!-- Newsletter Form -->
             <div class="w-full max-w-2xl">
                 <form
-                    class="w-full"
+                    class="w-full newsletter-form"
                     data-brevo-newsletter="1"
                     role="form"
                     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
@@ -140,7 +140,7 @@ if (!$icon_alt) {
                     </div>
 
                     <!-- Terms and Conditions -->
-                    <div class="flex flex-wrap gap-2 items-start md:items-center mt-4 w-full">
+                    <div class="flex flex-wrap gap-2 items-start mt-4 w-full md:items-center">
                         <div class="flex overflow-hidden flex-col flex-shrink-0 justify-center items-center w-6 rounded min-h-6">
                             <input
                                 type="checkbox"

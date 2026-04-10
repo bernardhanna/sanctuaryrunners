@@ -29,14 +29,15 @@ $secondary_cta = get_sub_field('secondary_cta');
 $media_type        = get_sub_field('media_type') ?: 'image';
 $media_image       = get_sub_field('media_image');
 $media_ratio_class = get_sub_field('media_ratio') ?: 'aspect-[16/9]';
+$media_presentation = get_sub_field('media_presentation') ?: 'default';
 
 $video_source      = get_sub_field('video_source') ?: 'local';
 $video_file        = get_sub_field('video_file');
+$video_url         = trim((string) get_sub_field('video_url'));
 $video_youtube_url = get_sub_field('video_youtube_url');
 $video_vimeo_url   = get_sub_field('video_vimeo_url');
-$video_poster      = get_sub_field('video_poster');
 
-$video_autoplay    = matrix_hero_acf_bool(get_sub_field('video_autoplay'), true);
+$video_autoplay    = false;
 $video_muted       = matrix_hero_acf_bool(get_sub_field('video_muted'), true);
 $video_loop        = matrix_hero_acf_bool(get_sub_field('video_loop'), true);
 $video_playsinline = matrix_hero_acf_bool(get_sub_field('video_playsinline'), true);
@@ -64,7 +65,44 @@ if ($media_type === 'video') {
     }
 }
 
-$video_poster_url = ($video_poster && $media_type === 'video') ? wp_get_attachment_image_url((int) $video_poster, 'full') : '';
+$allowed_media_presentations = ['default', 'contain', 'contain_right', 'full_height_right_svg'];
+if (!in_array($media_presentation, $allowed_media_presentations, true)) {
+    $media_presentation = 'default';
+}
+
+$is_full_height_right_media = $media_type === 'image' && !empty($media_image) && $media_presentation === 'full_height_right_svg';
+
+$hero_grid_classes = $is_full_height_right_media
+    ? 'relative grid grid-cols-1 gap-4 w-full max-[1200px]:px-5 py-[2rem] min-[1201px]:block min-[1201px]:min-h-[500px] min-[1201px]:py-0'
+    : 'grid grid-cols-1 gap-4 w-full max-xl:px-5 py-[2rem] min-[1201px]:grid-cols-[35%_70%] min-[1201px]:py-0';
+
+$header_classes = $is_full_height_right_media
+    ? 'relative z-[2] flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 min-[1201px]:order-1 min-[1201px]:max-w-[420px]'
+    : 'flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 min-[1201px]:order-1';
+
+$section_media_wrap_classes = $is_full_height_right_media
+    ? 'pointer-events-none absolute inset-y-0 right-0 z-[1] hidden min-[1201px]:flex min-[1201px]:w-[68%] min-[1201px]:items-stretch min-[1201px]:justify-end'
+    : '';
+$section_media_figure_classes = $is_full_height_right_media
+    ? 'h-full w-full overflow-hidden'
+    : '';
+
+$media_wrap_classes = $is_full_height_right_media
+    ? 'flex order-1 justify-end min-w-0 min-[1201px]:hidden'
+    : 'flex order-1 justify-end min-w-0 min-[1201px]:order-2';
+
+$media_figure_classes = $is_full_height_right_media
+    ? 'relative flex w-full min-h-[260px] items-stretch justify-end overflow-hidden'
+    : 'relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] ' . $media_ratio_class;
+
+$image_classes = 'w-full h-full object-cover';
+if ($media_presentation === 'contain') {
+    $image_classes = 'w-full h-full object-contain';
+} elseif ($media_presentation === 'contain_right') {
+    $image_classes = 'w-full h-full object-contain object-right';
+} elseif ($is_full_height_right_media) {
+    $image_classes = 'w-full h-full object-contain object-right';
+}
 
 // -------------------------------
 // Background
@@ -96,18 +134,27 @@ $hero_iframe_title = $title_inline !== ''
 
 <section
     id="<?php echo esc_attr($section_id); ?>"
-    class="overflow-hidden relative min-h-[500px] w-full flex items-center lg:pb-[50px]"
+    class="overflow-hidden relative min-h-[500px] w-full flex items-center min-[1201px]:pb-[50px]"
     style="background-color: <?php echo esc_attr($bg_color); ?>;"
-    role="banner"
     aria-labelledby="<?php echo esc_attr($title_id); ?>"
 >
 
-    <div class="mx-auto w-full max-w-container">
+    <?php if ($is_full_height_right_media && !empty($media_image)): ?>
+        <div class="<?php echo esc_attr($section_media_wrap_classes); ?>">
+            <figure class="<?php echo esc_attr($section_media_figure_classes); ?>">
+                <?php echo wp_get_attachment_image($media_image, 'full', false, [
+                    'class' => $image_classes,
+                ]); ?>
+            </figure>
+        </div>
+    <?php endif; ?>
 
-        <div class="grid grid-cols-1 gap-4 lg:grid-cols-[35%_70%] w-full max-lg:px-5 py-[2rem] lg:py-0">
+    <div class="relative mx-auto mt-5 w-full max-w-container">
+
+        <div class="<?php echo esc_attr($hero_grid_classes); ?>">
 
             <!-- Text -->
-            <header class="order-2 lg:order-1 flex flex-col gap-4 self-start pr-5 pl-0 min-w-0">
+            <header class="<?php echo esc_attr($header_classes); ?>">
 
                 <div class="w-full">
 
@@ -129,19 +176,19 @@ $hero_iframe_title = $title_inline !== ''
                 </div>
 
                 <?php if (!empty($description)): ?>
-                    <div id="<?php echo esc_attr($desc_id); ?>" class="flex flex-col gap-[10px] text-left lg:max-w-[303px] text-[18px] leading-6 text-white">
+                    <div id="<?php echo esc_attr($desc_id); ?>" class="flex flex-col gap-[10px] text-left min-[1201px]:max-w-[303px] text-[18px] leading-6 text-white">
                         <?php echo wp_kses_post($description); ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if ($primary_cta || $secondary_cta): ?>
-                    <div class="flex gap-6 pt-0 md:pt-4 w-full max-w-[400px] justify-between md:justify-start">
+                    <div class="flex gap-6 pt-0 md:pt-4 w-full min-[1201px]:max-w-[400px] md:justify-start">
 
                         <?php if ($primary_cta): ?>
                             <a
                                 href="<?php echo esc_url($primary_cta['url']); ?>"
                                 target="<?php echo esc_attr($primary_cta['target'] ?? '_self'); ?>"
-                                class="inline-flex items-center justify-center gap-2 bg-white rounded-full px-6 py-4 text-[14px] font-bold text-[#00628F]
+                                class="hero-cta inline-flex items-center justify-center gap-2 bg-white rounded-full px-6 py-4 text-[14px] font-bold text-[#00628F]
                                        hover:bg-[var(--Turquoise-50,#CBF3F6)]
                                        active:bg-[var(--Turquoise-100,#75E0E6)]
                                        focus:outline-none focus-visible:ring-0 focus-visible:border-[3px]
@@ -156,13 +203,12 @@ $hero_iframe_title = $title_inline !== ''
                             <a
                                 href="<?php echo esc_url($secondary_cta['url']); ?>"
                                 target="<?php echo esc_attr($secondary_cta['target'] ?? '_self'); ?>"
-                                class="inline-flex items-center justify-center gap-2 border border-white rounded-full px-6 py-4 text-[14px] font-bold text-white
+                                class="hero-cta inline-flex items-center justify-center gap-2 rounded-full border border-solid border-white px-6 py-4 text-[14px] font-bold text-white
                                        hover:border-[var(--Yellow-100,#FCF4C5)]
-                                       active:border-white active:bg-[var(--Blue-SR-400,#008BCC)]
-                                       focus:outline-none focus-visible:ring-0 focus-visible:border-[3px]
-                                       focus-visible:border-[var(--Turquoise-500,#1C959B)]
-                                       focus-visible:bg-[var(--Purple-50,#D9CCE4)]
-                                       transition-colors duration-200 whitespace-nowrap"
+                                       active:border-[var(--Base-White,#FFF)] active:bg-[var(--Blue-SR-400,#008BCC)]
+                                       focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-solid
+                                       focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-[var(--Purple-50,#D9CCE4)]
+                                       transition-[border-color,background-color,border-width] duration-200 whitespace-nowrap"
                             >
                                 <?php echo esc_html($secondary_cta['title']); ?>
                             </a>
@@ -174,15 +220,27 @@ $hero_iframe_title = $title_inline !== ''
             </header>
 
             <!-- Media -->
-            <div class="order-1 lg:order-2 flex justify-end min-w-0">
+            <div class="<?php echo esc_attr($media_wrap_classes); ?>">
 
-                <figure class="relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] <?php echo esc_attr($media_ratio_class); ?>">
+                <figure class="<?php echo esc_attr($media_figure_classes); ?>">
 
                     <?php if ($media_type === 'video'): ?>
                         <?php
                         $video_media_classes = 'absolute inset-0 w-full h-full object-cover';
-                        if ($video_source === 'local' && is_array($video_file) && !empty($video_file['url'])) :
-                            $mime = !empty($video_file['mime_type']) ? $video_file['mime_type'] : 'video/mp4';
+                        if (
+                            ($video_source === 'local' && is_array($video_file) && !empty($video_file['url'])) ||
+                            ($video_source === 'url' && $video_url !== '')
+                        ) :
+                            $video_src = $video_source === 'url' ? $video_url : $video_file['url'];
+                            $mime = 'video/mp4';
+                            if ($video_source === 'local' && !empty($video_file['mime_type'])) {
+                                $mime = (string) $video_file['mime_type'];
+                            } elseif ($video_source === 'url') {
+                                $filetype = wp_check_filetype((string) $video_src);
+                                if (!empty($filetype['type'])) {
+                                    $mime = (string) $filetype['type'];
+                                }
+                            }
                             ?>
                             <video
                                 class="<?php echo esc_attr($video_media_classes); ?>"
@@ -191,10 +249,9 @@ $hero_iframe_title = $title_inline !== ''
                                 <?php echo $video_muted ? 'muted' : ''; ?>
                                 <?php echo $video_loop ? 'loop' : ''; ?>
                                 <?php echo $video_playsinline ? 'playsinline' : ''; ?>
-                                <?php echo $video_poster_url ? 'poster="' . esc_url($video_poster_url) . '"' : ''; ?>
                                 preload="metadata"
                             >
-                                <source src="<?php echo esc_url($video_file['url']); ?>" type="<?php echo esc_attr($mime); ?>">
+                                <source src="<?php echo esc_url($video_src); ?>" type="<?php echo esc_attr($mime); ?>">
                             </video>
                         <?php elseif (($video_source === 'youtube' || $video_source === 'vimeo') && $video_embed_url !== '') : ?>
                             <iframe
@@ -205,18 +262,11 @@ $hero_iframe_title = $title_inline !== ''
                                 allowfullscreen
                                 loading="eager"
                             ></iframe>
-                        <?php elseif (!empty($video_poster_url)) : ?>
-                            <img
-                                src="<?php echo esc_url($video_poster_url); ?>"
-                                alt=""
-                                class="<?php echo esc_attr($video_media_classes); ?>"
-                                decoding="async"
-                            >
                         <?php endif; ?>
 
                     <?php elseif (!empty($media_image)): ?>
                         <?php echo wp_get_attachment_image($media_image, 'full', false, [
-                            'class' => 'w-full h-full object-cover'
+                            'class' => $image_classes
                         ]); ?>
                     <?php endif; ?>
 

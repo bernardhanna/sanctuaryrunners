@@ -45,6 +45,15 @@ $blogFields
       'default_value'=> 'Latest and greatest.',
     ])
 
+    ->addImage('archive_default_svg', [
+      'label'         => 'Archive Hero Default SVG',
+      'instructions'  => 'Default decorative SVG/image for News & Media, search, and archive/category hero sections. Category-specific uploads can override this on the category edit screen.',
+      'return_format' => 'id',
+      'preview_size'  => 'medium',
+      'library'       => 'all',
+      'mime_types'    => 'svg,png,jpg,jpeg,webp',
+    ])
+
     // — Filter Section Title —
     ->addText('filter_section_title', [
       'label'        => 'Filter Section Title',

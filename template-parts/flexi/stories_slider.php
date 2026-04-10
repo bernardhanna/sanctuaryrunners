@@ -50,16 +50,16 @@ if ($has_posts) {
 <section
     id="<?php echo esc_attr($section_id); ?>"
     style="<?php echo esc_attr($background_style); ?>"
-    class="px-4 pt-6 pb-12 sm:px-6 lg:px-10 xl:px-16 <?php echo esc_attr($section_class); ?>"
+    class="py-12 lg:pt-[5rem] lg:pb-[9rem] <?php echo esc_attr($section_class); ?> max-xl:px-5"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
-    <div class="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-24 lg:py-[72px]">
+    <div class="mx-auto max-w-[1024px] w-full">
 
         <!-- Header row: heading + desktop CTA -->
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <<?php echo esc_html($heading_tag); ?>
                 id="<?php echo esc_attr($section_id); ?>-heading"
-                class="font-display text-[36px] font-bold leading-[1.1] tracking-[-0.04em] text-brand-blue sm:text-[44px]"
+                class="font-display text-center text-[24px] not-italic font-bold leading-[32px] tracking-[-0.72px] text-brand-blue md:text-left md:text-[36px] md:leading-[1.1] md:tracking-[-0.04em] lg:text-[44px]"
             >
                 <?php echo esc_html($heading); ?>
             </<?php echo esc_html($heading_tag); ?>>
@@ -68,11 +68,11 @@ if ($has_posts) {
                 <a
                     href="<?php echo esc_url($read_all_link['url']); ?>"
                     target="<?php echo esc_attr($read_all_link['target'] ?: '_self'); ?>"
-                    class="hidden md:inline-flex h-[42px] justify-center items-center gap-2 py-4 pl-6 pr-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] rounded-full bg-white hover:bg-[var(--Turquoise-50,#CBF3F6)] active:bg-[var(--Turquoise-100,#75E0E6)] focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-[var(--Turquoise-500,#1C959B)] focus-visible:bg-white transition-colors duration-200"
+                    class="hidden min-[1085px]:inline-flex h-[42px] justify-center items-center gap-2 py-4 pl-6 pr-4 font-['Public_Sans'] text-[14px] font-bold leading-5 text-brand-primary-hover rounded-pill bg-white hover:bg-brand-accent-soft active:bg-brand-accent-strong focus:outline-none focus-visible:ring-0 focus-visible:border-[3px] focus-visible:border-brand-accent focus-visible:bg-white transition-colors duration-200"
                 >
                     <?php echo esc_html($read_all_link['title']); ?>
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                        <path d="M1 5.66667H10.3333M10.3333 5.66667L5.66667 1M10.3333 5.66667L5.66667 10.3333" stroke="#00628F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M1 5.66667H10.3333M10.3333 5.66667L5.66667 1M10.3333 5.66667L5.66667 10.3333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </a>
             <?php endif; ?>
@@ -80,7 +80,7 @@ if ($has_posts) {
 
         <!-- Slider wrapper -->
         <div
-            class="stories-slider-wrap relative mt-4 rounded-[12px] shadow-story overflow-hidden md:overflow-visible"
+            class="stories-slider-wrap relative mt-4 rounded-[12px] shadow-story overflow-visible"
             data-slide-images="<?php echo esc_attr(wp_json_encode($slide_images)); ?>"
             data-default-bg="<?php echo esc_attr($default_slider_bg); ?>"
         >
@@ -94,7 +94,7 @@ if ($has_posts) {
                     class="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-0 transition-opacity duration-500 stories-bg stories-bg-b"
                     style="background-color: #081226;"
                 ></div>
-                <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10"></div>
+                <div class="absolute inset-x-0 bottom-0 z-10 h-2/3 bg-gradient-to-t to-transparent pointer-events-none from-black/40"></div>
             </div>
 
             <!-- Nav arrows (desktop only) -->
@@ -134,7 +134,7 @@ if ($has_posts) {
                 <?php if ($has_posts) : ?>
 
                     <!-- ── DESKTOP: Slick slider ── -->
-                    <div class="hidden md:block px-8 pb-8 w-full">
+                    <div class="hidden px-8 pb-8 w-full md:block">
                         <div class="js-stories-slider">
                             <?php $slide_index = 0; while ($stories_query->have_posts()) : $stories_query->the_post(); ?>
                                 <?php
@@ -145,7 +145,7 @@ if ($has_posts) {
                                 $image_alt = $image_alt ?: get_the_title($post_id);
                                 $excerpt   = wp_trim_words(get_the_excerpt(), 12, '…');
                                 ?>
-                                <div class="stories-slide px-2" data-slide-index="<?php echo esc_attr((string) $slide_index); ?>">
+                                <div class="px-2 stories-slide" data-slide-index="<?php echo esc_attr((string) $slide_index); ?>">
                                     <article class="flex h-full gap-3 rounded-[12px] bg-white p-4 shadow-md">
                                         <?php if ($image_url) : ?>
                                             <img
@@ -155,15 +155,15 @@ if ($has_posts) {
                                                 class="h-[100px] w-[100px] shrink-0 rounded-[8px] object-cover self-start"
                                             />
                                         <?php endif; ?>
-                                        <div class="flex min-w-0 flex-1 flex-col items-start justify-between gap-3">
-                                            <p style="color:#475467;font-family:'Public Sans',sans-serif;font-size:14px;font-weight:400;line-height:20px;">
+                                        <div class="flex flex-col flex-1 gap-3 justify-between items-start min-w-0">
+                                            <p class="font-sans text-[14px] font-normal leading-[20px] text-[#475467]">
                                                 <?php echo esc_html('"' . $excerpt . '"'); ?>
                                             </p>
                                             <a
                                                 href="<?php the_permalink(); ?>"
-                                                class="inline-flex justify-center items-center gap-2 px-5 py-2.5 w-full text-sm font-bold text-white rounded-full md:w-fit whitespace-nowrap bg-[#008BCC] border-0 hover:border-0 hover:bg-[#00628F] transition-colors duration-200"
+                                                class="inline-flex justify-center items-center gap-2 px-5 py-2.5 w-full font-['Public_Sans'] text-[12px] not-italic font-bold leading-[18px] text-white rounded-pill md:w-fit whitespace-nowrap bg-brand-primary border-0 hover:border-0 hover:bg-brand-primary-hover transition-colors duration-200"
                                             >
-                                                <?php echo esc_html('Read ' . get_the_title() . '\'s story'); ?>
+                                                <?php echo esc_html('Read story'); ?>
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                                     <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
@@ -175,8 +175,9 @@ if ($has_posts) {
                         </div>
                     </div>
 
+
                     <!-- ── MOBILE: CSS scroll snap ── -->
-                    <div class="md:hidden pb-4 w-full">
+                    <div class="pb-4 w-full md:hidden">
                         <div class="stories-scroll-track">
                             <?php foreach ($stories_query->posts as $i => $p) :
                                 $img_url = get_the_post_thumbnail_url($p->ID, 'medium_large') ?: '';
@@ -195,15 +196,15 @@ if ($has_posts) {
                                                 class="h-[80px] w-[80px] shrink-0 rounded-[8px] object-cover self-start"
                                             />
                                         <?php endif; ?>
-                                        <div class="flex min-w-0 flex-1 flex-col items-start justify-between gap-2">
-                                            <p style="color:#475467;font-family:'Public Sans',sans-serif;font-size:14px;font-weight:400;line-height:20px;">
+                                        <div class="flex flex-col flex-1 gap-2 justify-between items-start min-w-0">
+                                            <p class="font-sans text-[14px] font-normal leading-[20px] text-[#475467]">
                                                 <?php echo esc_html('"' . $exc . '"'); ?>
                                             </p>
                                             <a
                                                 href="<?php echo esc_url(get_permalink($p->ID)); ?>"
-                                                class="inline-flex justify-center items-center gap-2 px-4 py-2 w-full text-[13px] font-bold text-white rounded-full btn-primary whitespace-nowrap"
+                                                class="inline-flex justify-center items-center gap-2 px-4 py-2 w-full  font-['Public_Sans'] text-[12px] not-italic font-bold leading-[18px] text-white rounded-full btn-primary whitespace-nowrap"
                                             >
-                                                <?php echo esc_html('Read ' . get_the_title($p->ID) . '\'s story'); ?>
+                                                <?php echo esc_html('Read story'); ?>
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                                     <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
@@ -226,18 +227,18 @@ if ($has_posts) {
 
         <?php if ($has_posts) : ?>
             <!-- Mobile dots + CTA — outside the rounded container -->
-            <div class="mt-5 flex flex-col items-center justify-center gap-5 md:hidden">
-                <div class="stories-mobile-dots"></div>
+            <div class="flex flex-col gap-5 justify-center items-center mt-5 min-[1085px]:hidden">
+                <div class="stories-mobile-dots md:hidden"></div>
 
                 <?php if (!empty($read_all_link['url']) && !empty($read_all_link['title'])) : ?>
                     <a
                         href="<?php echo esc_url($read_all_link['url']); ?>"
                         target="<?php echo esc_attr($read_all_link['target'] ?: '_self'); ?>"
-                        class="inline-flex h-[52px] items-center justify-center gap-2 rounded-full bg-white px-6 text-[16px] font-bold leading-5 text-[var(--Blue-SR-500,#00628F)] transition-colors duration-200 hover:bg-[var(--Turquoise-50,#CBF3F6)] active:bg-[var(--Turquoise-100,#75E0E6)] focus:outline-none focus-visible:ring-0"
+                        class="inline-flex h-[52px] items-center justify-center gap-2 rounded-pill bg-white px-6 text-[16px] font-bold leading-5 text-brand-primary-hover transition-colors duration-200 hover:bg-brand-accent-soft active:bg-brand-accent-strong focus:outline-none focus-visible:ring-0"
                     >
                         <?php echo esc_html($read_all_link['title']); ?>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#00628F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
                 <?php endif; ?>
@@ -257,9 +258,19 @@ if ($has_posts) {
         }
     }
 
+    /* ── Desktop: keep left side clipped, extend viewport to right only ── */
+    #<?php echo esc_attr($section_id); ?> .js-stories-slider .slick-list {
+        overflow: hidden !important;
+        width: calc(100% + 200px);
+        max-width: none;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
+
     /* ── Desktop: equal height Slick slides ── */
     #<?php echo esc_attr($section_id); ?> .js-stories-slider .slick-track {
         display: flex !important;
+        gap: 0 !important;
     }
     #<?php echo esc_attr($section_id); ?> .js-stories-slider .slick-slide {
         height: inherit !important;
@@ -272,22 +283,52 @@ if ($has_posts) {
 
     /* ── Mobile: CSS scroll snap ── */
     #<?php echo esc_attr($section_id); ?> .stories-scroll-track {
+        --mobile-story-card: clamp(250px, calc(100% - 104px), 300px);
         display: flex;
         overflow-x: scroll;
+        overflow-y: visible;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+        overscroll-behavior-x: contain;
+        cursor: grab;
         scrollbar-width: none;
-        padding: 0 24px;
+        /* Center first card and keep a visible peek of the next card */
+        padding-inline: calc((100% - var(--mobile-story-card)) / 2);
+        scroll-padding-left: calc((100% - var(--mobile-story-card)) / 2);
         gap: 12px;
+    }
+    #<?php echo esc_attr($section_id); ?> .stories-scroll-track:active {
+        cursor: grabbing;
     }
     #<?php echo esc_attr($section_id); ?> .stories-scroll-track::-webkit-scrollbar {
         display: none;
     }
-    /* Each card: full width minus left+right peek */
+    /* Mobile: one primary card with next card peeking on the right */
     #<?php echo esc_attr($section_id); ?> .stories-scroll-slide {
-        flex: 0 0 calc(100% - 48px);
-        scroll-snap-align: center;
+        flex: 0 0 var(--mobile-story-card);
+        scroll-snap-align: start;
         scroll-snap-stop: always;
+    }
+    #<?php echo esc_attr($section_id); ?> .stories-scroll-slide > article {
+        width: 100%;
+    }
+
+    /* Keep mobile wrapper clean while preserving card peeking behavior */
+    @media (max-width: 767px) {
+        #<?php echo esc_attr($section_id); ?> .stories-slider-wrap {
+            overflow: visible;
+        }
+    }
+
+    /* Very small devices: reduce left gutter, preserve right-side peek */
+    @media (max-width: 420px) {
+        #<?php echo esc_attr($section_id); ?> .stories-scroll-track {
+            --mobile-story-card: calc(100% - 56px);
+            padding-left: 6px;
+            padding-right: 28px;
+            scroll-padding-left: 6px;
+        }
     }
 
     /* ── Mobile dots ── */
@@ -302,7 +343,7 @@ if ($has_posts) {
         width: 14px;
         height: 14px;
         padding: 0;
-        border: 2px solid #00628F;
+        border: 2px solid var(--color-brand-primary-hover, #00628F);
         border-radius: 9999px;
         background: transparent;
         cursor: pointer;
@@ -310,7 +351,7 @@ if ($has_posts) {
         transition: background 0.2s;
     }
     #<?php echo esc_attr($section_id); ?> .stories-mobile-dots button.is-active {
-        background: #00628F;
+        background: var(--color-brand-primary-hover, #00628F);
     }
 </style>
 
@@ -362,18 +403,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if ($slider.length && !$slider.hasClass('slick-initialized')) {
             $slider.slick({
-                slidesToShow   : 3,
-                slidesToScroll : 3,
-                infinite       : true,
+                /* Desktop: 2 full cards + half of 3rd */
+                slidesToShow   : 2.5,
+                slidesToScroll : 1,
+                infinite       : false,
                 dots           : false,
                 arrows         : true,
                 prevArrow      : $section.find('.stories-prev'),
                 nextArrow      : $section.find('.stories-next'),
                 adaptiveHeight : false,
-                responsive     : [{
-                    breakpoint : 1024,
-                    settings   : { slidesToShow: 2, slidesToScroll: 2 }
-                }]
+                responsive     : [
+                    {
+                        breakpoint : 1400,
+                        settings   : { slidesToShow: 2.5, slidesToScroll: 1 }
+                    },
+                    {
+                        breakpoint : 1280,
+                        settings   : { slidesToShow: 2.35, slidesToScroll: 1 }
+                    },
+                    {
+                        breakpoint : 1024,
+                        settings   : { slidesToShow: 2.2, slidesToScroll: 1 }
+                    }
+                ]
             });
         }
 
@@ -411,13 +463,14 @@ document.addEventListener('DOMContentLoaded', function () {
         dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
     }
 
-    /* Dot click: scroll the chosen slide into center */
+    /* Dot click: align slide to start (matches scroll-snap-align: start + 2+peek layout) */
     dotsEl.addEventListener('click', function (e) {
         var btn = e.target.closest('button[data-i]');
         if (!btn) return;
         var idx = parseInt(btn.getAttribute('data-i'), 10);
         var slide = slides[idx];
-        var targetScroll = slide.offsetLeft - (track.offsetWidth - slide.offsetWidth) / 2;
+        var trackPad = parseFloat(window.getComputedStyle(track).paddingLeft) || 0;
+        var targetScroll = Math.max(0, slide.offsetLeft - trackPad);
         track.scrollTo({ left: targetScroll, behavior: 'smooth' });
     });
 

@@ -204,14 +204,13 @@ $filter_title = $settings['filter_section_title'] ?? 'Filter by';
                     $slug    = esc_attr( $cat->slug );
                     $name    = esc_html( $cat->name );
                     $checked = ( $slug === $current_slug ) ? 'true' : 'false';
-                    $tab     = ( $slug === $current_slug ) ? '0' : '-1';
                   ?>
                     <button
                       role="radio"
                       class="gap-2 px-6 py-2 whitespace-nowrap rounded-lg filter-btn bg-secondary hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-3black btn"
                       data-filter="<?php echo $slug; ?>"
                       aria-checked="<?php echo $checked; ?>"
-                      tabindex="<?php echo $tab; ?>"
+                      tabindex="<?php echo $checked === 'true' ? '0' : '-1'; ?>"
                     >
                       <?php echo $name; ?>
                     </button>
@@ -255,21 +254,61 @@ $filter_title = $settings['filter_section_title'] ?? 'Filter by';
       document.addEventListener('DOMContentLoaded', function() {
           // Filter button functionality
           const filterButtons = document.querySelectorAll('[data-filter]');
+          const filterButtonList = Array.from(filterButtons);
+
+          function setActiveButton(nextButton) {
+              filterButtons.forEach(btn => {
+                  const isActive = btn === nextButton;
+                  btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+                  btn.setAttribute('tabindex', isActive ? '0' : '-1');
+              });
+          }
 
           filterButtons.forEach(button => {
               button.addEventListener('click', function() {
-                  // Remove active state from all buttons
-                  filterButtons.forEach(btn => {
-                      btn.setAttribute('aria-pressed', 'false');
-                  });
-
-                  // Add active state to clicked button
-                  this.setAttribute('aria-pressed', 'true');
+                  setActiveButton(this);
 
                   // Trigger filter event (can be extended for actual filtering)
                   const filterValue = this.getAttribute('data-filter');
                   const filterEvent = new CustomEvent('newsFilter', {
                       detail: { filter: filterValue }
+                  });
+                  document.dispatchEvent(filterEvent);
+              });
+
+              button.addEventListener('keydown', function(e) {
+                  const key = e.key;
+                  if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(key)) {
+                      return;
+                  }
+
+                  if (key === 'Enter' || key === ' ') {
+                      e.preventDefault();
+                      this.click();
+                      return;
+                  }
+
+                  e.preventDefault();
+                  const currentIndex = filterButtonList.indexOf(this);
+                  let nextIndex = currentIndex;
+
+                  if (key === 'ArrowRight' || key === 'ArrowDown') {
+                      nextIndex = (currentIndex + 1) % filterButtonList.length;
+                  } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+                      nextIndex = (currentIndex - 1 + filterButtonList.length) % filterButtonList.length;
+                  } else if (key === 'Home') {
+                      nextIndex = 0;
+                  } else if (key === 'End') {
+                      nextIndex = filterButtonList.length - 1;
+                  }
+
+                  const nextButton = filterButtonList[nextIndex];
+                  if (!nextButton) return;
+                  setActiveButton(nextButton);
+                  nextButton.focus();
+
+                  const filterEvent = new CustomEvent('newsFilter', {
+                      detail: { filter: nextButton.getAttribute('data-filter') }
                   });
                   document.dispatchEvent(filterEvent);
               });
@@ -559,11 +598,52 @@ function applyFilter() {
 // CATEGORY BUTTONS
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
-    // reset aria-pressed
-    buttons.forEach(b => b.setAttribute('aria-pressed','false'));
-    btn.setAttribute('aria-pressed','true');
+    buttons.forEach(b => {
+      const isActive = b === btn;
+      b.setAttribute('aria-checked', isActive ? 'true' : 'false');
+      b.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
 
     activeFilter = btn.getAttribute('data-filter');
+    applyFilter();
+  });
+
+  btn.addEventListener('keydown', (e) => {
+    const key = e.key;
+    if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(key)) {
+      return;
+    }
+
+    if (key === 'Enter' || key === ' ') {
+      e.preventDefault();
+      btn.click();
+      return;
+    }
+
+    e.preventDefault();
+    const list = Array.from(buttons);
+    const currentIndex = list.indexOf(btn);
+    let nextIndex = currentIndex;
+
+    if (key === 'ArrowRight' || key === 'ArrowDown') {
+      nextIndex = (currentIndex + 1) % list.length;
+    } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+      nextIndex = (currentIndex - 1 + list.length) % list.length;
+    } else if (key === 'Home') {
+      nextIndex = 0;
+    } else if (key === 'End') {
+      nextIndex = list.length - 1;
+    }
+
+    const nextBtn = list[nextIndex];
+    if (!nextBtn) return;
+    buttons.forEach((b) => {
+      const isActive = b === nextBtn;
+      b.setAttribute('aria-checked', isActive ? 'true' : 'false');
+      b.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
+    nextBtn.focus();
+    activeFilter = nextBtn.getAttribute('data-filter');
     applyFilter();
   });
 });
@@ -581,7 +661,8 @@ clearFilters.addEventListener('click', () => {
   // Reset category buttons
   activeFilter = 'all';
   buttons.forEach(b => {
-    b.setAttribute('aria-pressed', b.getAttribute('data-filter') === 'all' ? 'true' : 'false');
+    b.setAttribute('aria-checked', b.getAttribute('data-filter') === 'all' ? 'true' : 'false');
+    b.setAttribute('tabindex', b.getAttribute('data-filter') === 'all' ? '0' : '-1');
   });
 
   // Reset search
