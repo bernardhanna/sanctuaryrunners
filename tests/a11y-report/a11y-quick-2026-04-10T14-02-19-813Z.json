@@ -1,0 +1,417 @@
+{
+  "mode": "quick",
+  "baseUrl": "http://localhost:10101",
+  "scannedAt": "2026-04-10T14:02:30.930Z",
+  "pagesScanned": 5,
+  "totalViolations": 4,
+  "results": [
+    {
+      "url": "http://localhost:10101/",
+      "violationCount": 1,
+      "violations": [
+        {
+          "id": "aria-command-name",
+          "impact": "serious",
+          "description": "Ensure every ARIA button, link and menuitem has an accessible name",
+          "help": "ARIA commands must have an accessible name",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(1)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(381px, 288px, 0px); z-index: 288;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(2)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(372px, 183px, 0px); z-index: 183;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(3)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(321px, 377px, 0px); z-index: 377;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(4)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(356px, 355px, 0px); z-index: 355;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(5)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(339px, 279px, 0px); z-index: 279;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(6)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(238px, 354px, 0px); z-index: 354;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(7)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(394px, 241px, 0px); z-index: 241;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(8)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(391px, 278px, 0px); z-index: 278;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(9)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(294px, 201px, 0px); z-index: 201;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(10)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(394px, 268px, 0px); z-index: 268;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(11)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(397px, 273px, 0px); z-index: 273;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(12)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(402px, 292px, 0px); z-index: 292;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(13)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(370px, 286px, 0px); z-index: 286;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(14)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(328px, 269px, 0px); z-index: 269;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(15)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(287px, 364px, 0px); z-index: 364;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(16)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(303px, 144px, 0px); z-index: 144;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(17)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(330px, 243px, 0px); z-index: 243;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(18)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(319px, 364px, 0px); z-index: 364;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(19)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(287px, 325px, 0px); z-index: 325;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(20)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(328px, 148px, 0px); z-index: 148;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(21)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(247px, 369px, 0px); z-index: 369;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(22)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(268px, 278px, 0px); z-index: 278;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(23)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(304px, 364px, 0px); z-index: 364;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(24)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(396px, 272px, 0px); z-index: 272;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(25)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(273px, 310px, 0px); z-index: 310;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(26)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(265px, 206px, 0px); z-index: 206;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(27)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(396px, 247px, 0px); z-index: 247;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(28)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(395px, 274px, 0px); z-index: 274;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(29)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(302px, 205px, 0px); z-index: 205;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(30)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(391px, 245px, 0px); z-index: 245;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(31)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(295px, 381px, 0px); z-index: 381;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(32)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(388px, 275px, 0px); z-index: 275;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(33)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(303px, 385px, 0px); z-index: 385;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(34)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(257px, 234px, 0px); z-index: 234;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(35)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(341px, 133px, 0px); z-index: 133;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(36)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(402px, 285px, 0px); z-index: 285;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(37)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(310px, 299px, 0px); z-index: 299;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(38)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(398px, 276px, 0px); z-index: 276;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(39)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(325px, 219px, 0px); z-index: 219;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(40)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(319px, 267px, 0px); z-index: 267;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(41)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(386px, 233px, 0px); z-index: 233;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/blog/",
+      "error": "Navigation failed (404)",
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/events/",
+      "violationCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".shrink-0.gap-2:nth-child(1) > .focus\\:ring-sky-700.text-\\[\\#001A2B\\].focus\\:ring-offset-2"
+              ],
+              "html": "<a href=\"http://localhost:10101/\" class=\"text-[#001A2B] whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #6b7280, background color: #eef6fc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "a[href$=\"events/\"]"
+              ],
+              "html": "<a href=\"http://localhost:10101/events/\" class=\"text-[#001A2B] whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #6b7280, background color: #eef6fc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".truncate"
+              ],
+              "html": "<span class=\"text-[#001A2B] block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal\" aria-current=\"page\" title=\"Events\">\n                                                Events                                            </span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #6b7280, background color: #eef6fc, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/get-involved/",
+      "violationCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".focus\\:ring-sky-700"
+              ],
+              "html": "<a href=\"http://localhost:10101/\" class=\"text-[#001A2B] whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #6b7280, background color: #eef6fc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".truncate"
+              ],
+              "html": "<span class=\"text-[#001A2B] block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal\" aria-current=\"page\" title=\"Get involved\">\n                                                Get involved                                            </span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #6b7280, background color: #eef6fc, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "p:nth-child(1) > a[target=\"_blank\"][rel=\"noopener noreferrer\"]"
+              ],
+              "html": "<a href=\"http://localhost:10101/contact/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"get in touch (opens in a new tab)\">get in touch</a>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #009de6, background color: #ffffff, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/contact/",
+      "violationCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".focus\\:ring-sky-700"
+              ],
+              "html": "<a href=\"http://localhost:10101/\" class=\"text-[#001A2B] whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #ffffff, background color: #009de6, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".truncate"
+              ],
+              "html": "<span class=\"text-[#001A2B] block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal\" aria-current=\"page\" title=\"Contact\">\n                                                Contact                                            </span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #ffffff, background color: #009de6, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

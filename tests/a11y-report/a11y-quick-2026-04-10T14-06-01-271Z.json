@@ -1,0 +1,34 @@
+{
+  "mode": "quick",
+  "baseUrl": "http://localhost:10101",
+  "scannedAt": "2026-04-10T14:06:11.920Z",
+  "pagesScanned": 5,
+  "totalViolations": 0,
+  "results": [
+    {
+      "url": "http://localhost:10101/",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/blog/",
+      "error": "Navigation failed (404)",
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/events/",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/get-involved/",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/contact/",
+      "violationCount": 0,
+      "violations": []
+    }
+  ]
+}

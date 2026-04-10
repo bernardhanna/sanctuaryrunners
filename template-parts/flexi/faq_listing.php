@@ -19,7 +19,7 @@ $faq_posts = get_posts([
 ]);
 ?>
 
-<section id="<?php echo esc_attr($section_id); ?>" class="relative flex overflow-hidden py-8 lg:py-12" aria-label="<?php echo esc_attr__('Frequently Asked Questions', 'matrix-starter'); ?>">
+<section id="<?php echo esc_attr($section_id); ?>" class="flex overflow-hidden relative py-8 lg:py-12" aria-label="<?php echo esc_attr__('Frequently Asked Questions', 'matrix-starter'); ?>">
     <div class="flex flex-col items-center mx-auto w-full max-w-[768px] max-xl:px-5">
         <?php if (!empty($faq_posts)) : ?>
             <div class="w-full" role="region" aria-label="<?php echo esc_attr__('Frequently Asked Questions', 'matrix-starter'); ?>">
@@ -77,7 +77,7 @@ $faq_posts = get_posts([
                                 aria-labelledby="<?php echo esc_attr($button_id); ?>"
                                 role="region"
                             >
-                                <div class="px-6 pb-6 max-md:px-5">
+                                <div class="px-6 pb-6 mt-4 max-md:px-5">
                                     <div class="text-base font-normal leading-6 text-sky-950 max-md:max-w-full wp_editor">
                                         <?php echo wp_kses_post($answer_html); ?>
                                     </div>

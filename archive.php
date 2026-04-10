@@ -5,6 +5,9 @@
  */
 
 get_header();
+?>
+<main id="main-content" class="site-main">
+<?php
 
 $queried_object = get_queried_object();
 $archive_title = is_category()
@@ -92,6 +95,8 @@ if ($is_people_archive) {
     get_template_part('template-parts/flexi/blog_listing');
     get_template_part('template-parts/flexi/newsletter_001');
 }
-
+?>
+</main>
+<?php
 get_footer();
 

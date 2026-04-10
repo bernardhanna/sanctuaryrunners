@@ -216,11 +216,13 @@ $primary_navigation = Navi::make()->build('primary');
                     type="button"
                     class="relative -left-2 p-1"
                     @click.stop="toggleDropdown(<?php echo $index; ?>)"
+                    aria-label="<?php echo esc_attr(sprintf('Toggle %s submenu', wp_strip_all_tags((string) $item->label))); ?>"
                   >
                     <img
                       src="https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037"
                       class="w-[17px]"
                       alt=""
+                      aria-hidden="true"
                     />
                   </button>
                 <?php endif; ?>

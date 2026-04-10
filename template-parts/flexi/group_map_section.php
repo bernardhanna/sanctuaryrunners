@@ -462,6 +462,17 @@ foreach ($running_group_ids as $group_id) {
       iconAnchor: [11, 27]
     });
 
+    function applyGroupMarkerA11y() {
+      container.querySelectorAll('.group-map-marker.leaflet-interactive').forEach((iconEl) => {
+        if (!iconEl.getAttribute('aria-label')) {
+          iconEl.setAttribute('aria-label', 'Running group marker');
+        }
+        if (!iconEl.getAttribute('title')) {
+          iconEl.setAttribute('title', 'Running group marker');
+        }
+      });
+    }
+
     const markerEntries = [];
     const bounds = [];
     groups.forEach((g) => {
@@ -472,7 +483,23 @@ foreach ($running_group_ids as $group_id) {
 
       if (!Number.isFinite(glat) || !Number.isFinite(glng)) return;
 
-      const marker = L.marker([glat, glng], { icon: customIcon }).addTo(map);
+      const markerTitle = String(g.title || 'Running group location');
+      const marker = L.marker([glat, glng], {
+        icon: customIcon,
+        keyboard: false,
+        title: markerTitle
+      }).addTo(map);
+      marker.on('add', () => {
+        if (marker && marker._icon) {
+          marker._icon.setAttribute('aria-label', markerTitle);
+          marker._icon.setAttribute('title', markerTitle);
+        }
+        applyGroupMarkerA11y();
+      });
+      if (marker && marker._icon) {
+        marker._icon.setAttribute('aria-label', markerTitle);
+        marker._icon.setAttribute('title', markerTitle);
+      }
       bounds.push([glat, glng]);
       markerEntries.push({ marker: marker, group: g });
 
@@ -511,6 +538,8 @@ foreach ($running_group_ids as $group_id) {
     }
 
     container._applyGroupMapFilter = applyGroupMapFilter;
+    map.on('zoomend moveend layeradd', applyGroupMarkerA11y);
+    setTimeout(applyGroupMarkerA11y, 50);
 
     // Default view: all of Ireland (marker auto-fit was zooming tight on Dublin clusters)
     map.fitBounds(IRELAND_BOUNDS, { padding: [28, 28] });

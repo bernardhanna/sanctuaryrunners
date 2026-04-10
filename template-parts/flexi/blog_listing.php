@@ -157,7 +157,7 @@ $search_input_id = $section_id . '-search';
 
                     <div class="relative flex-1 min-w-0">
                         <div
-                            class="chip-slider flex gap-2 items-center self-stretch my-auto font-semibold text-sky-800 overflow-x-auto whitespace-nowrap select-none cursor-grab active:cursor-grabbing pr-6"
+                            class="chip-slider flex gap-2 items-center self-stretch my-auto font-semibold text-sky-800 overflow-x-auto whitespace-nowrap pr-6"
                             role="radiogroup"
                             aria-label="Filter posts by category"
                             data-chip-slider
@@ -315,7 +315,6 @@ $search_input_id = $section_id . '-search';
                             data-url="<?php echo esc_url($card_target_url); ?>"
                             data-url-target="<?php echo esc_attr($card_target_window); ?>"
                             tabindex="0"
-                            role="link"
                             aria-label="<?php echo esc_attr('Open post: ' . wp_strip_all_tags(get_the_title())); ?>"
                         >
                             <!-- Featured Image with Tag -->
@@ -370,7 +369,7 @@ $search_input_id = $section_id . '-search';
                                     </span>
                                 </div>
 
-                                <h3 class="mt-2 font-sans text-[18px] font-bold not-italic leading-[24px] <?php echo $is_layout_2 ? 'text-[#F68DA7]' : 'text-sky-800'; ?>">
+                                <h2 class="mt-2 font-sans text-[18px] font-bold not-italic leading-[24px] <?php echo $is_layout_2 ? 'text-[#F68DA7]' : 'text-sky-800'; ?>">
                                     <a
                                         href="<?php echo esc_url($card_target_url); ?>"
                                         target="<?php echo esc_attr($card_target_window); ?>"
@@ -379,7 +378,7 @@ $search_input_id = $section_id . '-search';
                                     >
                                         <?php the_title(); ?>
                                     </a>
-                                </h3>
+                                </h2>
 
                                 <div class="mt-2 leading-5 text-sky-950">
                                     <?php echo esc_html(wp_trim_words(get_the_excerpt(), 20)); ?>

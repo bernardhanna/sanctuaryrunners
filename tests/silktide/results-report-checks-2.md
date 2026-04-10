@@ -104,6 +104,22 @@ For `get_involved` / `get_involved_form_001` templates:
   - Ensure lists are marked up correctly
   - Ensure instructions are provided for appropriate fields
 
+## Paginated category/blog pass
+
+For paginated archive/index views (category pages, blog index pages):
+
+- Added explicit `<main id="main-content">` wrappers where missing:
+  - `archive.php`
+  - `home.php`
+  - `index.php`
+- Removed remaining drag-only cursor affordance from blog filter chip row:
+  - `template-parts/flexi/blog_listing.php`
+
+- Expected impact:
+  - Allow users to quickly skip to content
+  - Ensure drag and drop movements have an accessible alternative
+  - Improve consistency for whole-page semantic structure on paginated templates
+
 
 ## HTML/ID issue test file follow-up
 

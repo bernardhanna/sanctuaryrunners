@@ -401,6 +401,22 @@ document.addEventListener('DOMContentLoaded', function () {
         var $section = jQuery(section);
         var $slider  = $section.find('.js-stories-slider');
 
+        function syncHiddenSlidesA11y($s) {
+            if (!$s || !$s.length || !$s.hasClass('slick-initialized')) return;
+            $s.find('.slick-slide').each(function () {
+                var isHidden = this.getAttribute('aria-hidden') === 'true';
+                this.setAttribute('tabindex', isHidden ? '-1' : '0');
+                var focusables = this.querySelectorAll('a, button, input, textarea, select, [tabindex]');
+                focusables.forEach(function (el) {
+                    if (isHidden) {
+                        el.setAttribute('tabindex', '-1');
+                    } else if (el.getAttribute('tabindex') === '-1') {
+                        el.removeAttribute('tabindex');
+                    }
+                });
+            });
+        }
+
         if ($slider.length && !$slider.hasClass('slick-initialized')) {
             $slider.slick({
                 /* Desktop: 2 full cards + half of 3rd */
@@ -426,6 +442,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         settings   : { slidesToShow: 2.2, slidesToScroll: 1 }
                     }
                 ]
+            });
+            syncHiddenSlidesA11y($slider);
+            $slider.on('afterChange', function () {
+                syncHiddenSlidesA11y($slider);
             });
         }
 

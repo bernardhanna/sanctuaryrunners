@@ -47,18 +47,20 @@ $heading_id = $section_id . '-heading';
 <section
     id="<?php echo esc_attr($section_id); ?>"
     class="flex overflow-hidden relative max-md:overflow-visible"
-    aria-labelledby="<?php echo esc_attr($heading_id); ?>"
+    <?php if (!empty(trim((string) $heading_text))): ?>aria-labelledby="<?php echo esc_attr($heading_id); ?>"<?php endif; ?>
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
     <div class="flex flex-col items-center w-full mx-auto max-w-container py-6 lg:pt-10  lg:pb-12 max-xl:px-5 <?php echo esc_attr($padding_class_string); ?>">
         <div class="w-full max-w-[60rem] flex flex-col gap-6">
-            <<?php echo esc_html($heading_tag); ?>
-                id="<?php echo esc_attr($heading_id); ?>"
-                class="w-full break-words text-left text-[1.5rem] font-[700] leading-[2rem] font-['Public Sans']"
-                style="color: <?php echo esc_attr($heading_color); ?>;"
-            >
-                <?php echo esc_html($heading_text); ?>
-            </<?php echo esc_html($heading_tag); ?>>
+            <?php if (!empty(trim((string) $heading_text))): ?>
+                <<?php echo esc_html($heading_tag); ?>
+                    id="<?php echo esc_attr($heading_id); ?>"
+                    class="w-full break-words text-left text-[1.5rem] font-[700] leading-[2rem] font-['Public Sans']"
+                    style="color: <?php echo esc_attr($heading_color); ?>;"
+                >
+                    <?php echo esc_html($heading_text); ?>
+                </<?php echo esc_html($heading_tag); ?>>
+            <?php endif; ?>
 
             <?php if (!empty($show_subheading) && !empty($subheading_wysiwyg)) { ?>
                 <div

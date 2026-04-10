@@ -1770,3 +1770,13 @@ input[type="checkbox"]:checked,
 input[type="radio"]:checked {
     box-shadow: 0 0 0 2px #00628f !important;
 }
+
+/* Keep rich-text links readable on light surfaces. */
+.wp_editor a {
+    color: #00628f;
+    text-decoration: underline;
+}
+
+.wp-singular .wp_editor a {
+    color: #005072 !important;
+}

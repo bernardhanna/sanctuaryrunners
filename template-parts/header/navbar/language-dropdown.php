@@ -118,11 +118,10 @@ foreach ($languages as $lang) {
         href="<?php echo esc_url($current['url'] ?? '#'); ?>"
         class="flex gap-1 justify-center items-center px-1 py-2.5 w-full bg-transparent rounded-t transition-colors duration-200"
         <?php if (!empty($current['target'])) : ?>target="<?php echo esc_attr($current['target']); ?>"<?php endif; ?>
-        aria-haspopup="listbox"
+        aria-haspopup="true"
         :aria-expanded="open"
         aria-labelledby="language-dropdown-label"
         id="language-dropdown-trigger"
-        role="combobox"
       >
         <?php if (!empty($current['flag'])) : ?>
           <img

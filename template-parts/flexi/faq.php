@@ -9,6 +9,7 @@ $manual_faqs = get_sub_field('manual_faqs');
 $selected_faqs = get_sub_field('selected_faqs');
 $button = get_sub_field('button');
 $background_color = get_sub_field('background_color');
+$has_heading = !empty($heading);
 
 $padding_classes = ['pt-5', 'pb-5'];
 if (have_rows('padding_settings')) {
@@ -59,11 +60,10 @@ if ($faq_source === 'manual' && have_rows('manual_faqs')) {
     id="<?php echo esc_attr($section_id); ?>"
     class="relative flex overflow-hidden font-bold text-sky-800 <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
-    aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
     <div class="flex flex-col items-center max-lg:py-5 py-16 mx-auto w-full max-w-[768px] max-xl:px-5">
 
-        <?php if (!empty($heading)): ?>
+        <?php if ($has_heading): ?>
             <<?php echo esc_attr($heading_tag); ?>
                 id="<?php echo esc_attr($section_id); ?>-heading"
                 class="self-start text-3xl leading-none text-sky-800 max-md:max-w-full"

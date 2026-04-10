@@ -422,7 +422,23 @@ foreach ($running_group_ids as $group_id) {
                 return;
             }
 
-            var marker = L.marker([markerLat, markerLng], { icon: customIcon }).addTo(map);
+            var markerTitle = markerItem.title ? String(markerItem.title) : 'Running group location';
+            var marker = L.marker([markerLat, markerLng], {
+                icon: customIcon,
+                title: markerTitle,
+                alt: markerTitle,
+                keyboard: false
+            }).addTo(map);
+            marker.on('add', function () {
+                if (marker && marker._icon) {
+                    marker._icon.setAttribute('aria-label', markerTitle);
+                    marker._icon.setAttribute('title', markerTitle);
+                }
+            });
+            if (marker && marker._icon) {
+                marker._icon.setAttribute('aria-label', markerTitle);
+                marker._icon.setAttribute('title', markerTitle);
+            }
             bounds.push([markerLat, markerLng]);
 
             var popup = '<div style="max-width:240px;">';

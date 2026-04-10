@@ -302,5 +302,3 @@ function matrix_social_svg($icon) {
     }
   }
 </style>
-
-<?php wp_footer(); ?>

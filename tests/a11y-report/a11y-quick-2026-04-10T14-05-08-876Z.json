@@ -1,0 +1,331 @@
+{
+  "mode": "quick",
+  "baseUrl": "http://localhost:10101",
+  "scannedAt": "2026-04-10T14:05:20.089Z",
+  "pagesScanned": 5,
+  "totalViolations": 1,
+  "results": [
+    {
+      "url": "http://localhost:10101/",
+      "violationCount": 1,
+      "violations": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "div[title=\"Blessington Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Blessington Sanctuar...\" style=\"margin-left: -11px; ...\" aria-label=\"Blessington Sanctuar...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Dungannon Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Dungannon Sanctuary ...\" style=\"margin-left: -11px; ...\" aria-label=\"Dungannon Sanctuary ...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Youghal Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Youghal Sanctuary Ru...\" style=\"margin-left: -11px; ...\" aria-label=\"Youghal Sanctuary Ru...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Waterford Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Waterford Sanctuary ...\" style=\"margin-left: -11px; ...\" aria-label=\"Waterford Sanctuary ...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Tullamore Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Tullamore Sanctuary ...\" style=\"margin-left: -11px; ...\" aria-label=\"Tullamore Sanctuary ...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(6)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Tralee Sanctuary Run...\" style=\"margin-left: -11px; ...\" aria-label=\"Tralee Sanctuary Run...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Termonfeckin Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Termonfeckin Sanctua...\" style=\"margin-left: -11px; ...\" aria-label=\"Termonfeckin Sanctua...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Tallaght Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Tallaght Sanctuary R...\" style=\"margin-left: -11px; ...\" aria-label=\"Tallaght Sanctuary R...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Sligo Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" title=\"Sligo Sanctuary Runners\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(294px, 201px, 0px); z-index: 201;\" aria-label=\"Sligo Sanctuary Runners\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Poppintree Group Dublin\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" title=\"Poppintree Group Dublin\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(394px, 268px, 0px); z-index: 268;\" aria-label=\"Poppintree Group Dublin\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(11)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Poolbeg Sanctuary Ru...\" style=\"margin-left: -11px; ...\" aria-label=\"Poolbeg Sanctuary Ru...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(12)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Newtownmountkennedy ...\" style=\"margin-left: -11px; ...\" aria-label=\"Newtownmountkennedy ...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(13)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Newbridge Sanctuary ...\" style=\"margin-left: -11px; ...\" aria-label=\"Newbridge Sanctuary ...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Moate Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" title=\"Moate Sanctuary Runners\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(328px, 269px, 0px); z-index: 269;\" aria-label=\"Moate Sanctuary Runners\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Mallow Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Mallow Sanctuary Run...\" style=\"margin-left: -11px; ...\" aria-label=\"Mallow Sanctuary Run...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Loughanure Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Loughanure Sanctuary...\" style=\"margin-left: -11px; ...\" aria-label=\"Loughanure Sanctuary...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Longford Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Longford Sanctuary R...\" style=\"margin-left: -11px; ...\" aria-label=\"Longford Sanctuary R...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Lismore Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Lismore Sanctuary Ru...\" style=\"margin-left: -11px; ...\" aria-label=\"Lismore Sanctuary Ru...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Limerick Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Limerick Sanctuary R...\" style=\"margin-left: -11px; ...\" aria-label=\"Limerick Sanctuary R...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Letterkenny Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Letterkenny Sanctuar...\" style=\"margin-left: -11px; ...\" aria-label=\"Letterkenny Sanctuar...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(21)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Killarney Sanctuary ...\" style=\"margin-left: -11px; ...\" aria-label=\"Killarney Sanctuary ...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Galway Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Galway Sanctuary Run...\" style=\"margin-left: -11px; ...\" aria-label=\"Galway Sanctuary Run...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Fermoy Sanctuary Runners, Cork\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Fermoy Sanctuary Run...\" style=\"margin-left: -11px; ...\" aria-label=\"Fermoy Sanctuary Run...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Fairview Park, Dublin\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" title=\"Fairview Park, Dublin\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(396px, 272px, 0px); z-index: 272;\" aria-label=\"Fairview Park, Dublin\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Ennis Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" title=\"Ennis Sanctuary Runners\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(273px, 310px, 0px); z-index: 310;\" aria-label=\"Ennis Sanctuary Runners\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Enniscrone Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Enniscrone Sanctuary...\" style=\"margin-left: -11px; ...\" aria-label=\"Enniscrone Sanctuary...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"East Meath Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"East Meath Sanctuary...\" style=\"margin-left: -11px; ...\" aria-label=\"East Meath Sanctuary...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Dublin 8 Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Dublin 8 Sanctuary R...\" style=\"margin-left: -11px; ...\" aria-label=\"Dublin 8 Sanctuary R...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(29)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Dromahair Sanctuary ...\" style=\"margin-left: -11px; ...\" aria-label=\"Dromahair Sanctuary ...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Drogheda Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Drogheda Sanctuary R...\" style=\"margin-left: -11px; ...\" aria-label=\"Drogheda Sanctuary R...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Cork Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" title=\"Cork Sanctuary Runners\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(295px, 381px, 0px); z-index: 381;\" aria-label=\"Cork Sanctuary Runners\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Corkagh Park, Clondalkin\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Corkagh Park, Clonda...\" style=\"margin-left: -11px; ...\" aria-label=\"Corkagh Park, Clonda...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Cobh Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" title=\"Cobh Sanctuary Runners\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(303px, 385px, 0px); z-index: 385;\" aria-label=\"Cobh Sanctuary Runners\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(34)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Castlebar Sanctuary ...\" style=\"margin-left: -11px; ...\" aria-label=\"Castlebar Sanctuary ...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Buncrana Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Buncrana Sanctuary R...\" style=\"margin-left: -11px; ...\" aria-label=\"Buncrana Sanctuary R...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Bray Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" title=\"Bray Sanctuary Runners\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(402px, 285px, 0px); z-index: 285;\" aria-label=\"Bray Sanctuary Runners\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Borrisokane Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Borrisokane Sanctuar...\" style=\"margin-left: -11px; ...\" aria-label=\"Borrisokane Sanctuar...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Blackrock Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Blackrock Sanctuary ...\" style=\"margin-left: -11px; ...\" aria-label=\"Blackrock Sanctuary ...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(39)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Ballinamore Sanctuar...\" style=\"margin-left: -11px; ...\" aria-label=\"Ballinamore Sanctuar...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Athlone Sanctuary Runners\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Athlone Sanctuary Ru...\" style=\"margin-left: -11px; ...\" aria-label=\"Athlone Sanctuary Ru...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            },
+            {
+              "target": [
+                "div[title=\"Ardee Sanctuary Runners, Louth\"]"
+              ],
+              "html": "<div class=\"leaflet-marker-icon ...\" title=\"Ardee Sanctuary Runn...\" style=\"margin-left: -11px; ...\" aria-label=\"Ardee Sanctuary Runn...\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/blog/",
+      "error": "Navigation failed (404)",
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/events/",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/get-involved/",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/contact/",
+      "violationCount": 0,
+      "violations": []
+    }
+  ]
+}

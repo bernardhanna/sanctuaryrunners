@@ -32,6 +32,7 @@ if (!in_array($hero_tag, $allowed_tags, true)) {
   $hero_tag = 'h1';
 }
 ?>
+<main id="main-content" class="site-main">
 <style>
   /* room for the line under each thumb */
   .testimonial-indicators .indicator-slide{ position:relative; padding-bottom:32px; }
@@ -478,4 +479,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+ </main>
 <?php get_footer(); ?>

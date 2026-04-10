@@ -229,7 +229,6 @@ $search_input_id = $section_id . '-search';
     data-url="<?php echo esc_url($card_target_url); ?>"
     data-url-target="<?php echo esc_attr($card_target_window); ?>"
     tabindex="0"
-    role="link"
     aria-label="<?php echo esc_attr('Open event: ' . wp_strip_all_tags(get_the_title())); ?>"
 >
                             <!-- Featured Image -->
@@ -245,7 +244,7 @@ $search_input_id = $section_id . '-search';
 
                             <!-- Event Content -->
                             <div class="flex flex-col p-6 w-full text-sm max-md:px-5">
-                                <h3 class="font-sans text-[18px] font-bold not-italic leading-[24px] text-[#F68DA7]">
+                                <h2 class="font-sans text-[18px] font-bold not-italic leading-[24px] text-[#F68DA7]">
                                     <a
                                         href="<?php echo esc_url($card_target_url); ?>"
                                         target="<?php echo esc_attr($card_target_window); ?>"
@@ -254,7 +253,7 @@ $search_input_id = $section_id . '-search';
                                     >
                                         <?php the_title(); ?>
                                     </a>
-                                </h3>
+                                </h2>
 
                                 <div class="self-start mt-2 text-sm leading-none text-gray-200">
                                     <?php if ($event_date): ?>

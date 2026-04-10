@@ -232,7 +232,6 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
-        aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
         <?php if ($is_full_height_right_image && $image): ?>
             <div class="<?php echo esc_attr($section_media_wrap_class); ?>">
@@ -288,7 +287,7 @@ $section_id = 'subhero-' . uniqid();
                                     <li class="flex items-center gap-2 <?php echo $breadcrumb['is_current'] ? 'min-w-0 flex-1' : 'shrink-0'; ?>">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
-                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
+                                                class="text-slate-900 block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
                                                 aria-current="page"
                                                 title="<?php echo esc_attr($breadcrumb['title']); ?>"
                                             >
@@ -297,7 +296,7 @@ $section_id = 'subhero-' . uniqid();
                                         <?php else: ?>
                                             <a
                                                 href="<?php echo esc_url($breadcrumb['url']); ?>"
-                                                class="<?php echo esc_attr($text_color_class); ?> whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
+                                                class="text-slate-900 whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
                                             </a>
@@ -396,7 +395,6 @@ $section_id = 'subhero-' . uniqid();
         id="<?php echo esc_attr($section_id); ?>"
         class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?> <?php echo esc_attr($section_extra_classes); ?>"
         style="background-color: <?php echo esc_attr($background_color); ?>;"
-        aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
     >
         <?php if ($is_full_height_right_image && $image): ?>
             <div class="<?php echo esc_attr($section_media_wrap_class); ?>">
@@ -455,7 +453,7 @@ $section_id = 'subhero-' . uniqid();
                                     <li class="flex items-center gap-2 <?php echo $breadcrumb['is_current'] ? 'min-w-0 flex-1' : 'shrink-0'; ?>">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
-                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
+                                                class="text-slate-900 block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
                                                 aria-current="page"
                                                 title="<?php echo esc_attr($breadcrumb['title']); ?>"
                                             >
@@ -464,7 +462,7 @@ $section_id = 'subhero-' . uniqid();
                                         <?php else: ?>
                                             <a
                                                 href="<?php echo esc_url($breadcrumb['url']); ?>"
-                                                class="<?php echo esc_attr($text_color_class); ?> whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
+                                                class="text-slate-900 whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
                                             </a>

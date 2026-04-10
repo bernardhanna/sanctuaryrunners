@@ -1,0 +1,1382 @@
+{
+  "mode": "full",
+  "baseUrl": "http://localhost:10101",
+  "scannedAt": "2026-04-10T13:56:38.058Z",
+  "pagesScanned": 9,
+  "totalViolations": 48,
+  "results": [
+    {
+      "url": "http://localhost:10101/",
+      "violationCount": 9,
+      "violations": [
+        {
+          "id": "aria-allowed-role",
+          "impact": "minor",
+          "description": "Ensure role attribute has an appropriate value for the element",
+          "help": "ARIA role should be appropriate for the element",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-role?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#language-dropdown-trigger"
+              ],
+              "html": "<a href=\"http://localhost:10101/\" class=\"flex gap-1 justify-center items-center px-1 py-2.5 w-full bg-transparent rounded-t transition-colors duration-200\" aria-haspopup=\"listbox\" :aria-expanded=\"open\" aria-labelledby=\"language-dropdown-label\" id=\"language-dropdown-trigger\" role=\"combobox\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role combobox is not allowed for given element"
+            }
+          ]
+        },
+        {
+          "id": "aria-command-name",
+          "impact": "serious",
+          "description": "Ensure every ARIA button, link and menuitem has an accessible name",
+          "help": "ARIA commands must have an accessible name",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-command-name?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(1)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(381px, 288px, 0px); z-index: 288;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(2)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(372px, 183px, 0px); z-index: 183;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(3)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(321px, 377px, 0px); z-index: 377;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(4)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(356px, 355px, 0px); z-index: 355;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(5)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(339px, 279px, 0px); z-index: 279;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(6)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(238px, 354px, 0px); z-index: 354;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(7)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(394px, 241px, 0px); z-index: 241;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(8)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(391px, 278px, 0px); z-index: 278;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(9)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(294px, 201px, 0px); z-index: 201;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(10)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(394px, 268px, 0px); z-index: 268;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(11)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(397px, 273px, 0px); z-index: 273;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(12)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(402px, 292px, 0px); z-index: 292;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(13)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(370px, 286px, 0px); z-index: 286;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(14)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(328px, 269px, 0px); z-index: 269;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(15)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(287px, 364px, 0px); z-index: 364;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(16)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(303px, 144px, 0px); z-index: 144;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(17)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(330px, 243px, 0px); z-index: 243;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(18)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(319px, 364px, 0px); z-index: 364;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(19)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(287px, 325px, 0px); z-index: 325;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(20)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(328px, 148px, 0px); z-index: 148;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(21)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(247px, 369px, 0px); z-index: 369;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(22)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(268px, 278px, 0px); z-index: 278;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(23)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(304px, 364px, 0px); z-index: 364;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(24)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(396px, 272px, 0px); z-index: 272;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(25)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(273px, 310px, 0px); z-index: 310;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(26)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(265px, 206px, 0px); z-index: 206;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(27)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(396px, 247px, 0px); z-index: 247;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(28)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(395px, 274px, 0px); z-index: 274;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(29)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(302px, 205px, 0px); z-index: 205;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(30)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(391px, 245px, 0px); z-index: 245;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(31)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(295px, 381px, 0px); z-index: 381;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(32)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(388px, 275px, 0px); z-index: 275;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(33)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(303px, 385px, 0px); z-index: 385;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(34)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(257px, 234px, 0px); z-index: 234;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(35)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(341px, 133px, 0px); z-index: 133;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(36)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(402px, 285px, 0px); z-index: 285;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(37)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(310px, 299px, 0px); z-index: 299;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(38)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(398px, 276px, 0px); z-index: 276;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(39)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(325px, 219px, 0px); z-index: 219;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(40)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(319px, 267px, 0px); z-index: 267;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".leaflet-marker-icon.group-map-marker.leaflet-interactive:nth-child(41)"
+              ],
+              "html": "<div class=\"leaflet-marker-icon group-map-marker leaflet-zoom-animated leaflet-interactive\" tabindex=\"0\" role=\"button\" style=\"margin-left: -11px; margin-top: -27px; width: 22px; height: 27px; transform: translate3d(386px, 233px, 0px); z-index: 233;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            }
+          ]
+        },
+        {
+          "id": "aria-required-attr",
+          "impact": "critical",
+          "description": "Ensure elements with ARIA roles have all required ARIA attributes",
+          "help": "Required ARIA attributes must be provided",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-required-attr?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#language-dropdown-trigger"
+              ],
+              "html": "<a href=\"http://localhost:10101/\" class=\"flex gap-1 justify-center items-center px-1 py-2.5 w-full bg-transparent rounded-t transition-colors duration-200\" aria-haspopup=\"listbox\" :aria-expanded=\"open\" aria-labelledby=\"language-dropdown-label\" id=\"language-dropdown-trigger\" role=\"combobox\">",
+              "failureSummary": "Fix any of the following:\n  Required ARIA attributes not present: aria-expanded, aria-controls"
+            }
+          ]
+        },
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "description": "Ensure buttons have discernible text",
+          "help": "Buttons must have discernible text",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(1660)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(1660)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(927)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(927)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(935)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(935)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#hero-6ac9a7ef-86a6-438f-a72d-0ae046c995a5-desc > p:nth-child(1)"
+              ],
+              "html": "<p>We bring everyone in the community together through running, jogging and walking including people who have moved from other countries especially those seeking asylum and refugees.</p>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #ffffff, background color: #009de6, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "#hero-6ac9a7ef-86a6-438f-a72d-0ae046c995a5-desc > p:nth-child(2)"
+              ],
+              "html": "<p>Guided by the principles of solidarity, friendship, and respect, we focus on positive action. Winning races isn’t our goal–making friends is!</p>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #ffffff, background color: #009de6, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".border-solid"
+              ],
+              "html": "<a href=\"http://localhost:101...\" target=\"\" class=\"hero-cta inline-flex...\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #ffffff, background color: #009de6, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".group-map-find-btn"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"group-map-find-btn p...\" target=\"\" aria-label=\"Find nearby groups\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #ffffff, background color: #008bcc, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "div[data-slide-index=\"0\"] > .p-4.shadow-md.rounded-\\[12px\\] > .min-w-0.gap-3.justify-between > .bg-brand-primary.md\\:w-fit.hover\\:border-0"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"inline-flex justify-...\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #ffffff, background color: #008bcc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "div[data-slide-index=\"1\"] > .p-4.shadow-md.rounded-\\[12px\\] > .min-w-0.gap-3.justify-between > .bg-brand-primary.md\\:w-fit.hover\\:border-0"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"inline-flex justify-...\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #ffffff, background color: #008bcc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "div[data-slide-index=\"2\"] > .p-4.shadow-md.rounded-\\[12px\\] > .min-w-0.gap-3.justify-between > .bg-brand-primary.md\\:w-fit.hover\\:border-0"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"inline-flex justify-...\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #ffffff, background color: #008bcc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "div[data-slide-index=\"3\"] > .p-4.shadow-md.rounded-\\[12px\\] > .min-w-0.gap-3.justify-between > .bg-brand-primary.md\\:w-fit.hover\\:border-0"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"inline-flex justify-...\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #ffffff, background color: #008bcc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "div[data-slide-index=\"4\"] > .p-4.shadow-md.rounded-\\[12px\\] > .min-w-0.gap-3.justify-between > .bg-brand-primary.md\\:w-fit.hover\\:border-0"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"inline-flex justify-...\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #ffffff, background color: #008bcc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "div[data-slide-index=\"5\"] > .p-4.shadow-md.rounded-\\[12px\\] > .min-w-0.gap-3.justify-between > .bg-brand-primary.md\\:w-fit.hover\\:border-0"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"inline-flex justify-...\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #ffffff, background color: #008bcc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "div[data-slide-index=\"6\"] > .p-4.shadow-md.rounded-\\[12px\\] > .min-w-0.gap-3.justify-between > .bg-brand-primary.md\\:w-fit.hover\\:border-0"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"inline-flex justify-...\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #ffffff, background color: #008bcc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "div[data-slide-index=\"7\"] > .p-4.shadow-md.rounded-\\[12px\\] > .min-w-0.gap-3.justify-between > .bg-brand-primary.md\\:w-fit.hover\\:border-0"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"inline-flex justify-...\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #ffffff, background color: #008bcc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".text-\\[1\\.25rem\\]"
+              ],
+              "html": "<span class=\"break-words text-center text-[1.25rem] font-[400] leading-[1.625rem] text-[#fcfcfd] font-['Public Sans'] w-full\">\n              From Cork to London to Brighton, we are expanding. We are proud to work alongside our partners who believe in a more inclusive world.            </span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.94 (foreground color: #fcfcfd, background color: #009de6, font size: 15.0pt (20px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        },
+        {
+          "id": "empty-heading",
+          "impact": "minor",
+          "description": "Ensure headings have discernible text",
+          "help": "Headings should not be empty",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/empty-heading?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "div[aria-describedby=\"stats-952715-stat-desc-0\"] > .lg\\:text-\\[60px\\].lg\\:leading-\\[72px\\].lg\\:tracking-\\[-1\\.2px\\]"
+              ],
+              "html": "<h3 class=\"break-words text-left text-[36px] font-bold leading-[44px] tracking-[-0.72px] lg:text-[60px] lg:leading-[72px] lg:tracking-[-1.2px] font-['Public_Sans'] text-[var(--Light-Blue-500,#008FC5)] w-full\" style=\"color: #008fc5;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                "div[aria-describedby=\"stats-952715-stat-desc-1\"] > .lg\\:text-\\[60px\\].lg\\:leading-\\[72px\\].lg\\:tracking-\\[-1\\.2px\\]"
+              ],
+              "html": "<h3 class=\"break-words text-left text-[36px] font-bold leading-[44px] tracking-[-0.72px] lg:text-[60px] lg:leading-[72px] lg:tracking-[-1.2px] font-['Public_Sans'] text-[var(--Light-Blue-500,#008FC5)] w-full\" style=\"color: #008fc5;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                "div[aria-describedby=\"stats-952715-stat-desc-2\"] > .lg\\:text-\\[60px\\].lg\\:leading-\\[72px\\].lg\\:tracking-\\[-1\\.2px\\]"
+              ],
+              "html": "<h3 class=\"break-words text-left text-[36px] font-bold leading-[44px] tracking-[-0.72px] lg:text-[60px] lg:leading-[72px] lg:tracking-[-1.2px] font-['Public_Sans'] text-[var(--Light-Blue-500,#008FC5)] w-full\" style=\"color: #008fc5;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            }
+          ]
+        },
+        {
+          "id": "landmark-contentinfo-is-top-level",
+          "impact": "moderate",
+          "description": "Ensure the contentinfo landmark is at top level",
+          "help": "Contentinfo landmark should not be contained in another landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-contentinfo-is-top-level?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "footer[role=\"contentinfo\"]"
+              ],
+              "html": "<footer role=\"contentinfo\" aria-label=\"Site footer\">",
+              "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+            }
+          ]
+        },
+        {
+          "id": "landmark-no-duplicate-contentinfo",
+          "impact": "moderate",
+          "description": "Ensure the document has at most one contentinfo landmark",
+          "help": "Document should not have more than one contentinfo landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-contentinfo?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".bg-secondary"
+              ],
+              "html": "<footer class=\"overflow-hidden w-full bg-secondary\">",
+              "failureSummary": "Fix any of the following:\n  Document has more than one contentinfo landmark"
+            }
+          ]
+        },
+        {
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
+          "help": "Links must be distinguishable without relying on color",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/link-in-text-block?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "a[href$=\"leafletjs.com\"]"
+              ],
+              "html": "<a href=\"https://leafletjs.com\" title=\"A JavaScript library for interactive maps\">",
+              "failureSummary": "Fix any of the following:\n  The link has insufficient color contrast of 2.55:1 with the surrounding text. (Minimum contrast is 3:1, link text: #0078a8, surrounding text: #333333)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/about/",
+      "violationCount": 5,
+      "violations": [
+        {
+          "id": "aria-allowed-role",
+          "impact": "minor",
+          "description": "Ensure role attribute has an appropriate value for the element",
+          "help": "ARIA role should be appropriate for the element",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-role?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#language-dropdown-trigger"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"flex gap-1 justify-c...\" aria-haspopup=\"listbox\" :aria-expanded=\"open\" aria-labelledby=\"language-dropdown-la...\" id=\"language-dropdown-tr...\" role=\"combobox\" aria-expanded=\"false\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role combobox is not allowed for given element"
+            }
+          ]
+        },
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "description": "Ensure buttons have discernible text",
+          "help": "Buttons must have discernible text",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(1660)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(1660)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(927)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(927)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(935)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(935)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "landmark-contentinfo-is-top-level",
+          "impact": "moderate",
+          "description": "Ensure the contentinfo landmark is at top level",
+          "help": "Contentinfo landmark should not be contained in another landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-contentinfo-is-top-level?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "footer[role=\"contentinfo\"]"
+              ],
+              "html": "<footer role=\"contentinfo\" aria-label=\"Site footer\">",
+              "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+            }
+          ]
+        },
+        {
+          "id": "landmark-no-duplicate-contentinfo",
+          "impact": "moderate",
+          "description": "Ensure the document has at most one contentinfo landmark",
+          "help": "Document should not have more than one contentinfo landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-contentinfo?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".bg-secondary"
+              ],
+              "html": "<footer class=\"overflow-hidden w-full bg-secondary\">",
+              "failureSummary": "Fix any of the following:\n  Document has more than one contentinfo landmark"
+            }
+          ]
+        },
+        {
+          "id": "landmark-unique",
+          "impact": "moderate",
+          "description": "Ensure landmarks are unique",
+          "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#subhero-69d90189eca49"
+              ],
+              "html": "<section id=\"subhero-69d90189eca49\" class=\"relative flex overflow-hidden  \" style=\"background-color: rgb(238, 246, 252); padding-top: 120px;\" aria-labelledby=\"subhero-69d90189eca49-heading\" data-nav-offset=\"true\">",
+              "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/blog/",
+      "error": "Navigation failed (404)",
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/events/",
+      "violationCount": 6,
+      "violations": [
+        {
+          "id": "aria-allowed-role",
+          "impact": "minor",
+          "description": "Ensure role attribute has an appropriate value for the element",
+          "help": "ARIA role should be appropriate for the element",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-role?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#language-dropdown-trigger"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"flex gap-1 justify-c...\" aria-haspopup=\"listbox\" :aria-expanded=\"open\" aria-labelledby=\"language-dropdown-la...\" id=\"language-dropdown-tr...\" role=\"combobox\" aria-expanded=\"false\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role combobox is not allowed for given element"
+            },
+            {
+              "target": [
+                "article:nth-child(1)"
+              ],
+              "html": "<article class=\"overflow-hidden flex...\" data-url=\"http://localhost:101...\" data-url-target=\"_self\" tabindex=\"0\" role=\"link\" aria-label=\"Open event: Sonia O’...\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role link is not allowed for given element"
+            },
+            {
+              "target": [
+                "article:nth-child(2)"
+              ],
+              "html": "<article class=\"overflow-hidden flex...\" data-url=\"http://localhost:101...\" data-url-target=\"_self\" tabindex=\"0\" role=\"link\" aria-label=\"Open event: London M...\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role link is not allowed for given element"
+            },
+            {
+              "target": [
+                "article:nth-child(3)"
+              ],
+              "html": "<article class=\"overflow-hidden flex...\" data-url=\"http://localhost:101...\" data-url-target=\"_self\" tabindex=\"0\" role=\"link\" aria-label=\"Open event: Regenero...\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role link is not allowed for given element"
+            },
+            {
+              "target": [
+                "article:nth-child(4)"
+              ],
+              "html": "<article class=\"overflow-hidden flex...\" data-url=\"http://localhost:101...\" data-url-target=\"_self\" tabindex=\"0\" role=\"link\" aria-label=\"Open event: Dublin H...\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role link is not allowed for given element"
+            },
+            {
+              "target": [
+                "article:nth-child(5)"
+              ],
+              "html": "<article class=\"overflow-hidden flex...\" data-url=\"http://localhost:101...\" data-url-target=\"_self\" tabindex=\"0\" role=\"link\" aria-label=\"Open event: Terenure...\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role link is not allowed for given element"
+            },
+            {
+              "target": [
+                "article:nth-child(6)"
+              ],
+              "html": "<article class=\"overflow-hidden flex...\" data-url=\"http://localhost:101...\" data-url-target=\"_self\" tabindex=\"0\" role=\"link\" aria-label=\"Open event: Analog D...\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role link is not allowed for given element"
+            }
+          ]
+        },
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "description": "Ensure buttons have discernible text",
+          "help": "Buttons must have discernible text",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(1660)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(1660)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(927)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(927)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(935)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(935)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "description": "Ensure the order of headings is semantically correct",
+          "help": "Heading levels should only increase by one",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/heading-order?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "article:nth-child(1) > .p-6.max-md\\:px-5.text-sm > .text-\\[\\#F68DA7\\].text-\\[18px\\].leading-\\[24px\\]"
+              ],
+              "html": "<h3 class=\"font-sans text-[18px] font-bold not-italic leading-[24px] text-[#F68DA7]\">",
+              "failureSummary": "Fix any of the following:\n  Heading order invalid"
+            }
+          ]
+        },
+        {
+          "id": "landmark-contentinfo-is-top-level",
+          "impact": "moderate",
+          "description": "Ensure the contentinfo landmark is at top level",
+          "help": "Contentinfo landmark should not be contained in another landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-contentinfo-is-top-level?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "footer[role=\"contentinfo\"]"
+              ],
+              "html": "<footer role=\"contentinfo\" aria-label=\"Site footer\">",
+              "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+            }
+          ]
+        },
+        {
+          "id": "landmark-no-duplicate-contentinfo",
+          "impact": "moderate",
+          "description": "Ensure the document has at most one contentinfo landmark",
+          "help": "Document should not have more than one contentinfo landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-contentinfo?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".bg-secondary"
+              ],
+              "html": "<footer class=\"overflow-hidden w-full bg-secondary\">",
+              "failureSummary": "Fix any of the following:\n  Document has more than one contentinfo landmark"
+            }
+          ]
+        },
+        {
+          "id": "landmark-unique",
+          "impact": "moderate",
+          "description": "Ensure landmarks are unique",
+          "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#subhero-69d9018d76a2f"
+              ],
+              "html": "<section id=\"subhero-69d9018d76a2f\" class=\"relative flex overflow-hidden  \" style=\"background-color: rgb(238, 246, 252); padding-top: 120px;\" aria-labelledby=\"subhero-69d9018d76a2f-heading\" data-nav-offset=\"true\">",
+              "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/get-involved/",
+      "violationCount": 7,
+      "violations": [
+        {
+          "id": "aria-allowed-role",
+          "impact": "minor",
+          "description": "Ensure role attribute has an appropriate value for the element",
+          "help": "ARIA role should be appropriate for the element",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-role?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#language-dropdown-trigger"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"flex gap-1 justify-c...\" aria-haspopup=\"listbox\" :aria-expanded=\"open\" aria-labelledby=\"language-dropdown-la...\" id=\"language-dropdown-tr...\" role=\"combobox\" aria-expanded=\"false\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role combobox is not allowed for given element"
+            }
+          ]
+        },
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "description": "Ensure buttons have discernible text",
+          "help": "Buttons must have discernible text",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(1660)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(1660)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(927)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(927)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(935)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(935)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "p:nth-child(1) > a[target=\"_blank\"][rel=\"noopener noreferrer\"]"
+              ],
+              "html": "<a href=\"http://localhost:10101/contact/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"get in touch (opens in a new tab)\">get in touch</a>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #009de6, background color: #ffffff, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        },
+        {
+          "id": "empty-heading",
+          "impact": "minor",
+          "description": "Ensure headings have discernible text",
+          "help": "Headings should not be empty",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/empty-heading?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#content-editor-4e56aadd-ad78-48c0-aa30-8dc74c780cb7-heading"
+              ],
+              "html": "<h3 id=\"content-editor-4e56aadd-ad78-48c0-aa30-8dc74c780cb7-heading\" class=\"w-full break-words text-left text-[1.5rem] font-[700] leading-[2rem] font-['Public Sans']\" style=\"color: #00628f;\">\n                            </h3>",
+              "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            }
+          ]
+        },
+        {
+          "id": "landmark-contentinfo-is-top-level",
+          "impact": "moderate",
+          "description": "Ensure the contentinfo landmark is at top level",
+          "help": "Contentinfo landmark should not be contained in another landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-contentinfo-is-top-level?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "footer[role=\"contentinfo\"]"
+              ],
+              "html": "<footer role=\"contentinfo\" aria-label=\"Site footer\">",
+              "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+            }
+          ]
+        },
+        {
+          "id": "landmark-no-duplicate-contentinfo",
+          "impact": "moderate",
+          "description": "Ensure the document has at most one contentinfo landmark",
+          "help": "Document should not have more than one contentinfo landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-contentinfo?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".bg-secondary"
+              ],
+              "html": "<footer class=\"overflow-hidden w-full bg-secondary\">",
+              "failureSummary": "Fix any of the following:\n  Document has more than one contentinfo landmark"
+            }
+          ]
+        },
+        {
+          "id": "landmark-unique",
+          "impact": "moderate",
+          "description": "Ensure landmarks are unique",
+          "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#subhero-69d9018ee65ae"
+              ],
+              "html": "<section id=\"subhero-69d9018ee65ae\" class=\"relative flex overflow-hidden  \" style=\"background-color: rgb(238, 246, 252); padding-top: 120px;\" aria-labelledby=\"subhero-69d9018ee65ae-heading\" data-nav-offset=\"true\">",
+              "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/contact/",
+      "violationCount": 6,
+      "violations": [
+        {
+          "id": "aria-allowed-role",
+          "impact": "minor",
+          "description": "Ensure role attribute has an appropriate value for the element",
+          "help": "ARIA role should be appropriate for the element",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-role?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#language-dropdown-trigger"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"flex gap-1 justify-c...\" aria-haspopup=\"listbox\" :aria-expanded=\"open\" aria-labelledby=\"language-dropdown-la...\" id=\"language-dropdown-tr...\" role=\"combobox\" aria-expanded=\"false\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role combobox is not allowed for given element"
+            }
+          ]
+        },
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "description": "Ensure buttons have discernible text",
+          "help": "Buttons must have discernible text",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(1660)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(1660)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(927)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(927)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(935)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(935)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".focus\\:ring-sky-700"
+              ],
+              "html": "<a href=\"http://localhost:10101/\" class=\"text-white whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #ffffff, background color: #009de6, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".truncate"
+              ],
+              "html": "<span class=\"text-white block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal\" aria-current=\"page\" title=\"Contact\">\n                                                Contact                                            </span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #ffffff, background color: #009de6, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        },
+        {
+          "id": "landmark-contentinfo-is-top-level",
+          "impact": "moderate",
+          "description": "Ensure the contentinfo landmark is at top level",
+          "help": "Contentinfo landmark should not be contained in another landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-contentinfo-is-top-level?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "footer[role=\"contentinfo\"]"
+              ],
+              "html": "<footer role=\"contentinfo\" aria-label=\"Site footer\">",
+              "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+            }
+          ]
+        },
+        {
+          "id": "landmark-no-duplicate-contentinfo",
+          "impact": "moderate",
+          "description": "Ensure the document has at most one contentinfo landmark",
+          "help": "Document should not have more than one contentinfo landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-contentinfo?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".bg-secondary"
+              ],
+              "html": "<footer class=\"overflow-hidden w-full bg-secondary\">",
+              "failureSummary": "Fix any of the following:\n  Document has more than one contentinfo landmark"
+            }
+          ]
+        },
+        {
+          "id": "landmark-unique",
+          "impact": "moderate",
+          "description": "Ensure landmarks are unique",
+          "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#faq-section-69d9019099a79"
+              ],
+              "html": "<section id=\"faq-section-69d9019099a79\" class=\"relative flex overflow-hidden font-bold text-sky-800 pt-5 pb-5\" style=\"background-color: #c2edff;\" aria-labelledby=\"faq-section-69d9019099a79-heading\">",
+              "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/media/",
+      "error": "Navigation failed (404)",
+      "violations": []
+    },
+    {
+      "url": "http://localhost:10101/join/",
+      "violationCount": 7,
+      "violations": [
+        {
+          "id": "aria-allowed-role",
+          "impact": "minor",
+          "description": "Ensure role attribute has an appropriate value for the element",
+          "help": "ARIA role should be appropriate for the element",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-role?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#language-dropdown-trigger"
+              ],
+              "html": "<a href=\"http://localhost:101...\" class=\"flex gap-1 justify-c...\" aria-haspopup=\"listbox\" :aria-expanded=\"open\" aria-labelledby=\"language-dropdown-la...\" id=\"language-dropdown-tr...\" role=\"combobox\" aria-expanded=\"false\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role combobox is not allowed for given element"
+            }
+          ]
+        },
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "description": "Ensure buttons have discernible text",
+          "help": "Buttons must have discernible text",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(1660)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(1660)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(927)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(927)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "button[\\@click\\.stop=\"toggleDropdown(935)\"]"
+              ],
+              "html": "<button type=\"button\" class=\"relative -left-2 p-1\" @click.stop=\"toggleDropdown(935)\">\n                    <img src=\"https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/d0df69e40d4acbe67aaf2dd9aefce4391f13a037\" class=\"w-[17px]\" alt=\"\">\n                  </button>",
+              "failureSummary": "Fix any of the following:\n  Element does not have inner text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "a:nth-child(2) > b"
+              ],
+              "html": "<b>limerick@sanctuaryrunners.ie</b>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #009de6, background color: #ffffff, font size: 13.5pt (18px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "a:nth-child(4) > span"
+              ],
+              "html": "<span style=\"font-weight: 400;\">http://localhost:10101/limerick/</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #009de6, background color: #ffffff, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                "span:nth-child(5) > a:nth-child(2)"
+              ],
+              "html": "<a href=\"mailto:jennifer@sanctuaryrunners.ie\">jennifer@sanctuaryrunners.ie</a>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.01 (foreground color: #009de6, background color: #ffffff, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".post-item.rounded-\\[4px\\].bg-yellow-50:nth-child(1) > .aspect-\\[1\\.565\\].min-h-\\[232px\\].gap-2\\.5 > .bg-sky-300.rounded-r-\\[100px\\].gap-1 > span"
+              ],
+              "html": "<span>Our News</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4 (foreground color: #00628f, background color: #7dd3fc, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".post-item.rounded-\\[4px\\].bg-yellow-50:nth-child(2) > .aspect-\\[1\\.565\\].min-h-\\[232px\\].gap-2\\.5 > .bg-sky-300.rounded-r-\\[100px\\].gap-1 > span"
+              ],
+              "html": "<span>Our News</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4 (foreground color: #00628f, background color: #7dd3fc, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".post-item.rounded-\\[4px\\].bg-yellow-50:nth-child(3) > .aspect-\\[1\\.565\\].min-h-\\[232px\\].gap-2\\.5 > .bg-sky-300.rounded-r-\\[100px\\].gap-1 > span"
+              ],
+              "html": "<span>Our News</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4 (foreground color: #00628f, background color: #7dd3fc, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        },
+        {
+          "id": "landmark-contentinfo-is-top-level",
+          "impact": "moderate",
+          "description": "Ensure the contentinfo landmark is at top level",
+          "help": "Contentinfo landmark should not be contained in another landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-contentinfo-is-top-level?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "footer[role=\"contentinfo\"]"
+              ],
+              "html": "<footer role=\"contentinfo\" aria-label=\"Site footer\">",
+              "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+            }
+          ]
+        },
+        {
+          "id": "landmark-no-duplicate-contentinfo",
+          "impact": "moderate",
+          "description": "Ensure the document has at most one contentinfo landmark",
+          "help": "Document should not have more than one contentinfo landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-contentinfo?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".bg-secondary"
+              ],
+              "html": "<footer class=\"overflow-hidden w-full bg-secondary\">",
+              "failureSummary": "Fix any of the following:\n  Document has more than one contentinfo landmark"
+            }
+          ]
+        },
+        {
+          "id": "landmark-unique",
+          "impact": "moderate",
+          "description": "Ensure landmarks are unique",
+          "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#subhero-69d901935d88e"
+              ],
+              "html": "<section id=\"subhero-69d901935d88e\" class=\"relative flex overflow-hidden  max-md:mt-2\" style=\"background-color: rgb(238, 246, 252); padding-top: 120px;\" aria-labelledby=\"subhero-69d901935d88e-heading\" data-nav-offset=\"true\">",
+              "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+            }
+          ]
+        },
+        {
+          "id": "link-name",
+          "impact": "serious",
+          "description": "Ensure links have discernible text",
+          "help": "Links must have discernible text",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/link-name?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "span:nth-child(5) > a:nth-child(1)"
+              ],
+              "html": "<a href=\"mailto:Brien-jennifer@sanctuaryrunners.ie\">&nbsp;</a>",
+              "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:10101/donate/",
+      "violationCount": 8,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".matrix-donation-step-inactive > .matrix-donation-step-label"
+              ],
+              "html": "<span class=\"matrix-donation-step-label\">Your details</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.57 (foreground color: #98a2b3, background color: #ffffff, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        },
+        {
+          "id": "landmark-banner-is-top-level",
+          "impact": "moderate",
+          "description": "Ensure the banner landmark is at top level",
+          "help": "Banner landmark should not be contained in another landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-banner-is-top-level?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".matrix-donation-steps-header"
+              ],
+              "html": "<header class=\"matrix-donation-steps-header\" role=\"banner\">",
+              "failureSummary": "Fix any of the following:\n  The banner landmark is contained in another landmark."
+            }
+          ]
+        },
+        {
+          "id": "landmark-contentinfo-is-top-level",
+          "impact": "moderate",
+          "description": "Ensure the contentinfo landmark is at top level",
+          "help": "Contentinfo landmark should not be contained in another landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-contentinfo-is-top-level?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "footer[role=\"contentinfo\"]"
+              ],
+              "html": "<footer role=\"contentinfo\" aria-label=\"Site footer\">",
+              "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+            }
+          ]
+        },
+        {
+          "id": "landmark-main-is-top-level",
+          "impact": "moderate",
+          "description": "Ensure the main landmark is at top level",
+          "help": "Main landmark should not be contained in another landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-main-is-top-level?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".matrix-donation-main"
+              ],
+              "html": "<main class=\"matrix-donation-main grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-[1200px] mx-auto px-4 py-8 md:px-16 md:py-9\">",
+              "failureSummary": "Fix any of the following:\n  The main landmark is contained in another landmark."
+            }
+          ]
+        },
+        {
+          "id": "landmark-no-duplicate-banner",
+          "impact": "moderate",
+          "description": "Ensure the document has at most one banner landmark",
+          "help": "Document should not have more than one banner landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-banner?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "body > .relative"
+              ],
+              "html": "<header class=\"relative\">",
+              "failureSummary": "Fix any of the following:\n  Document has more than one banner landmark"
+            }
+          ]
+        },
+        {
+          "id": "landmark-no-duplicate-contentinfo",
+          "impact": "moderate",
+          "description": "Ensure the document has at most one contentinfo landmark",
+          "help": "Document should not have more than one contentinfo landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-contentinfo?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                ".bg-secondary"
+              ],
+              "html": "<footer class=\"overflow-hidden w-full bg-secondary\">",
+              "failureSummary": "Fix any of the following:\n  Document has more than one contentinfo landmark"
+            }
+          ]
+        },
+        {
+          "id": "landmark-no-duplicate-main",
+          "impact": "moderate",
+          "description": "Ensure the document has at most one main landmark",
+          "help": "Document should not have more than one main landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-main?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "#main-content"
+              ],
+              "html": "<main id=\"main-content\" class=\"overflow-hidden w-full site-main\">",
+              "failureSummary": "Fix any of the following:\n  Document has more than one main landmark"
+            }
+          ]
+        },
+        {
+          "id": "landmark-unique",
+          "impact": "moderate",
+          "description": "Ensure landmarks are unique",
+          "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+          "nodes": [
+            {
+              "target": [
+                "body > .relative"
+              ],
+              "html": "<header class=\"relative\">",
+              "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+            },
+            {
+              "target": [
+                "#main-content"
+              ],
+              "html": "<main id=\"main-content\" class=\"overflow-hidden w-full site-main\">",
+              "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

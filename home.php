@@ -5,6 +5,9 @@
  */
 
 get_header();
+?>
+<main id="main-content" class="site-main">
+<?php
 
 $breadcrumbs = [
     [
@@ -34,6 +37,9 @@ get_template_part('template-parts/hero/subhero', null, matrix_get_archive_subher
 
 get_template_part('template-parts/flexi/blog_listing');
 get_template_part('template-parts/flexi/newsletter_001');
+?>
+</main>
+<?php
 
 get_footer();
 
