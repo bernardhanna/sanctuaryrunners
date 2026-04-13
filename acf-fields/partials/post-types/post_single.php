@@ -21,19 +21,19 @@ $post_single
     ])
     ->addTrueFalse('post_force_index', [
         'label' => 'Force index this post',
-        'instructions' => 'Override default SEO behavior and allow indexing even if this post is a press-release external link-out.',
+        'instructions' => 'Override default SEO behavior and allow indexing even if this post is an external link-out in media categories.',
         'default_value' => 0,
         'ui' => 1,
     ])
     ->addImage('post_listing_logo_custom', [
-        'label' => 'Press Listing Logo (Custom)',
-        'instructions' => 'Optional. Upload a custom logo/image for press-release listing thumbnails.',
+        'label' => 'Media Listing Logo (Custom)',
+        'instructions' => 'Optional. Upload a custom logo/image for In the Media / press listing thumbnails.',
         'return_format' => 'id',
         'preview_size' => 'medium',
         'library' => 'all',
     ])
     ->addSelect('post_listing_logo_quick_select', [
-        'label' => 'Press Listing Logo (Quick Select)',
+        'label' => 'Media Listing Logo (Quick Select)',
         'instructions' => 'Optional. Pick a predefined source logo. Ignored when a custom logo is uploaded above.',
         'choices' => [
             '' => 'None',
@@ -50,8 +50,8 @@ $post_single
         'allow_null' => 0,
     ])
     ->addColorPicker('post_listing_logo_bg_color', [
-        'label' => 'Press Listing Logo Background Color',
-        'instructions' => 'Optional. Background color behind press-release logos in listings.',
+        'label' => 'Media Listing Logo Background Color',
+        'instructions' => 'Optional. Background color behind media logos in listings.',
         'default_value' => '#FFFFFF',
     ]);
 

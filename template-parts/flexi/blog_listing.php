@@ -338,18 +338,20 @@ $search_input_id = $section_id . '-search';
                         $post_date      = get_the_date('j M Y');
                         $reading_time   = '12 mins';
                         $post_permalink = get_permalink($post_id);
-                        $has_press_release_category = in_array('press-releases', $category_slugs, true);
+                        $has_media_listing_category = function_exists('matrix_post_has_media_category')
+                            ? matrix_post_has_media_category($post_id)
+                            : in_array('press-releases', $category_slugs, true);
                         $press_logo_custom_id = (int) get_field('post_listing_logo_custom', $post_id);
                         $press_logo_quick_select = trim((string) get_field('post_listing_logo_quick_select', $post_id));
                         $press_logo_bg_raw = trim((string) get_field('post_listing_logo_bg_color', $post_id));
                         $press_logo_bg = sanitize_hex_color($press_logo_bg_raw) ?: '#FFFFFF';
-                        $press_logo_bg_style = $has_press_release_category ? 'background-color: ' . $press_logo_bg . ';' : '';
-                        $use_press_logo_override = $has_press_release_category && ($press_logo_custom_id > 0 || $press_logo_quick_select !== '');
+                        $press_logo_bg_style = $has_media_listing_category ? 'background-color: ' . $press_logo_bg . ';' : '';
+                        $use_press_logo_override = $has_media_listing_category && ($press_logo_custom_id > 0 || $press_logo_quick_select !== '');
                         $external_source_link = get_field('post_external_source_link', $post_id);
                         $open_external_source = get_field('post_listing_open_external_source', $post_id);
                         $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
                         $has_external_source_url = is_array($external_source_link) && !empty($external_source_link['url']);
-                        $auto_external_for_press_release = $has_press_release_category && $has_external_source_url;
+                        $auto_external_for_press_release = $has_media_listing_category && $has_external_source_url;
                         if ($auto_external_for_press_release) {
                             $open_external_source = true;
                         }
@@ -396,7 +398,7 @@ $search_input_id = $section_id . '-search';
                                 <?php elseif ($featured_image): ?>
                                     <?php echo wp_get_attachment_image($featured_image, 'large', false, [
                                         'alt'     => esc_attr($image_alt),
-                                        'class'   => $has_press_release_category
+                                        'class'   => $has_media_listing_category
                                             ? 'object-contain absolute inset-0 size-full'
                                             : 'object-cover absolute inset-0 size-full',
                                         'style'   => $press_logo_bg_style,

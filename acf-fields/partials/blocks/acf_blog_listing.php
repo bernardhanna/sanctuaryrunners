@@ -75,7 +75,6 @@ $blog_listing
         'instructions' => 'Number of posts to display per page.',
         'default_value' => 12,
         'min' => 1,
-        'max' => 20,
     ])
     ->addTrueFalse('show_pagination', [
         'label' => 'Show Pagination',

@@ -362,8 +362,61 @@ add_filter('safe_style_css', function ($styles) {
 });
 
 /**
- * SEO rule for link-out press-release posts:
- * Default to noindex when post is in "press-releases" and points externally,
+ * Determine if a category term is part of media categories.
+ */
+if (!function_exists('matrix_is_media_category_term')) {
+    function matrix_is_media_category_term($term): bool {
+        if (!($term instanceof WP_Term) || $term->taxonomy !== 'category') {
+            return false;
+        }
+
+        // Backward-compatible support for direct press-releases usage.
+        if ((string) $term->slug === 'press-releases') {
+            return true;
+        }
+
+        if ((string) $term->slug === 'in-the-media') {
+            return true;
+        }
+
+        $media_parent = get_category_by_slug('in-the-media');
+        if (!$media_parent instanceof WP_Term) {
+            return false;
+        }
+
+        $ancestors = get_ancestors((int) $term->term_id, 'category', 'taxonomy');
+        $ancestors = array_map('intval', is_array($ancestors) ? $ancestors : []);
+        return in_array((int) $media_parent->term_id, $ancestors, true);
+    }
+}
+
+/**
+ * Determine if post has any media category.
+ */
+if (!function_exists('matrix_post_has_media_category')) {
+    function matrix_post_has_media_category(int $post_id): bool {
+        if ($post_id <= 0) {
+            return false;
+        }
+
+        $terms = get_the_terms($post_id, 'category');
+        if (empty($terms) || is_wp_error($terms)) {
+            return false;
+        }
+
+        foreach ($terms as $term) {
+            if (matrix_is_media_category_term($term)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+/**
+ * SEO rule for link-out media posts:
+ * Default to noindex when post is in media categories and points externally,
  * unless explicitly overridden by post_force_index.
  */
 if (!function_exists('matrix_should_noindex_post')) {
@@ -388,14 +441,9 @@ if (!function_exists('matrix_should_noindex_post')) {
         $open_external_source = get_field('post_listing_open_external_source', $post_id);
         $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
 
-        $category_slugs = [];
-        $terms = get_the_terms($post_id, 'category');
-        if (!empty($terms) && !is_wp_error($terms)) {
-            $category_slugs = wp_list_pluck($terms, 'slug');
-        }
-        $is_press_release = in_array('press-releases', $category_slugs, true);
+        $is_media_post = matrix_post_has_media_category($post_id);
 
-        return $has_external_source_url && ($is_press_release || $open_external_source);
+        return $has_external_source_url && ($is_media_post || $open_external_source);
     }
 }
 
