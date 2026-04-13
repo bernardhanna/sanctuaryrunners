@@ -14,6 +14,19 @@ class Theme_Forms {
   private $last_mail_error = '';
   private $phpmailer_sender = null;
 
+  private function is_non_production_env(): bool {
+    if (function_exists('wp_get_environment_type')) {
+      return wp_get_environment_type() !== 'production';
+    }
+    return defined('WP_DEBUG') && WP_DEBUG;
+  }
+
+  private function log_mail_issue(string $message, array $context = []): void {
+    if (!$this->is_non_production_env()) return;
+    $payload = $context ? ' ' . wp_json_encode($context) : '';
+    error_log('[Theme_Forms] ' . $message . $payload);
+  }
+
   public function __construct() {
     add_action('admin_post_nopriv_theme_form_submit', [ $this, 'handle' ]);
     add_action('admin_post_theme_form_submit',        [ $this, 'handle' ]);
@@ -132,9 +145,8 @@ class Theme_Forms {
   /* ---------- Main ---------- */
 
   public function handle() {
-    if (isset($_POST['action']) && $_POST['action'] === 'theme_form_submit') {
-      remove_all_actions('phpmailer_init'); // keep SMTP plugins from overwriting From/Sender
-    }
+    // Keep third-party mail transport hooks (SMTP plugins, host relays) intact.
+    // We still apply our own From/Sender values below via filters and phpmailer_init.
 
     // 1) Security
     if (empty($_POST['theme_form_nonce']) || !wp_verify_nonce($_POST['theme_form_nonce'], 'theme_form_submit')) {
@@ -265,7 +277,12 @@ class Theme_Forms {
 
     // 8.1) Send (capture errors + enforce Return-Path + force From/From-Name)
     $this->last_mail_error = '';
-    $err_catcher = function($wp_error){ $this->last_mail_error = $wp_error->get_error_message(); };
+    $err_catcher = function($wp_error){
+      $this->last_mail_error = $wp_error->get_error_message();
+      $this->log_mail_issue('wp_mail_failed', [
+        'error' => $this->last_mail_error,
+      ]);
+    };
     add_action('wp_mail_failed', $err_catcher);
 
     $this->phpmailer_sender = $from_email;
@@ -304,11 +321,21 @@ class Theme_Forms {
 
     // 10) Respond
     if (!$sent) {
+      $this->log_mail_issue('mail_send_failed', [
+        'to' => $to_list,
+        'subject' => $subject,
+        'form_name' => $form_name,
+      ]);
       $this->result(false, 'mail_failed', [
         'mail_error' => $this->last_mail_error,
         'to'         => implode(', ', $to_list),
       ]);
     }
+    $this->log_mail_issue('mail_send_ok', [
+      'to' => $to_list,
+      'subject' => $subject,
+      'form_name' => $form_name,
+    ]);
     $this->result(true, 'sent');
   }
 }
