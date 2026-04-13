@@ -33,7 +33,7 @@ if (have_rows('padding_settings')) {
     class="relative flex overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
-    <div class="flex flex-col items-center pt-8 pb-16 mx-auto w-full max-w-[1084px] max-lg:px-5">
+    <div class="flex flex-col items-center py-5 lg:pt-8 lg:pb-16 mx-auto w-full max-w-[1084px] max-lg:px-5">
         <div class="grid gap-4 items-center w-full lg:gap-10 md:grid-cols-2">
 
             <!-- Text Content Section -->
