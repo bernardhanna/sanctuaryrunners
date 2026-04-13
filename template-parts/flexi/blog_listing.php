@@ -11,6 +11,9 @@ $show_search = $has_show_search_field ? (bool) get_sub_field('show_search') : tr
 
 $has_limit_to_category_field = is_array(get_sub_field_object('limit_to_category'));
 $limit_to_category_id = $has_limit_to_category_field ? (int) get_sub_field('limit_to_category') : 0;
+$has_media_subcategory_filters_field = is_array(get_sub_field_object('show_media_subcategory_filters_only'));
+$show_media_subcategory_filters_only = $has_media_subcategory_filters_field ? (bool) get_sub_field('show_media_subcategory_filters_only') : false;
+$media_filter_slugs = ['local', 'national', 'international'];
 
 $has_posts_per_page_field = is_array(get_sub_field_object('posts_per_page'));
 $posts_per_page = $has_posts_per_page_field
@@ -90,7 +93,13 @@ if (!is_category() && $limit_to_category_id > 0 && $selected_filter_slug !== '')
         $allowed_ids = array_map('intval', is_array($allowed_ids) ? $allowed_ids : []);
         $allowed_ids[] = (int) $limit_to_category_id;
 
-        if (in_array((int) $selected_filter_term->term_id, $allowed_ids, true)) {
+        if (
+            $show_media_subcategory_filters_only
+            && !in_array((string) $selected_filter_term->slug, $media_filter_slugs, true)
+        ) {
+            $selected_filter_slug = '';
+            $args['cat'] = $limit_to_category_id;
+        } elseif (in_array((int) $selected_filter_term->term_id, $allowed_ids, true)) {
             $args['cat'] = (int) $selected_filter_term->term_id;
         } else {
             $selected_filter_slug = '';
@@ -120,6 +129,19 @@ if (!$is_category_archive && $limit_to_category_id > 0) {
 }
 
 $categories = get_categories($categories_args);
+if (!$is_category_archive && $limit_to_category_id > 0 && $show_media_subcategory_filters_only) {
+    $categories = array_values(array_filter($categories, static function ($category) use ($media_filter_slugs) {
+        return in_array((string) $category->slug, $media_filter_slugs, true);
+    }));
+
+    usort($categories, static function ($a, $b) use ($media_filter_slugs) {
+        $aIndex = array_search((string) $a->slug, $media_filter_slugs, true);
+        $bIndex = array_search((string) $b->slug, $media_filter_slugs, true);
+        $aIndex = $aIndex === false ? 999 : (int) $aIndex;
+        $bIndex = $bIndex === false ? 999 : (int) $bIndex;
+        return $aIndex <=> $bIndex;
+    });
+}
 
 $section_id = 'blog-listing-' . uniqid();
 $search_input_id = $section_id . '-search';

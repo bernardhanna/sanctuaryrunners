@@ -47,6 +47,12 @@ $blog_listing
         'return_format' => 'id',
         'multiple' => 0,
     ])
+    ->addTrueFalse('show_media_subcategory_filters_only', [
+        'label' => 'Show Only Media Subcategory Filters',
+        'instructions' => 'When enabled (with Limit to Category set), filter chips will only show Local, National, and International in that order.',
+        'default_value' => 0,
+        'ui' => 1,
+    ])
     ->addNumber('posts_per_page', [
         'label' => 'Posts Per Page',
         'instructions' => 'Number of posts to display per page.',
