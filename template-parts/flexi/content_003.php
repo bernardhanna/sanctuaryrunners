@@ -147,7 +147,7 @@ if (have_rows('padding_settings')) {
                 <div class="w-full min-w-0 overflow-hidden rounded-lg  max-md:order-1 <?php echo $reverse_layout ? 'md:order-1' : 'md:order-2'; ?>">
                     <?php echo wp_get_attachment_image($image, 'full', false, [
                         'alt' => esc_attr($image_alt),
-                        'class' => 'h-auto w-full object-contain aspect-[1.42] max-md:max-w-full',
+                        'class' => 'h-auto w-full object-contain  max-md:max-w-full',
                     ]); ?>
                 </div>
             <?php endif; ?>
