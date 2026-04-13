@@ -12,7 +12,6 @@ $get_involved
         'label' => 'Section Heading',
         'instructions' => 'Enter the main heading for the get involved section.',
         'default_value' => 'Get involved',
-        'required' => 1,
     ])
     ->addSelect('heading_tag', [
         'label' => 'Heading Tag',
@@ -28,19 +27,17 @@ $get_involved
             'span' => 'Span',
         ],
         'default_value' => 'h2',
-        'required' => 1,
     ])
     ->addLink('donate_button', [
         'label' => 'Donate Button',
         'instructions' => 'Configure the donate button link and text.',
         'return_format' => 'array',
-        'required' => 1,
     ])
     ->addRepeater('involvement_items', [
         'label' => 'Involvement Items',
         'instructions' => 'Add items that show different ways to get involved.',
         'button_label' => 'Add Involvement Item',
-        'min' => 1,
+        'min' => 0,
         'max' => 4,
         'layout' => 'block',
     ])
@@ -53,7 +50,6 @@ $get_involved
         ->addText('title', [
             'label' => 'Title',
             'instructions' => 'Enter the title for this involvement item.',
-            'required' => 1,
         ])
         ->addLink('link', [
             'label' => 'Link',
@@ -64,7 +60,6 @@ $get_involved
             'label' => 'Description',
             'instructions' => 'Enter a description for this involvement item.',
             'rows' => 3,
-            'required' => 1,
         ])
     ->endRepeater()
 
@@ -96,7 +91,6 @@ $get_involved
                 'xxl' => 'XXL',
                 'ultrawide' => 'Ultrawide',
             ],
-            'required' => 1,
         ])
         ->addNumber('padding_top', [
             'label' => 'Padding Top',
