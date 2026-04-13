@@ -62,12 +62,31 @@ $counters
                 'ui' => 1,
                 'default_value' => 1,
             ])
+            ->addSelect('value_source', [
+                'label' => 'Value Source',
+                'instructions' => 'Choose whether this stat uses a manual number or an auto-updating running groups count.',
+                'choices' => [
+                    'manual' => 'Manual value',
+                    'running_groups_count' => 'Running groups count (auto)',
+                ],
+                'default_value' => 'manual',
+                'return_format' => 'value',
+            ])
             ->addNumber('value', [
                 'label' => 'Value',
                 'instructions' => 'Numeric value that will count up (e.g. 43, 10000, 92).',
                 'min' => 0,
                 'step' => 1,
                 'default_value' => 43,
+                'conditional_logic' => [
+                    [
+                        [
+                            'field' => 'value_source',
+                            'operator' => '==',
+                            'value' => 'manual',
+                        ],
+                    ],
+                ],
             ])
             ->addText('suffix', [
                 'label' => 'Suffix',

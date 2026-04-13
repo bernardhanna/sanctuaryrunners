@@ -12,6 +12,7 @@ $heading_tag  = (string) get_sub_field('heading_tag');
 $description  = get_sub_field('description');
 
 $stats = get_sub_field('stats');
+$running_groups_count = (int) wp_count_posts('running_group')->publish;
 
 $image = get_sub_field('image');
 $image_fallback_alt = (string) get_sub_field('image_fallback_alt');
@@ -114,7 +115,11 @@ if ($image_title === '') {
                                     continue;
                                 }
 
+                                $value_source = (string) ($stat_item['value_source'] ?? 'manual');
                                 $value = (int) ($stat_item['value'] ?? 0);
+                                if ($value_source === 'running_groups_count') {
+                                    $value = $running_groups_count;
+                                }
                                 $suffix = (string) ($stat_item['suffix'] ?? '');
                                 $format = (string) ($stat_item['format'] ?? 'number');
                                 $stat_text = (string) ($stat_item['stat_text'] ?? '');
