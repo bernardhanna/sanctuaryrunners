@@ -53,6 +53,23 @@ $blog_listing
         'default_value' => 0,
         'ui' => 1,
     ])
+    ->addTaxonomy('exclude_categories', [
+        'label' => 'Exclude Categories',
+        'instructions' => 'Optional. Posts in these categories will be excluded from this feed.',
+        'taxonomy' => 'category',
+        'field_type' => 'multi_select',
+        'allow_null' => 1,
+        'add_term' => 0,
+        'return_format' => 'id',
+        'multiple' => 1,
+    ])
+    ->addRelationship('exclude_posts', [
+        'label' => 'Exclude Posts',
+        'instructions' => 'Optional. Select specific posts to exclude from this feed.',
+        'post_type' => ['post'],
+        'filters' => ['search', 'taxonomy'],
+        'return_format' => 'id',
+    ])
     ->addNumber('posts_per_page', [
         'label' => 'Posts Per Page',
         'instructions' => 'Number of posts to display per page.',

@@ -14,6 +14,28 @@ $limit_to_category_id = $has_limit_to_category_field ? (int) get_sub_field('limi
 $has_media_subcategory_filters_field = is_array(get_sub_field_object('show_media_subcategory_filters_only'));
 $show_media_subcategory_filters_only = $has_media_subcategory_filters_field ? (bool) get_sub_field('show_media_subcategory_filters_only') : false;
 $media_filter_slugs = ['local', 'national', 'international'];
+$has_exclude_categories_field = is_array(get_sub_field_object('exclude_categories'));
+$exclude_category_ids = [];
+if ($has_exclude_categories_field) {
+    $exclude_category_ids = get_sub_field('exclude_categories');
+    if (!is_array($exclude_category_ids)) {
+        $exclude_category_ids = $exclude_category_ids ? [$exclude_category_ids] : [];
+    }
+    $exclude_category_ids = array_values(array_filter(array_map('intval', $exclude_category_ids), static function ($id) {
+        return $id > 0;
+    }));
+}
+$has_exclude_posts_field = is_array(get_sub_field_object('exclude_posts'));
+$exclude_post_ids = [];
+if ($has_exclude_posts_field) {
+    $exclude_post_ids = get_sub_field('exclude_posts');
+    if (!is_array($exclude_post_ids)) {
+        $exclude_post_ids = $exclude_post_ids ? [$exclude_post_ids] : [];
+    }
+    $exclude_post_ids = array_values(array_filter(array_map('intval', $exclude_post_ids), static function ($id) {
+        return $id > 0;
+    }));
+}
 
 $has_posts_per_page_field = is_array(get_sub_field_object('posts_per_page'));
 $posts_per_page = $has_posts_per_page_field
@@ -59,6 +81,12 @@ $args = array(
     'paged'          => $paged,
     'post_status'    => 'publish'
 );
+if (!empty($exclude_post_ids)) {
+    $args['post__not_in'] = $exclude_post_ids;
+}
+if (!empty($exclude_category_ids)) {
+    $args['category__not_in'] = $exclude_category_ids;
+}
 if ($search_query !== '') {
     $args['s'] = $search_query;
 }
@@ -93,7 +121,10 @@ if (!is_category() && $limit_to_category_id > 0 && $selected_filter_slug !== '')
         $allowed_ids = array_map('intval', is_array($allowed_ids) ? $allowed_ids : []);
         $allowed_ids[] = (int) $limit_to_category_id;
 
-        if (
+        if (in_array((int) $selected_filter_term->term_id, $exclude_category_ids, true)) {
+            $selected_filter_slug = '';
+            $args['cat'] = $limit_to_category_id;
+        } elseif (
             $show_media_subcategory_filters_only
             && !in_array((string) $selected_filter_term->slug, $media_filter_slugs, true)
         ) {
@@ -129,6 +160,9 @@ if (!$is_category_archive && $limit_to_category_id > 0) {
 }
 
 $categories = get_categories($categories_args);
+$categories = array_values(array_filter($categories, static function ($category) use ($exclude_category_ids) {
+    return !in_array((int) $category->term_id, $exclude_category_ids, true);
+}));
 if (!$is_category_archive && $limit_to_category_id > 0 && $show_media_subcategory_filters_only) {
     $categories = array_values(array_filter($categories, static function ($category) use ($media_filter_slugs) {
         return in_array((string) $category->slug, $media_filter_slugs, true);
