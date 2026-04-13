@@ -25,6 +25,7 @@ $image_presentation = $sf('image_presentation', 'default');
 $image_alt          = $image ? (get_post_meta($image, '_wp_attachment_image_alt', true) ?: 'Featured image') : '';
 $background_color   = $sf('background_color', '#EEF6FC');
 $use_white_text     = (bool) $sf('use_white_text', false);
+$use_white_breadcrumbs = (bool) $sf('use_white_breadcrumbs', $use_white_text);
 $custom_breadcrumbs = (bool) $sf('custom_breadcrumbs', false);
 $layout_option      = $sf('layout_option', 'layout_1');
 $layout_2_desktop_min_height = max(0, (int) $sf('layout_2_desktop_min_height', 300));
@@ -203,8 +204,10 @@ if (is_array($breadcrumbs_arg) && !empty($breadcrumbs_arg)) {
 
 // Text color classes
 $text_color_class         = $use_white_text ? 'text-white' : 'text-content-body';
-$breadcrumb_text_class    = $use_white_text ? 'text-white' : 'text-gray-500';
-$breadcrumb_current_class = $use_white_text ? 'text-white' : 'text-content-body';
+$breadcrumb_text_class    = $use_white_breadcrumbs ? 'text-white' : 'text-gray-500';
+$breadcrumb_current_class = $use_white_breadcrumbs ? 'text-white' : 'text-content-body';
+$breadcrumb_link_class    = $use_white_breadcrumbs ? 'text-white' : 'text-slate-900';
+$breadcrumb_focus_class   = $use_white_breadcrumbs ? 'focus:ring-white' : 'focus:ring-sky-700';
 $heading_color_class      = $use_white_text ? 'text-white' : 'text-sky-800';
 $content_color_class      = $is_dark_background ? 'text-white [&_p]:!text-white' : 'text-content-body';
 
@@ -287,7 +290,7 @@ $section_id = 'subhero-' . uniqid();
                                     <li class="flex items-center gap-2 <?php echo $breadcrumb['is_current'] ? 'min-w-0 flex-1' : 'shrink-0'; ?>">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
-                                                class="text-slate-900 block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
+                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
                                                 aria-current="page"
                                                 title="<?php echo esc_attr($breadcrumb['title']); ?>"
                                             >
@@ -296,7 +299,7 @@ $section_id = 'subhero-' . uniqid();
                                         <?php else: ?>
                                             <a
                                                 href="<?php echo esc_url($breadcrumb['url']); ?>"
-                                                class="text-slate-900 whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
+                                                class="<?php echo esc_attr($breadcrumb_link_class); ?> whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 <?php echo esc_attr($breadcrumb_focus_class); ?>"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
                                             </a>
@@ -453,7 +456,7 @@ $section_id = 'subhero-' . uniqid();
                                     <li class="flex items-center gap-2 <?php echo $breadcrumb['is_current'] ? 'min-w-0 flex-1' : 'shrink-0'; ?>">
                                         <?php if ($breadcrumb['is_current']): ?>
                                             <span
-                                                class="text-slate-900 block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
+                                                class="<?php echo esc_attr($breadcrumb_current_class); ?> block min-w-0 max-w-full truncate font-['Public_Sans'] text-[12px] leading-[18px] font-normal"
                                                 aria-current="page"
                                                 title="<?php echo esc_attr($breadcrumb['title']); ?>"
                                             >
@@ -462,7 +465,7 @@ $section_id = 'subhero-' . uniqid();
                                         <?php else: ?>
                                             <a
                                                 href="<?php echo esc_url($breadcrumb['url']); ?>"
-                                                class="text-slate-900 whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-700"
+                                                class="<?php echo esc_attr($breadcrumb_link_class); ?> whitespace-nowrap font-['Public_Sans'] text-[12px] leading-[18px] font-bold rounded hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 <?php echo esc_attr($breadcrumb_focus_class); ?>"
                                             >
                                                 <?php echo esc_html($breadcrumb['title']); ?>
                                             </a>

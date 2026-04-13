@@ -193,6 +193,12 @@ $subhero
         'default_value' => 0,
         'ui' => 1,
     ])
+    ->addTrueFalse('use_white_breadcrumbs', [
+        'label' => 'Use White Breadcrumbs',
+        'instructions' => 'Enable to render breadcrumb text and icons in white.',
+        'default_value' => 0,
+        'ui' => 1,
+    ])
 
     ->addTab('Layout', ['label' => 'Layout'])
     ->addSelect('layout_option', [
