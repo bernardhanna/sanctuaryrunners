@@ -34,7 +34,7 @@ if (have_rows('padding_settings')) {
     style="background-color: <?php echo esc_attr($background_color); ?>;"
 >
     <div class="flex flex-col items-center pt-8 pb-16 mx-auto w-full max-w-[1084px] max-lg:px-5">
-        <div class="grid items-center w-full lg:gap-10 md:grid-cols-2">
+        <div class="grid gap-4 items-center w-full lg:gap-10 md:grid-cols-2">
 
             <!-- Text Content Section -->
             <article class="w-full min-w-0 max-md:max-w-full max-md:order-2 <?php echo $reverse_layout ? 'md:order-2' : 'md:order-1'; ?>">
