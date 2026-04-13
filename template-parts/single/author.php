@@ -56,7 +56,6 @@ $share_url   = rawurlencode($post_permalink);
 $share_title = rawurlencode(wp_strip_all_tags($post_title));
 
 $share_facebook = 'https://www.facebook.com/sharer/sharer.php?u=' . $share_url;
-$share_twitter  = 'https://twitter.com/intent/tweet?url=' . $share_url . '&text=' . $share_title;
 $share_linkedin = 'https://www.linkedin.com/sharing/share-offsite/?url=' . $share_url;
 $share_bluesky  = 'https://bsky.app/intent/compose?text=' . $share_title . '%20' . $share_url;
 ?>
@@ -96,15 +95,6 @@ $share_bluesky  = 'https://bsky.app/intent/compose?text=' . $share_title . '%20'
           target="_blank" rel="noopener"
         >
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M17.6055 17.3246H19.8992L20.8167 13.7924H17.6055V12.0262C17.6055 11.1167 17.6055 10.2601 19.4405 10.2601H20.8167V7.293C20.5176 7.25503 19.3882 7.16937 18.1954 7.16937C15.7045 7.16937 13.9356 8.63261 13.9356 11.3198V13.7924H11.1832V17.3246H13.9356V24.8307H17.6055V17.3246Z" fill="#00628F"></path></svg>
-        </a>
-
-        <a
-          href="<?php echo esc_url($share_twitter); ?>"
-          class="flex justify-center items-center w-8 h-8 bg-white rounded-full transition-opacity hover:opacity-80 shrink-0 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent btn"
-          aria-label="<?php esc_attr_e('Share on X (Twitter)', 'matrix-starter'); ?>"
-          target="_blank" rel="noopener"
-        >
-          <i class="fa-brands fa-x-twitter text-[16px] leading-none text-[#00628F]" aria-hidden="true"></i>
         </a>
 
         <a

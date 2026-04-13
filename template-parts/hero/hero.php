@@ -74,7 +74,7 @@ $is_full_height_right_media = $media_type === 'image' && !empty($media_image) &&
 
 $hero_grid_classes = $is_full_height_right_media
     ? 'relative grid grid-cols-1 gap-4 w-full max-[1200px]:px-5 py-[2rem] min-[1201px]:block min-[1201px]:min-h-[500px] min-[1201px]:py-0'
-    : 'grid grid-cols-1 gap-4 w-full max-xl:px-5 py-[2rem] min-[1201px]:grid-cols-[35%_70%] min-[1201px]:py-0';
+    : 'grid grid-cols-1 gap-6 w-full max-xl:px-5 py-[2rem] min-[1201px]:grid-cols-[36%_64%] min-[1201px]:items-start min-[1201px]:py-0';
 
 $header_classes = $is_full_height_right_media
     ? 'relative z-[2] flex flex-col order-2 gap-4 self-start pr-5 pl-0 min-w-0 min-[1201px]:order-1 min-[1201px]:max-w-[420px]'
@@ -89,11 +89,11 @@ $section_media_figure_classes = $is_full_height_right_media
 
 $media_wrap_classes = $is_full_height_right_media
     ? 'flex order-1 justify-end min-w-0 min-[1201px]:hidden'
-    : 'flex order-1 justify-end min-w-0 min-[1201px]:order-2';
+    : 'flex order-1 justify-center min-w-0 min-[1201px]:order-2';
 
 $media_figure_classes = $is_full_height_right_media
     ? 'relative flex w-full min-h-[260px] items-stretch justify-end overflow-hidden'
-    : 'relative overflow-hidden w-full rounded-lg xl:max-w-[768px] xl:max-h-[512px] ' . $media_ratio_class;
+    : 'relative overflow-hidden w-full max-w-full h-auto rounded-lg ' . $media_ratio_class;
 
 $image_classes = 'w-full h-full object-cover';
 if ($media_presentation === 'contain') {
