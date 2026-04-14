@@ -147,20 +147,30 @@ class Theme_Forms {
 
   private function normalize_field(string $key, $val) {
     if (is_array($val)) {
-      $vals = array_map('sanitize_text_field', $val);
+      $vals = array_map(static function($item) {
+        return sanitize_text_field(wp_unslash($item));
+      }, $val);
       $vals = array_filter($vals, static fn($v) => $v !== '' && $v !== null);
       $vals = array_map([$this, 'maybe_undouble_string'], $vals);
       $vals = array_values(array_unique($vals));
       if ($key === 'email') return $vals[0] ?? '';
       return count($vals) > 1 ? implode(', ', $vals) : ($vals[0] ?? '');
     }
-    $val = sanitize_text_field($val);
-    return $this->maybe_undouble_string($val);
+    $val = sanitize_text_field(wp_unslash($val));
+    $val = $this->maybe_undouble_string($val);
+
+    // Normalize common checkbox fields to readable Yes/No values.
+    if (in_array($key, ['terms_conditions', 'marketing_opt_in', 'newsletter_opt_in', 'email_opt_in', 'consent_marketing'], true)) {
+      return $this->is_truthy($val) ? 'Yes' : 'No';
+    }
+
+    return $val;
   }
 
   private function normalize_fields_from_post(): array {
     $skip = [
       'action','is_ajax',
+      'theme_form_nonce',
       'g-recaptcha-response','cf-turnstile-response',
       '_submission_uid',
     ];
@@ -260,6 +270,11 @@ class Theme_Forms {
     // 2) Identify + fields
     $form_id = absint($_POST['_theme_form_id'] ?? 0);
     $fields  = $this->normalize_fields_from_post();
+
+    // Require Terms & Conditions consent across all theme forms.
+    if (!isset($_POST['terms_conditions']) || !$this->is_truthy($_POST['terms_conditions'])) {
+      $this->result(false, 'terms_required');
+    }
 
     // 3) Files
     $attachments = [];
