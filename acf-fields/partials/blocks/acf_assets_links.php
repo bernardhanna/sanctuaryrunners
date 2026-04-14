@@ -64,6 +64,10 @@ $assets_links
         'instructions' => 'Choose the background color for the section.',
         'default_value' => '#1e40af',
     ])
+    ->addText('background_gradient', [
+        'label' => 'Background Gradient',
+        'instructions' => 'Paste a CSS gradient value (example: linear-gradient(313deg, #059DED 24.08%, #28B2FA 63%)). If set, this overrides Background Color.',
+    ])
     ->addColorPicker('item_text_color', [
         'label' => 'Item Text Color',
         'instructions' => 'Choose the text color used for each item title.',

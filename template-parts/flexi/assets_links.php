@@ -4,6 +4,7 @@ $heading = get_sub_field('heading');
 $heading_tag = get_sub_field('heading_tag') ?: 'h2';
 $center_heading = (bool) get_sub_field('center_heading');
 $background_color = get_sub_field('background_color');
+$background_gradient = get_sub_field('background_gradient');
 $item_text_color = get_sub_field('item_text_color') ?: '#FFFFFF';
 $item_text_size = get_sub_field('item_text_size') ?: 'lg';
 $asset_items = get_sub_field('asset_items');
@@ -31,7 +32,9 @@ if (have_rows('padding_settings')) {
 <section
     id="<?php echo esc_attr($section_id); ?>"
     class="relative overflow-hidden <?php echo esc_attr(implode(' ', $padding_classes)); ?>"
-    style="background-color: <?php echo esc_attr($background_color ?: '#1e40af'); ?>;"
+    style="<?php echo !empty($background_gradient)
+        ? 'background: ' . esc_attr($background_gradient) . ';'
+        : 'background-color: ' . esc_attr($background_color ?: '#1e40af') . ';'; ?>"
     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
 >
     <div class="mx-auto w-full max-w-[1024px] px-5 py-[5rem] max-lg:py-12">
@@ -45,7 +48,7 @@ if (have_rows('padding_settings')) {
         <?php endif; ?>
 
         <?php if (!empty($asset_items) && is_array($asset_items)): ?>
-            <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12" role="list">
+            <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 md:gap-10 lg:gap-12" role="list">
                 <?php foreach ($asset_items as $item): ?>
                     <?php
                     $item_icon = $item['icon'] ?? null;
