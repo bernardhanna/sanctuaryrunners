@@ -88,6 +88,12 @@ $partners
             'ui' => 1,
             'conditional_logic' => [[['field' => 'enable_logo_slider', 'operator' => '==', 'value' => 1]]],
         ])
+        ->addTrueFalse('show_mobile_dots', [
+            'label' => 'Show Mobile Dots',
+            'default_value' => 0,
+            'ui' => 1,
+            'conditional_logic' => [[['field' => 'enable_logo_slider', 'operator' => '==', 'value' => 1]]],
+        ])
         ->addTrueFalse('slider_autoplay', [
             'label' => 'Autoplay',
             'default_value' => 1,

@@ -10,6 +10,7 @@ $subheading_tag  = (string) get_sub_field('subheading_tag');
 $logos = get_sub_field('logos');
 $enable_logo_slider = (bool) get_sub_field('enable_logo_slider');
 $show_slider_arrows = (bool) get_sub_field('show_slider_arrows');
+$show_mobile_dots = (bool) get_sub_field('show_mobile_dots');
 $slider_autoplay = (bool) get_sub_field('slider_autoplay');
 $slider_autoplay_speed = (int) (get_sub_field('slider_autoplay_speed') ?: 3000);
 if ($slider_autoplay_speed < 1000) {
@@ -183,6 +184,9 @@ $heading_id = $section_id . '-heading';
                     </div>
                   <?php endforeach; ?>
                 </div>
+                <?php if ($show_mobile_dots) : ?>
+                  <div class="partners-mobile-dots mt-4"></div>
+                <?php endif; ?>
               </div>
             </div>
 
@@ -200,6 +204,27 @@ $heading_id = $section_id . '-heading';
               #<?php echo esc_attr($section_id); ?> .partners-scroll-slide {
                 flex: 0 0 min(72%, 260px);
                 scroll-snap-align: start;
+              }
+              #<?php echo esc_attr($section_id); ?> .partners-mobile-dots {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+              }
+              #<?php echo esc_attr($section_id); ?> .partners-mobile-dots button {
+                width: 12px;
+                height: 12px;
+                padding: 0;
+                border: 2px solid #ffffff;
+                border-radius: 9999px;
+                background: transparent;
+                cursor: pointer;
+                transition: background 0.2s, opacity 0.2s;
+                opacity: 0.9;
+              }
+              #<?php echo esc_attr($section_id); ?> .partners-mobile-dots button.is-active {
+                background: #ffffff;
+                opacity: 1;
               }
             </style>
 
@@ -234,6 +259,52 @@ $heading_id = $section_id . '-heading';
                   { breakpoint: 768, settings: 'unslick' }
                 ]
               });
+
+              <?php if ($show_mobile_dots) : ?>
+              var track = section.querySelector('.partners-scroll-track');
+              var dotsEl = section.querySelector('.partners-mobile-dots');
+              if (track && dotsEl) {
+                var slides = Array.from(track.querySelectorAll('.partners-scroll-slide'));
+                var dots = [];
+
+                function setActiveDot(idx) {
+                  dots.forEach(function (dot, i) { dot.classList.toggle('is-active', i === idx); });
+                }
+
+                slides.forEach(function (_, idx) {
+                  var dot = document.createElement('button');
+                  dot.type = 'button';
+                  dot.setAttribute('aria-label', 'Go to partner logo ' + (idx + 1));
+                  dot.addEventListener('click', function () {
+                    var target = slides[idx];
+                    if (!target) return;
+                    var trackPad = parseFloat(window.getComputedStyle(track).paddingLeft) || 0;
+                    var targetScroll = Math.max(0, target.offsetLeft - trackPad);
+                    track.scrollTo({ left: targetScroll, behavior: 'smooth' });
+                  });
+                  dotsEl.appendChild(dot);
+                  dots.push(dot);
+                });
+                setActiveDot(0);
+
+                var ticking = false;
+                track.addEventListener('scroll', function () {
+                  if (ticking) return;
+                  ticking = true;
+                  requestAnimationFrame(function () {
+                    ticking = false;
+                    var trackCx = track.scrollLeft + track.offsetWidth / 2;
+                    var best = 0;
+                    var bestDist = Infinity;
+                    slides.forEach(function (sl, i) {
+                      var dist = Math.abs((sl.offsetLeft + sl.offsetWidth / 2) - trackCx);
+                      if (dist < bestDist) { bestDist = dist; best = i; }
+                    });
+                    setActiveDot(best);
+                  });
+                }, { passive: true });
+              }
+              <?php endif; ?>
             });
             </script>
           <?php endif; ?>
