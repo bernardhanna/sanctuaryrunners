@@ -160,7 +160,7 @@ class Theme_Forms {
     $val = $this->maybe_undouble_string($val);
 
     // Normalize common checkbox fields to readable Yes/No values.
-    if (in_array($key, ['terms_conditions', 'marketing_opt_in', 'newsletter_opt_in', 'email_opt_in', 'consent_marketing'], true)) {
+    if (in_array($key, ['terms_conditions', 'marketing_opt_in', 'newsletter_opt_in', 'email_opt_in', 'consent_marketing', 'contact_details', 'newsletter'], true)) {
       return $this->is_truthy($val) ? 'Yes' : 'No';
     }
 

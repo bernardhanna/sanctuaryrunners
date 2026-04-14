@@ -76,6 +76,39 @@ $partners
                 'return_format' => 'array',
             ])
         ->endRepeater()
+        ->addTrueFalse('enable_logo_slider', [
+            'label' => 'Enable Logo Slider',
+            'instructions' => 'Show logos in a slider with swipe support and optional autoplay.',
+            'default_value' => 0,
+            'ui' => 1,
+        ])
+        ->addTrueFalse('show_slider_arrows', [
+            'label' => 'Show Slider Arrows',
+            'default_value' => 1,
+            'ui' => 1,
+            'conditional_logic' => [[['field' => 'enable_logo_slider', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addTrueFalse('slider_autoplay', [
+            'label' => 'Autoplay',
+            'default_value' => 1,
+            'ui' => 1,
+            'conditional_logic' => [[['field' => 'enable_logo_slider', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addNumber('slider_autoplay_speed', [
+            'label' => 'Autoplay Speed (ms)',
+            'default_value' => 3000,
+            'min' => 1000,
+            'step' => 100,
+            'conditional_logic' => [[['field' => 'slider_autoplay', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addNumber('slider_slides_desktop', [
+            'label' => 'Desktop Slides To Show',
+            'default_value' => 5,
+            'min' => 1,
+            'max' => 8,
+            'step' => 1,
+            'conditional_logic' => [[['field' => 'enable_logo_slider', 'operator' => '==', 'value' => 1]]],
+        ])
 
     ->addTab('design', [
         'label' => 'Design',
