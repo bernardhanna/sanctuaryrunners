@@ -223,11 +223,7 @@ if ($location_fields_version === 'ireland') {
                         return "+";
                     },
                     get phonePlaceholder() {
-                        const prefix = this.getPhonePrefix();
-                        if (prefix === "+353") return "+353-86 123 1234";
-                        if (prefix === "+44") return "+44-7700 900123";
-                        if (prefix === "+61") return "+61-412 345 678";
-                        return "+123 456 7890";
+                        return "Phone number";
                     },
                     get locationMode() {
                         const country = this.normalizeCountry(this.selectedCountry);
