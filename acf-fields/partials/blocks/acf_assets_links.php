@@ -54,8 +54,9 @@ $assets_links
         ])
         ->addLink('link', [
             'label' => 'Link',
-            'instructions' => 'Add a link for this asset item (optional).',
+            'instructions' => 'Add a link for this asset item.',
             'return_format' => 'array',
+            'required' => 1,
         ])
     ->endRepeater()
     ->addTab('Design', ['label' => 'Design'])

@@ -53,7 +53,10 @@ if (have_rows('padding_settings')) {
                     <?php
                     $item_icon = $item['icon'] ?? null;
                     $item_title = $item['title'] ?? '';
-                    $item_link = $item['link'] ?? null;
+                    $item_link = $item['link'] ?? [];
+                    $item_url = !empty($item_link['url']) ? $item_link['url'] : '#';
+                    $item_target = !empty($item_link['target']) ? $item_link['target'] : '_self';
+                    $item_label = !empty($item_title) ? $item_title : ($item_link['title'] ?? '');
                     ?>
                     <li class="flex w-full items-center gap-4">
                         <?php if (!empty($item_icon)): ?>
@@ -65,27 +68,18 @@ if (have_rows('padding_settings')) {
                             </div>
                         <?php endif; ?>
 
-                        <?php if (!empty($item_link) && is_array($item_link) && !empty($item_link['url']) && !empty($item_link['title'])): ?>
-                            <a
-                                href="<?php echo esc_url($item_link['url']); ?>"
-                                target="<?php echo esc_attr($item_link['target'] ?? '_self'); ?>"
-                                class="inline-flex items-center gap-1 font-semibold leading-tight transition-opacity duration-300 hover:opacity-80 <?php echo esc_attr($item_text_size_class); ?>"
-                                style="color: <?php echo esc_attr($item_text_color); ?>;"
-                                aria-label="<?php echo esc_attr($item_link['title']); ?>"
-                            >
-                                <span><?php echo esc_html($item_title ?: $item_link['title']); ?></span>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </a>
-                        <?php else: ?>
-                            <span
-                                class="font-semibold leading-tight <?php echo esc_attr($item_text_size_class); ?>"
-                                style="color: <?php echo esc_attr($item_text_color); ?>;"
-                            >
-                                <?php echo esc_html($item_title); ?>
-                            </span>
-                        <?php endif; ?>
+                        <a
+                            href="<?php echo esc_url($item_url); ?>"
+                            target="<?php echo esc_attr($item_target); ?>"
+                            class="inline-flex items-center gap-1 font-semibold leading-tight transition-opacity duration-300 hover:opacity-80 <?php echo esc_attr($item_text_size_class); ?>"
+                            style="color: <?php echo esc_attr($item_text_color); ?>;"
+                            aria-label="<?php echo esc_attr($item_label); ?>"
+                        >
+                            <span><?php echo esc_html($item_label); ?></span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
                     </li>
                 <?php endforeach; ?>
             </ul>
