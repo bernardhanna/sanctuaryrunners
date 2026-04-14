@@ -111,6 +111,76 @@ class Theme_Forms {
     ]);
   }
 
+  private function infer_form_type(string $form_name): string {
+    $needle = strtolower(trim($form_name));
+    if ($needle === '') return 'general';
+    if (strpos($needle, 'renew') !== false) return 'renewal';
+    if (strpos($needle, 'get involved') !== false) return 'get_involved';
+    if (strpos($needle, 'contact') !== false) return 'contact';
+    return 'general';
+  }
+
+  private function maybe_sync_submission_to_webhook(array $fields, string $form_name, int $entry_id = 0): void {
+    if (!function_exists('get_field')) return;
+
+    $enabled = (bool) get_field('enable_form_webhook_sync', 'option');
+    if (!$enabled) return;
+
+    $url = esc_url_raw((string) get_field('form_webhook_url', 'option'));
+    if ($url === '') {
+      $this->log_mail_issue('webhook_sync_skipped_missing_url');
+      return;
+    }
+
+    $secret = (string) get_field('form_webhook_secret', 'option');
+    $payload = [
+      'event' => 'theme_form_submission',
+      'submitted_at' => current_time('mysql'),
+      'site_url' => home_url('/'),
+      'entry_id' => $entry_id,
+      'form_name' => $form_name,
+      'form_type' => $this->infer_form_type($form_name),
+      'fields' => $fields,
+    ];
+
+    $headers = [
+      'content-type' => 'application/json',
+      'accept' => 'application/json',
+    ];
+    if ($secret !== '') {
+      $headers['X-Theme-Webhook-Secret'] = $secret;
+    }
+
+    $response = wp_remote_post($url, [
+      'method' => 'POST',
+      'timeout' => 12,
+      'headers' => $headers,
+      'body' => wp_json_encode($payload),
+    ]);
+
+    if (is_wp_error($response)) {
+      $this->log_mail_issue('webhook_sync_failed', [
+        'error' => $response->get_error_message(),
+      ]);
+      return;
+    }
+
+    $status = wp_remote_retrieve_response_code($response);
+    if ($status < 200 || $status >= 300) {
+      $this->log_mail_issue('webhook_sync_failed', [
+        'status' => $status,
+        'body' => wp_remote_retrieve_body($response),
+      ]);
+      return;
+    }
+
+    $this->log_mail_issue('webhook_sync_ok', [
+      'status' => $status,
+      'form_name' => $form_name,
+      'entry_id' => $entry_id,
+    ]);
+  }
+
   public function __construct() {
     add_action('admin_post_nopriv_theme_form_submit', [ $this, 'handle' ]);
     add_action('admin_post_theme_form_submit',        [ $this, 'handle' ]);
@@ -270,6 +340,7 @@ class Theme_Forms {
     // 2) Identify + fields
     $form_id = absint($_POST['_theme_form_id'] ?? 0);
     $fields  = $this->normalize_fields_from_post();
+    $form_name = sanitize_text_field($_POST['_theme_form_name'] ?? '');
 
     // Require Terms & Conditions consent across all theme forms.
     if (!isset($_POST['terms_conditions']) || !$this->is_truthy($_POST['terms_conditions'])) {
@@ -304,15 +375,20 @@ class Theme_Forms {
     }
 
     // 4) Optional DB save
+    $entry_id = 0;
     if (!empty($_POST['_theme_save_to_db'])) {
-      $title = ( $_POST['_theme_form_name'] ?? 'Entry') . ' – ' . current_time('mysql');
+      $title = ($form_name !== '' ? $form_name : 'Entry') . ' – ' . current_time('mysql');
       $entry = wp_insert_post([
         'post_type'   => 'form_entry',
         'post_status' => 'private',
         'post_title'  => sanitize_text_field($title),
       ]);
       if ($entry && !is_wp_error($entry)) {
+        $entry_id = (int) $entry;
         update_post_meta($entry, '_submission_uid', $uid_raw);
+        if ($form_name !== '') {
+          update_post_meta($entry, 'form_name', $form_name);
+        }
         foreach ($fields as $key => $val) {
           update_post_meta($entry, $key, $val);
         }
@@ -320,7 +396,6 @@ class Theme_Forms {
     }
 
     // 5) Resolve config
-    $form_name       = sanitize_text_field($_POST['_theme_form_name'] ?? '');
     $default_subject = $form_name ? "$form_name – new entry" : 'Website form entry';
 
     $cfg_to         = $_POST['_cfg_to']        ?? '';
@@ -468,6 +543,8 @@ class Theme_Forms {
 
     // 11) Optional Brevo subscribe for marketing opt-ins.
     $this->maybe_subscribe_to_brevo($fields);
+    // 12) Optional webhook sync for spreadsheet automation.
+    $this->maybe_sync_submission_to_webhook($fields, $form_name, $entry_id);
 
     $this->result(true, 'sent');
   }

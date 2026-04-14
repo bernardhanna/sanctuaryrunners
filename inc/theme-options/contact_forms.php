@@ -48,6 +48,22 @@ $forms_opts
   ->addText('turnstile_secret_key', [
     'label'            => 'Turnstile Secret Key',
     'conditional_logic'=> [[['field' => 'captcha_provider','operator'=>'==','value'=>'turnstile']]],
+  ])
+  ->addTrueFalse('enable_form_webhook_sync', [
+    'label'         => 'Enable Spreadsheet Webhook Sync',
+    'instructions'  => 'Send each successful form submission to a webhook (Zapier/Make/Power Automate) for auto spreadsheet updates.',
+    'default_value' => 0,
+    'ui'            => 1,
+  ])
+  ->addUrl('form_webhook_url', [
+    'label'             => 'Spreadsheet Webhook URL',
+    'instructions'      => 'Paste your automation webhook URL.',
+    'conditional_logic' => [[['field' => 'enable_form_webhook_sync','operator'=>'==','value'=>'1']]],
+  ])
+  ->addText('form_webhook_secret', [
+    'label'             => 'Webhook Secret (optional)',
+    'instructions'      => 'If set, sent as X-Theme-Webhook-Secret header.',
+    'conditional_logic' => [[['field' => 'enable_form_webhook_sync','operator'=>'==','value'=>'1']]],
   ]);
 
 return $forms_opts;
