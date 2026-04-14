@@ -92,70 +92,82 @@ add_action( 'add_meta_boxes_form_entry', function () {
 /**
  * CSV export for Form Entries.
  */
-add_action('admin_menu', function () {
-    add_submenu_page(
-        'edit.php?post_type=form_entry',
-        'Export Form Entries',
-        'Export CSV',
-        'edit_posts',
-        'form-entry-export',
-        function () {
-            if (!current_user_can('edit_posts')) {
-                wp_die('You do not have permission to export entries.');
-            }
-
-            $selected_form_name = isset($_GET['form_name']) ? sanitize_text_field((string) $_GET['form_name']) : '';
-            $available_names = get_posts([
-                'post_type' => 'form_entry',
-                'post_status' => 'private',
-                'posts_per_page' => -1,
-                'fields' => 'ids',
-                'no_found_rows' => true,
-            ]);
-
-            $form_names = [];
-            foreach ($available_names as $entry_id) {
-                $name = (string) get_post_meta((int) $entry_id, 'form_name', true);
-                if ($name === '') {
-                    $name = trim((string) get_the_title((int) $entry_id));
-                    if (strpos($name, ' – ') !== false) {
-                        $name = trim((string) strstr($name, ' – ', true));
-                    }
-                }
-                if ($name !== '') {
-                    $form_names[$name] = $name;
-                }
-            }
-            ksort($form_names);
-            ?>
-            <div class="wrap">
-                <h1>Export Form Entries</h1>
-                <p>Download all entries as CSV, or filter by form type (Get Involved, Renew, Contact, etc.).</p>
-                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
-                    <?php wp_nonce_field('matrix_export_form_entries_csv', 'matrix_export_form_entries_csv_nonce'); ?>
-                    <input type="hidden" name="action" value="matrix_export_form_entries_csv">
-                    <table class="form-table" role="presentation">
-                        <tr>
-                            <th scope="row"><label for="matrix-form-name">Form type</label></th>
-                            <td>
-                                <select id="matrix-form-name" name="form_name">
-                                    <option value="">All form types</option>
-                                    <?php foreach ($form_names as $form_name): ?>
-                                        <option value="<?php echo esc_attr($form_name); ?>" <?php selected($selected_form_name, $form_name); ?>>
-                                            <?php echo esc_html($form_name); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
-                    <?php submit_button('Download CSV'); ?>
-                </form>
-            </div>
-            <?php
+if (!function_exists('matrix_render_form_entries_export_page')) {
+    function matrix_render_form_entries_export_page() {
+        if (!current_user_can('edit_posts')) {
+            wp_die('You do not have permission to export entries.');
         }
-    );
-});
+
+        $selected_form_name = isset($_GET['form_name']) ? sanitize_text_field((string) $_GET['form_name']) : '';
+        $available_names = get_posts([
+            'post_type' => 'form_entry',
+            'post_status' => 'private',
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'no_found_rows' => true,
+        ]);
+
+        $form_names = [];
+        foreach ($available_names as $entry_id) {
+            $name = (string) get_post_meta((int) $entry_id, 'form_name', true);
+            if ($name === '') {
+                $name = trim((string) get_the_title((int) $entry_id));
+                if (strpos($name, ' – ') !== false) {
+                    $name = trim((string) strstr($name, ' – ', true));
+                }
+            }
+            if ($name !== '') {
+                $form_names[$name] = $name;
+            }
+        }
+        ksort($form_names);
+        ?>
+        <div class="wrap">
+            <h1>Export Form Entries</h1>
+            <p>Download all entries as CSV, or filter by form type (Get Involved, Renew, Contact, etc.).</p>
+            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+                <?php wp_nonce_field('matrix_export_form_entries_csv', 'matrix_export_form_entries_csv_nonce'); ?>
+                <input type="hidden" name="action" value="matrix_export_form_entries_csv">
+                <table class="form-table" role="presentation">
+                    <tr>
+                        <th scope="row"><label for="matrix-form-name">Form type</label></th>
+                        <td>
+                            <select id="matrix-form-name" name="form_name">
+                                <option value="">All form types</option>
+                                <?php foreach ($form_names as $form_name): ?>
+                                    <option value="<?php echo esc_attr($form_name); ?>" <?php selected($selected_form_name, $form_name); ?>>
+                                        <?php echo esc_html($form_name); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <?php submit_button('Download CSV'); ?>
+            </form>
+        </div>
+        <?php
+    }
+}
+
+if (!function_exists('matrix_register_form_entries_export_menu')) {
+    function matrix_register_form_entries_export_menu() {
+        // Safety: remove pre-existing duplicate entries with same slug, then add once.
+        remove_submenu_page('edit.php?post_type=form_entry', 'form-entry-export');
+        add_submenu_page(
+            'edit.php?post_type=form_entry',
+            'Export Form Entries',
+            'Export CSV',
+            'edit_posts',
+            'form-entry-export',
+            'matrix_render_form_entries_export_page'
+        );
+    }
+}
+
+if (!has_action('admin_menu', 'matrix_register_form_entries_export_menu')) {
+    add_action('admin_menu', 'matrix_register_form_entries_export_menu', 99);
+}
 
 add_action('admin_post_matrix_export_form_entries_csv', function () {
     if (!current_user_can('edit_posts')) {

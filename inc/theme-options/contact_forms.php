@@ -57,7 +57,7 @@ $forms_opts
   ])
   ->addUrl('form_webhook_url', [
     'label'             => 'Spreadsheet Webhook URL',
-    'instructions'      => 'Paste your automation webhook URL.',
+    'instructions'      => 'Paste your automation webhook URL (Zapier/Make/Power Automate or Google Apps Script Web App URL).',
     'conditional_logic' => [[['field' => 'enable_form_webhook_sync','operator'=>'==','value'=>'1']]],
   ])
   ->addText('form_webhook_secret', [
