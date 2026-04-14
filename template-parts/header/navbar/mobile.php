@@ -23,6 +23,8 @@ $nav_settings   = get_field('navigation_settings_start', 'option') ?: [];
 $contact_button = $nav_settings['contact_button'] ?? null;
 $donate_button  = $nav_settings['donate_button'] ?? null;
 $donate_icon    = $nav_settings['donate_icon'] ?? null;
+$donate_button_bg_color = sanitize_hex_color((string) ($nav_settings['donate_button_bg_color'] ?? '')) ?: '#FBEA5E';
+$donate_button_text_color = sanitize_hex_color((string) ($nav_settings['donate_button_text_color'] ?? '')) ?: '#00628F';
 
 // Transition mapping for panel
 $effect_classes = [
@@ -128,7 +130,8 @@ $menu_array = $primary_navigation->toArray();
         <?php if (!empty($donate_button['url']) && !empty($donate_button['title'])): ?>
           <a
             href="<?php echo esc_url($donate_button['url']); ?>"
-            class="flex gap-2 justify-center items-center px-4 mt-3 w-full min-h-[48px] h-12 font-bold text-[#00628F] rounded-full border border-sky-800 transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Turquoise-500,#1C959B)]"
+            class="flex gap-2 justify-center items-center px-4 mt-3 w-full min-h-[48px] h-12 font-bold rounded-full border transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Turquoise-500,#1C959B)]"
+            style="background-color: <?php echo esc_attr($donate_button_bg_color); ?>; color: <?php echo esc_attr($donate_button_text_color); ?>; border-color: <?php echo esc_attr($donate_button_text_color); ?>;"
             @click="isOpen = false"
           >
             <?php if (!empty($donate_icon['url'])) : ?>

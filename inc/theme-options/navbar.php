@@ -32,6 +32,16 @@ $navigationFields
             'preview_size' => 'thumbnail',
             'library' => 'all',
         ])
+        ->addColorPicker('donate_button_bg_color', [
+            'label' => 'Donate Button Background Color',
+            'instructions' => 'Sets background color for the donate button in desktop and mobile nav.',
+            'default_value' => '#FBEA5E',
+        ])
+        ->addColorPicker('donate_button_text_color', [
+            'label' => 'Donate Button Text Color',
+            'instructions' => 'Sets text/icon color for the donate button in desktop and mobile nav.',
+            'default_value' => '#00628F',
+        ])
         ->addTrueFalse('show_country_picker', [
             'label' => 'Show Country Picker',
             'instructions' => 'Disable to completely hide the country picker from the header.',

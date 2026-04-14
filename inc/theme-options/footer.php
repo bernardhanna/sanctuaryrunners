@@ -40,6 +40,8 @@ $fields
                     'facebook' => 'Facebook',
                     'linkedin' => 'LinkedIn',
                     'instagram'=> 'Instagram',
+                    'youtube'  => 'YouTube',
+                    'tiktok'   => 'TikTok',
                 ],
                 'default_value' => 'facebook',
                 'return_format' => 'value',

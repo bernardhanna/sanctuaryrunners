@@ -13,6 +13,8 @@ $contact_button = $nav_settings['contact_button'] ?? null;
 $join_us_button = $nav_settings['join_us_button'] ?? $contact_button;
 $donate_button  = $nav_settings['donate_button'] ?? null;
 $donate_icon    = $nav_settings['donate_icon'] ?? null;
+$donate_button_bg_color = sanitize_hex_color((string) ($nav_settings['donate_button_bg_color'] ?? '')) ?: '#FBEA5E';
+$donate_button_text_color = sanitize_hex_color((string) ($nav_settings['donate_button_text_color'] ?? '')) ?: '#00628F';
 $show_country_picker = !array_key_exists('show_country_picker', $nav_settings) || (bool) $nav_settings['show_country_picker'];
 
 use Log1x\Navi\Navi;
@@ -265,7 +267,8 @@ $primary_navigation = Navi::make()->build('primary');
         <!-- DONATE -->
         <a
           href="<?php echo esc_url($donate_button['url'] ?? '#'); ?>"
-          class="flex items-center gap-2 px-4 py-3 border border-sky-800 rounded-pill transition-all duration-200 hover:shadow-[0_0_0_4px_var(--color-brand-accent,#1C959B)] a11y-focus"
+          class="flex items-center gap-2 px-4 py-3 border rounded-pill transition-all duration-200 hover:shadow-[0_0_0_4px_var(--color-brand-accent,#1C959B)] a11y-focus"
+          style="background-color: <?php echo esc_attr($donate_button_bg_color); ?>; color: <?php echo esc_attr($donate_button_text_color); ?>; border-color: <?php echo esc_attr($donate_button_text_color); ?>;"
         >
           <?php if ($donate_icon) : ?>
             <img src="<?php echo esc_url($donate_icon['url']); ?>" class="w-4" alt="" />
