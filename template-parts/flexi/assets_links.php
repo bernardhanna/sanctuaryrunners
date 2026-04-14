@@ -71,12 +71,12 @@ if (have_rows('padding_settings')) {
                         <a
                             href="<?php echo esc_url($item_url); ?>"
                             target="<?php echo esc_attr($item_target); ?>"
-                            class="inline-flex items-center gap-1 font-semibold leading-tight transition-opacity duration-300 hover:opacity-80 <?php echo esc_attr($item_text_size_class); ?>"
+                            class="inline-flex max-w-full items-center gap-2 font-semibold leading-tight transition-opacity duration-300 hover:opacity-80 <?php echo esc_attr($item_text_size_class); ?>"
                             style="color: <?php echo esc_attr($item_text_color); ?>;"
                             aria-label="<?php echo esc_attr($item_label); ?>"
                         >
-                            <span><?php echo esc_html($item_label); ?></span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <span class="leading-tight"><?php echo esc_html($item_label); ?></span>
+                            <svg class="h-[1em] w-[1em] shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </a>
