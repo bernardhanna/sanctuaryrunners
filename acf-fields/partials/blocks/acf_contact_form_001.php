@@ -123,6 +123,12 @@ $contact_form_001
             'label' => 'Subject',
             'default_value' => 'Website contact form enquiry'
         ])
+        ->addText('existing_member_email_subject', [
+            'label' => 'Existing Member Form Subject Override',
+            'instructions' => 'Optional. If set, this subject is used for the existing member renewal form.',
+            'default_value' => '',
+            'conditional_logic' => [[['field' => 'enable_existing_member_form_switch', 'operator' => '==', 'value' => 1]]],
+        ])
         ->addTrueFalse('save_entries_to_db', [
             'label' => 'Save to DB?',
             'ui' => 1,
@@ -144,6 +150,41 @@ $contact_form_001
             'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
             'wrapper' => ['class' => 'wp_editor'],
             'default_value' => '<p>Thank you for contacting us. We will get back to you as soon as possible.</p>'
+        ])
+        ->addTrueFalse('autoresponder_include_logo', [
+            'label' => 'Include Logo',
+            'ui' => 1,
+            'default_value' => 0,
+            'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addImage('autoresponder_logo', [
+            'label' => 'Autoresponder Logo',
+            'return_format' => 'array',
+            'preview_size' => 'medium',
+            'library' => 'all',
+            'conditional_logic' => [[['field' => 'autoresponder_include_logo', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addText('autoresponder_footer_text', [
+            'label' => 'Footer Text',
+            'default_value' => '',
+            'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addSelect('autoresponder_name_field', [
+            'label' => 'Greeting Name Field',
+            'choices' => [
+                '' => 'None',
+                'first_name' => 'First Name',
+                'name' => 'Name',
+            ],
+            'default_value' => 'first_name',
+            'ui' => 1,
+            'return_format' => 'value',
+            'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addEmail('autoresponder_reply_to_email', [
+            'label' => 'Reply-To Email',
+            'instructions' => 'Optional. Set where recipients should reply.',
+            'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
         ])
 
     ->addTab('Design')

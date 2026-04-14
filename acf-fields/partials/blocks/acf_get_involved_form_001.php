@@ -117,6 +117,17 @@ $get_involved_form_001
             'label' => 'Subject',
             'default_value' => 'New get involved form enquiry',
         ])
+        ->addText('primary_email_subject', [
+            'label' => 'Primary Form Subject Override',
+            'instructions' => 'Optional. If set, this subject is used only for the Get Involved form.',
+            'default_value' => '',
+        ])
+        ->addText('renewal_email_subject', [
+            'label' => 'Renewal Form Subject Override',
+            'instructions' => 'Optional. If set, this subject is used only for the Renew Membership form.',
+            'default_value' => '',
+            'conditional_logic' => [[['field' => 'enable_existing_member_switch', 'operator' => '==', 'value' => 1]]],
+        ])
         ->addTrueFalse('save_entries_to_db', [
             'label' => 'Save to DB?',
             'ui' => 1,
@@ -139,6 +150,41 @@ $get_involved_form_001
             'toolbar' => 'basic',
             'media_upload' => 0,
             'default_value' => '<p>Thank you for contacting us. We will get back to you as soon as possible.</p>',
+            'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addTrueFalse('autoresponder_include_logo', [
+            'label' => 'Include Logo',
+            'ui' => 1,
+            'default_value' => 0,
+            'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addImage('autoresponder_logo', [
+            'label' => 'Autoresponder Logo',
+            'return_format' => 'array',
+            'preview_size' => 'medium',
+            'library' => 'all',
+            'conditional_logic' => [[['field' => 'autoresponder_include_logo', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addText('autoresponder_footer_text', [
+            'label' => 'Footer Text',
+            'default_value' => '',
+            'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addSelect('autoresponder_name_field', [
+            'label' => 'Greeting Name Field',
+            'choices' => [
+                '' => 'None',
+                'first_name' => 'First Name',
+                'name' => 'Name',
+            ],
+            'default_value' => 'first_name',
+            'ui' => 1,
+            'return_format' => 'value',
+            'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addEmail('autoresponder_reply_to_email', [
+            'label' => 'Reply-To Email',
+            'instructions' => 'Optional. Set where recipients should reply.',
             'conditional_logic' => [[['field' => 'enable_autoresponder', 'operator' => '==', 'value' => 1]]],
         ])
 

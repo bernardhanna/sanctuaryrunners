@@ -8,6 +8,13 @@ $enable_existing_member_form_switch = (bool) get_sub_field('enable_existing_memb
 $existing_member_form_markup = get_sub_field('existing_member_form_markup', false, false);
 $existing_member_trigger_text = trim((string) get_sub_field('existing_member_trigger_text'));
 $existing_member_form_name = get_sub_field('existing_member_form_name') ?: 'Existing Member Renewal Form';
+$existing_member_email_subject = (string) get_sub_field('existing_member_email_subject');
+$autoresponder_include_logo = (bool) get_sub_field('autoresponder_include_logo');
+$autoresponder_logo = get_sub_field('autoresponder_logo');
+$autoresponder_logo_url = is_array($autoresponder_logo) ? (string) ($autoresponder_logo['url'] ?? '') : '';
+$autoresponder_footer_text = (string) get_sub_field('autoresponder_footer_text');
+$autoresponder_name_field = (string) get_sub_field('autoresponder_name_field');
+$autoresponder_reply_to_email = (string) get_sub_field('autoresponder_reply_to_email');
 $location_fields_version = (string) get_sub_field('location_fields_version');
 if ($location_fields_version === '') {
     $location_fields_version = 'none';
@@ -45,7 +52,15 @@ if (have_rows('padding_settings')) {
 $section_id = 'contact-form-' . esc_attr(wp_generate_uuid4());
 
 // ===== Form plumbing: inject action, nonce, posted mail config, privacy/terms links =====
-$prepare_form_markup = static function ($markup, $custom_form_name = '') use ($privacy_policy_url, $terms_conditions_url) {
+$prepare_form_markup = static function ($markup, $custom_form_name = '', $custom_subject = '') use (
+    $privacy_policy_url,
+    $terms_conditions_url,
+    $autoresponder_include_logo,
+    $autoresponder_logo_url,
+    $autoresponder_footer_text,
+    $autoresponder_name_field,
+    $autoresponder_reply_to_email
+) {
     if (!$markup) {
         return '';
     }
@@ -89,7 +104,8 @@ $prepare_form_markup = static function ($markup, $custom_form_name = '') use ($p
     $hidden_cfg = '';
     $hidden_cfg .= '<input type="hidden" name="_cfg_to" value="' . esc_attr($cfg_to) . '">';
     $hidden_cfg .= '<input type="hidden" name="_cfg_bcc" value="' . esc_attr($cfg_bcc) . '">';
-    $hidden_cfg .= '<input type="hidden" name="_cfg_subject" value="' . esc_attr($cfg_subject) . '">';
+    $effective_subject = $custom_subject !== '' ? $custom_subject : $cfg_subject;
+    $hidden_cfg .= '<input type="hidden" name="_cfg_subject" value="' . esc_attr($effective_subject) . '">';
     $hidden_cfg .= '<input type="hidden" name="_cfg_from_name" value="' . esc_attr($cfg_from_name) . '">';
     $hidden_cfg .= '<input type="hidden" name="_cfg_from_email" value="' . esc_attr($cfg_from_email) . '">';
 
@@ -97,6 +113,11 @@ $prepare_form_markup = static function ($markup, $custom_form_name = '') use ($p
         $hidden_cfg .= '<input type="hidden" name="_cfg_auto_enabled" value="1">';
         $hidden_cfg .= '<input type="hidden" name="_cfg_auto_subject" value="' . esc_attr(get_sub_field('autoresponder_subject') ?: '') . '">';
         $hidden_cfg .= '<input type="hidden" name="_cfg_auto_message" value="' . esc_attr(get_sub_field('autoresponder_message') ?: '') . '">';
+        $hidden_cfg .= '<input type="hidden" name="_cfg_auto_include_logo" value="' . ($autoresponder_include_logo ? '1' : '0') . '">';
+        $hidden_cfg .= '<input type="hidden" name="_cfg_auto_logo_url" value="' . esc_attr($autoresponder_logo_url) . '">';
+        $hidden_cfg .= '<input type="hidden" name="_cfg_auto_footer" value="' . esc_attr($autoresponder_footer_text) . '">';
+        $hidden_cfg .= '<input type="hidden" name="_cfg_auto_name_field" value="' . esc_attr($autoresponder_name_field) . '">';
+        $hidden_cfg .= '<input type="hidden" name="_cfg_auto_reply_to" value="' . esc_attr($autoresponder_reply_to_email) . '">';
     }
 
     $markup = str_replace('</form>', ($hidden . $hidden_cfg) . '</form>', $markup);
@@ -113,7 +134,9 @@ $prepare_form_markup = static function ($markup, $custom_form_name = '') use ($p
 
 $form_markup = $prepare_form_markup($form_markup);
 $has_existing_member_form = $enable_existing_member_form_switch && !empty($existing_member_form_markup);
-$existing_member_form_markup = $has_existing_member_form ? $prepare_form_markup($existing_member_form_markup, $existing_member_form_name) : '';
+$existing_member_form_markup = $has_existing_member_form
+    ? $prepare_form_markup($existing_member_form_markup, $existing_member_form_name, $existing_member_email_subject)
+    : '';
 ?>
 
 <section
@@ -558,16 +581,47 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <style type="text/css">
-    
-input:not([type="hidden"]),
-select,
-textarea{
+#<?php echo esc_attr($section_id); ?> input:not([type="hidden"]),
+#<?php echo esc_attr($section_id); ?> select,
+#<?php echo esc_attr($section_id); ?> textarea {
     border-radius: 4px !important;
     border: 1px solid var(--Gray-600, #475467) !important;
 }
 
-input:not([type="hidden"])::placeholder,
-textarea::placeholder{
+#<?php echo esc_attr($section_id); ?> input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+#<?php echo esc_attr($section_id); ?> select {
+    height: 52px !important;
+    padding: 0 16px !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    box-sizing: border-box !important;
+}
+
+#<?php echo esc_attr($section_id); ?> textarea {
+    padding: 12px 16px !important;
+}
+
+#<?php echo esc_attr($section_id); ?> select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 44px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M3 5.25L7 9.25L11 5.25' stroke='%23475467' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 14px 14px;
+}
+
+#<?php echo esc_attr($section_id); ?> input:focus,
+#<?php echo esc_attr($section_id); ?> select:focus,
+#<?php echo esc_attr($section_id); ?> textarea:focus {
+    outline: none !important;
+    border-color: #1C959B !important;
+    box-shadow: 0 0 0 2px rgba(28, 149, 155, 0.2) !important;
+}
+
+#<?php echo esc_attr($section_id); ?> input:not([type="hidden"])::placeholder,
+#<?php echo esc_attr($section_id); ?> textarea::placeholder {
     color: var(--Gray-600, #475467) !important;
     font-family: "Public Sans", sans-serif !important;
     font-size: 14px !important;
@@ -577,7 +631,7 @@ textarea::placeholder{
     opacity: 1 !important;
 }
 
-label{
+#<?php echo esc_attr($section_id); ?> label {
     color: var(--Gray-800, #001929) !important;
     font-family: "Public Sans", sans-serif !important;
     font-size: 12px !important;
@@ -586,4 +640,12 @@ label{
     line-height: 18px !important;
 }
 
+#<?php echo esc_attr($section_id); ?> button[type="submit"] {
+    min-height: 52px;
+    border-radius: 9999px !important;
+}
+
+#<?php echo esc_attr($section_id); ?> a {
+    text-underline-offset: 2px;
+}
 </style>

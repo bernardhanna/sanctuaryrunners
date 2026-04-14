@@ -238,6 +238,9 @@ class Theme_Forms {
     $bcc_list = $this->parse_emails($cfg_bcc);
 
     $subject    = $cfg_subject ?: $default_subject;
+    if ($form_name !== '') {
+      $subject = $form_name . ' - ' . $subject;
+    }
     $from_name  = $cfg_from_name  ?: $opt_from_name;
     $from_email = $cfg_from_email ?: ($opt_from_email ?: ('no-reply@' . (parse_url(home_url(), PHP_URL_HOST) ?: 'localhost')));
 
@@ -306,14 +309,41 @@ class Theme_Forms {
     if ($sent && $auto_enabled && !empty($fields['email']) && is_email($fields['email'])) {
       $auto_subject = sanitize_text_field($_POST['_cfg_auto_subject'] ?? 'Thank you for your message');
       $auto_message = wp_kses_post($_POST['_cfg_auto_message'] ?? 'We received your message.');
+      $auto_include_logo = !empty($_POST['_cfg_auto_include_logo']);
+      $auto_logo_url = esc_url_raw($_POST['_cfg_auto_logo_url'] ?? '');
+      $auto_footer = wp_kses_post($_POST['_cfg_auto_footer'] ?? '');
+      $auto_name_field = sanitize_key($_POST['_cfg_auto_name_field'] ?? '');
+      $auto_reply_to = sanitize_email($_POST['_cfg_auto_reply_to'] ?? '');
+
+      $greeting_name = '';
+      if ($auto_name_field && !empty($fields[$auto_name_field])) {
+        $greeting_name = sanitize_text_field((string) $fields[$auto_name_field]);
+      }
+
+      $auto_body = '';
+      if ($auto_include_logo && $auto_logo_url) {
+        $auto_body .= '<p style="margin:0 0 16px;"><img src="' . esc_url($auto_logo_url) . '" alt="" style="max-width:180px;height:auto;"></p>';
+      }
+      if ($greeting_name !== '') {
+        $auto_body .= '<p style="margin:0 0 12px;">Hi ' . esc_html($greeting_name) . ',</p>';
+      }
+      $auto_body .= $auto_message;
+      if ($auto_footer !== '') {
+        $auto_body .= '<hr style="margin:20px 0;border:0;border-top:1px solid #e5e7eb;">';
+        $auto_body .= '<p style="margin:0;color:#475467;font-size:13px;line-height:20px;">' . $auto_footer . '</p>';
+      }
+
       $auto_headers = [ 'Content-Type: text/html; charset=utf-8', 'From: ' . sprintf('%s <%s>', $from_name, $from_email) ];
+      if ($auto_reply_to && is_email($auto_reply_to)) {
+        $auto_headers[] = 'Reply-To: ' . $auto_reply_to;
+      }
 
       $auto_from_filter      = function() use ($from_email) { return $from_email; };
       $auto_from_name_filter = function() use ($from_name)  { return $from_name;  };
       add_filter('wp_mail_from', $auto_from_filter);
       add_filter('wp_mail_from_name', $auto_from_name_filter);
 
-      wp_mail(sanitize_email($fields['email']), wp_strip_all_tags($auto_subject), $auto_message, $auto_headers);
+      wp_mail(sanitize_email($fields['email']), wp_strip_all_tags($auto_subject), $auto_body, $auto_headers);
 
       remove_filter('wp_mail_from', $auto_from_filter);
       remove_filter('wp_mail_from_name', $auto_from_name_filter);

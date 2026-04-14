@@ -78,14 +78,22 @@ if (have_rows('padding_settings')) {
 $cfg_to = get_sub_field('email_to') ?: get_option('admin_email');
 $cfg_bcc = get_sub_field('email_bcc') ?: '';
 $cfg_subject = get_sub_field('email_subject') ?: '';
+$primary_email_subject = get_sub_field('primary_email_subject') ?: '';
+$renewal_email_subject = get_sub_field('renewal_email_subject') ?: '';
 $cfg_from_name = get_sub_field('from_name') ?: '';
 $cfg_from_email = get_sub_field('from_email') ?: '';
 $enable_autoresponder = (bool) get_sub_field('enable_autoresponder');
 $autoresponder_subject = get_sub_field('autoresponder_subject') ?: '';
 $autoresponder_message = get_sub_field('autoresponder_message') ?: '';
+$autoresponder_include_logo = (bool) get_sub_field('autoresponder_include_logo');
+$autoresponder_logo = get_sub_field('autoresponder_logo');
+$autoresponder_logo_url = is_array($autoresponder_logo) ? (string) ($autoresponder_logo['url'] ?? '') : '';
+$autoresponder_footer_text = (string) get_sub_field('autoresponder_footer_text');
+$autoresponder_name_field = (string) get_sub_field('autoresponder_name_field');
+$autoresponder_reply_to_email = (string) get_sub_field('autoresponder_reply_to_email');
 $save_entries_to_db = (bool) get_sub_field('save_entries_to_db');
 
-$build_hidden_fields = static function ($form_name) use (
+$build_hidden_fields = static function ($form_name, $subject_override = '') use (
     $cfg_to,
     $cfg_bcc,
     $cfg_subject,
@@ -94,6 +102,11 @@ $build_hidden_fields = static function ($form_name) use (
     $enable_autoresponder,
     $autoresponder_subject,
     $autoresponder_message,
+    $autoresponder_include_logo,
+    $autoresponder_logo_url,
+    $autoresponder_footer_text,
+    $autoresponder_name_field,
+    $autoresponder_reply_to_email,
     $save_entries_to_db
 ) {
     $hidden = sprintf(
@@ -114,7 +127,8 @@ $build_hidden_fields = static function ($form_name) use (
 
     $hidden .= '<input type="hidden" name="_cfg_to" value="' . esc_attr($cfg_to) . '">';
     $hidden .= '<input type="hidden" name="_cfg_bcc" value="' . esc_attr($cfg_bcc) . '">';
-    $hidden .= '<input type="hidden" name="_cfg_subject" value="' . esc_attr($cfg_subject) . '">';
+    $effective_subject = $subject_override !== '' ? $subject_override : $cfg_subject;
+    $hidden .= '<input type="hidden" name="_cfg_subject" value="' . esc_attr($effective_subject) . '">';
     $hidden .= '<input type="hidden" name="_cfg_from_name" value="' . esc_attr($cfg_from_name) . '">';
     $hidden .= '<input type="hidden" name="_cfg_from_email" value="' . esc_attr($cfg_from_email) . '">';
 
@@ -122,6 +136,11 @@ $build_hidden_fields = static function ($form_name) use (
         $hidden .= '<input type="hidden" name="_cfg_auto_enabled" value="1">';
         $hidden .= '<input type="hidden" name="_cfg_auto_subject" value="' . esc_attr($autoresponder_subject) . '">';
         $hidden .= '<input type="hidden" name="_cfg_auto_message" value="' . esc_attr($autoresponder_message) . '">';
+        $hidden .= '<input type="hidden" name="_cfg_auto_include_logo" value="' . ($autoresponder_include_logo ? '1' : '0') . '">';
+        $hidden .= '<input type="hidden" name="_cfg_auto_logo_url" value="' . esc_attr($autoresponder_logo_url) . '">';
+        $hidden .= '<input type="hidden" name="_cfg_auto_footer" value="' . esc_attr($autoresponder_footer_text) . '">';
+        $hidden .= '<input type="hidden" name="_cfg_auto_name_field" value="' . esc_attr($autoresponder_name_field) . '">';
+        $hidden .= '<input type="hidden" name="_cfg_auto_reply_to" value="' . esc_attr($autoresponder_reply_to_email) . '">';
     }
 
     return $hidden;
@@ -189,6 +208,7 @@ if ($location_fields_version === 'ireland') {
                 class="mt-4"
                 x-data='{
                     formView: "main",
+                    existingMember: "no",
                     selectedCountry: <?php echo wp_json_encode($default_country); ?> || "",
                     irelandCounties: <?php echo wp_json_encode($ireland_counties); ?>,
                     australiaStates: <?php echo wp_json_encode($australia_states); ?>,
@@ -223,7 +243,7 @@ if ($location_fields_version === 'ireland') {
             >
                 <div x-show="formView === 'main'">
                     <form class="w-full" role="form" novalidate aria-labelledby="<?php echo esc_attr($main_form_heading_id); ?>" aria-describedby="<?php echo esc_attr($main_form_instructions_id); ?>" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" data-theme-form="<?php echo esc_attr(get_row_index()); ?>">
-                        <?php echo $build_hidden_fields($primary_form_name); ?>
+                        <?php echo $build_hidden_fields($primary_form_name, $primary_email_subject); ?>
 
                         <?php if ($enable_existing_member_switch) : ?>
                             <fieldset class="flex flex-wrap gap-4 items-start mt-0 w-full">
@@ -231,10 +251,10 @@ if ($location_fields_version === 'ireland') {
                                     <legend id="<?php echo esc_attr($existing_member_legend_id); ?>" style="font-size: 12px; color: #0f172a;">Are you an existing member of Sanctuary Runners?</legend>
                                     <div style="display: flex; align-items: center; gap: 24px;">
                                         <label for="<?php echo esc_attr($existing_member_yes_id); ?>" style="display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer;">
-                                            <input id="<?php echo esc_attr($existing_member_yes_id); ?>" style="width: 32px; height: 32px;" name="existing_member" type="radio" value="yes" @change="formView = 'renewal'">Yes
+                                            <input id="<?php echo esc_attr($existing_member_yes_id); ?>" style="width: 32px; height: 32px;" name="existing_member" type="radio" value="yes" x-model="existingMember" @change="formView = 'renewal'">Yes
                                         </label>
                                         <label for="<?php echo esc_attr($existing_member_no_id); ?>" style="display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer;">
-                                            <input id="<?php echo esc_attr($existing_member_no_id); ?>" style="width: 32px; height: 32px;" name="existing_member" type="radio" value="no" checked @change="formView = 'main'">No
+                                            <input id="<?php echo esc_attr($existing_member_no_id); ?>" style="width: 32px; height: 32px;" name="existing_member" type="radio" value="no" x-model="existingMember" checked @change="formView = 'main'">No
                                         </label>
                                     </div>
                                 </div>
@@ -260,7 +280,7 @@ if ($location_fields_version === 'ireland') {
                             </div>
                             <div class="flex-1 min-w-60">
                                 <label class="text-xs text-slate-900">Phone number</label>
-                                <div class="mt-0"><input class="p-4 w-full rounded border border-slate-600" type="tel" name="phone" :placeholder="phonePlaceholder"></div>
+                                <div class="mt-0"><input class="p-4 w-full rounded border border-slate-600" type="tel" name="phone" :placeholder="phonePlaceholder" required aria-required="true"></div>
                             </div>
                         </div>
 
@@ -365,19 +385,19 @@ if ($location_fields_version === 'ireland') {
 
                 <?php if ($enable_existing_member_switch) : ?>
                     <div x-show="formView === 'renewal'" x-cloak>
-                        <button type="button" class="inline-flex gap-2 items-center px-4 py-2 mb-4 text-sm font-bold bg-white transition-colors duration-200 rounded-pill text-brand-primary-hover hover:bg-brand-accent-soft a11y-focus" @click="formView = 'main'">Back to main form</button>
+                        <button type="button" class="inline-flex gap-2 items-center px-4 py-2 mb-4 text-sm font-bold bg-white transition-colors duration-200 rounded-pill text-brand-primary-hover hover:bg-brand-accent-soft a11y-focus" @click="formView = 'main'; existingMember = 'no'">Back to main form</button>
                         <h3 id="<?php echo esc_attr($renewal_form_heading_id); ?>" class="mb-4 text-2xl font-bold leading-8 text-sky-800"><?php echo esc_html($renewal_heading); ?></h3>
                         <p id="<?php echo esc_attr($renewal_form_instructions_id); ?>" class="mb-4 text-base leading-6 text-sky-950">Complete the renewal form fields below and submit to continue your membership.</p>
 
                         <form class="w-full" role="form" novalidate aria-labelledby="<?php echo esc_attr($renewal_form_heading_id); ?>" aria-describedby="<?php echo esc_attr($renewal_form_instructions_id); ?>" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" data-theme-form="<?php echo esc_attr(get_row_index()); ?>">
-                            <?php echo $build_hidden_fields($renewal_form_name); ?>
+                            <?php echo $build_hidden_fields($renewal_form_name, $renewal_email_subject); ?>
                             <div class="flex flex-wrap gap-4 mt-0 w-full">
                                 <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">First name*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="first_name" placeholder="First name" required aria-required="true"></div>
                                 <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Last name*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="last_name" placeholder="Last name" required aria-required="true"></div>
                             </div>
                             <div class="flex flex-wrap gap-4 mt-4 w-full">
                                 <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Email address*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="email" name="email" placeholder="Email address" required aria-required="true"></div>
-                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Member ID (optional)</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="member_id" placeholder="Member ID"></div>
+                                <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Phone number*</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="tel" name="phone" :placeholder="phonePlaceholder" required aria-required="true"></div>
                             </div>
                             <div class="flex flex-wrap gap-4 mt-4 w-full">
                                 <div class="flex-1 min-w-60"><label class="text-xs text-slate-900">Address line 1</label><input class="p-4 mt-0 w-full rounded border border-slate-600" type="text" name="address_line_1" placeholder="Address line 1"></div>
@@ -488,6 +508,10 @@ if ($location_fields_version === 'ireland') {
     box-sizing: border-box !important;
 }
 
+#<?php echo esc_attr($section_id); ?> textarea {
+    padding: 12px 16px !important;
+}
+
 #<?php echo esc_attr($section_id); ?> select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -497,6 +521,14 @@ if ($location_fields_version === 'ireland') {
     background-repeat: no-repeat;
     background-position: right 16px center;
     background-size: 14px 14px;
+}
+
+#<?php echo esc_attr($section_id); ?> input:focus,
+#<?php echo esc_attr($section_id); ?> select:focus,
+#<?php echo esc_attr($section_id); ?> textarea:focus {
+    outline: none !important;
+    border-color: #1C959B !important;
+    box-shadow: 0 0 0 2px rgba(28, 149, 155, 0.2) !important;
 }
 
 #<?php echo esc_attr($section_id); ?> input:not([type="hidden"])::placeholder,
@@ -517,5 +549,14 @@ if ($location_fields_version === 'ireland') {
     font-style: normal !important;
     font-weight: 400 !important;
     line-height: 18px !important;
+}
+
+#<?php echo esc_attr($section_id); ?> button[type="submit"] {
+    min-height: 52px;
+    border-radius: 9999px !important;
+}
+
+#<?php echo esc_attr($section_id); ?> a {
+    text-underline-offset: 2px;
 }
 </style>
