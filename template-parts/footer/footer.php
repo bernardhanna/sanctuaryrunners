@@ -142,7 +142,7 @@ function matrix_social_svg($icon) {
           <div>
 
           <?php if (!empty($footer_social_links) && is_array($footer_social_links)) : ?>
-            <nav class="flex gap-4 items-center" aria-label="Social media links">
+            <nav class="footer-social-links flex gap-4 items-center" aria-label="Social media links">
               <?php foreach ($footer_social_links as $social) :
                 $label = (string) ($social['label'] ?? 'Social link');
                 $icon  = (string) ($social['icon'] ?? 'facebook');
@@ -305,6 +305,17 @@ function matrix_social_svg($icon) {
       padding-bottom: 0;
       border-top: 0;
       border-bottom: 0;
+    }
+  }
+
+  /* Mobile <=575px: max 4 social icons per row */
+  @media (max-width: 575px) {
+    .footer-social-links {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, max-content));
+      gap: 0.75rem;
+      justify-content: start;
+      align-items: center;
     }
   }
 </style>

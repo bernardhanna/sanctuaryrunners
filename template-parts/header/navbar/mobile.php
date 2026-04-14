@@ -110,7 +110,7 @@ $menu_array = $primary_navigation->toArray();
       }
     }
 
-    $render_mobile_nav_actions = function () use ($contact_button, $donate_button, $donate_icon) {
+    $render_mobile_nav_actions = function () use ($contact_button, $donate_button, $donate_icon, $donate_button_bg_color, $donate_button_text_color) {
       ?>
       <div class="pt-4 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
         <?php if (!empty($contact_button['url']) && !empty($contact_button['title'])): ?>
