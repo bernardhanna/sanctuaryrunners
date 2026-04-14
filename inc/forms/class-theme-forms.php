@@ -27,6 +27,90 @@ class Theme_Forms {
     error_log('[Theme_Forms] ' . $message . $payload);
   }
 
+  private function is_truthy($value): bool {
+    if (is_bool($value)) return $value;
+    $value = strtolower(trim((string) $value));
+    return in_array($value, ['1', 'true', 'yes', 'on'], true);
+  }
+
+  private function maybe_subscribe_to_brevo(array $fields): void {
+    $email = isset($fields['email']) ? sanitize_email((string) $fields['email']) : '';
+    if (!$email || !is_email($email)) return;
+
+    $consent_keys = ['marketing_opt_in', 'newsletter_opt_in', 'email_opt_in', 'consent_marketing'];
+    $has_consent = false;
+    foreach ($consent_keys as $key) {
+      if (isset($_POST[$key]) && $this->is_truthy($_POST[$key])) {
+        $has_consent = true;
+        break;
+      }
+    }
+    if (!$has_consent) return;
+
+    if (!function_exists('get_field')) return;
+    $enabled = (bool) get_field('newsletter_enabled', 'option');
+    if (!$enabled) return;
+
+    $api_key = (string) get_field('brevo_api_key', 'option');
+    if (!$api_key && defined('MATRIX_BREVO_KEY')) $api_key = MATRIX_BREVO_KEY;
+    if (!$api_key) {
+      $this->log_mail_issue('brevo_skipped_missing_api_key');
+      return;
+    }
+
+    $list_ids_raw = (string) get_field('brevo_list_ids', 'option');
+    $list_ids = array_filter(array_map('absint', preg_split('/[,\s;]+/', $list_ids_raw)));
+    $list_ids = array_values(array_unique(array_filter($list_ids, 'intval')));
+
+    $first_name = isset($fields['first_name']) ? sanitize_text_field((string) $fields['first_name']) : '';
+    $last_name  = isset($fields['last_name']) ? sanitize_text_field((string) $fields['last_name']) : '';
+    if ($first_name === '' && $last_name === '' && !empty($fields['name'])) {
+      $parts = preg_split('/\s+/', trim((string) $fields['name']));
+      $first_name = sanitize_text_field((string) array_shift($parts));
+      $last_name = sanitize_text_field(trim(implode(' ', $parts)));
+    }
+
+    $body = [
+      'email' => $email,
+      'updateEnabled' => true,
+      'attributes' => array_filter([
+        'FIRSTNAME' => $first_name,
+        'LASTNAME' => $last_name,
+        'CONSENT' => 'yes',
+        'CONSENT_IP' => $_SERVER['REMOTE_ADDR'] ?? '',
+        'CONSENT_AT' => current_time('mysql'),
+      ]),
+    ];
+    if (!empty($list_ids)) {
+      $body['listIds'] = $list_ids;
+    }
+
+    $response = wp_remote_post('https://api.brevo.com/v3/contacts', [
+      'method' => 'POST',
+      'timeout' => 12,
+      'headers' => [
+        'accept' => 'application/json',
+        'content-type' => 'application/json',
+        'api-key' => $api_key,
+      ],
+      'body' => wp_json_encode($body),
+    ]);
+
+    $code = wp_remote_retrieve_response_code($response);
+    if (!in_array($code, [200, 201, 204], true)) {
+      $this->log_mail_issue('brevo_subscribe_failed', [
+        'email' => $email,
+        'status' => $code,
+        'body' => wp_remote_retrieve_body($response),
+      ]);
+      return;
+    }
+
+    $this->log_mail_issue('brevo_subscribe_ok', [
+      'email' => $email,
+    ]);
+  }
+
   public function __construct() {
     add_action('admin_post_nopriv_theme_form_submit', [ $this, 'handle' ]);
     add_action('admin_post_theme_form_submit',        [ $this, 'handle' ]);
@@ -366,6 +450,10 @@ class Theme_Forms {
       'subject' => $subject,
       'form_name' => $form_name,
     ]);
+
+    // 11) Optional Brevo subscribe for marketing opt-ins.
+    $this->maybe_subscribe_to_brevo($fields);
+
     $this->result(true, 'sent');
   }
 }
