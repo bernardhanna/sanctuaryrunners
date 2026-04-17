@@ -220,7 +220,6 @@ function template_part_blog() {
  * Forms
  */
 require get_template_directory() . '/inc/forms/class-theme-forms.php';
-new Theme_Forms();
 
 /**
  * Template builder (your original timing kept)
