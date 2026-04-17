@@ -101,6 +101,8 @@ wp_add_inline_script(
   wp_register_style('slick-css','https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css',[],'1.8.1');
   wp_register_script('slick-js','https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js',['jquery'],'1.8.1',true);
   wp_register_script('headroom','https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/headroom.min.js',[],'0.12.0',true);
+  wp_register_style('nice-select-css','https://cdn.jsdelivr.net/npm/jquery-nice-select@1.1.0/css/nice-select.css',[],'1.1.0');
+  wp_register_script('nice-select-js','https://cdn.jsdelivr.net/npm/jquery-nice-select@1.1.0/js/jquery.nice-select.min.js',['jquery'],'1.1.0',true);
 
   // Leaflet
   wp_register_style('leaflet','https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',[],'1.9.4');
@@ -135,6 +137,10 @@ wp_add_inline_script(
     }
   }
 
+  // Contact form custom select UI.
+  wp_enqueue_style('nice-select-css');
+  wp_enqueue_script('nice-select-js');
+
 
   // Woo fragments
   if (class_exists('WooCommerce')) {
@@ -165,6 +171,7 @@ wp_add_inline_script(
       // Theme + Woo essentials
       'jquery','jquery-core','jquery-migrate',
       'matrix-starter','theme-forms','matrix-newsletter',
+      'nice-select-js',
       'wc-cart-fragments','woocommerce',
       'recaptcha','turnstile',
       'alpine-intersect','alpine',

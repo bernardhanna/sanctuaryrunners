@@ -296,6 +296,38 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    function initNiceSelectInSection() {
+        if (!(window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.niceSelect === 'function')) return;
+        var $ = window.jQuery;
+        var $selects = $(section).find('select.contact-select');
+        if (!$selects.length) return;
+
+        $selects.each(function () {
+            var $el = $(this);
+            if ($el.next('.nice-select').length) {
+                $el.niceSelect('update');
+            } else {
+                $el.niceSelect();
+            }
+        });
+    }
+
+    var attempts = 0;
+    var waitTimer = setInterval(function () {
+        attempts++;
+        if (window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.niceSelect === 'function') {
+            clearInterval(waitTimer);
+            initNiceSelectInSection();
+            section.querySelectorAll('select.contact-select').forEach(function (selectEl) {
+                selectEl.addEventListener('change', function () {
+                    initNiceSelectInSection();
+                });
+            });
+        } else if (attempts > 80) {
+            clearInterval(waitTimer);
+        }
+    }, 50);
+
 });
 </script>
 
@@ -331,6 +363,80 @@ document.addEventListener('DOMContentLoaded', function () {
     background-repeat: no-repeat !important;
     background-position: right 0.9rem center !important;
     background-size: 1rem 1rem !important;
+}
+
+#<?php echo esc_attr($section_id); ?> .nice-select {
+    width: 100% !important;
+    min-height: 52px !important;
+    height: 52px !important;
+    border-radius: 4px !important;
+    border: 1px solid var(--Gray-600, #475467) !important;
+    float: none !important;
+    display: flex !important;
+    align-items: center !important;
+    color: #475467 !important;
+    font-family: "Public Sans", sans-serif !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    padding: 0 2.75rem 0 1rem !important;
+    background-color: #fff !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+
+#<?php echo esc_attr($section_id); ?> .nice-select:hover {
+    border-color: var(--Turquoise-500, #1C959B) !important;
+    background-color: #F9FEFF !important;
+}
+
+#<?php echo esc_attr($section_id); ?> .nice-select:focus,
+#<?php echo esc_attr($section_id); ?> .nice-select:focus-visible,
+#<?php echo esc_attr($section_id); ?> .nice-select.open {
+    outline: 2px solid var(--Turquoise-500, #1C959B) !important;
+    outline-offset: 1px !important;
+    border-color: var(--Turquoise-500, #1C959B) !important;
+    box-shadow: 0 0 0 3px rgba(28,149,155,0.18) !important;
+    background-color: #ffffff !important;
+}
+
+#<?php echo esc_attr($section_id); ?> .nice-select:active {
+    border-color: var(--Blue-SR-500, #00628F) !important;
+}
+
+#<?php echo esc_attr($section_id); ?> .nice-select .current {
+    line-height: 20px !important;
+    color: #475467 !important;
+}
+
+#<?php echo esc_attr($section_id); ?> .nice-select:after {
+    border-bottom: 2px solid #00628F !important;
+    border-right: 2px solid #00628F !important;
+    width: 8px !important;
+    height: 8px !important;
+    right: 1rem !important;
+    margin-top: -5px !important;
+}
+
+#<?php echo esc_attr($section_id); ?> .nice-select .list {
+    width: 100% !important;
+    margin-top: 6px !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--Gray-300, #D0D5DD) !important;
+    box-shadow: 0 10px 24px rgba(0, 38, 62, 0.12) !important;
+    max-height: 240px !important;
+    overflow-y: auto !important;
+}
+
+#<?php echo esc_attr($section_id); ?> .nice-select .option {
+    min-height: 42px !important;
+    line-height: 42px !important;
+    font-size: 14px !important;
+}
+
+#<?php echo esc_attr($section_id); ?> .nice-select .option:hover,
+#<?php echo esc_attr($section_id); ?> .nice-select .option.focus,
+#<?php echo esc_attr($section_id); ?> .nice-select .option.selected.focus {
+    background-color: #EAF8FA !important;
+    color: #001929 !important;
 }
 
 #<?php echo esc_attr($section_id); ?> select.contact-select:focus,
