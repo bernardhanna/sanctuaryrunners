@@ -182,7 +182,7 @@ if ($country_mode === 'uk') {
                             <option value="<?php echo esc_attr($subject_option); ?>"><?php echo esc_html($subject_option); ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <input id="<?php echo esc_attr($section_id); ?>-subject-other" class="hidden w-full p-4 mt-2 bg-white text-slate-600 outline-none min-h-[52px]" name="subject_topic_other" type="text" placeholder="Your Answer" data-other-input="subject">
+                    <input id="<?php echo esc_attr($section_id); ?>-subject-other" class="hidden w-full p-4 mt-2 bg-white text-slate-600 outline-none min-h-[52px]" name="subject_topic_other" type="text" placeholder="Please provide more details on how we can help" data-other-input="subject">
                 </div>
 
                 <div class="mt-4 w-full max-md:max-w-full">
@@ -218,7 +218,7 @@ if ($country_mode === 'uk') {
                             <option value="<?php echo esc_attr($heard_about_option); ?>"><?php echo esc_html($heard_about_option); ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <input id="<?php echo esc_attr($section_id); ?>-heard-other" class="hidden w-full p-4 mt-2 bg-white text-slate-600 outline-none min-h-[52px]" name="heard_about_other" type="text" placeholder="Your Answer" data-other-input="heard">
+                    <input id="<?php echo esc_attr($section_id); ?>-heard-other" class="hidden w-full p-4 mt-2 bg-white text-slate-600 outline-none min-h-[52px]" name="heard_about_other" type="text" placeholder="Where did you hear about us?" data-other-input="heard">
                 </div>
 
                 <div class="flex flex-wrap gap-2 items-center mt-4 w-full max-md:max-w-full">
