@@ -164,6 +164,8 @@ class Theme_Forms {
     ];
     if ($secret !== '') {
       $headers['X-Theme-Webhook-Secret'] = $secret;
+      // Send secret in body too for webhook providers that cannot access custom headers.
+      $payload['secret'] = $secret;
     }
 
     $this->record_webhook_debug([
@@ -178,6 +180,9 @@ class Theme_Forms {
     $response = wp_remote_post($url, [
       'method' => 'POST',
       'timeout' => 12,
+      // Apps Script web app endpoints commonly return 302 after successful POST.
+      // Avoid following redirect chains that can transform/fail server-to-server POST.
+      'redirection' => 0,
       'headers' => $headers,
       'body' => wp_json_encode($payload),
     ]);
@@ -199,7 +204,7 @@ class Theme_Forms {
 
     $status = wp_remote_retrieve_response_code($response);
     $response_body = wp_remote_retrieve_body($response);
-    if ($status < 200 || $status >= 300) {
+    if ($status < 200 || $status >= 400) {
       $this->log_mail_issue('webhook_sync_failed', [
         'status' => $status,
         'body' => $response_body,
