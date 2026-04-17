@@ -13,6 +13,7 @@ class Theme_Forms {
 
   private $last_mail_error = '';
   private $phpmailer_sender = null;
+  private const WEBHOOK_DEBUG_OPTION_KEY = 'matrix_last_webhook_sync_debug';
 
   private function is_non_production_env(): bool {
     if (function_exists('wp_get_environment_type')) {
@@ -25,6 +26,15 @@ class Theme_Forms {
     if (!$this->is_non_production_env()) return;
     $payload = $context ? ' ' . wp_json_encode($context) : '';
     error_log('[Theme_Forms] ' . $message . $payload);
+  }
+
+  private function record_webhook_debug(array $data): void {
+    $snapshot = [
+      'recorded_at' => current_time('mysql'),
+      'site_url' => home_url('/'),
+      'data' => $data,
+    ];
+    update_option(self::WEBHOOK_DEBUG_OPTION_KEY, $snapshot, false);
   }
 
   private function is_truthy($value): bool {
@@ -129,6 +139,11 @@ class Theme_Forms {
     $url = esc_url_raw((string) get_field('form_webhook_url', 'option'));
     if ($url === '') {
       $this->log_mail_issue('webhook_sync_skipped_missing_url');
+      $this->record_webhook_debug([
+        'result' => 'skipped_missing_url',
+        'form_name' => $form_name,
+        'entry_id' => $entry_id,
+      ]);
       return;
     }
 
@@ -151,6 +166,15 @@ class Theme_Forms {
       $headers['X-Theme-Webhook-Secret'] = $secret;
     }
 
+    $this->record_webhook_debug([
+      'result' => 'attempting',
+      'form_name' => $form_name,
+      'entry_id' => $entry_id,
+      'url' => $url,
+      'payload_keys' => array_keys($payload),
+      'field_keys' => array_keys($fields),
+    ]);
+
     $response = wp_remote_post($url, [
       'method' => 'POST',
       'timeout' => 12,
@@ -159,17 +183,34 @@ class Theme_Forms {
     ]);
 
     if (is_wp_error($response)) {
+      $error_message = $response->get_error_message();
       $this->log_mail_issue('webhook_sync_failed', [
-        'error' => $response->get_error_message(),
+        'error' => $error_message,
+      ]);
+      $this->record_webhook_debug([
+        'result' => 'failed_wp_error',
+        'form_name' => $form_name,
+        'entry_id' => $entry_id,
+        'url' => $url,
+        'error' => $error_message,
       ]);
       return;
     }
 
     $status = wp_remote_retrieve_response_code($response);
+    $response_body = wp_remote_retrieve_body($response);
     if ($status < 200 || $status >= 300) {
       $this->log_mail_issue('webhook_sync_failed', [
         'status' => $status,
-        'body' => wp_remote_retrieve_body($response),
+        'body' => $response_body,
+      ]);
+      $this->record_webhook_debug([
+        'result' => 'failed_http_status',
+        'form_name' => $form_name,
+        'entry_id' => $entry_id,
+        'url' => $url,
+        'status' => $status,
+        'response_body' => $response_body,
       ]);
       return;
     }
@@ -179,11 +220,69 @@ class Theme_Forms {
       'form_name' => $form_name,
       'entry_id' => $entry_id,
     ]);
+    $this->record_webhook_debug([
+      'result' => 'ok',
+      'form_name' => $form_name,
+      'entry_id' => $entry_id,
+      'url' => $url,
+      'status' => $status,
+      'response_body' => $response_body,
+    ]);
+  }
+
+  public function register_webhook_debug_page(): void {
+    add_management_page(
+      'Form Webhook Debug',
+      'Form Webhook Debug',
+      'manage_options',
+      'matrix-form-webhook-debug',
+      [ $this, 'render_webhook_debug_page' ]
+    );
+  }
+
+  public function render_webhook_debug_page(): void {
+    if (!current_user_can('manage_options')) {
+      return;
+    }
+
+    if (
+      isset($_POST['matrix_clear_webhook_debug'])
+      && check_admin_referer('matrix_clear_webhook_debug_action', 'matrix_clear_webhook_debug_nonce')
+    ) {
+      delete_option(self::WEBHOOK_DEBUG_OPTION_KEY);
+      echo '<div class="notice notice-success is-dismissible"><p>Webhook debug history cleared.</p></div>';
+    }
+
+    $debug = get_option(self::WEBHOOK_DEBUG_OPTION_KEY, []);
+    echo '<div class="wrap">';
+    echo '<h1>Form Webhook Debug</h1>';
+    echo '<p>Shows the latest spreadsheet webhook attempt from Theme Forms.</p>';
+
+    echo '<form method="post" style="margin:16px 0;">';
+    wp_nonce_field('matrix_clear_webhook_debug_action', 'matrix_clear_webhook_debug_nonce');
+    submit_button('Clear Latest Debug Snapshot', 'secondary', 'matrix_clear_webhook_debug', false);
+    echo '</form>';
+
+    if (empty($debug) || !is_array($debug)) {
+      echo '<p><strong>No webhook debug snapshot recorded yet.</strong></p>';
+      echo '</div>';
+      return;
+    }
+
+    echo '<table class="widefat striped" style="max-width: 1100px;">';
+    echo '<tbody>';
+    echo '<tr><th style="width:220px;">Recorded At</th><td>' . esc_html((string) ($debug['recorded_at'] ?? '')) . '</td></tr>';
+    echo '<tr><th>Site URL</th><td>' . esc_html((string) ($debug['site_url'] ?? '')) . '</td></tr>';
+    echo '<tr><th>Snapshot</th><td><pre style="white-space:pre-wrap;word-break:break-word;margin:0;">' . esc_html(wp_json_encode($debug['data'] ?? [], JSON_PRETTY_PRINT)) . '</pre></td></tr>';
+    echo '</tbody>';
+    echo '</table>';
+    echo '</div>';
   }
 
   public function __construct() {
     add_action('admin_post_nopriv_theme_form_submit', [ $this, 'handle' ]);
     add_action('admin_post_theme_form_submit',        [ $this, 'handle' ]);
+    add_action('admin_menu', [ $this, 'register_webhook_debug_page' ]);
   }
 
   /* ---------- Helpers ---------- */
