@@ -357,6 +357,33 @@ class Theme_Forms {
       if (str_starts_with($k, '_') || in_array($k, $skip, true)) continue;
       $out[$k] = $this->normalize_field($k, $v);
     }
+
+    // Normalize structured contact-form "Other" selections into final exported fields.
+    // This keeps admin emails/webhook payloads consistent and avoids losing typed details.
+    $subject_select = $this->normalize_field('subject_topic_select', $_POST['subject_topic_select'] ?? '');
+    $subject_other  = $this->normalize_field('subject_topic_other', $_POST['subject_topic_other'] ?? '');
+    if ($subject_select !== '') {
+      $subject_choice = trim((string) $subject_select);
+      $is_other = preg_match('/^other\b/i', $subject_choice) === 1;
+      if ($is_other && $subject_other !== '') {
+        $out['subject_topic'] = 'Other: ' . $subject_other;
+      } else {
+        $out['subject_topic'] = $subject_choice;
+      }
+    }
+
+    $heard_select = $this->normalize_field('heard_about_select', $_POST['heard_about_select'] ?? '');
+    $heard_other  = $this->normalize_field('heard_about_other', $_POST['heard_about_other'] ?? '');
+    if ($heard_select !== '') {
+      $heard_choice = trim((string) $heard_select);
+      $is_other = preg_match('/^other\b/i', $heard_choice) === 1;
+      if ($is_other && $heard_other !== '') {
+        $out['heard_about_us'] = 'Other: ' . $heard_other;
+      } else {
+        $out['heard_about_us'] = $heard_choice;
+      }
+    }
+
     return $out;
   }
 
