@@ -62,8 +62,50 @@ $forms_opts
   ])
   ->addText('form_webhook_secret', [
     'label'             => 'Webhook Secret (optional)',
-    'instructions'      => 'If set, sent as X-Theme-Webhook-Secret header.',
+    'instructions'      => 'If set, sent as X-Theme-Webhook-Secret header. You can auto-generate below.',
+    'conditional_logic' => [[['field' => 'enable_form_webhook_sync','operator'=>'==','value'=>'1']]],
+  ])
+  ->addTrueFalse('regenerate_form_webhook_secret', [
+    'label'             => 'Generate / Regenerate Webhook Secret',
+    'instructions'      => 'Turn on and save to generate a new secure secret. It auto-resets back to Off after saving.',
+    'default_value'     => 0,
+    'ui'                => 1,
     'conditional_logic' => [[['field' => 'enable_form_webhook_sync','operator'=>'==','value'=>'1']]],
   ]);
+
+if (!function_exists('matrix_generate_webhook_secret')) {
+  function matrix_generate_webhook_secret(): string {
+    try {
+      return 'sr_webhook_' . bin2hex(random_bytes(24));
+    } catch (\Throwable $e) {
+      return 'sr_webhook_' . wp_generate_password(48, false, false);
+    }
+  }
+}
+
+if (!function_exists('matrix_maybe_generate_form_webhook_secret')) {
+  function matrix_maybe_generate_form_webhook_secret($post_id): void {
+    if ($post_id !== 'options' || !function_exists('get_field') || !function_exists('update_field')) {
+      return;
+    }
+
+    $sync_enabled = (bool) get_field('enable_form_webhook_sync', 'option');
+    if (!$sync_enabled) {
+      return;
+    }
+
+    $current_secret = trim((string) get_field('form_webhook_secret', 'option'));
+    $should_regenerate = (bool) get_field('regenerate_form_webhook_secret', 'option');
+
+    if ($current_secret === '' || $should_regenerate) {
+      update_field('form_webhook_secret', matrix_generate_webhook_secret(), 'option');
+    }
+
+    if ($should_regenerate) {
+      update_field('regenerate_form_webhook_secret', 0, 'option');
+    }
+  }
+}
+add_action('acf/save_post', 'matrix_maybe_generate_form_webhook_secret', 20);
 
 return $forms_opts;
