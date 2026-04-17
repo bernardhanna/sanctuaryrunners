@@ -296,37 +296,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    function initNiceSelectInSection() {
-        if (!(window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.niceSelect === 'function')) return;
-        var $ = window.jQuery;
-        var $selects = $(section).find('select.contact-select');
-        if (!$selects.length) return;
-
-        $selects.each(function () {
-            var $el = $(this);
-            if ($el.next('.nice-select').length) {
-                $el.niceSelect('update');
-            } else {
-                $el.niceSelect();
-            }
-        });
-    }
-
-    var initAttempts = 0;
-    var initTimer = setInterval(function () {
-        initAttempts++;
-        if (window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.niceSelect === 'function') {
-            clearInterval(initTimer);
-            initNiceSelectInSection();
-            section.querySelectorAll('select.contact-select').forEach(function (selectEl) {
-                selectEl.addEventListener('change', function () {
-                    initNiceSelectInSection();
-                });
-            });
-        } else if (initAttempts > 80) {
-            clearInterval(initTimer);
-        }
-    });
 });
 </script>
 
@@ -364,38 +333,14 @@ document.addEventListener('DOMContentLoaded', function () {
     background-size: 1rem 1rem !important;
 }
 
-#<?php echo esc_attr($section_id); ?> .nice-select {
-    width: 100% !important;
-    min-height: 52px !important;
-    height: 52px !important;
-    border-radius: 4px !important;
-    border: 1px solid var(--Gray-600, #475467) !important;
-    float: none !important;
-    display: flex !important;
-    align-items: center !important;
-    font-size: 14px !important;
-    color: #475467 !important;
-    padding: 0 2.75rem 0 1rem !important;
-    background-color: #fff !important;
-}
-
-#<?php echo esc_attr($section_id); ?> .nice-select .current {
-    line-height: 20px !important;
-}
-
-#<?php echo esc_attr($section_id); ?> .nice-select:after {
-    border-bottom: 2px solid #00628F !important;
-    border-right: 2px solid #00628F !important;
-    width: 8px !important;
-    height: 8px !important;
-    right: 1rem !important;
-    margin-top: -5px !important;
-}
-
-#<?php echo esc_attr($section_id); ?> .nice-select .list {
-    width: 100% !important;
-    max-height: 240px !important;
-    overflow-y: auto !important;
+#<?php echo esc_attr($section_id); ?> select.contact-select:focus,
+#<?php echo esc_attr($section_id); ?> input[type="text"]:focus,
+#<?php echo esc_attr($section_id); ?> input[type="email"]:focus,
+#<?php echo esc_attr($section_id); ?> input[type="tel"]:focus,
+#<?php echo esc_attr($section_id); ?> textarea:focus {
+    outline: 2px solid var(--Turquoise-500, #1C959B) !important;
+    outline-offset: 1px !important;
+    border-color: var(--Turquoise-500, #1C959B) !important;
 }
 
 #<?php echo esc_attr($section_id); ?> input:not([type="hidden"])::placeholder,
