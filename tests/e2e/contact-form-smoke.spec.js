@@ -6,11 +6,20 @@ const shouldSubmit = process.env.CONTACT_FORM_SUBMIT === '1';
 test('smoke: structured contact form fields and flow', async ({ page }) => {
   await page.goto(formPath, { waitUntil: 'domcontentloaded', timeout: 45_000 });
 
-  const form = page.locator('form[data-contact-structured="1"]').first();
-  const formCount = await page.locator('form[data-contact-structured="1"]').count();
-  if (formCount === 0) {
-    test.skip(true, `No structured contact form found on ${formPath}. Set CONTACT_FORM_PATH to a page that includes contact_form_001.`);
+  const structuredLocator = page.locator('form[data-contact-structured="1"]');
+  const fallbackLocator = page.locator('form[data-theme-form]');
+  const structuredCount = await structuredLocator.count();
+  const fallbackCount = await fallbackLocator.count();
+
+  if (structuredCount === 0) {
+    const msg = `No structured contact form found on ${formPath}. Structured forms: ${structuredCount}, fallback forms: ${fallbackCount}.`;
+    if (shouldSubmit) {
+      throw new Error(`${msg} CONTACT_FORM_SUBMIT=1 requested, so test will not skip.`);
+    }
+    test.skip(true, `${msg} Set CONTACT_FORM_PATH to a page that includes contact_form_001.`);
   }
+
+  const form = structuredLocator.first();
   await expect(form).toBeVisible();
 
   await form.locator('input[name="first_name"]').fill('Test');

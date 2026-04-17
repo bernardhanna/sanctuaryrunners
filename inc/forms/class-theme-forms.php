@@ -549,7 +549,14 @@ class Theme_Forms {
       if ($greeting_name !== '') {
         $auto_body .= '<p style="margin:0 0 12px;">Hi ' . esc_html($greeting_name) . ',</p>';
       }
-      $auto_body .= $auto_message;
+      // Support lightweight merge tags in autoresponder content.
+      $merge_map = [
+        '{first_name}' => sanitize_text_field((string) ($fields['first_name'] ?? '')),
+        '{last_name}' => sanitize_text_field((string) ($fields['last_name'] ?? '')),
+        '{name}' => trim(sanitize_text_field((string) (($fields['first_name'] ?? '') . ' ' . ($fields['last_name'] ?? '')))),
+      ];
+      $auto_message_rendered = strtr((string) $auto_message, $merge_map);
+      $auto_body .= $auto_message_rendered;
       if ($auto_footer !== '') {
         $auto_body .= '<hr style="margin:20px 0;border:0;border-top:1px solid #e5e7eb;">';
         $auto_body .= '<p style="margin:0;color:#475467;font-size:13px;line-height:20px;">' . $auto_footer . '</p>';
