@@ -258,7 +258,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateOtherField(selectEl, inputEl) {
         if (!selectEl || !inputEl) return;
-        var isOther = (selectEl.value || '').toLowerCase() === 'other';
+        var normalized = String(selectEl.value || '').trim().toLowerCase();
+        var isOther = normalized === 'other' || normalized.indexOf('other:') === 0 || normalized.indexOf('other ') === 0;
         inputEl.classList.toggle('hidden', !isOther);
         inputEl.required = isOther;
         if (!isOther) inputEl.value = '';
@@ -289,7 +290,9 @@ document.addEventListener('DOMContentLoaded', function () {
         formEl.addEventListener('submit', function () {
             if (subjectFinal && subjectSelect) {
                 var subjectValue = subjectSelect.value || '';
-                if (subjectValue.toLowerCase() === 'other' && subjectOther && subjectOther.value.trim() !== '') {
+                var subjectNormalized = String(subjectValue).trim().toLowerCase();
+                var subjectIsOther = subjectNormalized === 'other' || subjectNormalized.indexOf('other:') === 0 || subjectNormalized.indexOf('other ') === 0;
+                if (subjectIsOther && subjectOther && subjectOther.value.trim() !== '') {
                     subjectFinal.value = 'Other: ' + subjectOther.value.trim();
                 } else {
                     subjectFinal.value = subjectValue;
@@ -298,7 +301,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (heardFinal && heardSelect) {
                 var heardValue = heardSelect.value || '';
-                if (heardValue.toLowerCase() === 'other' && heardOther && heardOther.value.trim() !== '') {
+                var heardNormalized = String(heardValue).trim().toLowerCase();
+                var heardIsOther = heardNormalized === 'other' || heardNormalized.indexOf('other:') === 0 || heardNormalized.indexOf('other ') === 0;
+                if (heardIsOther && heardOther && heardOther.value.trim() !== '') {
                     heardFinal.value = 'Other: ' + heardOther.value.trim();
                 } else {
                     heardFinal.value = heardValue;
