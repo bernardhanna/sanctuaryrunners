@@ -164,7 +164,7 @@ if ($country_mode === 'uk') {
 
                 <div class="mt-4 w-full max-md:max-w-full">
                     <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-subject-select">How can we help?*</label>
-                    <select id="<?php echo esc_attr($section_id); ?>-subject-select" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="subject_topic_select" required aria-required="true" data-other-toggle="subject">
+                    <select id="<?php echo esc_attr($section_id); ?>-subject-select" class="contact-select w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="subject_topic_select" required aria-required="true" data-other-toggle="subject">
                         <option value="">Select your topic</option>
                         <?php foreach ($subject_options as $subject_option) : ?>
                             <option value="<?php echo esc_attr($subject_option); ?>"><?php echo esc_html($subject_option); ?></option>
@@ -188,7 +188,7 @@ if ($country_mode === 'uk') {
                         <?php if ($country_mode === 'global') : ?>
                             <input id="<?php echo esc_attr($section_id); ?>-county-region" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="county_region" required type="text" placeholder="Your Answer" aria-required="true">
                         <?php else : ?>
-                            <select id="<?php echo esc_attr($section_id); ?>-county-region" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="county_region" required aria-required="true">
+                            <select id="<?php echo esc_attr($section_id); ?>-county-region" class="contact-select w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="county_region" required aria-required="true">
                                 <option value="">Select <?php echo esc_html(strtolower($location_label)); ?></option>
                                 <?php foreach ($location_options as $location_option) : ?>
                                     <option value="<?php echo esc_attr($location_option); ?>"><?php echo esc_html($location_option); ?></option>
@@ -200,7 +200,7 @@ if ($country_mode === 'uk') {
 
                 <div class="mt-4 w-full max-md:max-w-full">
                     <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-heard-select">How did you hear about us?*</label>
-                    <select id="<?php echo esc_attr($section_id); ?>-heard-select" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="heard_about_select" required aria-required="true" data-other-toggle="heard">
+                    <select id="<?php echo esc_attr($section_id); ?>-heard-select" class="contact-select w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="heard_about_select" required aria-required="true" data-other-toggle="heard">
                         <option value="">Select an option</option>
                         <?php foreach ($heard_about_options as $heard_about_option) : ?>
                             <option value="<?php echo esc_attr($heard_about_option); ?>"><?php echo esc_html($heard_about_option); ?></option>
@@ -313,6 +313,23 @@ document.addEventListener('DOMContentLoaded', function () {
 #<?php echo esc_attr($section_id); ?> input[type="tel"],
 #<?php echo esc_attr($section_id); ?> select {
     min-height: 52px !important;
+    height: 52px !important;
+    line-height: 20px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+}
+
+#<?php echo esc_attr($section_id); ?> select.contact-select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    padding-top: 0.875rem !important;
+    padding-bottom: 0.875rem !important;
+    padding-right: 2.75rem !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%2300628F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.9rem center !important;
+    background-size: 1rem 1rem !important;
 }
 
 #<?php echo esc_attr($section_id); ?> input:not([type="hidden"])::placeholder,
