@@ -175,6 +175,34 @@ You can override with:
 BASE_URL="http://your-local-domain-or-port" npm run test:e2e:network
 ```
 
+### Contact Form Smoke Test
+
+Run the structured contact form smoke test:
+
+```bash
+npm run test:e2e:contact-form
+```
+
+Run it in headed/live browser mode:
+
+```bash
+npm run test:e2e:contact-form:live
+```
+
+If your contact form is on a different page, set the path:
+
+```bash
+CONTACT_FORM_PATH="/contact-us/" npm run test:e2e:contact-form:live
+```
+
+To submit the form (instead of fill-only smoke mode), set:
+
+```bash
+CONTACT_FORM_SUBMIT=1 CONTACT_FORM_PATH="/contact-us/" npm run test:e2e:contact-form:live
+```
+
+Note: `CONTACT_FORM_SUBMIT=1` can send real emails to recipients configured in the Contact Form block (and BCC if configured).
+
 ---
 
 ### Features

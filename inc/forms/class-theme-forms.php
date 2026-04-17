@@ -80,6 +80,60 @@ class Theme_Forms {
         || (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
   }
 
+  private function is_truthy($value): bool {
+    if (is_bool($value)) return $value;
+    $normalized = strtolower(trim((string) $value));
+    return in_array($normalized, ['1', 'true', 'yes', 'on'], true);
+  }
+
+  private function maybe_subscribe_brevo_contact(array $fields): void {
+    if (empty($fields['email']) || !is_email($fields['email'])) return;
+    if (!$this->is_truthy($fields['keeping_in_touch_consent'] ?? '')) return;
+
+    $enabled = function_exists('get_field') ? (bool) get_field('newsletter_enabled', 'option') : true;
+    if (!$enabled) return;
+
+    $api_key = function_exists('get_field') ? (string) get_field('brevo_api_key', 'option') : '';
+    if (!$api_key && defined('MATRIX_BREVO_KEY')) $api_key = MATRIX_BREVO_KEY;
+    if (!$api_key) return;
+
+    $opt_lists = function_exists('get_field') ? (string) get_field('brevo_list_ids', 'option') : '';
+    $list_ids = array_values(array_unique(array_filter(array_map('absint', preg_split('/[,\s;]+/', (string) $opt_lists)), 'intval')));
+
+    $first = sanitize_text_field((string) ($fields['first_name'] ?? ''));
+    $last = sanitize_text_field((string) ($fields['last_name'] ?? ''));
+    if ($first === '' && !empty($fields['name'])) {
+      $parts = preg_split('/\s+/', trim((string) $fields['name']));
+      $first = sanitize_text_field((string) (array_shift($parts) ?: ''));
+      $last = sanitize_text_field((string) implode(' ', $parts));
+    }
+
+    $endpoint = 'https://api.brevo.com/v3/contacts';
+    $body = [
+      'email' => sanitize_email($fields['email']),
+      'updateEnabled' => true,
+      'attributes' => array_filter([
+        'FIRSTNAME' => $first,
+        'LASTNAME' => $last,
+        'CONSENT' => 'yes',
+        'CONSENT_IP' => $_SERVER['REMOTE_ADDR'] ?? '',
+        'CONSENT_AT' => current_time('mysql'),
+      ]),
+    ];
+    if (!empty($list_ids)) $body['listIds'] = $list_ids;
+
+    wp_remote_post($endpoint, [
+      'headers' => [
+        'accept' => 'application/json',
+        'content-type' => 'application/json',
+        'api-key' => $api_key,
+      ],
+      'timeout' => 10,
+      'body' => wp_json_encode($body),
+      'method' => 'POST',
+    ]);
+  }
+
   private function captcha_ok(): bool {
     $provider = function_exists('get_field') ? (get_field('captcha_provider', 'option') ?: 'none') : 'none';
     if ($provider === 'none') return true;
@@ -300,6 +354,10 @@ class Theme_Forms {
 
       remove_filter('wp_mail_from', $auto_from_filter);
       remove_filter('wp_mail_from_name', $auto_from_name_filter);
+    }
+
+    if ($sent) {
+      $this->maybe_subscribe_brevo_contact($fields);
     }
 
     // 10) Respond

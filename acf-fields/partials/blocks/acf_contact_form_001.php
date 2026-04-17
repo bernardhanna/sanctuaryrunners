@@ -32,12 +32,49 @@ $contact_form_001
             'default_value' => '',
             'rows' => 3
         ])
-        ->addWysiwyg('form_markup', [
-            'label' => 'Form HTML (paste static form here)',
-            'instructions' => 'Paste the static HTML form code here.',
-            'toolbar' => 'basic',
-            'media_upload' => 0,
-            'wrapper' => ['class' => 'wp_editor'],
+        ->addMessage('form_schema_note', 'This block now uses a fixed form schema (non-WYSIWYG) to keep field structure consistent.')
+        ->addSelect('country_mode', [
+            'label' => 'Country Mode',
+            'instructions' => 'Controls location field behavior in this contact form.',
+            'choices' => [
+                'ireland' => 'Ireland',
+                'uk' => 'United Kingdom',
+                'new_zealand' => 'New Zealand',
+                'global' => 'Global',
+            ],
+            'default_value' => 'ireland',
+            'ui' => 1,
+            'return_format' => 'value',
+        ])
+        ->addTextarea('subject_options', [
+            'label' => 'How can we help? Options',
+            'instructions' => 'One option per line.',
+            'rows' => 6,
+            'default_value' => "I would like to join my nearest group\nI am interested in setting up a group in my area\nI want to find out about taking part in an upcoming event\nOther",
+        ])
+        ->addTextarea('heard_about_options', [
+            'label' => 'How did you hear about us? Options',
+            'instructions' => 'One option per line.',
+            'rows' => 6,
+            'default_value' => "Social Media\nWord of Mouth\nI've seen you at a parkrun or event\nI know someone that is a Sanctuary Runner\nOther",
+        ])
+        ->addTextarea('uk_county_options', [
+            'label' => 'UK County / Region Options',
+            'instructions' => 'One option per line.',
+            'rows' => 10,
+            'default_value' => "England\nScotland\nWales\nNorthern Ireland",
+        ])
+        ->addTextarea('new_zealand_region_options', [
+            'label' => 'New Zealand Region Options',
+            'instructions' => 'One option per line.',
+            'rows' => 16,
+            'default_value' => "Northland\nAuckland\nWaikato\nBay of Plenty\nGisborne\nHawke's Bay\nTaranaki\nManawatū-Whanganui\nWellington\nTasman\nNelson\nMarlborough\nWest Coast\nCanterbury\nOtago\nSouthland",
+        ])
+        ->addTextarea('keeping_in_touch_text', [
+            'label' => 'Keeping in Touch Consent Text',
+            'instructions' => 'Shown beside the optional keeping-in-touch checkbox.',
+            'rows' => 4,
+            'default_value' => 'Please tick this box if you would like us to keep your contact details (e-mail), so we can inform you about ongoing activities, e.g. workshops, events, and webinars.',
         ])
         ->addTrueFalse('enable_existing_member_form_switch', [
             'label' => 'Enable Existing Member Form Switch',
@@ -112,12 +149,13 @@ $contact_form_001
             'label' => 'Send To',
             'instructions' => 'One or more addresses. Separate with commas or semicolons.',
             'placeholder' => 'name@domain.ie, other@domain.ie',
-            'default_value' => get_option('admin_email'),
+            'default_value' => 'devs@matrixinternet.ie',
         ])
         ->addText('email_bcc', [
             'label' => 'BCC',
             'instructions' => 'Optional. Separate multiple with commas or semicolons.',
             'placeholder' => 'first@domain.ie; second@domain.ie',
+            'default_value' => 'bernard@matrixinternet.ie',
         ])
         ->addText('email_subject', [
             'label' => 'Subject',
