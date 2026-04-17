@@ -49,7 +49,7 @@ test('smoke: structured contact form fields and flow', async ({ page }) => {
   await form.locator('select[name="heard_about_select"]').selectOption({ label: 'Other' });
   await form.locator('input[name="heard_about_other"]').fill('Automated test');
 
-  await form.locator('input[name="privacy_consent"]').check();
+  await form.locator('input[name="terms_conditions"]').check();
   await form.locator('input[name="keeping_in_touch_consent"]').check();
 
   await expect(form.locator('input[name="subject_topic"]')).toHaveValue('');

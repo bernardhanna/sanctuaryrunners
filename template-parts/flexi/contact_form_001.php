@@ -210,7 +210,7 @@ if ($country_mode === 'uk') {
                 </div>
 
                 <div class="flex flex-wrap gap-2 items-center mt-4 w-full max-md:max-w-full">
-                    <input id="<?php echo esc_attr($section_id); ?>-privacy-consent" class="w-8 h-8 bg-white rounded" name="privacy_consent" required type="checkbox" aria-required="true">
+                    <input id="<?php echo esc_attr($section_id); ?>-privacy-consent" class="w-8 h-8 bg-white rounded" name="terms_conditions" required type="checkbox" aria-required="true">
                     <label class="flex-1 shrink my-auto text-xs leading-5 basis-0 text-slate-900 max-md:max-w-full cursor-pointer" for="<?php echo esc_attr($section_id); ?>-privacy-consent">
                         By sending a message you agree with the
                         <a class="font-bold text-sky-800 hover:underline focus:underline rounded" href="<?php echo esc_url($terms_conditions_url); ?>">Terms and Conditions</a>
