@@ -8,6 +8,13 @@ $country_mode = (string) get_sub_field('country_mode');
 if ($country_mode === '') {
     $country_mode = 'ireland';
 }
+$ireland_county_options = [
+    'Antrim', 'Armagh', 'Carlow', 'Cavan', 'Clare', 'Cork', 'Derry', 'Donegal',
+    'Down', 'Dublin', 'Fermanagh', 'Galway', 'Kerry', 'Kildare', 'Kilkenny',
+    'Laois', 'Leitrim', 'Limerick', 'Longford', 'Louth', 'Mayo', 'Meath',
+    'Monaghan', 'Offaly', 'Roscommon', 'Sligo', 'Tipperary', 'Tyrone',
+    'Waterford', 'Westmeath', 'Wexford', 'Wicklow',
+];
 $subject_options_raw = (string) get_sub_field('subject_options');
 $subject_options = array_values(array_filter(array_map('trim', preg_split('/[\r\n]+/', $subject_options_raw))));
 if (empty($subject_options)) {
@@ -68,7 +75,7 @@ if (have_rows('padding_settings')) {
 $section_id = 'contact-form-' . esc_attr(wp_generate_uuid4());
 $default_country = 'Ireland';
 $location_label = 'County';
-$location_options = [];
+$location_options = $ireland_county_options;
 if ($country_mode === 'uk') {
     $default_country = 'United Kingdom';
     $location_label = 'County / Region';
@@ -128,40 +135,42 @@ if ($country_mode === 'uk') {
                     <input type="hidden" name="_cfg_auto_message" value="<?php echo esc_attr(get_sub_field('autoresponder_message') ?: ''); ?>">
                 <?php endif; ?>
                 <input type="hidden" name="country" value="<?php echo esc_attr($default_country); ?>">
+                <input type="hidden" name="site_country_mode" value="<?php echo esc_attr($country_mode); ?>">
+                <input type="hidden" name="site_country_context" value="<?php echo esc_attr($default_country); ?>">
                 <input type="hidden" name="subject_topic" value="">
                 <input type="hidden" name="heard_about_us" value="">
 
                 <div class="flex flex-wrap gap-4 items-start w-full max-md:max-w-full">
                     <div class="flex-1 shrink basis-0 min-w-60 max-md:max-w-full">
                         <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-first-name">First Name*</label>
-                        <input id="<?php echo esc_attr($section_id); ?>-first-name" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none" name="first_name" required type="text" placeholder="Your First Name" aria-required="true">
+                        <input id="<?php echo esc_attr($section_id); ?>-first-name" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="first_name" required type="text" placeholder="Your First Name" aria-required="true">
                     </div>
                     <div class="flex-1 shrink basis-0 min-w-60 max-md:max-w-full">
                         <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-last-name">Last Name*</label>
-                        <input id="<?php echo esc_attr($section_id); ?>-last-name" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none" name="last_name" required type="text" placeholder="Your Last Name" aria-required="true">
+                        <input id="<?php echo esc_attr($section_id); ?>-last-name" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="last_name" required type="text" placeholder="Your Last Name" aria-required="true">
                     </div>
                 </div>
 
                 <div class="flex flex-wrap gap-4 items-start mt-4 w-full max-md:max-w-full">
                     <div class="flex-1 shrink basis-0 min-w-60 max-md:max-w-full">
                         <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-email">Contact Email*</label>
-                        <input id="<?php echo esc_attr($section_id); ?>-email" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none" autocomplete="email" name="email" required type="email" placeholder="Your Contact Email" aria-required="true">
+                        <input id="<?php echo esc_attr($section_id); ?>-email" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" autocomplete="email" name="email" required type="email" placeholder="Your Contact Email" aria-required="true">
                     </div>
                     <div class="flex-1 shrink basis-0 min-w-60 max-md:max-w-full">
                         <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-phone">Phone Number</label>
-                        <input id="<?php echo esc_attr($section_id); ?>-phone" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none" autocomplete="tel" name="phone" type="tel" placeholder="Your Phone Number">
+                        <input id="<?php echo esc_attr($section_id); ?>-phone" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" autocomplete="tel" name="phone" type="tel" placeholder="Your Phone Number">
                     </div>
                 </div>
 
                 <div class="mt-4 w-full max-md:max-w-full">
                     <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-subject-select">How can we help?*</label>
-                    <select id="<?php echo esc_attr($section_id); ?>-subject-select" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none" name="subject_topic_select" required aria-required="true" data-other-toggle="subject">
+                    <select id="<?php echo esc_attr($section_id); ?>-subject-select" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="subject_topic_select" required aria-required="true" data-other-toggle="subject">
                         <option value="">Select your topic</option>
                         <?php foreach ($subject_options as $subject_option) : ?>
                             <option value="<?php echo esc_attr($subject_option); ?>"><?php echo esc_html($subject_option); ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <input id="<?php echo esc_attr($section_id); ?>-subject-other" class="hidden w-full p-4 mt-2 bg-white text-slate-600 outline-none" name="subject_topic_other" type="text" placeholder="Your Answer" data-other-input="subject">
+                    <input id="<?php echo esc_attr($section_id); ?>-subject-other" class="hidden w-full p-4 mt-2 bg-white text-slate-600 outline-none min-h-[52px]" name="subject_topic_other" type="text" placeholder="Your Answer" data-other-input="subject">
                 </div>
 
                 <div class="mt-4 w-full max-md:max-w-full">
@@ -172,14 +181,14 @@ if ($country_mode === 'uk') {
                 <div class="flex flex-wrap gap-4 items-start mt-4 w-full max-md:max-w-full">
                     <div class="flex-1 shrink basis-0 min-w-60 max-md:max-w-full">
                         <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-area-town">Area / Town*</label>
-                        <input id="<?php echo esc_attr($section_id); ?>-area-town" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none" name="area_town" required type="text" placeholder="Your Area/Town" aria-required="true">
+                        <input id="<?php echo esc_attr($section_id); ?>-area-town" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="area_town" required type="text" placeholder="Your Area/Town" aria-required="true">
                     </div>
                     <div class="flex-1 shrink basis-0 min-w-60 max-md:max-w-full">
                         <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-county-region"><?php echo esc_html($location_label); ?>*</label>
                         <?php if ($country_mode === 'global') : ?>
-                            <input id="<?php echo esc_attr($section_id); ?>-county-region" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none" name="county_region" required type="text" placeholder="Your Answer" aria-required="true">
+                            <input id="<?php echo esc_attr($section_id); ?>-county-region" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="county_region" required type="text" placeholder="Your Answer" aria-required="true">
                         <?php else : ?>
-                            <select id="<?php echo esc_attr($section_id); ?>-county-region" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none" name="county_region" required aria-required="true">
+                            <select id="<?php echo esc_attr($section_id); ?>-county-region" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="county_region" required aria-required="true">
                                 <option value="">Select <?php echo esc_html(strtolower($location_label)); ?></option>
                                 <?php foreach ($location_options as $location_option) : ?>
                                     <option value="<?php echo esc_attr($location_option); ?>"><?php echo esc_html($location_option); ?></option>
@@ -191,13 +200,13 @@ if ($country_mode === 'uk') {
 
                 <div class="mt-4 w-full max-md:max-w-full">
                     <label class="block w-full text-xs text-slate-900" for="<?php echo esc_attr($section_id); ?>-heard-select">How did you hear about us?*</label>
-                    <select id="<?php echo esc_attr($section_id); ?>-heard-select" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none" name="heard_about_select" required aria-required="true" data-other-toggle="heard">
+                    <select id="<?php echo esc_attr($section_id); ?>-heard-select" class="w-full p-4 mt-1 bg-white text-slate-600 outline-none min-h-[52px]" name="heard_about_select" required aria-required="true" data-other-toggle="heard">
                         <option value="">Select an option</option>
                         <?php foreach ($heard_about_options as $heard_about_option) : ?>
                             <option value="<?php echo esc_attr($heard_about_option); ?>"><?php echo esc_html($heard_about_option); ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <input id="<?php echo esc_attr($section_id); ?>-heard-other" class="hidden w-full p-4 mt-2 bg-white text-slate-600 outline-none" name="heard_about_other" type="text" placeholder="Your Answer" data-other-input="heard">
+                    <input id="<?php echo esc_attr($section_id); ?>-heard-other" class="hidden w-full p-4 mt-2 bg-white text-slate-600 outline-none min-h-[52px]" name="heard_about_other" type="text" placeholder="Your Answer" data-other-input="heard">
                 </div>
 
                 <div class="flex flex-wrap gap-2 items-center mt-4 w-full max-md:max-w-full">
@@ -290,11 +299,20 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <style type="text/css">
-#<?php echo esc_attr($section_id); ?> input:not([type="hidden"]),
+#<?php echo esc_attr($section_id); ?> input[type="text"],
+#<?php echo esc_attr($section_id); ?> input[type="email"],
+#<?php echo esc_attr($section_id); ?> input[type="tel"],
 #<?php echo esc_attr($section_id); ?> select,
 #<?php echo esc_attr($section_id); ?> textarea {
     border-radius: 4px !important;
     border: 1px solid var(--Gray-600, #475467) !important;
+}
+
+#<?php echo esc_attr($section_id); ?> input[type="text"],
+#<?php echo esc_attr($section_id); ?> input[type="email"],
+#<?php echo esc_attr($section_id); ?> input[type="tel"],
+#<?php echo esc_attr($section_id); ?> select {
+    min-height: 52px !important;
 }
 
 #<?php echo esc_attr($section_id); ?> input:not([type="hidden"])::placeholder,
