@@ -394,6 +394,18 @@ class Theme_Forms {
     $fields  = $this->normalize_fields_from_post();
     $form_name = sanitize_text_field($_POST['_theme_form_name'] ?? '');
 
+    // Track the exact page URL the form was submitted from.
+    $source_url = '';
+    if (!empty($_POST['source_url'])) {
+      $source_url = esc_url_raw(wp_unslash((string) $_POST['source_url']));
+    }
+    if ($source_url === '' && !empty($_SERVER['HTTP_REFERER'])) {
+      $source_url = esc_url_raw(wp_unslash((string) $_SERVER['HTTP_REFERER']));
+    }
+    if ($source_url !== '') {
+      $fields['source_url'] = $source_url;
+    }
+
     // Require Terms & Conditions consent across all theme forms.
     if (!isset($_POST['terms_conditions']) || !$this->is_truthy($_POST['terms_conditions'])) {
       $this->result(false, 'terms_required');
@@ -484,11 +496,16 @@ class Theme_Forms {
     ob_start();
     echo '<h2>New form entry</h2><table>';
     foreach ($fields as $label => $val) {
+      if ($label === 'source_url') continue;
       printf(
         '<tr><th style="text-align:left;padding-right:10px;">%s</th><td>%s</td></tr>',
         esc_html( ucwords( str_replace(['-', '_'], ' ', $label) ) ),
         esc_html( is_array($val) ? implode(', ', $val) : $val )
       );
+    }
+    if (!empty($fields['source_url'])) {
+      $safe_source_url = esc_url((string) $fields['source_url']);
+      echo '<tr><th style="text-align:left;padding-right:10px;">Source URL</th><td><a href="' . $safe_source_url . '">' . $safe_source_url . '</a></td></tr>';
     }
     echo '</table>';
     $message = ob_get_clean();

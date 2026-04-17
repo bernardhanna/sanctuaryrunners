@@ -148,6 +148,7 @@ if ($country_mode === 'uk') {
                 <input type="hidden" name="country" value="<?php echo esc_attr($default_country); ?>">
                 <input type="hidden" name="site_country_mode" value="<?php echo esc_attr($country_mode); ?>">
                 <input type="hidden" name="site_country_context" value="<?php echo esc_attr($default_country); ?>">
+                <input type="hidden" name="source_url" value="">
                 <input type="hidden" name="subject_topic" value="">
                 <input type="hidden" name="heard_about_us" value="">
 
@@ -266,6 +267,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     section.querySelectorAll('form[data-contact-structured="1"]').forEach(function (formEl) {
+        var sourceUrlInput = formEl.querySelector('input[name="source_url"]');
+        if (sourceUrlInput) {
+            sourceUrlInput.value = window.location.href;
+        }
+
         var subjectSelect = formEl.querySelector('[name="subject_topic_select"]');
         var subjectOther = formEl.querySelector('[name="subject_topic_other"]');
         var subjectFinal = formEl.querySelector('[name="subject_topic"]');
