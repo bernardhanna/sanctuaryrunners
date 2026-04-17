@@ -257,12 +257,6 @@ class Theme_Forms {
         || (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
   }
 
-  private function is_truthy($value): bool {
-    if (is_bool($value)) return $value;
-    $normalized = strtolower(trim((string) $value));
-    return in_array($normalized, ['1', 'true', 'yes', 'on'], true);
-  }
-
   private function maybe_subscribe_brevo_contact(array $fields): void {
     if (empty($fields['email']) || !is_email($fields['email'])) return;
     if (!$this->is_truthy($fields['keeping_in_touch_consent'] ?? '')) return;
