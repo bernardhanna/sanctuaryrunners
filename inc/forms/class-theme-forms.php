@@ -230,7 +230,7 @@ class Theme_Forms {
     $val = $this->maybe_undouble_string($val);
 
     // Normalize common checkbox fields to readable Yes/No values.
-    if (in_array($key, ['terms_conditions', 'marketing_opt_in', 'newsletter_opt_in', 'email_opt_in', 'consent_marketing', 'contact_details', 'newsletter'], true)) {
+    if (in_array($key, ['terms_conditions', 'marketing_opt_in', 'newsletter_opt_in', 'email_opt_in', 'consent_marketing', 'contact_details', 'newsletter', 'keeping_in_touch_consent'], true)) {
       return $this->is_truthy($val) ? 'Yes' : 'No';
     }
 
@@ -243,6 +243,10 @@ class Theme_Forms {
       'theme_form_nonce',
       'g-recaptcha-response','cf-turnstile-response',
       '_submission_uid',
+      // helper/internal fields that should not appear in admin emails/entries
+      'subject_topic_select', 'subject_topic_other',
+      'heard_about_select', 'heard_about_other',
+      'site_country_mode', 'site_country_context',
     ];
     $out = [];
     foreach ($_POST as $k => $v) {

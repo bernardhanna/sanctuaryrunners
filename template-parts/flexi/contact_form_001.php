@@ -57,6 +57,12 @@ if ($keeping_in_touch_text === '') {
 
 $background_color = get_sub_field('background_color') ?: '#ffffff';
 $form_background_color = get_sub_field('form_background_color') ?: '#fef3c7';
+$autoresponder_include_logo = (bool) get_sub_field('autoresponder_include_logo');
+$autoresponder_logo = get_sub_field('autoresponder_logo');
+$autoresponder_logo_url = is_array($autoresponder_logo) ? (string) ($autoresponder_logo['url'] ?? '') : '';
+$autoresponder_footer_text = (string) get_sub_field('autoresponder_footer_text');
+$autoresponder_name_field = (string) get_sub_field('autoresponder_name_field');
+$autoresponder_reply_to_email = (string) get_sub_field('autoresponder_reply_to_email');
 
 $padding_classes = [''];
 if (have_rows('padding_settings')) {
@@ -133,6 +139,11 @@ if ($country_mode === 'uk') {
                     <input type="hidden" name="_cfg_auto_enabled" value="1">
                     <input type="hidden" name="_cfg_auto_subject" value="<?php echo esc_attr(get_sub_field('autoresponder_subject') ?: 'Thank you for your message'); ?>">
                     <input type="hidden" name="_cfg_auto_message" value="<?php echo esc_attr(get_sub_field('autoresponder_message') ?: ''); ?>">
+                    <input type="hidden" name="_cfg_auto_include_logo" value="<?php echo $autoresponder_include_logo ? '1' : '0'; ?>">
+                    <input type="hidden" name="_cfg_auto_logo_url" value="<?php echo esc_attr($autoresponder_logo_url); ?>">
+                    <input type="hidden" name="_cfg_auto_footer" value="<?php echo esc_attr($autoresponder_footer_text); ?>">
+                    <input type="hidden" name="_cfg_auto_name_field" value="<?php echo esc_attr($autoresponder_name_field); ?>">
+                    <input type="hidden" name="_cfg_auto_reply_to" value="<?php echo esc_attr($autoresponder_reply_to_email); ?>">
                 <?php endif; ?>
                 <input type="hidden" name="country" value="<?php echo esc_attr($default_country); ?>">
                 <input type="hidden" name="site_country_mode" value="<?php echo esc_attr($country_mode); ?>">
