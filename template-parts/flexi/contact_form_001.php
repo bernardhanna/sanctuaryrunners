@@ -257,10 +257,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var section = document.getElementById('<?php echo esc_js($section_id); ?>');
     if (!section) return;
 
+    function isOtherSelection(value) {
+        var normalized = String(value || '').trim().toLowerCase();
+        return normalized === 'other' || normalized.indexOf('other:') === 0 || normalized.indexOf('other ') === 0;
+    }
+
     function updateOtherField(selectEl, inputEl) {
         if (!selectEl || !inputEl) return;
-        var normalized = String(selectEl.value || '').trim().toLowerCase();
-        var isOther = normalized === 'other' || normalized.indexOf('other:') === 0 || normalized.indexOf('other ') === 0;
+        var isOther = isOtherSelection(selectEl.value);
         inputEl.classList.toggle('hidden', !isOther);
         inputEl.required = isOther;
         if (!isOther) inputEl.value = '';
@@ -296,8 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formEl.addEventListener('submit', function () {
             if (subjectFinal && subjectSelect) {
                 var subjectValue = subjectSelect.value || '';
-                var subjectNormalized = String(subjectValue).trim().toLowerCase();
-                var subjectIsOther = subjectNormalized === 'other' || subjectNormalized.indexOf('other:') === 0 || subjectNormalized.indexOf('other ') === 0;
+                var subjectIsOther = isOtherSelection(subjectValue);
                 if (subjectIsOther && subjectOther && subjectOther.value.trim() !== '') {
                     subjectFinal.value = 'Other: ' + subjectOther.value.trim();
                 } else {
@@ -307,8 +310,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (heardFinal && heardSelect) {
                 var heardValue = heardSelect.value || '';
-                var heardNormalized = String(heardValue).trim().toLowerCase();
-                var heardIsOther = heardNormalized === 'other' || heardNormalized.indexOf('other:') === 0 || heardNormalized.indexOf('other ') === 0;
+                var heardIsOther = isOtherSelection(heardValue);
                 if (heardIsOther && heardOther && heardOther.value.trim() !== '') {
                     heardFinal.value = 'Other: ' + heardOther.value.trim();
                 } else {
@@ -316,6 +318,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         });
+    });
+
+    // Works for both native selects and Nice Select transformed UI.
+    function refreshOtherFieldsForAllForms() {
+        section.querySelectorAll('form[data-contact-structured="1"]').forEach(function (formEl) {
+            var subjectSelect = formEl.querySelector('[name="subject_topic_select"]');
+            var subjectOther = formEl.querySelector('[name="subject_topic_other"]');
+            var heardSelect = formEl.querySelector('[name="heard_about_select"]');
+            var heardOther = formEl.querySelector('[name="heard_about_other"]');
+            updateOtherField(subjectSelect, subjectOther);
+            updateOtherField(heardSelect, heardOther);
+        });
+    }
+
+    section.addEventListener('change', function (event) {
+        var target = event.target;
+        if (!target || target.tagName !== 'SELECT') return;
+        if (target.name === 'subject_topic_select' || target.name === 'heard_about_select') {
+            refreshOtherFieldsForAllForms();
+        }
+    });
+
+    section.addEventListener('click', function (event) {
+        var optionEl = event.target.closest('.nice-select .option');
+        if (!optionEl) return;
+        setTimeout(function () {
+            refreshOtherFieldsForAllForms();
+        }, 0);
     });
 
     function initNiceSelectInSection() {
@@ -340,11 +370,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.niceSelect === 'function') {
             clearInterval(waitTimer);
             initNiceSelectInSection();
-            section.querySelectorAll('select.contact-select').forEach(function (selectEl) {
-                selectEl.addEventListener('change', function () {
-                    initNiceSelectInSection();
-                });
-            });
+            refreshOtherFieldsForAllForms();
         } else if (attempts > 80) {
             clearInterval(waitTimer);
         }
