@@ -57,7 +57,7 @@ isProject: false
 ## Phase 4: Theme/UX Multisite Configuration
 
 - Configure per-site ACF Options values (logos, nav buttons, legal/footer links, contact settings, country-specific text).
-- Configure country switch links in `[/Users/bernardhanna/Local Sites/sanctuaryrunners/app/public/wp-content/themes/matrix-starter/template-parts/header/navbar/language-dropdown.php](/Users/bernardhanna/Local%20Sites/sanctuaryrunners/app/public/wp-content/themes/matrix-starter/template-parts/header/navbar/language-dropdown.php)` via options so each country points to the right subsite URL.
+- Configure country switch links in `template-parts/header/navbar/language-dropdown.php` via options so each country points to the right subsite URL.
 - Ensure each site uses the correct localized contact form block setup (country mode, recipient routing, autoresponder copy, consent text).
 - Validate hero/nav breakpoint behavior and shared tokenized styling still match across all 3 sites.
 
@@ -65,8 +65,8 @@ isProject: false
 
 - Audit activation mode (network vs per-site) for critical plugins, especially `matrix-donations`.
 - For `matrix-donations`, verify per-site options + DB table bootstrap behavior in:
-  - `[/Users/bernardhanna/Local Sites/sanctuaryrunners/app/public/wp-content/plugins/matrix-donations/matrix-donations.php](/Users/bernardhanna/Local%20Sites/sanctuaryrunners/app/public/wp-content/plugins/matrix-donations/matrix-donations.php)`
-  - `[/Users/bernardhanna/Local Sites/sanctuaryrunners/app/public/wp-content/plugins/matrix-donations/includes/class-settings.php](/Users/bernardhanna/Local%20Sites/sanctuaryrunners/app/public/wp-content/plugins/matrix-donations/includes/class-settings.php)`
+  - `wp-content/plugins/matrix-donations/matrix-donations.php`
+  - `wp-content/plugins/matrix-donations/includes/class-settings.php`
 - Confirm each subsite has correct donation pages, Stripe keys/webhook endpoint, Salesforce settings, and email recipients.
 - Verify forms, reCAPTCHA/Turnstile, email/autoresponder behavior per site.
 
