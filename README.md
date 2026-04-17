@@ -203,6 +203,34 @@ CONTACT_FORM_SUBMIT=1 CONTACT_FORM_PATH="/contact-us/" npm run test:e2e:contact-
 
 Note: `CONTACT_FORM_SUBMIT=1` can send real emails to recipients configured in the Contact Form block (and BCC if configured).
 
+### Donation Form Smoke Test
+
+Run the donation form smoke test:
+
+```bash
+npm run test:e2e:donation-form
+```
+
+Run it in headed/live browser mode:
+
+```bash
+npm run test:e2e:donation-form:live
+```
+
+If your donation form is on a different page, set the path:
+
+```bash
+DONATION_FORM_PATH="/donate/" npm run test:e2e:donation-form:live
+```
+
+To submit the donation form (instead of fill-only smoke mode), set:
+
+```bash
+DONATION_FORM_SUBMIT=1 DONATION_FORM_PATH="/donate/" npm run test:e2e:donation-form:live
+```
+
+Note: `DONATION_FORM_SUBMIT=1` should only be used in safe/sandbox environments.
+
 ---
 
 ### Features

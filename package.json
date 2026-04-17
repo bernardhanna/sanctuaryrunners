@@ -21,6 +21,8 @@
     "test:e2e:network": "playwright test -c playwright.config.cjs tests/e2e/network-smoke.spec.js",
     "test:e2e:contact-form": "playwright test -c playwright.config.cjs tests/e2e/contact-form-smoke.spec.js",
     "test:e2e:contact-form:live": "playwright test -c playwright.config.cjs tests/e2e/contact-form-smoke.spec.js --headed",
+    "test:e2e:donation-form": "playwright test -c playwright.config.cjs tests/e2e/donation-form-smoke.spec.js",
+    "test:e2e:donation-form:live": "playwright test -c playwright.config.cjs tests/e2e/donation-form-smoke.spec.js --headed",
     "test:watch": "playwright test --ui",
     "test": "npm run test:php && npm run test:e2e",
     "test:links": "node scripts/run-blc.js",
