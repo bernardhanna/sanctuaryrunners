@@ -54,7 +54,7 @@ $heading_id = $section_id . '-heading';
 
 <section
   id="<?php echo esc_attr($section_id); ?>"
-  class="flex overflow-hidden relative max-md:overflow-visible"
+  class="flex relative overflow-hidden"
   role="region"
   aria-labelledby="<?php echo esc_attr($heading_id); ?>"
   style="background-color: <?php echo esc_attr($background_color ?: '#009DE6'); ?>;"
@@ -143,7 +143,7 @@ $heading_id = $section_id . '-heading';
                 </button>
               <?php endif; ?>
 
-              <div class="hidden md:block">
+              <div>
                 <div
                   class="js-partners-slider"
                   data-autoplay="<?php echo $slider_autoplay ? '1' : '0'; ?>"
@@ -154,7 +154,7 @@ $heading_id = $section_id . '-heading';
                 >
                   <?php foreach ($logo_items as $logo_data) : ?>
                     <div class="px-2 partners-slide">
-                      <div role="listitem" class="flex h-[100px] items-center justify-center">
+                      <div role="listitem" class="flex h-[100px] items-center justify-center rounded-[10px] bg-white/5 px-3">
                         <?php if (is_array($logo_data['link']) && !empty($logo_data['link']['url'])) : ?>
                           <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
                             <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="max-h-[82px] w-auto max-w-full object-contain mix-blend-luminosity" />
@@ -168,7 +168,7 @@ $heading_id = $section_id . '-heading';
                 </div>
               </div>
 
-              <div class="md:hidden">
+              <div class="hidden">
                 <div class="partners-scroll-track" role="list" aria-label="Partner logos slider">
                   <?php foreach ($logo_items as $logo_data) : ?>
                     <div class="partners-scroll-slide" role="listitem">
@@ -204,6 +204,9 @@ $heading_id = $section_id . '-heading';
               #<?php echo esc_attr($section_id); ?> .partners-scroll-slide {
                 flex: 0 0 min(72%, 260px);
                 scroll-snap-align: start;
+              }
+              #<?php echo esc_attr($section_id); ?> .js-partners-slider .slick-list {
+                overflow: hidden;
               }
               #<?php echo esc_attr($section_id); ?> .partners-mobile-dots {
                 display: flex;
@@ -243,7 +246,7 @@ $heading_id = $section_id . '-heading';
               var slidesDesktop = parseInt($slider.attr('data-slides') || '5', 10);
 
               $slider.slick({
-                slidesToShow: slidesDesktop,
+                slidesToShow: Math.max(1, Math.min(4, slidesDesktop)),
                 slidesToScroll: 1,
                 autoplay: autoplay,
                 autoplaySpeed: isNaN(speed) ? 3000 : speed,
@@ -251,12 +254,12 @@ $heading_id = $section_id . '-heading';
                 arrows: <?php echo $show_slider_arrows ? 'true' : 'false'; ?>,
                 prevArrow: $section.find('.partners-prev'),
                 nextArrow: $section.find('.partners-next'),
-                dots: false,
+                dots: <?php echo $show_mobile_dots ? 'true' : 'false'; ?>,
                 adaptiveHeight: false,
                 responsive: [
-                  { breakpoint: 1280, settings: { slidesToShow: Math.max(2, slidesDesktop - 1) } },
-                  { breakpoint: 1024, settings: { slidesToShow: Math.max(2, slidesDesktop - 2) } },
-                  { breakpoint: 768, settings: 'unslick' }
+                  { breakpoint: 1280, settings: { slidesToShow: 3 } },
+                  { breakpoint: 1024, settings: { slidesToShow: 2 } },
+                  { breakpoint: 768, settings: { slidesToShow: 1 } }
                 ]
               });
 
