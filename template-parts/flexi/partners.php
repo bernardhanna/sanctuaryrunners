@@ -9,6 +9,10 @@ $subheading_tag  = (string) get_sub_field('subheading_tag');
 
 $logos = get_sub_field('logos');
 $enable_logo_slider = (bool) get_sub_field('enable_logo_slider');
+$logo_visual_style = (string) get_sub_field('logo_visual_style');
+if ($logo_visual_style === '') {
+  $logo_visual_style = 'original';
+}
 $show_slider_arrows = (bool) get_sub_field('show_slider_arrows');
 $show_mobile_dots = (bool) get_sub_field('show_mobile_dots');
 $slider_autoplay = (bool) get_sub_field('slider_autoplay');
@@ -58,6 +62,14 @@ if (have_rows('padding_settings')) {
 $padding_class_string = implode(' ', $padding_classes);
 
 $heading_id = $section_id . '-heading';
+
+$logo_image_class = 'object-contain';
+if ($logo_visual_style === 'muted') {
+  $logo_image_class .= ' mix-blend-luminosity';
+} elseif ($logo_visual_style === 'white') {
+  // Best-effort white conversion for dark logos.
+  $logo_image_class .= ' brightness-0 invert';
+}
 ?>
 
 <section
@@ -136,13 +148,17 @@ $heading_id = $section_id . '-heading';
                 }
                 ?>
                 <div role="listitem" class="flex justify-center md:justify-start">
+                  <?php
+                  $is_white_logo_mode = $logo_visual_style === 'white';
+                  $non_slider_card_class = $is_white_logo_mode ? 'bg-transparent px-0' : $card_class;
+                  ?>
                   <?php if (is_array($logo_data['link']) && !empty($logo_data['link']['url'])) : ?>
-                    <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn rounded-[10px] px-3 <?php echo esc_attr($card_class); ?>" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
-                      <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="object-cover max-w-full mix-blend-luminosity shrink-0 max-md:h-auto max-md:object-contain" />
+                    <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn rounded-[10px] <?php echo esc_attr($non_slider_card_class); ?>" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
+                      <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="object-cover max-w-full shrink-0 max-md:h-auto max-md:object-contain <?php echo esc_attr($logo_image_class); ?>" />
                     </a>
                   <?php else : ?>
-                    <div class="inline-flex rounded-[10px] px-3 <?php echo esc_attr($card_class); ?>">
-                      <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="object-cover max-w-full mix-blend-luminosity shrink-0 max-md:h-auto max-md:object-contain" />
+                    <div class="inline-flex rounded-[10px] <?php echo esc_attr($non_slider_card_class); ?>">
+                      <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="object-cover max-w-full shrink-0 max-md:h-auto max-md:object-contain <?php echo esc_attr($logo_image_class); ?>" />
                     </div>
                   <?php endif; ?>
                 </div>
@@ -185,13 +201,17 @@ $heading_id = $section_id . '-heading';
                     }
                     ?>
                     <div class="px-2 partners-slide">
-                      <div role="listitem" class="flex h-[100px] items-center justify-center rounded-[10px] px-3 <?php echo esc_attr($card_class); ?>">
+                      <?php
+                      $is_white_logo_mode = $logo_visual_style === 'white';
+                      $slider_card_class = $is_white_logo_mode ? 'bg-transparent px-0' : $card_class;
+                      ?>
+                      <div role="listitem" class="flex h-[100px] items-center justify-center rounded-[10px] <?php echo esc_attr($slider_card_class); ?>">
                         <?php if (is_array($logo_data['link']) && !empty($logo_data['link']['url'])) : ?>
                           <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn h-[82px] w-full items-center justify-center" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
-                            <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="h-full w-full object-contain mix-blend-luminosity" />
+                            <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="h-full w-full <?php echo esc_attr($logo_image_class); ?>" />
                           </a>
                         <?php else : ?>
-                          <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="h-[82px] w-full object-contain mix-blend-luminosity" />
+                          <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="h-[82px] w-full <?php echo esc_attr($logo_image_class); ?>" />
                         <?php endif; ?>
                       </div>
                     </div>

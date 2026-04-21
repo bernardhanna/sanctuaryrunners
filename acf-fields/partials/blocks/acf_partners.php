@@ -94,6 +94,18 @@ $partners
             'default_value' => 0,
             'ui' => 1,
         ])
+        ->addSelect('logo_visual_style', [
+            'label' => 'Logo Visual Style',
+            'instructions' => 'Control how logos are visually rendered.',
+            'choices' => [
+                'original' => 'Original Colors',
+                'muted' => 'Muted (Blend/Luminosity)',
+                'white' => 'White Logos (No Card Background)',
+            ],
+            'default_value' => 'original',
+            'ui' => 1,
+            'return_format' => 'value',
+        ])
         ->addTrueFalse('show_slider_arrows', [
             'label' => 'Show Slider Arrows',
             'default_value' => 1,
