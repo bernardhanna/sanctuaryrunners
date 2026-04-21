@@ -143,7 +143,7 @@ $heading_id = $section_id . '-heading';
                 </button>
               <?php endif; ?>
 
-              <div>
+              <div class="hidden md:block">
                 <div
                   class="js-partners-slider"
                   data-autoplay="<?php echo $slider_autoplay ? '1' : '0'; ?>"
@@ -168,7 +168,7 @@ $heading_id = $section_id . '-heading';
                 </div>
               </div>
 
-              <div class="hidden">
+              <div class="md:hidden">
                 <div class="partners-scroll-track" role="list" aria-label="Partner logos slider">
                   <?php foreach ($logo_items as $logo_data) : ?>
                     <div class="partners-scroll-slide" role="listitem">
@@ -206,7 +206,10 @@ $heading_id = $section_id . '-heading';
                 scroll-snap-align: start;
               }
               #<?php echo esc_attr($section_id); ?> .js-partners-slider .slick-list {
-                overflow: hidden;
+                overflow: hidden !important;
+              }
+              #<?php echo esc_attr($section_id); ?> .js-partners-slider .slick-track {
+                overflow: hidden !important;
               }
               #<?php echo esc_attr($section_id); ?> .partners-mobile-dots {
                 display: flex;
@@ -245,22 +248,51 @@ $heading_id = $section_id . '-heading';
               var speed = parseInt($slider.attr('data-speed') || '3000', 10);
               var slidesDesktop = parseInt($slider.attr('data-slides') || '5', 10);
 
-              $slider.slick({
-                slidesToShow: Math.max(1, Math.min(4, slidesDesktop)),
-                slidesToScroll: 1,
-                autoplay: autoplay,
-                autoplaySpeed: isNaN(speed) ? 3000 : speed,
-                infinite: true,
-                arrows: <?php echo $show_slider_arrows ? 'true' : 'false'; ?>,
-                prevArrow: $section.find('.partners-prev'),
-                nextArrow: $section.find('.partners-next'),
-                dots: <?php echo $show_mobile_dots ? 'true' : 'false'; ?>,
-                adaptiveHeight: false,
-                responsive: [
-                  { breakpoint: 1280, settings: { slidesToShow: 3 } },
-                  { breakpoint: 1024, settings: { slidesToShow: 2 } },
-                  { breakpoint: 768, settings: { slidesToShow: 1 } }
-                ]
+              var initDesktopSlider = function () {
+                if ($slider.hasClass('slick-initialized')) return;
+                $slider.slick({
+                  slidesToShow: 4,
+                  slidesToScroll: 1,
+                  autoplay: autoplay,
+                  autoplaySpeed: isNaN(speed) ? 3000 : speed,
+                  infinite: true,
+                  arrows: <?php echo $show_slider_arrows ? 'true' : 'false'; ?>,
+                  prevArrow: $section.find('.partners-prev'),
+                  nextArrow: $section.find('.partners-next'),
+                  dots: false,
+                  adaptiveHeight: false,
+                  swipe: true,
+                  draggable: true,
+                  touchMove: true,
+                  responsive: [
+                    { breakpoint: 1280, settings: { slidesToShow: 3 } },
+                    { breakpoint: 1024, settings: { slidesToShow: 2 } }
+                  ]
+                });
+              };
+
+              var destroyDesktopSlider = function () {
+                if ($slider.hasClass('slick-initialized')) {
+                  $slider.slick('unslick');
+                }
+              };
+
+              var syncSliderMode = function () {
+                if (window.matchMedia('(min-width: 768px)').matches) {
+                  initDesktopSlider();
+                } else {
+                  destroyDesktopSlider();
+                }
+              };
+
+              syncSliderMode();
+
+              var resizeTimer = null;
+              window.addEventListener('resize', function () {
+                if (resizeTimer) {
+                  window.clearTimeout(resizeTimer);
+                }
+                resizeTimer = window.setTimeout(syncSliderMode, 150);
               });
 
               <?php if ($show_mobile_dots) : ?>
