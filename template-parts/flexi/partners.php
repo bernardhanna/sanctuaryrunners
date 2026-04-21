@@ -143,7 +143,7 @@ $heading_id = $section_id . '-heading';
                 </button>
               <?php endif; ?>
 
-              <div class="hidden md:block">
+              <div>
                 <div
                   class="js-partners-slider"
                   data-autoplay="<?php echo $slider_autoplay ? '1' : '0'; ?>"
@@ -156,81 +156,25 @@ $heading_id = $section_id . '-heading';
                     <div class="px-2 partners-slide">
                       <div role="listitem" class="flex h-[100px] items-center justify-center rounded-[10px] bg-white/5 px-3">
                         <?php if (is_array($logo_data['link']) && !empty($logo_data['link']['url'])) : ?>
-                          <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
-                            <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="max-h-[82px] w-auto max-w-full object-contain mix-blend-luminosity" />
+                          <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn h-[82px] w-full items-center justify-center" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
+                            <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="h-full w-full object-contain mix-blend-luminosity" />
                           </a>
                         <?php else : ?>
-                          <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="max-h-[82px] w-auto max-w-full object-contain mix-blend-luminosity" />
+                          <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="h-[82px] w-full object-contain mix-blend-luminosity" />
                         <?php endif; ?>
                       </div>
                     </div>
                   <?php endforeach; ?>
                 </div>
-              </div>
-
-              <div class="md:hidden">
-                <div class="partners-scroll-track" role="list" aria-label="Partner logos slider">
-                  <?php foreach ($logo_items as $logo_data) : ?>
-                    <div class="partners-scroll-slide" role="listitem">
-                      <div class="flex h-[96px] items-center justify-center rounded-[10px] bg-white/5 px-3">
-                        <?php if (is_array($logo_data['link']) && !empty($logo_data['link']['url'])) : ?>
-                          <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
-                            <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="max-h-[72px] w-auto max-w-full object-contain mix-blend-luminosity" />
-                          </a>
-                        <?php else : ?>
-                          <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="max-h-[72px] w-auto max-w-full object-contain mix-blend-luminosity" />
-                        <?php endif; ?>
-                      </div>
-                    </div>
-                  <?php endforeach; ?>
-                </div>
-                <?php if ($show_mobile_dots) : ?>
-                  <div class="partners-mobile-dots mt-4"></div>
-                <?php endif; ?>
               </div>
             </div>
 
             <style>
-              #<?php echo esc_attr($section_id); ?> .partners-scroll-track {
-                display: flex;
-                gap: 12px;
-                overflow-x: auto;
-                scrollbar-width: none;
-                -webkit-overflow-scrolling: touch;
-                scroll-snap-type: x mandatory;
-                padding-inline: 6px;
-              }
-              #<?php echo esc_attr($section_id); ?> .partners-scroll-track::-webkit-scrollbar { display: none; }
-              #<?php echo esc_attr($section_id); ?> .partners-scroll-slide {
-                flex: 0 0 min(72%, 260px);
-                scroll-snap-align: start;
-              }
               #<?php echo esc_attr($section_id); ?> .js-partners-slider .slick-list {
                 overflow: hidden !important;
               }
               #<?php echo esc_attr($section_id); ?> .js-partners-slider .slick-track {
                 overflow: hidden !important;
-              }
-              #<?php echo esc_attr($section_id); ?> .partners-mobile-dots {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-              }
-              #<?php echo esc_attr($section_id); ?> .partners-mobile-dots button {
-                width: 12px;
-                height: 12px;
-                padding: 0;
-                border: 2px solid #ffffff;
-                border-radius: 9999px;
-                background: transparent;
-                cursor: pointer;
-                transition: background 0.2s, opacity 0.2s;
-                opacity: 0.9;
-              }
-              #<?php echo esc_attr($section_id); ?> .partners-mobile-dots button.is-active {
-                background: #ffffff;
-                opacity: 1;
               }
             </style>
 
@@ -248,98 +192,26 @@ $heading_id = $section_id . '-heading';
               var speed = parseInt($slider.attr('data-speed') || '3000', 10);
               var slidesDesktop = parseInt($slider.attr('data-slides') || '5', 10);
 
-              var initDesktopSlider = function () {
-                if ($slider.hasClass('slick-initialized')) return;
-                $slider.slick({
-                  slidesToShow: 4,
-                  slidesToScroll: 1,
-                  autoplay: autoplay,
-                  autoplaySpeed: isNaN(speed) ? 3000 : speed,
-                  infinite: true,
-                  arrows: <?php echo $show_slider_arrows ? 'true' : 'false'; ?>,
-                  prevArrow: $section.find('.partners-prev'),
-                  nextArrow: $section.find('.partners-next'),
-                  dots: false,
-                  adaptiveHeight: false,
-                  swipe: true,
-                  draggable: true,
-                  touchMove: true,
-                  responsive: [
-                    { breakpoint: 1280, settings: { slidesToShow: 3 } },
-                    { breakpoint: 1024, settings: { slidesToShow: 2 } }
-                  ]
-                });
-              };
-
-              var destroyDesktopSlider = function () {
-                if ($slider.hasClass('slick-initialized')) {
-                  $slider.slick('unslick');
-                }
-              };
-
-              var syncSliderMode = function () {
-                if (window.matchMedia('(min-width: 768px)').matches) {
-                  initDesktopSlider();
-                } else {
-                  destroyDesktopSlider();
-                }
-              };
-
-              syncSliderMode();
-
-              var resizeTimer = null;
-              window.addEventListener('resize', function () {
-                if (resizeTimer) {
-                  window.clearTimeout(resizeTimer);
-                }
-                resizeTimer = window.setTimeout(syncSliderMode, 150);
+              $slider.slick({
+                slidesToShow: Math.max(1, Math.min(4, slidesDesktop)),
+                slidesToScroll: 1,
+                autoplay: autoplay,
+                autoplaySpeed: isNaN(speed) ? 3000 : speed,
+                infinite: true,
+                arrows: <?php echo $show_slider_arrows ? 'true' : 'false'; ?>,
+                prevArrow: $section.find('.partners-prev'),
+                nextArrow: $section.find('.partners-next'),
+                dots: <?php echo $show_mobile_dots ? 'true' : 'false'; ?>,
+                adaptiveHeight: false,
+                swipe: true,
+                draggable: true,
+                touchMove: true,
+                responsive: [
+                  { breakpoint: 1280, settings: { slidesToShow: 3 } },
+                  { breakpoint: 1024, settings: { slidesToShow: 2 } },
+                  { breakpoint: 768, settings: { slidesToShow: 1 } }
+                ]
               });
-
-              <?php if ($show_mobile_dots) : ?>
-              var track = section.querySelector('.partners-scroll-track');
-              var dotsEl = section.querySelector('.partners-mobile-dots');
-              if (track && dotsEl) {
-                var slides = Array.from(track.querySelectorAll('.partners-scroll-slide'));
-                var dots = [];
-
-                function setActiveDot(idx) {
-                  dots.forEach(function (dot, i) { dot.classList.toggle('is-active', i === idx); });
-                }
-
-                slides.forEach(function (_, idx) {
-                  var dot = document.createElement('button');
-                  dot.type = 'button';
-                  dot.setAttribute('aria-label', 'Go to partner logo ' + (idx + 1));
-                  dot.addEventListener('click', function () {
-                    var target = slides[idx];
-                    if (!target) return;
-                    var trackPad = parseFloat(window.getComputedStyle(track).paddingLeft) || 0;
-                    var targetScroll = Math.max(0, target.offsetLeft - trackPad);
-                    track.scrollTo({ left: targetScroll, behavior: 'smooth' });
-                  });
-                  dotsEl.appendChild(dot);
-                  dots.push(dot);
-                });
-                setActiveDot(0);
-
-                var ticking = false;
-                track.addEventListener('scroll', function () {
-                  if (ticking) return;
-                  ticking = true;
-                  requestAnimationFrame(function () {
-                    ticking = false;
-                    var trackCx = track.scrollLeft + track.offsetWidth / 2;
-                    var best = 0;
-                    var bestDist = Infinity;
-                    slides.forEach(function (sl, i) {
-                      var dist = Math.abs((sl.offsetLeft + sl.offsetWidth / 2) - trackCx);
-                      if (dist < bestDist) { bestDist = dist; best = i; }
-                    });
-                    setActiveDot(best);
-                  });
-                }, { passive: true });
-              }
-              <?php endif; ?>
             });
             </script>
           <?php endif; ?>
