@@ -16,6 +16,14 @@ $slider_autoplay_speed = (int) (get_sub_field('slider_autoplay_speed') ?: 3000);
 if ($slider_autoplay_speed < 1000) {
   $slider_autoplay_speed = 1000;
 }
+$slider_start_delay = (int) (get_sub_field('slider_start_delay') ?: 500);
+if ($slider_start_delay < 0) {
+  $slider_start_delay = 0;
+}
+$slider_transition_speed = (int) (get_sub_field('slider_transition_speed') ?: 450);
+if ($slider_transition_speed < 100) {
+  $slider_transition_speed = 100;
+}
 $slider_slides_desktop = (int) (get_sub_field('slider_slides_desktop') ?: 5);
 if ($slider_slides_desktop < 1) {
   $slider_slides_desktop = 1;
@@ -110,6 +118,7 @@ $heading_id = $section_id . '-heading';
               'alt' => $logo_alt,
               'title' => $logo_title,
               'link' => $logo_link,
+              'card_style' => (string) ($logo_item['logo_card_style'] ?? 'white'),
             ];
           }
           ?>
@@ -117,13 +126,24 @@ $heading_id = $section_id . '-heading';
           <?php if (!$enable_logo_slider) : ?>
             <div class="flex flex-col gap-6 self-center pr-4 pl-4 w-full h-auto md:flex-row md:justify-between md:items-center max-xl:px-5" role="list" aria-label="Partner logos">
               <?php foreach ($logo_items as $logo_data) : ?>
+                <?php
+                $card_style = $logo_data['card_style'] ?? 'white';
+                $card_class = 'bg-white';
+                if ($card_style === 'translucent') {
+                  $card_class = 'bg-white/5';
+                } elseif ($card_style === 'transparent') {
+                  $card_class = 'bg-transparent';
+                }
+                ?>
                 <div role="listitem" class="flex justify-center md:justify-start">
                   <?php if (is_array($logo_data['link']) && !empty($logo_data['link']['url'])) : ?>
-                    <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
+                    <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn rounded-[10px] px-3 <?php echo esc_attr($card_class); ?>" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
                       <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="object-cover max-w-full mix-blend-luminosity shrink-0 max-md:h-auto max-md:object-contain" />
                     </a>
                   <?php else : ?>
-                    <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="object-cover max-w-full mix-blend-luminosity shrink-0 max-md:h-auto max-md:object-contain" />
+                    <div class="inline-flex rounded-[10px] px-3 <?php echo esc_attr($card_class); ?>">
+                      <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="object-cover max-w-full mix-blend-luminosity shrink-0 max-md:h-auto max-md:object-contain" />
+                    </div>
                   <?php endif; ?>
                 </div>
               <?php endforeach; ?>
@@ -147,14 +167,25 @@ $heading_id = $section_id . '-heading';
                 <div
                   class="js-partners-slider"
                   data-autoplay="<?php echo $slider_autoplay ? '1' : '0'; ?>"
-                  data-speed="<?php echo esc_attr((string) $slider_autoplay_speed); ?>"
+                  data-autoplay-speed="<?php echo esc_attr((string) $slider_autoplay_speed); ?>"
+                  data-start-delay="<?php echo esc_attr((string) $slider_start_delay); ?>"
+                  data-transition-speed="<?php echo esc_attr((string) $slider_transition_speed); ?>"
                   data-slides="<?php echo esc_attr((string) $slider_slides_desktop); ?>"
                   role="list"
                   aria-label="Partner logos slider"
                 >
                   <?php foreach ($logo_items as $logo_data) : ?>
+                    <?php
+                    $card_style = $logo_data['card_style'] ?? 'white';
+                    $card_class = 'bg-white';
+                    if ($card_style === 'translucent') {
+                      $card_class = 'bg-white/5';
+                    } elseif ($card_style === 'transparent') {
+                      $card_class = 'bg-transparent';
+                    }
+                    ?>
                     <div class="px-2 partners-slide">
-                      <div role="listitem" class="flex h-[100px] items-center justify-center rounded-[10px] bg-white/5 px-3">
+                      <div role="listitem" class="flex h-[100px] items-center justify-center rounded-[10px] px-3 <?php echo esc_attr($card_class); ?>">
                         <?php if (is_array($logo_data['link']) && !empty($logo_data['link']['url'])) : ?>
                           <a href="<?php echo esc_url($logo_data['link']['url']); ?>" target="<?php echo esc_attr($logo_data['link']['target'] ?? '_self'); ?>" class="inline-flex btn h-[82px] w-full items-center justify-center" aria-label="<?php echo esc_attr($logo_data['link']['title'] ?: $logo_data['alt']); ?>">
                             <img src="<?php echo esc_url($logo_data['url']); ?>" alt="<?php echo esc_attr($logo_data['alt']); ?>" title="<?php echo esc_attr($logo_data['title']); ?>" loading="lazy" decoding="async" class="h-full w-full object-contain mix-blend-luminosity" />
@@ -189,14 +220,18 @@ $heading_id = $section_id . '-heading';
               if (!$slider.length || $slider.hasClass('slick-initialized')) return;
 
               var autoplay = $slider.attr('data-autoplay') === '1';
-              var speed = parseInt($slider.attr('data-speed') || '3000', 10);
+              var autoplaySpeed = parseInt($slider.attr('data-autoplay-speed') || '3000', 10);
+              var startDelay = parseInt($slider.attr('data-start-delay') || '500', 10);
+              var transitionSpeed = parseInt($slider.attr('data-transition-speed') || '450', 10);
               var slidesDesktop = parseInt($slider.attr('data-slides') || '5', 10);
+              var shouldDelayStart = autoplay && !isNaN(startDelay) && startDelay > 0;
 
               $slider.slick({
                 slidesToShow: Math.max(1, Math.min(4, slidesDesktop)),
                 slidesToScroll: 1,
-                autoplay: autoplay,
-                autoplaySpeed: isNaN(speed) ? 3000 : speed,
+                autoplay: shouldDelayStart ? false : autoplay,
+                autoplaySpeed: isNaN(autoplaySpeed) ? 3000 : autoplaySpeed,
+                speed: isNaN(transitionSpeed) ? 450 : transitionSpeed,
                 infinite: true,
                 arrows: <?php echo $show_slider_arrows ? 'true' : 'false'; ?>,
                 prevArrow: $section.find('.partners-prev'),
@@ -212,6 +247,14 @@ $heading_id = $section_id . '-heading';
                   { breakpoint: 768, settings: { slidesToShow: 1 } }
                 ]
               });
+
+              if (shouldDelayStart) {
+                window.setTimeout(function () {
+                  if (!$slider.hasClass('slick-initialized')) return;
+                  $slider.slick('slickSetOption', 'autoplay', true, true);
+                  $slider.slick('slickPlay');
+                }, startDelay);
+              }
             });
             </script>
           <?php endif; ?>

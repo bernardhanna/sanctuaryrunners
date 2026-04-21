@@ -75,6 +75,18 @@ $partners
                 'instructions' => 'Optional. If set, the logo becomes a link.',
                 'return_format' => 'array',
             ])
+            ->addSelect('logo_card_style', [
+                'label' => 'Logo Card Style',
+                'instructions' => 'Choose card background style for this logo slide.',
+                'choices' => [
+                    'white' => 'White',
+                    'translucent' => 'Translucent White',
+                    'transparent' => 'Transparent',
+                ],
+                'default_value' => 'white',
+                'ui' => 1,
+                'return_format' => 'value',
+            ])
         ->endRepeater()
         ->addTrueFalse('enable_logo_slider', [
             'label' => 'Enable Logo Slider',
@@ -106,6 +118,23 @@ $partners
             'min' => 1000,
             'step' => 100,
             'conditional_logic' => [[['field' => 'slider_autoplay', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addNumber('slider_start_delay', [
+            'label' => 'Autoplay Start Delay (ms)',
+            'instructions' => 'Delay before first auto-slide starts. Use 0 for immediate.',
+            'default_value' => 500,
+            'min' => 0,
+            'step' => 100,
+            'conditional_logic' => [[['field' => 'slider_autoplay', 'operator' => '==', 'value' => 1]]],
+        ])
+        ->addNumber('slider_transition_speed', [
+            'label' => 'Slide Transition Speed (ms)',
+            'instructions' => 'Duration of slide animation.',
+            'default_value' => 450,
+            'min' => 100,
+            'max' => 3000,
+            'step' => 50,
+            'conditional_logic' => [[['field' => 'enable_logo_slider', 'operator' => '==', 'value' => 1]]],
         ])
         ->addNumber('slider_slides_desktop', [
             'label' => 'Desktop Slides To Show',
