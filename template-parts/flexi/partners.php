@@ -67,8 +67,8 @@ $logo_image_class = 'object-contain';
 if ($logo_visual_style === 'muted') {
   $logo_image_class .= ' mix-blend-luminosity';
 } elseif ($logo_visual_style === 'white') {
-  // Best-effort white conversion for dark logos.
-  $logo_image_class .= ' brightness-0 invert';
+  // Best-effort white conversion: invert to white and screen-blend to suppress boxed backgrounds.
+  $logo_image_class .= ' brightness-0 invert mix-blend-screen';
 }
 ?>
 
