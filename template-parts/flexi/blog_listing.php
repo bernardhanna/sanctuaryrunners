@@ -315,6 +315,7 @@ $search_input_id = $section_id . '-search';
                         $post_id         = get_the_ID();
                         $post_categories = get_the_category($post_id);
                         $category_slugs  = array();
+                        $category_names  = array();
                         $primary_category = null;
                         $queried_category_slug = (is_category() && $queried_object instanceof WP_Term && $queried_object->taxonomy === 'category')
                             ? (string) $queried_object->slug
@@ -323,6 +324,7 @@ $search_input_id = $section_id . '-search';
                         if (!empty($post_categories)) {
                             foreach ($post_categories as $cat) {
                                 $category_slugs[] = $cat->slug;
+                                $category_names[] = $cat->name;
                                 // On category archives, prefer showing the currently viewed category as the badge.
                                 if ($queried_category_slug !== '' && $cat->slug === $queried_category_slug) {
                                     $primary_category = $cat;
@@ -332,6 +334,7 @@ $search_input_id = $section_id . '-search';
                                 $primary_category = $post_categories[0];
                             }
                         }
+                        $category_badge_text = implode(' | ', array_map('trim', array_filter($category_names)));
 
                         $featured_image = get_post_thumbnail_id($post_id);
                         $image_alt      = get_post_meta($featured_image, '_wp_attachment_image_alt', true) ?: get_the_title();
@@ -406,10 +409,10 @@ $search_input_id = $section_id . '-search';
                                     ]); ?>
                                 <?php endif; ?>
 
-                                <?php if ($primary_category): ?>
+                                <?php if ($primary_category && $category_badge_text !== ''): ?>
                                     <div class="flex overflow-hidden relative gap-1 items-center px-3 py-1 <?php echo $primary_category->slug === 'event' ? 'bg-[#FBEA5E]' : 'bg-sky-300'; ?> rounded-r-[100px]">
                                         <span class="self-stretch my-auto">
-                                            <?php echo esc_html($primary_category->name); ?>
+                                            <?php echo esc_html($category_badge_text); ?>
                                         </span>
                                     </div>
                                 <?php endif; ?>

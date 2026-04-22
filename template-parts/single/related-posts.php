@@ -103,6 +103,7 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
           $p_terms = get_the_terms($pid, 'category') ?: [];
           $cats_attr = implode(' ', wp_list_pluck($p_terms, 'slug'));
           $primary_category = !empty($p_terms) ? $p_terms[0] : null;
+          $category_badge_text = implode(' | ', array_map('trim', array_filter(wp_list_pluck($p_terms, 'name'))));
           $has_media_listing_category = function_exists('matrix_post_has_media_category')
             ? matrix_post_has_media_category($pid)
             : in_array('press-releases', wp_list_pluck($p_terms, 'slug'), true);
@@ -170,9 +171,9 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
                 ]); ?>
               <?php endif; ?>
 
-              <?php if ($primary_category): ?>
+              <?php if ($primary_category && $category_badge_text !== ''): ?>
                 <div class="relative flex items-center gap-1 overflow-hidden rounded-r-[100px] px-3 py-1 <?php echo $primary_category->slug === 'event' ? 'bg-[#FBEA5E]' : 'bg-sky-300'; ?>">
-                  <span><?php echo esc_html($primary_category->name); ?></span>
+                  <span><?php echo esc_html($category_badge_text); ?></span>
                 </div>
               <?php endif; ?>
             </div>
