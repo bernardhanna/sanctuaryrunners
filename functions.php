@@ -172,6 +172,70 @@ function svg_mime_check($data, $file, $filename) {
 add_filter('wp_check_filetype_and_ext', 'svg_mime_check', 10, 3);
 
 /**
+ * Global frontend search: include all searchable public post types.
+ */
+function matrix_global_site_search_query($query) {
+    if (is_admin() || !$query->is_main_query() || !$query->is_search()) {
+        return;
+    }
+
+    $post_types = get_post_types([
+        'public' => true,
+        'exclude_from_search' => false,
+    ], 'names');
+
+    unset($post_types['attachment'], $post_types['nav_menu_item']);
+    if (!empty($post_types)) {
+        $query->set('post_type', array_values($post_types));
+    }
+}
+add_action('pre_get_posts', 'matrix_global_site_search_query', 20);
+
+/**
+ * Header live search endpoint.
+ */
+function matrix_live_site_search() {
+    $term = isset($_GET['q']) ? sanitize_text_field(wp_unslash((string) $_GET['q'])) : '';
+    if (mb_strlen($term) < 2) {
+        wp_send_json_success(['items' => []]);
+    }
+
+    $post_types = get_post_types([
+        'public' => true,
+        'exclude_from_search' => false,
+    ], 'names');
+    unset($post_types['attachment'], $post_types['nav_menu_item']);
+
+    $query = new WP_Query([
+        'post_type'              => array_values($post_types),
+        'post_status'            => 'publish',
+        'posts_per_page'         => 8,
+        's'                      => $term,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
+    ]);
+
+    $items = [];
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $items[] = [
+                'title' => get_the_title(),
+                'url'   => get_permalink(),
+                'type'  => get_post_type_object(get_post_type())->labels->singular_name ?? get_post_type(),
+            ];
+        }
+        wp_reset_postdata();
+    }
+
+    wp_send_json_success(['items' => $items]);
+}
+add_action('wp_ajax_matrix_live_site_search', 'matrix_live_site_search');
+add_action('wp_ajax_nopriv_matrix_live_site_search', 'matrix_live_site_search');
+
+/**
  * CF7 style tag tweak
  */
 function add_type_attribute($tag, $handle, $src) {

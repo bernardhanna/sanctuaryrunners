@@ -28,6 +28,13 @@ $primary_navigation = Navi::make()->build('primary');
     activeDropdown: null,
     searchOpen: false,
     searchTriggerEl: null,
+    liveSearchEndpoint: '<?php echo esc_js(admin_url('admin-ajax.php')); ?>',
+    searchQuery: '',
+    searchResults: [],
+    searchLoading: false,
+    searchNoResults: false,
+    liveSearchTimer: null,
+    liveSearchAbort: null,
     lastScroll: 0,
     isVisible: true,
 
@@ -59,12 +66,69 @@ $primary_navigation = Navi::make()->build('primary');
     openSearch() {
       this.searchTriggerEl = document.activeElement;
       this.searchOpen = true;
+      this.searchQuery = '';
+      this.searchResults = [];
+      this.searchNoResults = false;
       this.$nextTick(() => this.$refs.searchInput?.focus());
     },
 
     closeSearch() {
       this.searchOpen = false;
+      this.searchQuery = '';
+      this.searchResults = [];
+      this.searchNoResults = false;
+      this.searchLoading = false;
+      if (this.liveSearchAbort) {
+        this.liveSearchAbort.abort();
+        this.liveSearchAbort = null;
+      }
       this.$nextTick(() => this.searchTriggerEl?.focus());
+    },
+
+    handleLiveSearch() {
+      const term = (this.searchQuery || '').trim();
+
+      if (this.liveSearchTimer) {
+        clearTimeout(this.liveSearchTimer);
+        this.liveSearchTimer = null;
+      }
+      if (this.liveSearchAbort) {
+        this.liveSearchAbort.abort();
+        this.liveSearchAbort = null;
+      }
+
+      if (term.length < 2) {
+        this.searchResults = [];
+        this.searchNoResults = false;
+        this.searchLoading = false;
+        return;
+      }
+
+      this.searchLoading = true;
+      this.liveSearchTimer = setTimeout(() => {
+        this.liveSearchAbort = new AbortController();
+        fetch(`${this.liveSearchEndpoint}?action=matrix_live_site_search&q=${encodeURIComponent(term)}`, {
+          method: 'GET',
+          credentials: 'same-origin',
+          signal: this.liveSearchAbort.signal,
+          headers: { 'Accept': 'application/json' }
+        })
+        .then((res) => res.json())
+        .then((json) => {
+          const items = json && json.success && json.data && Array.isArray(json.data.items) ? json.data.items : [];
+          this.searchResults = items;
+          this.searchNoResults = items.length === 0;
+        })
+        .catch((err) => {
+          if (err && err.name === 'AbortError') return;
+          this.searchResults = [];
+          this.searchNoResults = false;
+        })
+        .finally(() => {
+          this.searchLoading = false;
+          this.liveSearchAbort = null;
+        });
+      }, 220);
     },
 
     shouldSkipNavOffset(target) {
@@ -315,10 +379,24 @@ $primary_navigation = Navi::make()->build('primary');
           name="s"
           placeholder="Search..."
           autocomplete="off"
+          x-model="searchQuery"
+          @input="handleLiveSearch()"
           class="flex-1 px-4 py-3 !border-none"
         />
         <button type="submit" class="px-5 btn-primary">Search</button>
       </form>
+      <div x-show="searchOpen && ((searchQuery || '').trim().length >= 2)" x-cloak class="mt-3 border border-slate-200 rounded-md bg-white shadow-sm max-h-[320px] overflow-auto">
+        <div x-show="searchLoading" class="px-4 py-3 text-sm text-slate-500">Searching...</div>
+        <template x-if="!searchLoading && searchNoResults">
+          <div class="px-4 py-3 text-sm text-slate-500">No results found.</div>
+        </template>
+        <template x-for="(item, idx) in searchResults" :key="idx">
+          <a :href="item.url" @click="closeSearch()" class="block px-4 py-3 border-b border-slate-100 last:border-b-0 hover:bg-slate-50">
+            <span class="block text-sm font-semibold text-slate-800" x-text="item.title"></span>
+            <span class="block text-xs text-slate-500" x-text="item.type"></span>
+          </a>
+        </template>
+      </div>
     </div>
   </div>
 </section>
