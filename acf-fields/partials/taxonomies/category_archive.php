@@ -19,6 +19,14 @@ $category_archive
         'instructions' => 'Optional. Leave empty to use the standard category description.',
         'rows' => 4,
         'new_lines' => 'br',
+    ])
+    ->addColorPicker('category_chip_bg_color', [
+        'label' => 'Category Chip Background Color',
+        'instructions' => 'Optional. Used for category tags/chips in listings. Leave empty to use theme defaults.',
+    ])
+    ->addColorPicker('category_chip_text_color', [
+        'label' => 'Category Chip Text Color',
+        'instructions' => 'Optional. Used for category tags/chips in listings. Leave empty to use theme defaults.',
     ]);
 
 return $category_archive;

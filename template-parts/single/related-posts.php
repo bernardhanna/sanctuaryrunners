@@ -179,6 +179,8 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
                     if (!$cat instanceof WP_Term) {
                       continue;
                     }
+                    $chip_bg_custom = sanitize_hex_color((string) get_field('category_chip_bg_color', $cat));
+                    $chip_text_custom = sanitize_hex_color((string) get_field('category_chip_text_color', $cat));
                     $chip_classes = 'bg-sky-200 text-sky-900';
                     if ($cat->slug === 'press-releases') {
                       $chip_classes = 'bg-[#D7EDF8] text-sky-900';
@@ -187,8 +189,15 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
                     } elseif ($cat->slug === 'event') {
                       $chip_classes = 'bg-[#FBEA5E] text-slate-800';
                     }
+                    $chip_inline_style = '';
+                    if ($chip_bg_custom) {
+                      $chip_inline_style .= 'background-color:' . $chip_bg_custom . ';';
+                    }
+                    if ($chip_text_custom) {
+                      $chip_inline_style .= 'color:' . $chip_text_custom . ';';
+                    }
                   ?>
-                    <span class="inline-flex items-center rounded-[100px] px-3 py-1 text-xs font-bold leading-none <?php echo esc_attr($chip_classes); ?>">
+                    <span class="inline-flex items-center rounded-[100px] px-3 py-1 text-xs font-bold leading-none <?php echo esc_attr($chip_classes); ?>"<?php echo $chip_inline_style !== '' ? ' style="' . esc_attr($chip_inline_style) . '"' : ''; ?>>
                       <?php echo esc_html($cat->name); ?>
                     </span>
                   <?php endforeach; ?>
