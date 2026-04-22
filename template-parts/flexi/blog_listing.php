@@ -443,9 +443,14 @@ $search_input_id = $section_id . '-search';
                                                 $chip_inline_style .= 'color:' . $chip_text_custom . ';';
                                             }
                                         ?>
-                                            <span class="inline-flex items-center rounded-[100px] px-3 py-1 text-xs font-bold leading-none <?php echo esc_attr($chip_classes); ?>"<?php echo $chip_inline_style !== '' ? ' style="' . esc_attr($chip_inline_style) . '"' : ''; ?>>
+                                            <a
+                                                href="<?php echo esc_url(get_category_link($cat->term_id)); ?>"
+                                                class="inline-flex items-center rounded-[100px] px-3 py-1 text-xs font-bold leading-none transition-all duration-200 hover:shadow-[0_0_0_4px_var(--Mint-500,#87CEB7)] focus:outline-none focus-visible:ring-0 <?php echo esc_attr($chip_classes); ?>"
+                                                aria-label="<?php echo esc_attr('View category: ' . $cat->name); ?>"
+                                                <?php echo $chip_inline_style !== '' ? ' style="' . esc_attr($chip_inline_style) . '"' : ''; ?>
+                                            >
                                                 <?php echo esc_html($cat->name); ?>
-                                            </span>
+                                            </a>
                                         <?php endforeach; ?>
                                     </div>
                                 <?php endif; ?>
