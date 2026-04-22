@@ -320,6 +320,7 @@ $search_input_id = $section_id . '-search';
                             ? (string) $queried_object->slug
                             : '';
 
+                        $ordered_categories = $post_categories;
                         if (!empty($post_categories)) {
                             foreach ($post_categories as $cat) {
                                 $category_slugs[] = $cat->slug;
@@ -330,6 +331,14 @@ $search_input_id = $section_id . '-search';
                             }
                             if (!$primary_category) {
                                 $primary_category = $post_categories[0];
+                            }
+                            if ($primary_category instanceof WP_Term) {
+                                $ordered_categories = array_values(array_merge(
+                                    [$primary_category],
+                                    array_filter($post_categories, static function ($cat) use ($primary_category) {
+                                        return $cat instanceof WP_Term && (int) $cat->term_id !== (int) $primary_category->term_id;
+                                    })
+                                ));
                             }
                         }
 
@@ -410,9 +419,9 @@ $search_input_id = $section_id . '-search';
 
                             <!-- Post Content -->
                             <div class="flex flex-col p-6 w-full text-sm text-sky-950 max-md:px-5">
-                                <?php if (!empty($post_categories)) : ?>
+                                <?php if (!empty($ordered_categories)) : ?>
                                     <div class="mb-3 flex flex-wrap gap-2 items-center self-start">
-                                        <?php foreach ($post_categories as $cat) :
+                                        <?php foreach ($ordered_categories as $cat) :
                                             if (!$cat instanceof WP_Term) {
                                                 continue;
                                             }
