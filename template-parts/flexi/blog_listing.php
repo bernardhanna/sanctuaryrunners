@@ -315,7 +315,6 @@ $search_input_id = $section_id . '-search';
                         $post_id         = get_the_ID();
                         $post_categories = get_the_category($post_id);
                         $category_slugs  = array();
-                        $category_names  = array();
                         $primary_category = null;
                         $queried_category_slug = (is_category() && $queried_object instanceof WP_Term && $queried_object->taxonomy === 'category')
                             ? (string) $queried_object->slug
@@ -324,7 +323,6 @@ $search_input_id = $section_id . '-search';
                         if (!empty($post_categories)) {
                             foreach ($post_categories as $cat) {
                                 $category_slugs[] = $cat->slug;
-                                $category_names[] = $cat->name;
                                 // On category archives, prefer showing the currently viewed category as the badge.
                                 if ($queried_category_slug !== '' && $cat->slug === $queried_category_slug) {
                                     $primary_category = $cat;
@@ -334,7 +332,6 @@ $search_input_id = $section_id . '-search';
                                 $primary_category = $post_categories[0];
                             }
                         }
-                        $category_badge_text = implode(' | ', array_map('trim', array_filter($category_names)));
 
                         $featured_image = get_post_thumbnail_id($post_id);
                         $image_alt      = get_post_meta($featured_image, '_wp_attachment_image_alt', true) ?: get_the_title();
@@ -409,17 +406,31 @@ $search_input_id = $section_id . '-search';
                                     ]); ?>
                                 <?php endif; ?>
 
-                                <?php if ($primary_category && $category_badge_text !== ''): ?>
-                                    <div class="flex overflow-hidden relative gap-1 items-center px-3 py-1 <?php echo $primary_category->slug === 'event' ? 'bg-[#FBEA5E]' : 'bg-sky-300'; ?> rounded-r-[100px]">
-                                        <span class="self-stretch my-auto">
-                                            <?php echo esc_html($category_badge_text); ?>
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
                             </div>
 
                             <!-- Post Content -->
                             <div class="flex flex-col p-6 w-full text-sm text-sky-950 max-md:px-5">
+                                <?php if (!empty($post_categories)) : ?>
+                                    <div class="mb-3 flex flex-wrap gap-2 items-center self-start">
+                                        <?php foreach ($post_categories as $cat) :
+                                            if (!$cat instanceof WP_Term) {
+                                                continue;
+                                            }
+                                            $chip_classes = 'bg-sky-200 text-sky-900';
+                                            if ($cat->slug === 'press-releases') {
+                                                $chip_classes = 'bg-[#D7EDF8] text-sky-900';
+                                            } elseif ($cat->slug === 'news' || $cat->slug === 'our-news') {
+                                                $chip_classes = 'bg-[#9EDCF6] text-sky-900';
+                                            } elseif ($cat->slug === 'event') {
+                                                $chip_classes = 'bg-[#FBEA5E] text-slate-800';
+                                            }
+                                        ?>
+                                            <span class="inline-flex items-center rounded-[100px] px-3 py-1 text-xs font-bold leading-none <?php echo esc_attr($chip_classes); ?>">
+                                                <?php echo esc_html($cat->name); ?>
+                                            </span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="flex gap-2 items-start self-start leading-none <?php echo $is_layout_2 ? 'hidden' : ''; ?>">
                                     <time class="text-sky-950" datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
                                         <?php echo esc_html($post_date); ?>
