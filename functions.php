@@ -221,8 +221,10 @@ function matrix_live_site_search() {
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
+            $raw_title = (string) get_the_title();
+            $normalized_title = wp_strip_all_tags(wp_specialchars_decode($raw_title, ENT_QUOTES));
             $items[] = [
-                'title' => get_the_title(),
+                'title' => $normalized_title,
                 'url'   => get_permalink(),
                 'type'  => get_post_type_object(get_post_type())->labels->singular_name ?? get_post_type(),
             ];

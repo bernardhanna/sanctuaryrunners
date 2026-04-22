@@ -40,7 +40,7 @@ get_template_part('template-parts/hero/subhero', null, matrix_get_archive_subher
 ?>
 
 <main id="main-content" class="site-main">
-    <section class="relative overflow-hidden">
+    <section class="relative overflow-hidden" data-disable-nav-offset="true">
         <div class="mx-auto w-full max-w-[1158px] px-5 py-12">
             <div class="mb-8 flex items-center justify-between gap-4">
                 <p class="text-base text-slate-600">
