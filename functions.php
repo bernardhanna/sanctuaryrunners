@@ -191,6 +191,12 @@ function matrix_global_site_search_query($query) {
 }
 add_action('pre_get_posts', 'matrix_global_site_search_query', 20);
 
+if (!function_exists('matrix_allowed_search_pdf_url')) {
+    function matrix_allowed_search_pdf_url(): string {
+        return 'https://sanctuaryrunners.s1.matrix-test.com/wp-content/uploads/2026/03/Code-of-Conduct-February-2026.pdf';
+    }
+}
+
 /**
  * Header live search endpoint.
  */
@@ -218,18 +224,60 @@ function matrix_live_site_search() {
     ]);
 
     $items = [];
+    $seen_urls = [];
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
             $raw_title = (string) get_the_title();
             $normalized_title = wp_strip_all_tags(wp_specialchars_decode($raw_title, ENT_QUOTES));
+            $url = (string) get_permalink();
+            if ($url === '' || isset($seen_urls[$url])) {
+                continue;
+            }
+            $seen_urls[$url] = true;
             $items[] = [
                 'title' => $normalized_title,
-                'url'   => get_permalink(),
+                'url'   => $url,
                 'type'  => get_post_type_object(get_post_type())->labels->singular_name ?? get_post_type(),
             ];
         }
         wp_reset_postdata();
+    }
+
+    // Include PDF attachments in live search results (useful for policies/docs).
+    $pdf_query = new WP_Query([
+        'post_type'              => 'attachment',
+        'post_status'            => 'inherit',
+        'post_mime_type'         => 'application/pdf',
+        'posts_per_page'         => 8,
+        's'                      => $term,
+        'no_found_rows'          => true,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
+    ]);
+
+    $allowed_pdf_url = matrix_allowed_search_pdf_url();
+    if ($pdf_query->have_posts()) {
+        while ($pdf_query->have_posts()) {
+            $pdf_query->the_post();
+            $pdf_url = (string) wp_get_attachment_url(get_the_ID());
+            if ($pdf_url === '' || $pdf_url !== $allowed_pdf_url || isset($seen_urls[$pdf_url])) {
+                continue;
+            }
+            $seen_urls[$pdf_url] = true;
+            $raw_title = (string) get_the_title();
+            $normalized_title = wp_strip_all_tags(wp_specialchars_decode($raw_title, ENT_QUOTES));
+            $items[] = [
+                'title' => $normalized_title,
+                'url'   => $pdf_url,
+                'type'  => 'PDF',
+            ];
+        }
+        wp_reset_postdata();
+    }
+
+    if (count($items) > 8) {
+        $items = array_slice($items, 0, 8);
     }
 
     wp_send_json_success(['items' => $items]);

@@ -37,6 +37,34 @@ get_template_part('template-parts/hero/subhero', null, matrix_get_archive_subher
     'primary_cta'        => null,
     'secondary_cta'      => null,
 ]));
+
+$pdf_results = [];
+if ($search_term !== '') {
+    $allowed_pdf_url = function_exists('matrix_allowed_search_pdf_url')
+        ? matrix_allowed_search_pdf_url()
+        : 'https://sanctuaryrunners.s1.matrix-test.com/wp-content/uploads/2026/03/Code-of-Conduct-February-2026.pdf';
+    $pdf_query = new WP_Query([
+        'post_type'              => 'attachment',
+        'post_status'            => 'inherit',
+        'post_mime_type'         => 'application/pdf',
+        'posts_per_page'         => 12,
+        's'                      => $search_term,
+        'no_found_rows'          => true,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
+    ]);
+    if ($pdf_query->have_posts()) {
+        while ($pdf_query->have_posts()) {
+            $pdf_query->the_post();
+            $candidate_url = (string) wp_get_attachment_url(get_the_ID());
+            if ($candidate_url === '' || $candidate_url !== $allowed_pdf_url) {
+                continue;
+            }
+            $pdf_results[] = get_post();
+        }
+        wp_reset_postdata();
+    }
+}
 ?>
 
 <main id="main-content" class="site-main">
@@ -46,7 +74,8 @@ get_template_part('template-parts/hero/subhero', null, matrix_get_archive_subher
                 <p class="text-base text-slate-600">
                     <?php
                     global $wp_query;
-                    echo esc_html(sprintf('%d result%s', (int) $wp_query->found_posts, (int) $wp_query->found_posts === 1 ? '' : 's'));
+                    $total_results = (int) $wp_query->found_posts + count($pdf_results);
+                    echo esc_html(sprintf('%d result%s', $total_results, $total_results === 1 ? '' : 's'));
                     ?>
                 </p>
                 <form method="get" action="<?php echo esc_url(home_url('/')); ?>" class="flex w-full max-w-[420px] items-center gap-2" role="search" aria-label="Search all site content">
@@ -63,40 +92,67 @@ get_template_part('template-parts/hero/subhero', null, matrix_get_archive_subher
                 </form>
             </div>
 
-            <?php if (have_posts()) : ?>
-                <?php
+            <?php
                 $grouped_results = [];
+                if (have_posts()) {
                 while (have_posts()) :
                     the_post();
                     $post_type = get_post_type() ?: 'post';
                     $grouped_results[$post_type][] = get_post();
                 endwhile;
                 wp_reset_postdata();
-                ?>
+                }
+                if (!empty($pdf_results)) {
+                    $grouped_results['attachment_pdf'] = $pdf_results;
+                }
+            ?>
 
+            <?php if (!empty($grouped_results)) : ?>
                 <div class="space-y-10">
                     <?php foreach ($grouped_results as $post_type => $results) : ?>
                         <?php
-                        $post_type_object = get_post_type_object($post_type);
-                        $group_heading = $post_type_object && !empty($post_type_object->labels->name)
-                            ? $post_type_object->labels->name
-                            : ucfirst($post_type);
+                        if ($post_type === 'attachment_pdf') {
+                            $group_heading = 'PDFs';
+                        } else {
+                            $post_type_object = get_post_type_object($post_type);
+                            $group_heading = $post_type_object && !empty($post_type_object->labels->name)
+                                ? $post_type_object->labels->name
+                                : ucfirst($post_type);
+                        }
                         ?>
                         <section aria-label="<?php echo esc_attr($group_heading); ?> results">
                             <h2 class="mb-4 text-2xl font-bold text-slate-800"><?php echo esc_html($group_heading); ?></h2>
                             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                                 <?php foreach ($results as $result_post) : ?>
+                                    <?php
+                                    $result_type = get_post_type($result_post);
+                                    $result_url = $result_type === 'attachment'
+                                        ? wp_get_attachment_url((int) $result_post->ID)
+                                        : get_permalink($result_post);
+                                    $result_title_raw = (string) get_the_title($result_post);
+                                    $result_title = wp_strip_all_tags(wp_specialchars_decode($result_title_raw, ENT_QUOTES));
+                                    $result_excerpt = trim((string) get_the_excerpt($result_post));
+                                    if ($result_excerpt === '') {
+                                        $result_excerpt = trim((string) get_post_field('post_excerpt', (int) $result_post->ID));
+                                    }
+                                    if ($result_excerpt === '') {
+                                        $result_excerpt = trim((string) get_post_field('post_content', (int) $result_post->ID));
+                                    }
+                                    if ($result_type === 'attachment' && $result_excerpt === '') {
+                                        $result_excerpt = 'PDF document';
+                                    }
+                                    ?>
                                     <article class="rounded-lg border border-slate-200 bg-white p-5">
                                         <h3 class="mb-1 text-lg font-bold text-slate-900">
-                                            <a class="hover:text-[#008BCC]" href="<?php echo esc_url(get_permalink($result_post)); ?>">
-                                                <?php echo esc_html(get_the_title($result_post)); ?>
+                                            <a class="hover:text-[#008BCC]" href="<?php echo esc_url((string) $result_url); ?>">
+                                                <?php echo esc_html($result_title); ?>
                                             </a>
                                         </h3>
                                         <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
                                             <?php echo esc_html(get_the_date('j F Y', $result_post)); ?>
                                         </p>
                                         <p class="text-sm text-slate-600">
-                                            <?php echo esc_html(wp_trim_words(wp_strip_all_tags((string) get_the_excerpt($result_post)), 24)); ?>
+                                            <?php echo esc_html(wp_trim_words(wp_strip_all_tags($result_excerpt), 24)); ?>
                                         </p>
                                     </article>
                                 <?php endforeach; ?>

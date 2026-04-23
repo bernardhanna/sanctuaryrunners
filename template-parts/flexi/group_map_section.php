@@ -506,7 +506,7 @@ foreach ($running_group_ids as $group_id) {
       let popup = `<div style="max-width:240px;">`;
       popup += `<div style="font-weight:700;margin-bottom:4px;">${escapeHtml(g.title || "")}</div>`;
       if (g.address)      popup += `<div style="font-size:12px;margin-bottom:4px;"><strong>Address:</strong> ${escapeHtml(g.address)}</div>`;
-      if (g.meeting_time) popup += `<div style="font-size:12px;margin-bottom:4px;"><strong>Meeting Time:</strong> ${escapeHtml(g.meeting_time)}</div>`;
+      if (g.meeting_time) popup += `<div style="font-size:12px;margin-bottom:4px;"><strong>Meeting Time:</strong><div style="margin-top:2px;">${escapeHtml(g.meeting_time)}</div></div>`;
       if (g.contact_info) popup += `<div style="font-size:12px;margin-bottom:6px;"><strong>Contact:</strong> ${escapeHtml(g.contact_info)}</div>`;
       if (g.url)          popup += `<a href="${g.url}" style="font-size:12px;text-decoration:underline;">View Details</a>`;
       popup += `</div>`;
