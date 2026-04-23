@@ -117,6 +117,12 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
           $press_logo_bg = sanitize_hex_color($press_logo_bg_raw) ?: '#FFFFFF';
           $press_logo_bg_style = $has_media_listing_category ? 'background-color: ' . $press_logo_bg . ';' : '';
           $use_press_logo_override = $has_media_listing_category && ($press_logo_custom_id > 0 || $press_logo_quick_select !== '');
+          $featured_image_fit = (string) get_field('post_featured_image_fit', $pid);
+          $is_story_post = in_array('stories', wp_list_pluck($p_terms, 'slug'), true);
+          $resolved_fit = in_array($featured_image_fit, ['landscape', 'portrait'], true)
+            ? $featured_image_fit
+            : ($is_story_post ? 'portrait' : 'landscape');
+          $featured_image_object_class = $resolved_fit === 'portrait' ? 'object-contain' : 'object-cover';
           $external_source_link = get_field('post_external_source_link', $pid);
           $open_external_source = get_field('post_listing_open_external_source', $pid);
           $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
@@ -164,7 +170,7 @@ $section_id = 'related-posts-' . wp_generate_uuid4();
               <?php elseif ($thumb_id): ?>
                 <?php echo wp_get_attachment_image($thumb_id, 'large', false, [
                   'alt'     => esc_attr($img_alt),
-                  'class'   => $has_media_listing_category ? 'absolute inset-0 size-full object-contain' : 'absolute inset-0 size-full object-cover',
+                  'class'   => $has_media_listing_category ? 'absolute inset-0 size-full object-contain' : 'absolute inset-0 size-full ' . $featured_image_object_class,
                   'style'   => $press_logo_bg_style,
                   'loading' => 'lazy',
                 ]); ?>

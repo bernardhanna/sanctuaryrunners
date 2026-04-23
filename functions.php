@@ -197,6 +197,15 @@ if (!function_exists('matrix_allowed_search_pdf_url')) {
     }
 }
 
+if (!function_exists('matrix_normalize_search_title')) {
+    function matrix_normalize_search_title(string $raw_title): string {
+        // Some titles are double-encoded (e.g. &amp;#8217;), so decode twice.
+        $decoded = wp_specialchars_decode($raw_title, ENT_QUOTES);
+        $decoded = wp_specialchars_decode($decoded, ENT_QUOTES);
+        return wp_strip_all_tags($decoded);
+    }
+}
+
 /**
  * Header live search endpoint.
  */
@@ -229,7 +238,7 @@ function matrix_live_site_search() {
         while ($query->have_posts()) {
             $query->the_post();
             $raw_title = (string) get_the_title();
-            $normalized_title = wp_strip_all_tags(wp_specialchars_decode($raw_title, ENT_QUOTES));
+            $normalized_title = matrix_normalize_search_title($raw_title);
             $url = (string) get_permalink();
             if ($url === '' || isset($seen_urls[$url])) {
                 continue;
@@ -266,7 +275,7 @@ function matrix_live_site_search() {
             }
             $seen_urls[$pdf_url] = true;
             $raw_title = (string) get_the_title();
-            $normalized_title = wp_strip_all_tags(wp_specialchars_decode($raw_title, ENT_QUOTES));
+            $normalized_title = matrix_normalize_search_title($raw_title);
             $items[] = [
                 'title' => $normalized_title,
                 'url'   => $pdf_url,

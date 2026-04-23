@@ -356,6 +356,12 @@ $search_input_id = $section_id . '-search';
                         $press_logo_bg = sanitize_hex_color($press_logo_bg_raw) ?: '#FFFFFF';
                         $press_logo_bg_style = $has_media_listing_category ? 'background-color: ' . $press_logo_bg . ';' : '';
                         $use_press_logo_override = $has_media_listing_category && ($press_logo_custom_id > 0 || $press_logo_quick_select !== '');
+                        $featured_image_fit = (string) get_field('post_featured_image_fit', $post_id);
+                        $is_story_post = in_array('stories', $category_slugs, true);
+                        $resolved_fit = in_array($featured_image_fit, ['landscape', 'portrait'], true)
+                            ? $featured_image_fit
+                            : ($is_story_post ? 'portrait' : 'landscape');
+                        $featured_image_object_class = $resolved_fit === 'portrait' ? 'object-contain' : 'object-cover';
                         $external_source_link = get_field('post_external_source_link', $post_id);
                         $open_external_source = get_field('post_listing_open_external_source', $post_id);
                         $open_external_source = ($open_external_source === 1 || $open_external_source === '1' || $open_external_source === true);
@@ -409,7 +415,7 @@ $search_input_id = $section_id . '-search';
                                         'alt'     => esc_attr($image_alt),
                                         'class'   => $has_media_listing_category
                                             ? 'object-contain absolute inset-0 size-full'
-                                            : 'object-cover absolute inset-0 size-full',
+                                            : $featured_image_object_class . ' absolute inset-0 size-full',
                                         'style'   => $press_logo_bg_style,
                                         'loading' => 'lazy'
                                     ]); ?>

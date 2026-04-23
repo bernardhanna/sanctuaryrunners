@@ -130,7 +130,11 @@ if ($search_term !== '') {
                                         ? wp_get_attachment_url((int) $result_post->ID)
                                         : get_permalink($result_post);
                                     $result_title_raw = (string) get_the_title($result_post);
-                                    $result_title = wp_strip_all_tags(wp_specialchars_decode($result_title_raw, ENT_QUOTES));
+                                    if (function_exists('matrix_normalize_search_title')) {
+                                        $result_title = matrix_normalize_search_title($result_title_raw);
+                                    } else {
+                                        $result_title = wp_strip_all_tags(wp_specialchars_decode(wp_specialchars_decode($result_title_raw, ENT_QUOTES), ENT_QUOTES));
+                                    }
                                     $result_excerpt = trim((string) get_the_excerpt($result_post));
                                     if ($result_excerpt === '') {
                                         $result_excerpt = trim((string) get_post_field('post_excerpt', (int) $result_post->ID));

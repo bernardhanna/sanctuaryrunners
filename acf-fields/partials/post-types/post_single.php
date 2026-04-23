@@ -25,6 +25,18 @@ $post_single
         'default_value' => 0,
         'ui' => 1,
     ])
+    ->addSelect('post_featured_image_fit', [
+        'label' => 'Featured Image Fit (Listings)',
+        'instructions' => 'Controls how this post thumbnail is displayed in listing cards. Default behavior: Stories = Portrait (contain), all others = Landscape (cover).',
+        'choices' => [
+            'auto' => 'Auto (Recommended)',
+            'landscape' => 'Landscape (object-cover)',
+            'portrait' => 'Portrait (object-contain)',
+        ],
+        'default_value' => 'auto',
+        'ui' => 1,
+        'return_format' => 'value',
+    ])
     ->addImage('post_listing_logo_custom', [
         'label' => 'Media Listing Logo (Custom)',
         'instructions' => 'Optional. Upload a custom logo/image for In the Media / press listing thumbnails.',
