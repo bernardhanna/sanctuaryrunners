@@ -5,24 +5,22 @@ if (!is_dir($acf_fields_dir)) {
     return;
 }
 
-// Keep legacy single-site loading behavior, but use robust recursive loading in multisite.
-if (!is_multisite()) {
-    foreach (glob($acf_fields_dir . '/**/*.php') as $file) {
-        require_once $file;
-    }
-    return;
-}
-
 $iterator = new RecursiveIteratorIterator(
     new RecursiveDirectoryIterator($acf_fields_dir, FilesystemIterator::SKIP_DOTS)
 );
 
 foreach ($iterator as $file) {
-    if (!$file->isFile()) {
+    if (!$file->isFile() || substr($file->getFilename(), -4) !== '.php') {
         continue;
     }
-    if (substr($file->getFilename(), -4) !== '.php') {
+
+    $path = $file->getPathname();
+
+    // Flexible block partials are loaded by `acf-fields/partials/flexi.php`.
+    // Loading them here first causes require_once collisions and empty layouts.
+    if (strpos($path, '/acf-fields/partials/blocks/') !== false) {
         continue;
     }
-    require_once $file->getPathname();
+
+    require_once $path;
 }
