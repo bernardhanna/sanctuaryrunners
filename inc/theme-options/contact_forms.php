@@ -22,12 +22,39 @@ $forms_opts
     'label'         => 'Captcha Provider',
     'instructions'  => 'Choose a captcha provider (or None).',
     'choices'       => [
-      'none'         => 'Nonea',
+      'none'         => 'None',
       'recaptcha_v3' => 'Google reCAPTCHA v3',
       'turnstile'    => 'Cloudflare Turnstile',
     ],
     'default_value' => 'none',
     'ui'            => 1,
+  ])
+  // Newsletter / Brevo integration
+  ->addTrueFalse('newsletter_enabled', [
+    'label'         => 'Enable Newsletter Signup',
+    'instructions'  => 'Enable Brevo newsletter subscriptions from theme forms and newsletter blocks.',
+    'default_value' => 0,
+    'ui'            => 1,
+  ])
+  ->addText('brevo_api_key', [
+    'label'             => 'Brevo API Key',
+    'instructions'      => 'Your Brevo v3 API key. If empty, MATRIX_BREVO_KEY constant is used when defined.',
+    'conditional_logic' => [[['field' => 'newsletter_enabled','operator'=>'==','value'=>'1']]],
+  ])
+  ->addText('brevo_list_ids', [
+    'label'             => 'Default Brevo List IDs',
+    'instructions'      => 'Comma-separated list IDs (for example: 2,14,29). Used when a block does not override list IDs.',
+    'conditional_logic' => [[['field' => 'newsletter_enabled','operator'=>'==','value'=>'1']]],
+  ])
+  ->addText('brevo_default_confirm_message', [
+    'label'             => 'Newsletter Success Message',
+    'default_value'     => 'Thanks, you are subscribed!',
+    'conditional_logic' => [[['field' => 'newsletter_enabled','operator'=>'==','value'=>'1']]],
+  ])
+  ->addText('brevo_error_message', [
+    'label'             => 'Newsletter Error Message',
+    'default_value'     => 'Sorry, something went wrong. Please try again.',
+    'conditional_logic' => [[['field' => 'newsletter_enabled','operator'=>'==','value'=>'1']]],
   ])
 
   // Google reCAPTCHA v3 keys
