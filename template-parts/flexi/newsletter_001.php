@@ -13,6 +13,10 @@ $button_text_color = get_sub_field('button_text_color') ?: '#1e293b';
 $brevo_list_ids = get_sub_field('brevo_list_ids') ?: '';
 $privacy_policy_url = get_sub_field('privacy_policy_url') ?: '#';
 $terms_conditions_url = get_sub_field('terms_conditions_url') ?: '#';
+$captcha_provider = function_exists('get_field') ? (string) (get_field('captcha_provider', 'option') ?: 'none') : 'none';
+$captcha_provider = strtolower(trim($captcha_provider));
+$turnstile_site_key = function_exists('get_field') ? (string) get_field('turnstile_site_key', 'option') : '';
+$turnstile_site_key = trim($turnstile_site_key);
 
 // Padding classes
 $padding_classes = ['pt-5', 'pb-5'];
@@ -79,6 +83,7 @@ if (!$icon_alt) {
                 <form
                     class="w-full newsletter-form"
                     data-brevo-newsletter="1"
+                    action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>"
                     role="form"
                     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
                     novalidate>
@@ -173,6 +178,12 @@ if (!$icon_alt) {
                         </label>
                         <div id="newsletter-consent-error-<?php echo esc_attr($section_id); ?>" class="hidden mt-1 w-full text-xs text-red-600" role="alert" aria-live="polite"></div>
                     </div>
+
+                    <?php if ($captcha_provider === 'turnstile' && $turnstile_site_key !== ''): ?>
+                        <div class="mt-4">
+                            <div class="cf-turnstile" data-sitekey="<?php echo esc_attr($turnstile_site_key); ?>"></div>
+                        </div>
+                    <?php endif; ?>
 
                     <div id="newsletter-submit-help-<?php echo esc_attr($section_id); ?>" class="mt-2 text-xs sr-only">
                         Please fill in all required fields and accept the terms to subscribe.

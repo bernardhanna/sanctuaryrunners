@@ -780,6 +780,59 @@ if (!function_exists('matrix_collect_brevo_list_ids')) {
   }
 }
 
+if (!function_exists('matrix_verify_newsletter_captcha')) {
+  function matrix_verify_newsletter_captcha(): bool {
+    if (!function_exists('get_field')) {
+      return true;
+    }
+
+    $provider = strtolower(trim((string) (get_field('captcha_provider', 'option') ?: 'none')));
+    if ($provider === 'none') {
+      return true;
+    }
+
+    if ($provider === 'recaptcha_v3') {
+      $token = sanitize_text_field($_POST['g-recaptcha-response'] ?? '');
+      if ($token === '') {
+        return false;
+      }
+      $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
+        'body' => [
+          'secret' => (string) get_field('recaptcha_secret_key', 'option'),
+          'response' => $token,
+        ],
+        'timeout' => 10,
+      ]);
+      if (is_wp_error($response)) {
+        return false;
+      }
+      $json = json_decode((string) wp_remote_retrieve_body($response), true);
+      return !empty($json['success']);
+    }
+
+    if ($provider === 'turnstile') {
+      $token = sanitize_text_field($_POST['cf-turnstile-response'] ?? '');
+      if ($token === '') {
+        return false;
+      }
+      $response = wp_remote_post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+        'body' => [
+          'secret' => (string) get_field('turnstile_secret_key', 'option'),
+          'response' => $token,
+        ],
+        'timeout' => 10,
+      ]);
+      if (is_wp_error($response)) {
+        return false;
+      }
+      $json = json_decode((string) wp_remote_retrieve_body($response), true);
+      return !empty($json['success']);
+    }
+
+    return true;
+  }
+}
+
 function matrix_subscribe_brevo() {
   $nonce_val = '';
   if (isset($_REQUEST['nonce']))    { $nonce_val = sanitize_text_field($_REQUEST['nonce']); }
@@ -801,6 +854,7 @@ function matrix_subscribe_brevo() {
 
   if (!$email || !is_email($email)) wp_send_json_error(['message' => 'Please enter a valid email address.'], 400);
   if (!$consent) wp_send_json_error(['message' => 'Please accept the terms.'], 400);
+  if (!matrix_verify_newsletter_captcha()) wp_send_json_error(['message' => 'Captcha verification failed. Please try again.'], 400);
 
   $opt_lists   = function_exists('get_field') ? (string) get_field('brevo_list_ids', 'option') : '';
   $opt_select  = function_exists('get_field') ? get_field('brevo_list_ids_select', 'option') : [];

@@ -147,7 +147,11 @@ add_action('acf/save_post', 'matrix_maybe_generate_form_webhook_secret', 20);
 
 if (!function_exists('matrix_get_brevo_api_key')) {
   function matrix_get_brevo_api_key(): string {
-    $api_key = function_exists('get_field') ? (string) get_field('brevo_api_key', 'option') : '';
+    // Prefer raw option read to avoid ACF field-load timing issues.
+    $api_key = (string) get_option('options_brevo_api_key', '');
+    if ($api_key === '' && function_exists('get_field')) {
+      $api_key = (string) get_field('brevo_api_key', 'option');
+    }
     if ($api_key === '' && defined('MATRIX_BREVO_KEY')) {
       $api_key = (string) MATRIX_BREVO_KEY;
     }
@@ -202,15 +206,12 @@ if (!function_exists('matrix_get_brevo_list_choices')) {
 add_filter('acf/load_field/name=brevo_list_ids_select', function ($field) {
   $field['choices'] = [];
 
-  if (!function_exists('get_field')) {
-    return $field;
-  }
-
   $api_key = matrix_get_brevo_api_key();
   $choices = matrix_get_brevo_list_choices($api_key);
 
   // Preserve already-saved values in case API is unavailable.
-  $saved_values = get_field('brevo_list_ids_select', 'option');
+  // IMPORTANT: use get_option() here to avoid recursion while ACF is loading this same field.
+  $saved_values = get_option('options_brevo_list_ids_select', []);
   if (is_array($saved_values)) {
     foreach ($saved_values as $saved_id) {
       $saved_id = (string) absint($saved_id);
