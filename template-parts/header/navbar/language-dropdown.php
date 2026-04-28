@@ -8,7 +8,6 @@
 $languages = [];
 $nav_settings = get_field('navigation_settings_start', 'option') ?: [];
 $show_country_picker = !array_key_exists('show_country_picker', $nav_settings) || (bool) $nav_settings['show_country_picker'];
-$disable_uk_and_com_versions = true; // Temporary rollout toggle. Set to false to show UK/.com options again.
 
 if (!$show_country_picker) {
     return;
@@ -57,33 +56,6 @@ if (empty($languages)) {
         ['value' => 'australia', 'label' => 'Australia', 'url' => '#', 'flag' => 'https://api.builder.io/api/v1/image/assets/f35586c581c84ecf82b6de32c55ed39e/01e57acce2567c69db9be0aa06c4f52ee1a53efd?placeholderIfAbsent=true', 'target' => ''],
         ['value' => 'global', 'label' => 'Global', 'url' => '#', 'flag' => null, 'target' => ''],
     ];
-}
-
-$is_temporarily_disabled_language = static function (array $language) {
-    $value = strtolower((string) ($language['value'] ?? ''));
-    $label = strtolower(trim((string) ($language['label'] ?? '')));
-    $url   = (string) ($language['url'] ?? '');
-    $host  = strtolower((string) wp_parse_url($url, PHP_URL_HOST));
-    $host  = preg_replace('/^www\./', '', $host);
-
-    if (in_array($value, ['uk', 'united-kingdom', 'gb'], true)) {
-        return true;
-    }
-
-    if (in_array($label, ['uk', 'united kingdom'], true)) {
-        return true;
-    }
-
-    return (bool) preg_match('/\.com$/', $host);
-};
-
-if ($disable_uk_and_com_versions) {
-    $languages = array_values(array_filter(
-        $languages,
-        static function ($language) use ($is_temporarily_disabled_language) {
-            return !$is_temporarily_disabled_language((array) $language);
-        }
-    ));
 }
 
 if (empty($languages)) {
