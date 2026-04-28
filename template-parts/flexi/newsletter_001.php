@@ -17,6 +17,8 @@ $captcha_provider = function_exists('get_field') ? (string) (get_field('captcha_
 $captcha_provider = strtolower(trim($captcha_provider));
 $turnstile_site_key = function_exists('get_field') ? (string) get_field('turnstile_site_key', 'option') : '';
 $turnstile_site_key = trim($turnstile_site_key);
+$newsletter_status = isset($_GET['newsletter_status']) ? sanitize_text_field((string) wp_unslash($_GET['newsletter_status'])) : '';
+$newsletter_message = isset($_GET['newsletter_message']) ? sanitize_text_field((string) wp_unslash($_GET['newsletter_message'])) : '';
 
 // Padding classes
 $padding_classes = ['pt-5', 'pb-5'];
@@ -84,11 +86,14 @@ if (!$icon_alt) {
                     class="w-full newsletter-form"
                     data-brevo-newsletter="1"
                     action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>"
+                    method="post"
                     role="form"
                     aria-labelledby="<?php echo esc_attr($section_id); ?>-heading"
                     novalidate>
 
                     <!-- Hidden fields for Brevo integration -->
+                    <input type="hidden" name="action" value="matrix_subscribe_brevo">
+                    <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('matrix_brevo_subscribe')); ?>">
                     <input type="hidden" name="list_ids" value="<?php echo esc_attr($brevo_list_ids); ?>">
 
                     <div class="flex flex-wrap gap-4 items-center w-full text-sm leading-none">
@@ -190,7 +195,17 @@ if (!$icon_alt) {
                     </div>
 
                     <!-- Success/Error Messages -->
-                    <div id="newsletter-messages-<?php echo esc_attr($section_id); ?>" class="hidden mt-4" role="alert" aria-live="polite"></div>
+                    <div
+                        id="newsletter-messages-<?php echo esc_attr($section_id); ?>"
+                        class="<?php echo $newsletter_message ? 'mt-4' : 'hidden mt-4'; ?>"
+                        role="alert"
+                        aria-live="polite">
+                        <?php if ($newsletter_message): ?>
+                            <div class="<?php echo $newsletter_status === 'success' ? 'text-green-700' : 'text-red-700'; ?>">
+                                <?php echo esc_html($newsletter_message); ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                 </form>
             </div>
         </div>

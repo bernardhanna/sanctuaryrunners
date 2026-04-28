@@ -833,28 +833,59 @@ if (!function_exists('matrix_verify_newsletter_captcha')) {
   }
 }
 
+if (!function_exists('matrix_newsletter_is_ajax_request')) {
+  function matrix_newsletter_is_ajax_request(): bool {
+    if ((isset($_POST['is_ajax']) && $_POST['is_ajax'] === '1')
+      || (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower((string) $_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')) {
+      return true;
+    }
+
+    $accept = strtolower((string) ($_SERVER['HTTP_ACCEPT'] ?? ''));
+    return strpos($accept, 'application/json') !== false;
+  }
+}
+
+if (!function_exists('matrix_newsletter_respond')) {
+  function matrix_newsletter_respond(bool $ok, string $message, int $status_code = 200): void {
+    if (matrix_newsletter_is_ajax_request()) {
+      if ($ok) {
+        wp_send_json_success(['message' => $message], $status_code);
+      }
+      wp_send_json_error(['message' => $message], $status_code);
+    }
+
+    $redirect_url = wp_get_referer() ?: home_url('/');
+    $redirect_url = add_query_arg([
+      'newsletter_status' => $ok ? 'success' : 'error',
+      'newsletter_message' => $message,
+    ], $redirect_url);
+    wp_safe_redirect($redirect_url);
+    exit;
+  }
+}
+
 function matrix_subscribe_brevo() {
   $nonce_val = '';
   if (isset($_REQUEST['nonce']))    { $nonce_val = sanitize_text_field($_REQUEST['nonce']); }
   if (isset($_REQUEST['_wpnonce'])) { $nonce_val = sanitize_text_field($_REQUEST['_wpnonce']); }
   if (!wp_verify_nonce($nonce_val, 'matrix_brevo_subscribe')) {
-    wp_send_json_error(['message' => 'Bad nonce.'], 400);
+    matrix_newsletter_respond(false, 'Bad nonce.', 400);
   }
 
   $enabled = function_exists('get_field') ? (bool) get_field('newsletter_enabled', 'option') : true;
-  if (!$enabled) wp_send_json_error(['message' => 'Newsletter disabled.'], 400);
+  if (!$enabled) matrix_newsletter_respond(false, 'Newsletter disabled.', 400);
 
   $api_key = function_exists('get_field') ? (string) get_field('brevo_api_key', 'option') : '';
   if (!$api_key && defined('MATRIX_BREVO_KEY')) $api_key = MATRIX_BREVO_KEY;
-  if (!$api_key) wp_send_json_error(['message' => 'Missing Brevo API key.'], 500);
+  if (!$api_key) matrix_newsletter_respond(false, 'Missing Brevo API key.', 500);
 
   $name_raw = sanitize_text_field($_POST['name'] ?? ($_POST['nn'] ?? ''));
   $email    = sanitize_email($_POST['email'] ?? ($_POST['ne'] ?? ''));
   $consent  = isset($_POST['consent']) ? (bool) $_POST['consent'] : ( isset($_POST['ny']) );
 
-  if (!$email || !is_email($email)) wp_send_json_error(['message' => 'Please enter a valid email address.'], 400);
-  if (!$consent) wp_send_json_error(['message' => 'Please accept the terms.'], 400);
-  if (!matrix_verify_newsletter_captcha()) wp_send_json_error(['message' => 'Captcha verification failed. Please try again.'], 400);
+  if (!$email || !is_email($email)) matrix_newsletter_respond(false, 'Please enter a valid email address.', 400);
+  if (!$consent) matrix_newsletter_respond(false, 'Please accept the terms.', 400);
+  if (!matrix_verify_newsletter_captcha()) matrix_newsletter_respond(false, 'Captcha verification failed. Please try again.', 400);
 
   $opt_lists   = function_exists('get_field') ? (string) get_field('brevo_list_ids', 'option') : '';
   $opt_select  = function_exists('get_field') ? get_field('brevo_list_ids_select', 'option') : [];
@@ -908,13 +939,13 @@ function matrix_subscribe_brevo() {
 
   if (in_array($code, [200, 201, 204], true)) {
     $msg = function_exists('get_field') ? (string) get_field('brevo_default_confirm_message', 'option') : 'Thanks — you’re subscribed!';
-    wp_send_json_success(['message' => $msg]);
+    matrix_newsletter_respond(true, $msg, 200);
   }
 
   $json     = json_decode($raw, true);
   $err      = is_array($json) && !empty($json['message']) ? $json['message'] : 'Subscription failed.';
   $fallback = function_exists('get_field') ? (string) get_field('brevo_error_message', 'option') : 'Sorry, something went wrong. Please try again.';
-  wp_send_json_error(['message' => ($err ?: $fallback)], $code ?: 400);
+  matrix_newsletter_respond(false, ($err ?: $fallback), $code ?: 400);
 }
 
 /* ==== Safe singleton init (avoid duplicate action registration) ==== */

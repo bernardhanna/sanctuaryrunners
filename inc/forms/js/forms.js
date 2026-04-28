@@ -213,6 +213,30 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('form[data-brevo-newsletter]').forEach(form => {
+      const ensureNewsletterTurnstileRendered = () => {
+        if (provider !== 'turnstile' || !window.turnstile || !tsSiteKey) return;
+        const placeholder = form.querySelector('.cf-turnstile');
+        if (!placeholder || form._newsletterTsWidgetId) return;
+        form._newsletterTsWidgetId = window.turnstile.render(placeholder, {
+          sitekey: tsSiteKey,
+          size: placeholder.getAttribute('data-size') || 'normal',
+          theme: placeholder.getAttribute('data-theme') || 'auto',
+          callback: (token) => {
+            let inp = form.querySelector('input[name="cf-turnstile-response"]');
+            if (!inp) {
+              inp = document.createElement('input');
+              inp.type = 'hidden';
+              inp.name = 'cf-turnstile-response';
+              form.appendChild(inp);
+            }
+            inp.value = token;
+          },
+        });
+      };
+
+      // Render visible Turnstile widget for newsletter forms.
+      ensureNewsletterTurnstileRendered();
+
         form.addEventListener('submit', ev => {
           if (!form.checkValidity()) { ev.preventDefault(); form.reportValidity(); return; }
           ev.preventDefault();
@@ -277,6 +301,7 @@
 
         // Turnstile for newsletter forms (visible widget)
         if (provider === 'turnstile' && window.turnstile && tsSiteKey) {
+          ensureNewsletterTurnstileRendered();
           const tokenInput = form.querySelector('input[name="cf-turnstile-response"]');
           if (!tokenInput || !tokenInput.value) {
             showBanner(form, 'Please complete the captcha before subscribing.', false);
@@ -289,6 +314,19 @@
 
         submitNewsletter();
         });
+      // Handle race condition if Turnstile script loads after DOM ready.
+      if (provider === 'turnstile' && tsSiteKey) {
+        let attempts = 0;
+        const waitForNewsletterTurnstile = setInterval(() => {
+          attempts++;
+          if (window.turnstile) {
+            clearInterval(waitForNewsletterTurnstile);
+            ensureNewsletterTurnstileRendered();
+          } else if (attempts > 80) {
+            clearInterval(waitForNewsletterTurnstile);
+          }
+        }, 50);
+      }
       });
 
       function showBanner(form, text, ok) {
