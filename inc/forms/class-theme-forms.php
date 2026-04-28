@@ -68,9 +68,7 @@ class Theme_Forms {
       return;
     }
 
-    $list_ids_raw = (string) get_field('brevo_list_ids', 'option');
-    $list_ids = array_filter(array_map('absint', preg_split('/[,\s;]+/', $list_ids_raw)));
-    $list_ids = array_values(array_unique(array_filter($list_ids, 'intval')));
+    $list_ids = matrix_collect_brevo_list_ids();
 
     $first_name = isset($fields['first_name']) ? sanitize_text_field((string) $fields['first_name']) : '';
     $last_name  = isset($fields['last_name']) ? sanitize_text_field((string) $fields['last_name']) : '';
@@ -403,8 +401,7 @@ class Theme_Forms {
     if (!$api_key && defined('MATRIX_BREVO_KEY')) $api_key = MATRIX_BREVO_KEY;
     if (!$api_key) return;
 
-    $opt_lists = function_exists('get_field') ? (string) get_field('brevo_list_ids', 'option') : '';
-    $list_ids = array_values(array_unique(array_filter(array_map('absint', preg_split('/[,\s;]+/', (string) $opt_lists)), 'intval')));
+    $list_ids = matrix_collect_brevo_list_ids();
 
     $first = sanitize_text_field((string) ($fields['first_name'] ?? ''));
     $last = sanitize_text_field((string) ($fields['last_name'] ?? ''));
@@ -765,6 +762,24 @@ class Theme_Forms {
 add_action('wp_ajax_nopriv_matrix_subscribe_brevo', 'matrix_subscribe_brevo');
 add_action('wp_ajax_matrix_subscribe_brevo',        'matrix_subscribe_brevo');
 
+if (!function_exists('matrix_collect_brevo_list_ids')) {
+  function matrix_collect_brevo_list_ids(string $manual_ids = '', array $extra_ids = []): array {
+    if (!function_exists('get_field')) {
+      return [];
+    }
+
+    $manual_ids = $manual_ids !== '' ? $manual_ids : (string) get_field('brevo_list_ids', 'option');
+    $selected_ids = get_field('brevo_list_ids_select', 'option');
+    $selected_ids = is_array($selected_ids) ? $selected_ids : [];
+
+    $ids_from_manual = array_filter(array_map('absint', preg_split('/[,\s;]+/', (string) $manual_ids)));
+    $ids_from_selected = array_filter(array_map('absint', $selected_ids));
+    $ids_from_extra = array_filter(array_map('absint', $extra_ids));
+
+    return array_values(array_unique(array_filter(array_merge($ids_from_manual, $ids_from_selected, $ids_from_extra), 'intval')));
+  }
+}
+
 function matrix_subscribe_brevo() {
   $nonce_val = '';
   if (isset($_REQUEST['nonce']))    { $nonce_val = sanitize_text_field($_REQUEST['nonce']); }
@@ -788,13 +803,15 @@ function matrix_subscribe_brevo() {
   if (!$consent) wp_send_json_error(['message' => 'Please accept the terms.'], 400);
 
   $opt_lists   = function_exists('get_field') ? (string) get_field('brevo_list_ids', 'option') : '';
+  $opt_select  = function_exists('get_field') ? get_field('brevo_list_ids_select', 'option') : [];
   $post_list_s = sanitize_text_field($_POST['list_ids'] ?? '');
   $post_list_a = (isset($_POST['list_ids']) && is_array($_POST['list_ids'])) ? array_map('sanitize_text_field', (array) $_POST['list_ids']) : [];
 
   $lists_str       = $post_list_s ?: $opt_lists;
   $_ids_from_str   = array_filter(array_map('absint', preg_split('/[,\s;]+/', (string) $lists_str)));
   $_ids_from_array = array_filter(array_map('absint', $post_list_a));
-  $list_ids        = array_values(array_unique(array_filter(array_merge($_ids_from_str, $_ids_from_array), 'intval')));
+  $_ids_from_select = is_array($opt_select) ? array_filter(array_map('absint', $opt_select)) : [];
+  $list_ids        = array_values(array_unique(array_filter(array_merge($_ids_from_str, $_ids_from_array, $_ids_from_select), 'intval')));
 
   $first = ''; $last = '';
   if ($name_raw) {

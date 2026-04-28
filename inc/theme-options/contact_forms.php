@@ -43,7 +43,17 @@ $forms_opts
   ])
   ->addText('brevo_list_ids', [
     'label'             => 'Default Brevo List IDs',
-    'instructions'      => 'Comma-separated list IDs (for example: 2,14,29). Used when a block does not override list IDs.',
+    'instructions'      => 'Comma-separated list IDs (for example: 2,14,29). You can use this, the selector below, or both.',
+    'conditional_logic' => [[['field' => 'newsletter_enabled','operator'=>'==','value'=>'1']]],
+  ])
+  ->addSelect('brevo_list_ids_select', [
+    'label'             => 'Select Brevo Lists',
+    'instructions'      => 'Fetched from Brevo using your API key. You can combine this with manual IDs above.',
+    'choices'           => [],
+    'multiple'          => 1,
+    'ui'                => 1,
+    'allow_null'        => 1,
+    'ajax'              => 0,
     'conditional_logic' => [[['field' => 'newsletter_enabled','operator'=>'==','value'=>'1']]],
   ])
   ->addText('brevo_default_confirm_message', [
@@ -134,5 +144,84 @@ if (!function_exists('matrix_maybe_generate_form_webhook_secret')) {
   }
 }
 add_action('acf/save_post', 'matrix_maybe_generate_form_webhook_secret', 20);
+
+if (!function_exists('matrix_get_brevo_api_key')) {
+  function matrix_get_brevo_api_key(): string {
+    $api_key = function_exists('get_field') ? (string) get_field('brevo_api_key', 'option') : '';
+    if ($api_key === '' && defined('MATRIX_BREVO_KEY')) {
+      $api_key = (string) MATRIX_BREVO_KEY;
+    }
+    return trim($api_key);
+  }
+}
+
+if (!function_exists('matrix_get_brevo_list_choices')) {
+  function matrix_get_brevo_list_choices(string $api_key): array {
+    if ($api_key === '') {
+      return [];
+    }
+
+    $cache_key = 'matrix_brevo_list_choices_' . md5($api_key);
+    $cached = get_transient($cache_key);
+    if (is_array($cached)) {
+      return $cached;
+    }
+
+    $response = wp_remote_get('https://api.brevo.com/v3/contacts/lists?limit=50', [
+      'timeout' => 12,
+      'headers' => [
+        'accept' => 'application/json',
+        'api-key' => $api_key,
+      ],
+    ]);
+
+    if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
+      return [];
+    }
+
+    $data = json_decode((string) wp_remote_retrieve_body($response), true);
+    if (!is_array($data) || empty($data['lists']) || !is_array($data['lists'])) {
+      return [];
+    }
+
+    $choices = [];
+    foreach ($data['lists'] as $list) {
+      $id = isset($list['id']) ? absint($list['id']) : 0;
+      if ($id <= 0) {
+        continue;
+      }
+      $name = isset($list['name']) ? sanitize_text_field((string) $list['name']) : ('List ' . $id);
+      $choices[(string) $id] = sprintf('%s (%d)', $name, $id);
+    }
+
+    set_transient($cache_key, $choices, 15 * MINUTE_IN_SECONDS);
+    return $choices;
+  }
+}
+
+add_filter('acf/load_field/name=brevo_list_ids_select', function ($field) {
+  $field['choices'] = [];
+
+  if (!function_exists('get_field')) {
+    return $field;
+  }
+
+  $api_key = matrix_get_brevo_api_key();
+  $choices = matrix_get_brevo_list_choices($api_key);
+
+  // Preserve already-saved values in case API is unavailable.
+  $saved_values = get_field('brevo_list_ids_select', 'option');
+  if (is_array($saved_values)) {
+    foreach ($saved_values as $saved_id) {
+      $saved_id = (string) absint($saved_id);
+      if ($saved_id !== '' && !isset($choices[$saved_id])) {
+        $choices[$saved_id] = 'List ID ' . $saved_id;
+      }
+    }
+  }
+
+  $field['choices'] = $choices;
+  return $field;
+});
 
 return $forms_opts;
