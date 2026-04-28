@@ -47,7 +47,7 @@ class Theme_Forms {
     $email = isset($fields['email']) ? sanitize_email((string) $fields['email']) : '';
     if (!$email || !is_email($email)) return;
 
-    $consent_keys = ['marketing_opt_in', 'newsletter_opt_in', 'email_opt_in', 'consent_marketing'];
+    $consent_keys = ['marketing_opt_in', 'newsletter_opt_in', 'email_opt_in', 'consent_marketing', 'keeping_in_touch_consent', 'contact_details'];
     $has_consent = false;
     foreach ($consent_keys as $key) {
       if (isset($_POST[$key]) && $this->is_truthy($_POST[$key])) {
