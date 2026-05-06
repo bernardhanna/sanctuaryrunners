@@ -103,7 +103,13 @@ class Theme_Forms {
       ],
       'body' => wp_json_encode($body),
     ]);
-
+    if (is_wp_error($response)) {
+      $this->log_mail_issue('brevo_subscribe_failed', [
+        'email' => $email,
+        'error' => $response->get_error_message(),
+      ]);
+      return;
+    }
     $code = wp_remote_retrieve_response_code($response);
     if (!in_array($code, [200, 201, 204], true)) {
       $this->log_mail_issue('brevo_subscribe_failed', [
@@ -113,10 +119,7 @@ class Theme_Forms {
       ]);
       return;
     }
-
-    $this->log_mail_issue('brevo_subscribe_ok', [
-      'email' => $email,
-    ]);
+    $this->log_mail_issue('brevo_subscribe_ok', [ 'email' => $email ]);
   }
 
   private function infer_form_type(string $form_name): string {
@@ -217,7 +220,6 @@ class Theme_Forms {
       ]);
       return;
     }
-
     $this->log_mail_issue('webhook_sync_ok', [
       'status' => $status,
       'form_name' => $form_name,

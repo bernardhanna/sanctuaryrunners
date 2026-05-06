@@ -11,26 +11,39 @@
   if (window._themeFormsInitDone) return;
   window._themeFormsInitDone = true;
 
+  /** ACF / other scripts may leave nested objects; Turnstile requires a non-empty string sitekey. */
+  function coerceTurnstileSiteKey(raw) {
+    let v = raw;
+    for (let i = 0; i < 12 && v != null && typeof v === 'object'; i++) {
+      const next = v.value ?? v.key ?? v.sitekey ?? v.site_key;
+      if (next === undefined || next === v) break;
+      v = next;
+    }
+    if (v == null) return '';
+    if (typeof v === 'string') return v.trim();
+    if (typeof v === 'number' || typeof v === 'boolean') return String(v).trim();
+    return '';
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     let provider = window.themeFormsCaptchaProvider;
     if (!provider || typeof provider !== 'string') provider = 'none';
     provider = provider.toLowerCase().trim();
 
-    let tsSiteKey = window.themeFormsTurnstileSiteKey;
-    if (tsSiteKey && typeof tsSiteKey === 'object') {
-      tsSiteKey = tsSiteKey.value || tsSiteKey.key || '';
-    }
-    if (typeof tsSiteKey !== 'string') tsSiteKey = '';
-    tsSiteKey = tsSiteKey.trim();
+    let tsSiteKey = coerceTurnstileSiteKey(window.themeFormsTurnstileSiteKey);
 
     const reSiteKey = (typeof window.themeFormsRecaptchaV3 === 'string' ? window.themeFormsRecaptchaV3.trim() : '');
+    const clearTurnstileToken = (form) => {
+      const inp = form.querySelector('input[name="cf-turnstile-response"]');
+      if (inp) inp.value = '';
+    };
 
     const ensureTurnstileRendered = (form) => {
       if (provider !== 'turnstile' || !window.turnstile || !tsSiteKey) return;
       const placeholder = form.querySelector('.cf-turnstile');
       if (!placeholder || form._tsWidgetId) return;
       form._tsWidgetId = window.turnstile.render(placeholder, {
-        sitekey: tsSiteKey,
+        sitekey: coerceTurnstileSiteKey(tsSiteKey),
         size: placeholder.getAttribute('data-size') || 'normal',
         theme: placeholder.getAttribute('data-theme') || 'auto',
         callback: (token) => {
@@ -43,7 +56,14 @@
           }
           inp.value = token;
         },
-        'error-callback': () => showBanner(form, 'Captcha failed, please try again.', false),
+        'expired-callback': () => {
+          clearTurnstileToken(form);
+          showBanner(form, 'Captcha expired, please complete it again.', false);
+        },
+        'error-callback': () => {
+          clearTurnstileToken(form);
+          showBanner(form, 'Captcha failed, please try again.', false);
+        },
       });
     };
 
@@ -62,7 +82,13 @@
         const lock = (on) => {
           form.dataset.submitting = on ? '1' : '0';
           form.classList.toggle('is-submitting', !!on);
-          form.querySelectorAll('button, [type="submit"]').forEach(b => b.disabled = !!on);
+          form.querySelectorAll('button, [type="submit"]').forEach(b => {
+            b.disabled = !!on;
+            if (!b.dataset.originalLabel) {
+              b.dataset.originalLabel = b.textContent || 'Submit';
+            }
+            b.textContent = on ? 'Processing...' : b.dataset.originalLabel;
+          });
         };
 
         // Abort any prior in-flight request for this form
@@ -106,6 +132,14 @@
                   }
                   if (d.mail_error) msg += ` (Mail error: ${d.mail_error})`;
                   if (d.to) msg += ` [to: ${d.to}]`;
+                }
+                // If backend rejects Turnstile, force a fresh challenge token.
+                if (provider === 'turnstile' && msg.indexOf('captcha_failed') !== -1) {
+                  clearTurnstileToken(form);
+                  if (window.turnstile && form._tsWidgetId) {
+                    try { window.turnstile.reset(form._tsWidgetId); } catch (e) { }
+                  }
+                  msg = 'Captcha check failed. Please complete captcha again and resubmit.';
                 }
                 showBanner(form, msg, false);
               }
@@ -151,7 +185,7 @@
 
           if (!form._tsWidgetId) {
             form._tsWidgetId = window.turnstile.render(placeholder || form, {
-              sitekey: tsSiteKey,
+              sitekey: coerceTurnstileSiteKey(tsSiteKey),
               size: placeholder ? (placeholder.getAttribute('data-size') || 'normal') : 'invisible',
               theme: placeholder ? (placeholder.getAttribute('data-theme') || 'auto') : 'auto',
               callback: (token) => {
@@ -165,7 +199,14 @@
                 inp.value = token;
                 send();
               },
-              'error-callback': () => showBanner(form, 'Captcha failed, please try again.', false),
+              'expired-callback': () => {
+                clearTurnstileToken(form);
+                showBanner(form, 'Captcha expired, please complete it again.', false);
+              },
+              'error-callback': () => {
+                clearTurnstileToken(form);
+                showBanner(form, 'Captcha failed, please try again.', false);
+              },
             });
           }
 
@@ -212,13 +253,18 @@
     window._brevoInitDone = true;
 
     document.addEventListener('DOMContentLoaded', () => {
+      let providerNews = window.themeFormsCaptchaProvider;
+      if (!providerNews || typeof providerNews !== 'string') providerNews = 'none';
+      providerNews = providerNews.toLowerCase().trim();
+      const tsKeyNews = coerceTurnstileSiteKey(window.themeFormsTurnstileSiteKey);
+
       document.querySelectorAll('form[data-brevo-newsletter]').forEach(form => {
       const ensureNewsletterTurnstileRendered = () => {
-        if (provider !== 'turnstile' || !window.turnstile || !tsSiteKey) return;
+        if (providerNews !== 'turnstile' || !window.turnstile || !tsKeyNews) return;
         const placeholder = form.querySelector('.cf-turnstile');
         if (!placeholder || form._newsletterTsWidgetId) return;
         form._newsletterTsWidgetId = window.turnstile.render(placeholder, {
-          sitekey: tsSiteKey,
+          sitekey: tsKeyNews,
           size: placeholder.getAttribute('data-size') || 'normal',
           theme: placeholder.getAttribute('data-theme') || 'auto',
           callback: (token) => {
@@ -245,12 +291,7 @@
         if (!provider || typeof provider !== 'string') provider = 'none';
         provider = provider.toLowerCase().trim();
 
-        let tsSiteKey = window.themeFormsTurnstileSiteKey;
-        if (tsSiteKey && typeof tsSiteKey === 'object') {
-          tsSiteKey = tsSiteKey.value || tsSiteKey.key || '';
-        }
-        if (typeof tsSiteKey !== 'string') tsSiteKey = '';
-        tsSiteKey = tsSiteKey.trim();
+        const tsSiteKey = coerceTurnstileSiteKey(window.themeFormsTurnstileSiteKey);
 
         const reSiteKey = (typeof window.themeFormsRecaptchaV3 === 'string' ? window.themeFormsRecaptchaV3.trim() : '');
 
@@ -315,7 +356,7 @@
         submitNewsletter();
         });
       // Handle race condition if Turnstile script loads after DOM ready.
-      if (provider === 'turnstile' && tsSiteKey) {
+      if (providerNews === 'turnstile' && tsKeyNews) {
         let attempts = 0;
         const waitForNewsletterTurnstile = setInterval(() => {
           attempts++;

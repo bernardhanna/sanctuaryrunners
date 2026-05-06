@@ -173,7 +173,7 @@ $people_query = new WP_Query($query_args);
                       ?>
                       <article class="flex flex-col gap-4">
                           <div class="flex flex-col gap-4">
-                              <div class="w-full max-lg:h-auto h-[20rem] overflow-hidden <?php echo esc_attr($image_radius); ?>">
+                              <div class="sr-person-card__imgwrap w-full overflow-hidden bg-[#e8ebf4] <?php echo esc_attr($image_radius); ?>">
                                   <?php if (!empty($thumb_url)) { ?>
                                       <img
                                           src="<?php echo esc_url($thumb_url); ?>"
@@ -181,11 +181,11 @@ $people_query = new WP_Query($query_args);
                                           title="<?php echo esc_attr($thumb_title); ?>"
                                           loading="lazy"
                                           decoding="async"
-                                          class="object-cover w-full h-full rounded-lg max-lg:h-auto max-lg:object-contain"
+                                          class="sr-person-card__img w-full h-full rounded-lg"
                                       >
                                   <?php } else { ?>
                                       <div
-                                          class="w-full h-[20rem] flex items-center justify-center bg-[#e8ebf4] <?php echo esc_attr($image_radius); ?>"
+                                          class="w-full h-full flex items-center justify-center bg-[#e8ebf4] <?php echo esc_attr($image_radius); ?>"
                                           role="img"
                                           aria-label="<?php echo esc_attr($thumb_alt); ?>"
                                       >

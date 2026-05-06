@@ -58,6 +58,88 @@ if (empty($languages)) {
     ];
 }
 
+// In multisite, options are per-site. Merge network sites so IE/UK/Global are always present,
+// while preserving any manual labels/flags configured in theme options.
+if (is_multisite()) {
+    $manual_languages = $languages;
+    $manual_by_value = [];
+    foreach ($manual_languages as $manual_lang) {
+        $manual_value = sanitize_title((string) ($manual_lang['value'] ?? ''));
+        if ($manual_value !== '') {
+            $manual_by_value[$manual_value] = $manual_lang;
+        }
+    }
+
+    $network_languages = [];
+    $sites = get_sites([
+        'number'   => 0,
+        'deleted'  => 0,
+        'archived' => 0,
+        'spam'     => 0,
+    ]);
+
+    foreach ($sites as $site) {
+        $blog_id = (int) ($site->blog_id ?? 0);
+        if ($blog_id <= 0) {
+            continue;
+        }
+
+        $url = get_home_url($blog_id, '/');
+        $host = strtolower((string) wp_parse_url($url, PHP_URL_HOST));
+        $path = trim((string) wp_parse_url($url, PHP_URL_PATH), '/');
+        $host_no_www = preg_replace('/^www\./', '', $host);
+
+        $value = sanitize_title((string) $site->path);
+        if ($value === '') {
+            if (strpos($host_no_www, 'uk.') === 0 || strpos($host_no_www, '.co.uk') !== false || $path === 'uk') {
+                $value = 'uk';
+            } elseif (strpos($host_no_www, 'global.') === 0 || strpos($host_no_www, '.com') !== false || $path === 'global') {
+                $value = 'global';
+            } else {
+                $value = 'ie';
+            }
+        }
+
+        $label = get_blog_option($blog_id, 'blogname', '');
+        if (!is_string($label) || trim($label) === '') {
+            if ($value === 'uk') {
+                $label = 'United Kingdom';
+            } elseif ($value === 'global') {
+                $label = 'Global';
+            } else {
+                $label = 'Ireland';
+            }
+        }
+
+        $entry = [
+            'value'  => $value,
+            'label'  => trim((string) $label),
+            'url'    => $url,
+            'flag'   => null,
+            'target' => '',
+        ];
+
+        if (isset($manual_by_value[$value]) && is_array($manual_by_value[$value])) {
+            $manual_entry = $manual_by_value[$value];
+            if (!empty($manual_entry['label'])) {
+                $entry['label'] = (string) $manual_entry['label'];
+            }
+            if (!empty($manual_entry['flag'])) {
+                $entry['flag'] = (string) $manual_entry['flag'];
+            }
+            if (!empty($manual_entry['target'])) {
+                $entry['target'] = (string) $manual_entry['target'];
+            }
+        }
+
+        $network_languages[] = $entry;
+    }
+
+    if (!empty($network_languages)) {
+        $languages = $network_languages;
+    }
+}
+
 if (empty($languages)) {
     return;
 }
@@ -118,14 +200,14 @@ foreach ($languages as $lang) {
   <div class="w-full text-sm leading-none text-slate-900">
     <div class="rounded shadow-none">
       <!-- Compact trigger in nav (hover target): flag + arrow -->
-      <a
-        href="<?php echo esc_url($current['url'] ?? '#'); ?>"
+      <button
+        type="button"
         class="flex gap-1 justify-center items-center px-1 py-2.5 w-full bg-transparent rounded-t transition-colors duration-200"
-        <?php if (!empty($current['target'])) : ?>target="<?php echo esc_attr($current['target']); ?>"<?php endif; ?>
         aria-haspopup="true"
         :aria-expanded="open"
         aria-labelledby="language-dropdown-label"
         id="language-dropdown-trigger"
+        @click.prevent="open = !open"
       >
         <?php if (!empty($current['flag'])) : ?>
           <img
@@ -142,7 +224,7 @@ foreach ($languages as $lang) {
           :style="open ? 'transform: rotate(180deg)' : 'transform: rotate(0deg)'"
           aria-hidden="true"
         ></i>
-      </a>
+      </button>
 
       <!-- Dropdown panel: list of language options only, no shadow -->
       <div

@@ -62,8 +62,8 @@ $menu_array = $primary_navigation->toArray();
     class="hamburger mobile-hamburger-custom <?php echo esc_attr($hamburger_style); ?> min-[1201px]:hidden"
     type="button"
     aria-label="Menu"
-    aria-expanded="false"
-    @click="isOpen = !isOpen"
+    :aria-expanded="isOpen.toString()"
+    @click.stop="isOpen = !isOpen"
   >
     <span class="hamburger-box">
       <span class="hamburger-inner"></span>
@@ -208,7 +208,7 @@ $menu_array = $primary_navigation->toArray();
     style="background-color: <?php echo esc_attr($mobile_menu_bg); ?>; width: 100vw; left: 0; right: 0;"
     x-transition:enter="transition ease-out duration-500"
     x-transition:leave="transition ease-in duration-300"
-    @click.away="isOpen = false"
+    @click.self="isOpen = false"
     @keydown.escape="isOpen = false"
   >
     <nav class="flex relative flex-col h-full" aria-label="Mobile navigation">

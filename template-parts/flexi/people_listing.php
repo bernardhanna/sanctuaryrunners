@@ -11,7 +11,7 @@ global $wp_query;
 $section_id = 'people-listing-' . wp_generate_uuid4();
 ?>
 
-<section id="<?php echo esc_attr($section_id); ?>" class="relative flex overflow-hidden bg-white">
+<section id="<?php echo esc_attr($section_id); ?>" class="flex overflow-hidden relative bg-white">
     <div class="mx-auto flex w-full max-w-[1120px] flex-col items-center px-5 py-12">
         <?php if (have_posts()) : ?>
             <div class="grid grid-cols-2 gap-6 w-full md:grid-cols-3 lg:grid-cols-4">
@@ -46,7 +46,7 @@ $section_id = 'people-listing-' . wp_generate_uuid4();
                     ?>
                     <article class="flex flex-col gap-4">
                         <a href="<?php echo esc_url($person_permalink); ?>" class="flex flex-col gap-4 group" aria-label="<?php echo esc_attr(sprintf(__('View profile for %s', 'matrix-starter'), $person_name)); ?>">
-                            <div class="w-full h-[20rem] overflow-hidden rounded-lg max-lg:h-auto">
+                            <div class="sr-person-card__imgwrap w-full overflow-hidden rounded-lg bg-[#e8ebf4]">
                                 <?php if ($thumb_url !== '') : ?>
                                     <img
                                         src="<?php echo esc_url($thumb_url); ?>"
@@ -54,11 +54,11 @@ $section_id = 'people-listing-' . wp_generate_uuid4();
                                         title="<?php echo esc_attr($thumb_title); ?>"
                                         loading="lazy"
                                         decoding="async"
-                                        class="object-cover w-full h-full rounded-lg max-lg:h-auto max-lg:object-contain"
+                                        class="sr-person-card__img w-full h-full rounded-lg"
                                     >
                                 <?php else : ?>
                                     <div
-                                        class="w-full h-[20rem] flex items-center justify-center bg-[#e8ebf4] rounded-lg"
+                                        class="w-full h-full flex items-center justify-center bg-[#e8ebf4] rounded-lg"
                                         role="img"
                                         aria-label="<?php echo esc_attr($thumb_alt); ?>"
                                     >
@@ -86,7 +86,7 @@ $section_id = 'people-listing-' . wp_generate_uuid4();
             </div>
 
             <?php if ((int) $wp_query->max_num_pages > 1) : ?>
-                <nav class="mt-10 flex flex-wrap items-center justify-center gap-2" aria-label="<?php esc_attr_e('People pagination', 'matrix-starter'); ?>">
+                <nav class="flex flex-wrap gap-2 justify-center items-center mt-10" aria-label="<?php esc_attr_e('People pagination', 'matrix-starter'); ?>">
                     <?php
                     echo wp_kses_post(paginate_links([
                         'total'     => (int) $wp_query->max_num_pages,

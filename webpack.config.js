@@ -71,7 +71,9 @@ module.exports = {
       },
     },
     hot: false,
-    devMiddleware: { writeToDisk: true },
+    // Never write dev-server bundles into dist/; they include WDS client code.
+    // Production assets must come only from `npm run build`.
+    devMiddleware: { writeToDisk: false },
     watchFiles: ['assets/**/*.{js,css}'],
   },
 };

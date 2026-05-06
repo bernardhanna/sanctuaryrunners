@@ -217,6 +217,14 @@ if ($image_title === '') {
           this.display = this.formatValue(0);
           this.a11yLabel = this.formatA11y(this.value);
 
+          // Alpine can invoke init() automatically without args.
+          // Fall back to this.$el and avoid throwing if not available yet.
+          var targetEl = el || this.$el || null;
+          if (!(targetEl instanceof Element)) {
+            this.start();
+            return;
+          }
+
           // Start when visible
           if (!('IntersectionObserver' in window)) {
             this.start();
@@ -233,7 +241,7 @@ if ($image_title === '') {
             });
           }, { threshold: 0.25 });
 
-          observer.observe(el);
+          observer.observe(targetEl);
         },
 
         start: function () {
